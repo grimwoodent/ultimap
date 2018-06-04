@@ -1,9 +1,10 @@
-import { IGeoStrategy } from '../interface/index';
-import { YandexGeocoderStrategy } from './geocoder';
 import { ymaps } from './utils/ymaps';
+import { IGeoStrategy } from '../interface/index';
+import { YandexMapStrategy } from './map';
+import { YandexGeocoderStrategy } from './geocoder';
 
 export class YandexGeoStrategy implements IGeoStrategy {
-    public map = null as any;
+    public map = new YandexMapStrategy();
 
     public marker = null as any;
 

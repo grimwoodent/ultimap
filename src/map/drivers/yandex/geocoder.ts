@@ -1,6 +1,6 @@
+import { ymaps } from './utils/ymaps';
 import { IGeocodeResult, IGeocoderStrategy } from '../interface/geocoder';
 import { Coords, tCoords } from '../../coords';
-import { ymaps } from './utils/ymaps';
 
 export class YandexGeocoderStrategy implements IGeocoderStrategy {
     public whatAt(coords: tCoords): Promise<IGeocodeResult> {
@@ -13,6 +13,7 @@ export class YandexGeocoderStrategy implements IGeocoderStrategy {
                 return;
             }
 
+            // @TODO implements method
             reject('Method not implemented');
         });
     }

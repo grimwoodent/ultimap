@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import { LatLng, Map, Bounds as LBounds, MapOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { ICreateMapStrategyOptions, IMapStrategy } from './../interface/map';
+import { ICreateMapStrategyOptions, IMapStrategy } from '../interface/map';
 import { Coords } from '../../coords';
 import { Bounds } from '../../bounds';
 import { EventHandlerFn, IEventHandlerFnMap } from '../../events';

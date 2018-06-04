@@ -13940,7 +13940,7 @@ function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constructor__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constructor__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__strategy__ = __webpack_require__(20);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__constructor__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__strategy__["a"]; });
@@ -13953,8 +13953,17 @@ function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ymaps; });
+// @TODO ymaps @types interface
+var ymaps = window.ymaps;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Events; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__group__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__group__ = __webpack_require__(41);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -14060,7 +14069,7 @@ function () {
 }();
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14117,7 +14126,7 @@ function () {
 }();
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14321,7 +14330,7 @@ function () {
 }();
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14389,12 +14398,12 @@ function () {
 }();
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return markerPresetStorage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icon__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__icon__ = __webpack_require__(6);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -14460,7 +14469,7 @@ function () {
 var markerPresetStorage = new MarkerPresetStorage();
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14529,20 +14538,12 @@ function () {
 var polygonPresetStorge = new PolygonPresetStorge();
 
 /***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ymaps; });
-var ymaps = window.ymaps;
-
-/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Evented; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__events__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__events__ = __webpack_require__(5);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -15758,7 +15759,7 @@ module.exports = isObject;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return geo; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__geo__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__collection__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__map_drivers_leaflet_index__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__map_drivers_leaflet_index__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__map_drivers_yandex_index__ = __webpack_require__(39);
 
 
@@ -26246,18 +26247,18 @@ function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Geo; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__map__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__map_drivers_leaflet__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__map_marker__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__map_preset_marker__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__map_polygon__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__map_preset_polygon__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__map_map_control__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__map_drivers_leaflet__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__map_marker__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__map_preset_marker__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__map_polygon__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__map_preset_polygon__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__map_map_control__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__map_dom_event__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__map_collection_constructor__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__map_collection_strategy_marker__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__map_collection_strategy_polygon__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__map_geo_event__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__map_geocoder__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__map_geo_event__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__map_geocoder__ = __webpack_require__(43);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -26395,7 +26396,7 @@ function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Constructor; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__collection_constructor__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__collection_constructor__ = __webpack_require__(7);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26746,7 +26747,7 @@ function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeafletGeocoderStrategy; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_nominatim_js__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_nominatim_js__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_nominatim_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_nominatim_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__coords__ = __webpack_require__(0);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26876,13 +26877,13 @@ function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeafletMapStrategy; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_leaflet__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_leaflet__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_leaflet_dist_leaflet_css__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_leaflet_dist_leaflet_css__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_leaflet_dist_leaflet_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_leaflet_dist_leaflet_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_map__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__interface_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__interface_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__coords__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__bounds__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__events__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__events__ = __webpack_require__(5);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27111,17 +27112,17 @@ function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeafletMarkerStrategy; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_leaflet__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_leaflet__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_leaflet_editable_src_Leaflet_Editable__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_leaflet_editable_src_Leaflet_Editable__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_leaflet_editable_src_Leaflet_Editable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_leaflet_editable_src_Leaflet_Editable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__coords__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icon__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__icon__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__interface_marker__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__interface_marker___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__interface_marker__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_icon_factory__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_marker_preset_storage__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_marker_preset_storage__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__bounds__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__events__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__events__ = __webpack_require__(5);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27304,7 +27305,7 @@ function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_leaflet__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__polygon_coords__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bounds__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_polygon_preset_storge__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_polygon_preset_storge__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_polygon_coords__ = __webpack_require__(16);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27490,7 +27491,7 @@ function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeafletMarkerPresetStrategy; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_marker_preset_storage__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_marker_preset_storage__ = __webpack_require__(9);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27524,7 +27525,7 @@ function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeafletPolygonPresetStrategy; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_polygon_preset_storge__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_polygon_preset_storge__ = __webpack_require__(10);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27606,8 +27607,8 @@ var iconFactory = new IconFactory();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YandexGeocoderStrategy; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coords__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_ymaps__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_ymaps__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__coords__ = __webpack_require__(0);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27627,10 +27628,11 @@ function () {
     key: "whatAt",
     value: function whatAt(coords) {
       return new Promise(function (resolve, reject) {
-        if (!__WEBPACK_IMPORTED_MODULE_1__utils_ymaps__["a" /* ymaps */]) {
+        if (!__WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */]) {
           reject('Yandex maps script not found');
           return;
-        }
+        } // @TODO implements method
+
 
         reject('Method not implemented');
       });
@@ -27639,7 +27641,7 @@ function () {
     key: "whereIs",
     value: function whereIs(address, coords) {
       return new Promise(function (resolve, reject) {
-        if (!__WEBPACK_IMPORTED_MODULE_1__utils_ymaps__["a" /* ymaps */]) {
+        if (!__WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */]) {
           reject('Yandex maps script not found');
           return;
         }
@@ -27647,11 +27649,11 @@ function () {
         var params = {};
 
         if (coords) {
-          var center = new __WEBPACK_IMPORTED_MODULE_0__coords__["a" /* Coords */](coords);
+          var center = new __WEBPACK_IMPORTED_MODULE_1__coords__["a" /* Coords */](coords);
           params.boundedBy = center.getBounds().toArray();
         }
 
-        __WEBPACK_IMPORTED_MODULE_1__utils_ymaps__["a" /* ymaps */].geocode(address, params).then(function (res) {
+        __WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */].geocode(address, params).then(function (res) {
           if (!res || !res.geoObjects || !res.geoObjects.each) {
             reject('Empty geocoder response');
             return;
@@ -27661,7 +27663,7 @@ function () {
           res.geoObjects.each(function (obj) {
             elements.push({
               address: obj.properties.get('name'),
-              coords: new __WEBPACK_IMPORTED_MODULE_0__coords__["a" /* Coords */](obj.geometry.getCoordinates())
+              coords: new __WEBPACK_IMPORTED_MODULE_1__coords__["a" /* Coords */](obj.geometry.getCoordinates())
             });
           });
           resolve(elements[0] || null);
@@ -27681,8 +27683,9 @@ function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YandexGeoStrategy; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__geocoder__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_ymaps__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_ymaps__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__map__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__geocoder__ = __webpack_require__(38);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -27693,13 +27696,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var YandexGeoStrategy =
 /*#__PURE__*/
 function () {
   function YandexGeoStrategy() {
     _classCallCheck(this, YandexGeoStrategy);
 
-    _defineProperty(this, "map", null);
+    _defineProperty(this, "map", new __WEBPACK_IMPORTED_MODULE_1__map__["a" /* YandexMapStrategy */]());
 
     _defineProperty(this, "marker", null);
 
@@ -27716,13 +27720,13 @@ function () {
       polygon: null
     });
 
-    _defineProperty(this, "geocoder", new __WEBPACK_IMPORTED_MODULE_0__geocoder__["a" /* YandexGeocoderStrategy */]());
+    _defineProperty(this, "geocoder", new __WEBPACK_IMPORTED_MODULE_2__geocoder__["a" /* YandexGeocoderStrategy */]());
   }
 
   _createClass(YandexGeoStrategy, [{
     key: "isAllowed",
     value: function isAllowed() {
-      return !!__WEBPACK_IMPORTED_MODULE_1__utils_ymaps__["a" /* ymaps */];
+      return !!__WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */];
     }
   }]);
 
@@ -27731,6 +27735,222 @@ function () {
 
 /***/ }),
 /* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YandexMapStrategy; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_ymaps__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__coords__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bounds__ = __webpack_require__(2);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var YandexMapStrategy =
+/*#__PURE__*/
+function () {
+  function YandexMapStrategy() {
+    _classCallCheck(this, YandexMapStrategy);
+  }
+
+  _createClass(YandexMapStrategy, [{
+    key: "load",
+
+    /**
+     * Произвести загрузку карты в элемент
+     * @param {HTMLElement} element
+     * @param {ICreateMapStrategyOptions} options
+     * @return {Promise<any>}
+     */
+    value: function load(element, options) {
+      return new Promise(function (resolve, reject) {
+        if (!__WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */]) {
+          reject('Yandex maps script not found');
+          return;
+        }
+
+        __WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */].ready(function () {
+          // @TODO options
+          var instance = new __WEBPACK_IMPORTED_MODULE_0__utils_ymaps__["a" /* ymaps */].Map(element, {
+            center: options.center ? options.center.toArray() : null,
+            bounds: options.bounds ? options.bounds.toArray() : null,
+            zoom: options.zoom
+          });
+          resolve(instance);
+        }, function (message) {
+          reject(message);
+        });
+      });
+    }
+    /**
+     * Уничтожить карту
+     *
+     * @param {Map} map
+     *
+     * @return {Promise<IMapStrategy>}
+     */
+
+  }, {
+    key: "destroy",
+    value: function destroy(map) {
+      var _this = this;
+
+      return new Promise(function (resolve) {
+        map.destroy();
+        resolve(_this);
+      });
+    }
+    /**
+     * Установить центр для карты
+     *
+     * @param {Map} map
+     * @param {Coords} coords
+     *
+     * @return {IMapStrategy}
+     */
+
+  }, {
+    key: "setCenter",
+    value: function setCenter(map, coords) {
+      var _this2 = this;
+
+      return new Promise(function (resolve) {
+        map.setCenter(coords.toArray()).then(function () {
+          resolve(_this2);
+        });
+      });
+    }
+    /**
+     * Получить значение центра для карты
+     *
+     * @param {Map} map
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCenter",
+    value: function getCenter(map) {
+      var center = map.getCenter();
+      return new __WEBPACK_IMPORTED_MODULE_1__coords__["a" /* Coords */](center);
+    }
+    /**
+     * Установить текущее занчение зума
+     * @param {Map} map
+     * @param {number} value
+     * @return {IMapStrategy}
+     */
+
+  }, {
+    key: "setZoom",
+    value: function setZoom(map, value) {
+      var _this3 = this;
+
+      return new Promise(function (resolve) {
+        // @TODO listen event for complete
+        map.setZoom(value);
+        resolve(_this3);
+      });
+    }
+    /**
+     * Получить текущее значение зума
+     * @param {Map} map
+     * @return {number}
+     */
+
+  }, {
+    key: "getZoom",
+    value: function getZoom(map) {
+      return map.getZoom();
+    }
+    /**
+     * Установить область отображения карты
+     * @param map
+     * @param {Bounds} value
+     * @return {IMapStrategy}
+     */
+
+  }, {
+    key: "setBounds",
+    value: function setBounds(map, value) {
+      var _this4 = this;
+
+      return new Promise(function (resolve) {
+        map.setBounds(value.toArray()).then(function () {
+          resolve(_this4);
+        });
+      });
+    }
+    /**
+     * Получить область отображения карты
+     * @return {Bounds}
+     */
+
+  }, {
+    key: "getBounds",
+    value: function getBounds(map) {
+      var bounds = map.getBounds();
+      return new __WEBPACK_IMPORTED_MODULE_2__bounds__["a" /* Bounds */](bounds);
+    }
+    /**
+     * Обновить отображаемую область
+     * @param {Map} map
+     * @return {Promise<IMapStrategy>}
+     */
+
+  }, {
+    key: "fitToViewport",
+    value: function fitToViewport(map) {
+      var _this5 = this;
+
+      return new Promise(function (resolve) {
+        map.container.fitToViewport();
+        resolve(_this5);
+      });
+    }
+    /**
+     * Добавить элемент управления на карту
+     *
+     * @param map
+     * @param control
+     *
+     * @return {Promise<IMapStrategy>}
+     */
+
+  }, {
+    key: "addControl",
+    value: function addControl(map, control) {
+      var _this6 = this;
+
+      return new Promise(function (resolve) {
+        map.controls.add(control);
+        resolve(_this6);
+      });
+    }
+  }, {
+    key: "on",
+    value: function on(geoObject, type, fn, context) {
+      geoObject.events.add(type, fn, context);
+      return this;
+    }
+  }, {
+    key: "off",
+    value: function off(geoObject, type, fn, context) {
+      geoObject.events.remove(type, fn, context);
+      return this;
+    }
+  }]);
+
+  return YandexMapStrategy;
+}();
+
+/***/ }),
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27898,7 +28118,7 @@ function () {
 }();
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27943,7 +28163,7 @@ function () {
 }();
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28006,7 +28226,7 @@ function () {
 }();
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28098,13 +28318,13 @@ function () {
 }();
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Marker; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coords__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icon__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__icon__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__geoobject__ = __webpack_require__(12);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -28298,7 +28518,7 @@ function (_GeoObject) {
 _defineProperty(Marker, "Coords", __WEBPACK_IMPORTED_MODULE_0__coords__["a" /* Coords */]);
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28505,7 +28725,7 @@ function (_GeoObject) {
 _defineProperty(Polygon, "Coords", __WEBPACK_IMPORTED_MODULE_1__polygon_coords__["a" /* PolygonCoords */]);
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28564,7 +28784,7 @@ function () {
 }();
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28634,7 +28854,7 @@ function () {
 }();
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28656,11 +28876,22 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
     osm.load().then((map) => {
         console.log('OSM Map loaded', map);
     });
+
+    const ymap = __WEBPACK_IMPORTED_MODULE_1_ultimap__["a" /* geo */].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["b" /* Strategy */].Yandex())
+        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+            center: [57.767131, 40.928349],
+            zoom: 16,
+        });
+
+    console.log('YMaps Map created', ymap);
+    ymap.load().then((map) => {
+        console.log('YMaps Map loaded', map);
+    });
 });
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -28829,13 +29060,13 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30762,7 +30993,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30803,7 +31034,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(54);
+var superagent = __webpack_require__(55);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -30855,7 +31086,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -30881,7 +31112,7 @@ module.exports = Agent;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -30898,11 +31129,11 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(49);
-var RequestBase = __webpack_require__(55);
+var Emitter = __webpack_require__(50);
+var RequestBase = __webpack_require__(56);
 var isObject = __webpack_require__(17);
-var ResponseBase = __webpack_require__(56);
-var Agent = __webpack_require__(53);
+var ResponseBase = __webpack_require__(57);
+var Agent = __webpack_require__(54);
 
 /**
  * Noop.
@@ -31807,7 +32038,7 @@ request.put = function(url, data, fn) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32508,7 +32739,7 @@ RequestBase.prototype._setTimeouts = function() {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32518,7 +32749,7 @@ RequestBase.prototype._setTimeouts = function() {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(57);
+var utils = __webpack_require__(58);
 
 /**
  * Expose `ResponseBase`.
@@ -32651,7 +32882,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32729,5 +32960,5 @@ exports.cleanHeader = function(header, changesOrigin){
 
 
 /***/ })
-],[48]);
+],[49]);
 //# sourceMappingURL=main.js.map
