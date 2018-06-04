@@ -5,7 +5,7 @@
       "decoratorsLegacy": true
     }],
     ["@babel/preset-env", {
-      "modules": false,
+      "modules": 'commonjs',
       "targets": {
         "browsers": ["last 2 versions", "ie >= 9"]
       }

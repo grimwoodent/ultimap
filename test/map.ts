@@ -1,7 +1,7 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { JSDOM } from 'jsdom';
-import { geo } from './../index';
+import { geo } from '../index';
 
 describe('Map', () => {
     describe('element', () => {

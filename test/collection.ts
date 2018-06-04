@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Geo, geo } from '../index';
+import * as Collection from '../dist/map/collection/constructor';
+import { geo } from '../index';
 
 describe('Collection', () => {
     describe('Abstract', () => {
@@ -8,7 +9,7 @@ describe('Collection', () => {
 
         it('should be created', () => {
             expect(() => {
-                collections = (new Geo.Collections.Constructor({}));
+                collections = (new Collection.Constructor({}));
             }).to.not.throw();
         });
 
@@ -20,7 +21,7 @@ describe('Collection', () => {
 
         it('should add new strategy', () => {
             expect(() => {
-                collections.addStrategy('numbers', new Geo.Collections.Strategy());
+                collections.addStrategy('numbers', new Collection.Strategy());
             }).to.not.throw();
         });
 

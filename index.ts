@@ -1,11 +1,12 @@
 import {
     Collections,
     Strategy,
-    GeoConstructor,
+    GeoConstructor as Geo,
     geo,
 } from './src/index';
 
 export {
+    Geo,
     Collections,
     Strategy,
     geo,

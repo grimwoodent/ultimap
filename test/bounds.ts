@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Coords } from './../src/map/coords';
-import { Bounds } from './../src/map/bounds';
+import { Coords } from '../dist/map/coords';
+import { Bounds } from '../dist/map/bounds';
 
 describe('Bounds', () => {
     it('should be created by 2 arrays of numbers', () => {
