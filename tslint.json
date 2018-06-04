@@ -1,0 +1,14 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "semicolon": [ true ],
+    "no-console": [ false ],
+    "quotemark": [ true, "single", "jsx-double" ],
+    "no-empty": [ false ],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "no-empty-interface": false,
+    "no-bitwise": false
+  },
+  "jsRules": {}
+}

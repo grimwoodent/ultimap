@@ -1,0 +1,69 @@
+{
+  "name": "ultimap",
+  "version": "0.0.0",
+  "description": "Universal amp api",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src",
+    "index.ts"
+  ],
+  "dependencies": {
+    "leaflet": "^1.3.1",
+    "leaflet-editable": "^1.1.0",
+    "nominatim-js": "git+https://github.com/grimwoodent/nominatim.git#v1.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.47",
+    "@babel/core": "^7.0.0-beta.47",
+    "@babel/plugin-external-helpers": "^7.0.0-beta.47",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.47",
+    "@babel/preset-env": "^7.0.0-beta.47",
+    "@babel/preset-stage-0": "^7.0.0-beta.47",
+    "@babel/preset-typescript": "^7.0.0-beta.39",
+    "@babel/register": "^7.0.0-beta.49",
+    "@types/chai": "^4.1.2",
+    "@types/jsdom": "^11.0.4",
+    "@types/leaflet": "^1.2.7",
+    "@types/mocha": "^5.0.0",
+    "@types/superagent": "^3.5.8",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "chai": "^4.1.2",
+    "cross-env": "^5.1.4",
+    "del-cli": "^1.1.0",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^11.7.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.0.5",
+    "ts-node": "^5.0.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "clear": "del-cli dist",
+    "build": "npm run clear && babel -x \".js\",\".ts\" --optional runtime --copy-files -d dist/ src/",
+    "test": "mocha -r ts-node/register -r ignore-styles -r jsdom-global/register test/**/*.ts",
+    "git-push-all": "git push origin && git push origin --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grimwoodent/ultimap.git"
+  },
+  "keywords": [
+    "map",
+    "api",
+    "osm",
+    "openstreet",
+    "ymaps",
+    "universal"
+  ],
+  "author": "GrimwoodEnt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grimwoodent/ultimap/issues"
+  },
+  "homepage": "https://github.com/grimwoodent/ultimap#readme"
+}
