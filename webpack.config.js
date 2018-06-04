@@ -111,14 +111,15 @@ if (!DEBUG) {
 }
 
 module.exports = [
-    Object.assign({}, resultConfig, {
-        name: 'basic',
-        entry: './basic/js/index.js',
-        output: {
-            path: path.resolve(EXAMPLES_PATH, "basic/dist"),
-            filename: "[name].js",
-            library: '[name]',
-            libraryTarget: 'this'
-        },
-    })
-];
+    'basic',
+    'marker',
+].map((exampleName) => Object.assign({}, resultConfig, {
+    name: exampleName,
+    entry: `./${exampleName}/js/index.js`,
+    output: {
+        path: path.resolve(EXAMPLES_PATH, `${exampleName}/dist`),
+        filename: "[name].js",
+        library: '[name]',
+        libraryTarget: 'this'
+    },
+}));
