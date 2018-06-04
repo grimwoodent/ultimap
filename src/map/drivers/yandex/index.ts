@@ -2,11 +2,12 @@ import { ymaps } from './utils/ymaps';
 import { IGeoStrategy } from '../interface/index';
 import { YandexMapStrategy } from './map';
 import { YandexGeocoderStrategy } from './geocoder';
+import {YandexMarkerStrategy} from './marker';
 
 export class YandexGeoStrategy implements IGeoStrategy {
     public map = new YandexMapStrategy();
 
-    public marker = null as any;
+    public marker = new YandexMarkerStrategy();
 
     public polygon = null as any;
 

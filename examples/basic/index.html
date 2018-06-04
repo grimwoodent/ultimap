@@ -17,7 +17,7 @@
                     <pre class="small">
 import { geo, Strategy } from 'ultimap';
 
-geo.map.byStrategy(new Strategy.Leaflet()).create(holder_element, {
+geo.byStrategy(new Strategy.Leaflet()).map.create(holder_element, {
     center: [57.767131, 40.928349],
     zoom: 16,
 }).load();
@@ -33,7 +33,7 @@ geo.map.byStrategy(new Strategy.Leaflet()).create(holder_element, {
                     <pre class="small">
 import { geo, Strategy } from 'ultimap';
 
-geo.map.byStrategy(new Strategy.Yandex()).create(holder_element, {
+geo.map.byStrategy(new Strategy.Yandex()).map.create(holder_element, {
     center: [57.767131, 40.928349],
     zoom: 16,
 }).load();

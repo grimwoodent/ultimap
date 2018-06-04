@@ -17,11 +17,37 @@
                     <pre class="small">
 import { geo, Strategy } from 'ultimap';
 
-geo.map.byStrategy(new Strategy.Leaflet()).create(holder_element, {
+const osmGeo = geo.byStrategy(new Strategy.Leaflet());
+osmGeo.map.create(holder_element, {
     center: [57.767131, 40.928349],
     zoom: 16,
 }).load().then((map) => {
-    geo.marker.create(map.getCenter(), {
+    osmGeo.marker.create(map.getCenter(), {
+        icon: {
+            src: './image/map-marker-black.png',
+            size: [32, 32],
+            offset: [16, 32],
+        },
+    }).addTo(map);
+});
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-xs-6">
+                    <div id="ymaps_holder" style="width: 100%; height: 400px;"></div>
+                </div>
+                <div class="col-xs-6">
+                    <pre class="small">
+import { geo, Strategy } from 'ultimap';
+
+const ymapGeo = geo.byStrategy(new Strategy.Yandex());
+ymapGeo.map.byStrategy(new Strategy.Yandex()).create(holder_element, {
+    center: [57.767131, 40.928349],
+    zoom: 16,
+}).load().then((map) => {
+    ymapGeo.marker.create(map.getCenter(), {
         icon: {
             src: './image/map-marker-black.png',
             size: [32, 32],
