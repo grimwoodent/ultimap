@@ -30,14 +30,26 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "chai": "^4.1.2",
     "cross-env": "^5.1.4",
+    "css-loader": "^0.28.11",
     "del-cli": "^1.1.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.8.5",
     "ignore-styles": "^5.0.1",
+    "jquery": "^3.0.0",
     "jsdom": "^11.7.0",
     "jsdom-global": "^3.0.2",
+    "json-loader": "^0.5.7",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
     "mocha": "^5.0.5",
+    "style-loader": "^0.21.0",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
-    "typescript": "^2.8.1"
+    "tslint-loader": "^3.5.3",
+    "twig-loader": "^0.3.1",
+    "typescript": "^2.8.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.6.1"
   },
   "directories": {
     "test": "test"
@@ -46,7 +58,8 @@
     "clear": "del-cli dist",
     "build": "npm run clear && babel -x \".js\",\".ts\" --optional runtime --copy-files -d dist/ src/",
     "test": "mocha -r ts-node/register -r ignore-styles -r jsdom-global/register test/**/*.ts",
-    "git-push-all": "git push origin && git push origin --tags"
+    "git-push-all": "git push origin && git push origin --tags",
+    "build-dev": "webpack --progress --display-error-details"
   },
   "repository": {
     "type": "git",
