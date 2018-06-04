@@ -41,8 +41,6 @@ implements IGeoObject<TCoordsForUpdate, TPropertiesForUpdate> {
 
     protected static Coords: any = null;
 
-    public ['constructor']: typeof GeoObject;
-
     protected map: Map;
     protected coords: TCoords;
     protected data: tExtraData = {};
@@ -112,7 +110,7 @@ implements IGeoObject<TCoordsForUpdate, TPropertiesForUpdate> {
                 return;
             }
 
-            this.coords = new this.constructor.Coords(value);
+            this.coords = new (this.constructor as any).Coords(value);
 
             if (this.hasInstance()) {
                 this.getStrategy().setCoords(this.getInstance(), this.coords);

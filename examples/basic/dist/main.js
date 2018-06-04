@@ -14562,8 +14562,6 @@ function () {
 
     _classCallCheck(this, Evented);
 
-    _defineProperty(this, 'constructor', void 0);
-
     _defineProperty(this, "instance", void 0);
 
     _defineProperty(this, "strategy", void 0);
@@ -14710,8 +14708,6 @@ function (_Evented) {
     _classCallCheck(this, GeoObject);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(GeoObject).call(this, strategy));
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), 'constructor', void 0);
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "map", void 0);
 
@@ -15757,7 +15753,7 @@ module.exports = isObject;
 
 "use strict";
 /* unused harmony export Collections */
-/* unused harmony export Strategy */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Strategy; });
 /* unused harmony export GeoConstructor */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return geo; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__geo__ = __webpack_require__(21);
@@ -26289,8 +26285,6 @@ function () {
   function Geo(strategy) {
     _classCallCheck(this, Geo);
 
-    _defineProperty(this, 'constructor', void 0);
-
     _defineProperty(this, "Collections", {
       Type: {
         Marker: 'marker',
@@ -28652,10 +28646,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    const osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["a" /* geo */].map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 16,
-    });
+    const osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["a" /* geo */].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["b" /* Strategy */].Leaflet())
+        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+            center: [57.767131, 40.928349],
+            zoom: 16,
+        });
 
     console.log('OSM Map created', osm);
     osm.load().then((map) => {

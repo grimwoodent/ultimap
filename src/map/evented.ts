@@ -14,8 +14,6 @@ export interface IEvented<TPropertiesForUpdate> {
 }
 
 export abstract class Evented<TPropertiesForUpdate, TPropertiesForCreate> implements IEvented<TPropertiesForUpdate> {
-    public ['constructor']: typeof Evented;
-
     protected instance: any;
     protected strategy: IGeoStrategy;
     protected props: TPropertiesForCreate;

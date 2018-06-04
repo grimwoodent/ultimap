@@ -14,7 +14,6 @@ import { GeoEvent } from './map/geo-event';
 import { Geocoder } from './map/geocoder';
 
 export class Geo {
-    public ['constructor']: typeof Geo;
     public Collections = {
         Type: {
             Marker: 'marker',
@@ -60,7 +59,7 @@ export class Geo {
     }
 
     public byStrategy(strategy: IGeoStrategy): Geo {
-        return new this.constructor(strategy);
+        return new (this.constructor as any)(strategy);
     }
 
     public isAllowed() {
