@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Collections, geo } from '../index';
+import { Geo, geo } from '../index';
 
 describe('Collection', () => {
     describe('Abstract', () => {
@@ -8,7 +8,7 @@ describe('Collection', () => {
 
         it('should be created', () => {
             expect(() => {
-                collections = (new Collections.Constructor({}));
+                collections = (new Geo.Collections.Constructor({}));
             }).to.not.throw();
         });
 
@@ -20,7 +20,7 @@ describe('Collection', () => {
 
         it('should add new strategy', () => {
             expect(() => {
-                collections.addStrategy('numbers', new Collections.Strategy());
+                collections.addStrategy('numbers', new Geo.Collections.Strategy());
             }).to.not.throw();
         });
 

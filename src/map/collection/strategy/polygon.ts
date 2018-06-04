@@ -1,9 +1,7 @@
-import {
-    Strategy,
-} from '../../../collection';
+import { Collection } from 'grim.lib';
 import { IPolygon } from '../../polygon';
 
-export class PolygonStrategy extends Strategy {
+export class PolygonStrategy extends Collection.Strategy {
     /**
      * Получить индекс элемента в коллекции
      *

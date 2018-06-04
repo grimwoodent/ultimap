@@ -1,5 +1,9 @@
-import { Collections } from '../../collection/constructor';
+import { Collection } from 'grim.lib';
 
-export class Constructor extends Collections {
+export class Strategy extends Collection.Strategy {
+
+}
+
+export class Constructor extends Collection.Constructor {
 
 }

@@ -1,9 +1,7 @@
-import {
-    Strategy,
-} from '../../../collection';
+import { Collection } from 'grim.lib';
 import { IMarker } from '../../marker';
 
-export class MarkerStrategy extends Strategy {
+export class MarkerStrategy extends Collection.Strategy {
     /**
      * Получить индекс элемента в коллекции
      *
