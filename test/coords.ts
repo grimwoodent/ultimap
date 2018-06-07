@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import 'mocha';
-import { Coords } from '../dist/map/coords';
+import { Coords } from '../dist';
 
 describe('Coords', () => {
     it('should be created by numbers', () => {

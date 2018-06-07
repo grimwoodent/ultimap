@@ -1,5 +1,6 @@
 import {
-    Collections,
+    Coords,
+    Bounds,
     Strategy,
     GeoConstructor as Geo,
     geo,
@@ -7,7 +8,8 @@ import {
 
 export {
     Geo,
-    Collections,
+    Coords,
+    Bounds,
     Strategy,
     geo,
 };

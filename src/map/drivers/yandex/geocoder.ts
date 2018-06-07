@@ -1,4 +1,4 @@
-import { ymaps } from './utils/ymaps';
+import { Api } from './utils/ymaps';
 import { IGeocodeResult, IGeocoderStrategy } from '../interface/geocoder';
 import { Coords, tCoords } from '../../coords';
 
@@ -8,7 +8,7 @@ export class YandexGeocoderStrategy implements IGeocoderStrategy {
             resolve: (result: IGeocodeResult) => void,
             reject: (message?: string) => void,
         ) => {
-            if (!ymaps) {
+            if (!Api.ymaps) {
                 reject('Yandex maps script not found');
                 return;
             }
@@ -23,7 +23,7 @@ export class YandexGeocoderStrategy implements IGeocoderStrategy {
             resolve: (result: IGeocodeResult) => void,
             reject: (message?: string) => void,
         ) => {
-            if (!ymaps) {
+            if (!Api.ymaps) {
                 reject('Yandex maps script not found');
                 return;
             }
@@ -38,7 +38,7 @@ export class YandexGeocoderStrategy implements IGeocoderStrategy {
                 params.boundedBy = center.getBounds().toArray();
             }
 
-            ymaps.geocode(address, params)
+            Api.ymaps.geocode(address, params)
                 .then((res: any) => {
                     if (!res || !res.geoObjects || !res.geoObjects.each) {
                         reject('Empty geocoder response');

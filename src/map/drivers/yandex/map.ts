@@ -1,4 +1,4 @@
-import { ymaps } from './utils/ymaps';
+import { Api } from './utils/ymaps';
 import { ICreateMapStrategyOptions, IMapStrategy } from '../interface/map';
 import { Coords } from '../../coords';
 import { Bounds } from '../../bounds';
@@ -16,14 +16,14 @@ export class YandexMapStrategy implements IMapStrategy {
             resolve: (result: any) => void,
             reject: (message?: string) => void,
         ) => {
-            if (!ymaps) {
+            if (!Api.ymaps) {
                 reject('Yandex maps script not found');
                 return;
             }
 
-            ymaps.ready(() => {
+            Api.ymaps.ready(() => {
                 // @TODO options
-                const instance = new ymaps.Map(element, {
+                const instance = new Api.ymaps.Map(element, {
                     center: options.center
                         ? options.center.toArray()
                         : null,

@@ -1,7 +1,7 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { JSDOM } from 'jsdom';
-import { geo } from '../index';
+import { geo } from '../dist';
 
 describe('Marker', () => {
     const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {

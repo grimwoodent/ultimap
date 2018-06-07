@@ -1,4 +1,5 @@
-import { ymaps, YMarker } from './utils/ymaps';
+import { Api, YMarker } from './utils/ymaps';
+import { IconFactory } from './utils/icon-factory';
 import { IMap } from '../../index';
 import { Coords } from '../../coords';
 import { Icon } from '../../icon';
@@ -16,10 +17,15 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {any}
      */
     public create(coords: Coords, props: ICreateMarkerOptions): any {
-        // @TODO icon factory
-        return new ymaps.Placemark(coords.toArray(), {}, {
-            preset: props.preset || undefined,
-        });
+        const icon = props.icon
+            ? IconFactory.createBy(props.icon)
+            : {};
+        const preset = props.preset
+            ? { preset: props.preset }
+            : {};
+        const compiledProps = Object.assign({}, icon, preset);
+
+        return new Api.ymaps.Placemark(coords.toArray(), {}, compiledProps);
     }
 
     /**
@@ -111,7 +117,7 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {Bounds}
      */
     public getBounds(geoobject: YMarker): Bounds {
-        // maybe use ymaps marker.geometry.getBounds() method?
+        // maybe use Api.ymaps marker.geometry.getBounds() method?
         return this.getCoords(geoobject).getBounds();
     }
 

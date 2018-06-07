@@ -1,8 +1,8 @@
-import { ymaps } from './utils/ymaps';
+import { Api } from './utils/ymaps';
 import { IGeoStrategy } from '../interface/index';
 import { YandexMapStrategy } from './map';
 import { YandexGeocoderStrategy } from './geocoder';
-import {YandexMarkerStrategy} from './marker';
+import { YandexMarkerStrategy } from './marker';
 
 export class YandexGeoStrategy implements IGeoStrategy {
     public map = new YandexMapStrategy();
@@ -25,6 +25,6 @@ export class YandexGeoStrategy implements IGeoStrategy {
     public geocoder = new YandexGeocoderStrategy();
 
     public isAllowed(): boolean {
-        return !!ymaps;
+        return !!Api.ymaps;
     }
 }
