@@ -13,7 +13,7 @@ export class IconFactory {
             throw new Error('Empty icon for create marker');
         }
 
-        const offset = (icon.offset && Array.isArray(icon.offset))
+        const offset: number[] = (icon.offset && Array.isArray(icon.offset))
             ? icon.offset
             : [];
 

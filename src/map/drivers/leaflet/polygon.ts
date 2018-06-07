@@ -8,6 +8,7 @@ import { polygonPresetStorge } from './utils/polygon-preset-storge';
 import { EventHandlerFn, IEventHandlerFnMap } from '../../events';
 import { UtilsPolygonCoords } from '../../utils/polygon-coords';
 
+// @TODO move to style factory
 const POLYGON_STYLE: { [key: string]: keyof (ICreatePolygonStyle); } = {
     color: 'strokeColor',
     opacity: 'strokeOpacity',
@@ -24,6 +25,7 @@ export class LeafletPolygonStrategy implements IPolygonStrategy {
         const preset = polygonPresetStorge.get(options.preset);
         const props: LPolylineOptions = {};
 
+        // @TODO move to style factory
         Object.keys(POLYGON_PROPS).forEach((key: keyof (LPolylineOptions)) => {
             const propKey = POLYGON_PROPS[key];
             let option = options[propKey];
@@ -85,6 +87,7 @@ export class LeafletPolygonStrategy implements IPolygonStrategy {
     public setStyle(geoobject: LPolygon, style: ICreatePolygonStyle): IPolygonStrategy {
         const props: LPolylineOptions = {};
 
+        // @TODO move to style factory
         Object.keys(POLYGON_STYLE).forEach((key: keyof (LPolylineOptions)) => {
             const option = style[POLYGON_STYLE[key]];
 

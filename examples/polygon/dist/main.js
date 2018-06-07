@@ -29500,26 +29500,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    const osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet())
-        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-            center: [57.767131, 40.928349],
-            zoom: 16,
-        });
+    const p1 = { lat : 57.769131, lng: 40.93534 };
+    const p2 = { lat : 57.765131, lng: 40.91834 };
+    const coords = [[
+        [p1.lat, p1.lng],
+        [p2.lat, p1.lng],
+        [p2.lat, p2.lng],
+        [p1.lat, p2.lng],
+    ]];
+    const style = {
+        fillColor: '#df362a',
+        fillOpacity: 0.33,
+        strokeColor: '#df362a',
+        strokeOpacity: 0.5,
+        strokeWidth: 2,
+    };
+
+    const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
+    const osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+        center: [57.767131, 40.928349],
+        zoom: 14,
+    });
 
     console.log('OSM Map created', osm);
     osm.load().then((map) => {
         console.log('OSM Map loaded', map);
+
+        osmGeo.polygon.create(coords,  Object.assign({}, style)).addTo(map);
     });
 
-    const ymap = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex())
-        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
-            center: [57.767131, 40.928349],
-            zoom: 16,
-        });
+    const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
+    const ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+        center: [57.767131, 40.928349],
+        zoom: 14,
+    });
 
     console.log('YMaps Map created', ymap);
     ymap.load().then((map) => {
         console.log('YMaps Map loaded', map);
+
+        ymapGeo.polygon.create(coords, Object.assign({}, style)).addTo(map);
     });
 });
 

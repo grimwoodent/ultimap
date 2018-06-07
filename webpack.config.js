@@ -113,6 +113,7 @@ if (!DEBUG) {
 module.exports = [
     'basic',
     'marker',
+    'polygon',
 ].map((exampleName) => Object.assign({}, resultConfig, {
     name: exampleName,
     entry: `./${exampleName}/js/index.js`,

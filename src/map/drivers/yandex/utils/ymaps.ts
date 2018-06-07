@@ -1,5 +1,7 @@
 export type YMarker = any;
 
+export type YPolygon = any;
+
 // @TODO ymaps @types interface
 export interface IYMaps {
     ready: (resolve: () => void, reject: () => void) => void;

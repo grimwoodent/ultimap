@@ -3,13 +3,14 @@ import { IGeoStrategy } from '../interface/index';
 import { YandexMapStrategy } from './map';
 import { YandexGeocoderStrategy } from './geocoder';
 import { YandexMarkerStrategy } from './marker';
+import { YandexPolygonStrategy } from './polygon';
 
 export class YandexGeoStrategy implements IGeoStrategy {
     public map = new YandexMapStrategy();
 
     public marker = new YandexMarkerStrategy();
 
-    public polygon = null as any;
+    public polygon = new YandexPolygonStrategy();
 
     public mapControl = null as any;
 
