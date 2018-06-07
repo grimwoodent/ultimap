@@ -2,6 +2,16 @@
 
 Universal api for different maps.
 
+---
+
+#### Contents
+- [Map](#map)
+- [Marker](#marker)
+- [Coords](#coords)
+- [Bounds](#bounds)
+
+---
+
 # Map
 
 The central class of the API — it is used to create a map on a page and manipulate it.
@@ -75,8 +85,6 @@ const coords = new Coords(57.767131, 40.928349);
 |new Coords(lat: *\<string\>*, lng: *\<string\>*)| Creates an object representing a geographical point with the given latitude and longitude. |
 |new Coords(coords: *\<array\>*) | Expects an array of the form \[number, number\]. |
 |new Coords(coords: *\<object\>*) | Expects an plain object of the form {lat: number, lng: number}. |
-
----
 
 ### Methods
 
