@@ -28,7 +28,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
         const preset = props.preset
             ? { preset: props.preset }
             : {};
-        const compiledProps = Object.assign({}, preset);
+        const compiledProps: { [key: string]: any } = Object.assign({}, preset);
 
         // @TODO move to style factory
         Object.keys(POLYGON_PROPS).forEach((key: string) => {

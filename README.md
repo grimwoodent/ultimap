@@ -33,6 +33,27 @@ geo.map.create(document.getElementById('map'), {
 | ------- | ----------- |
 |geo.map.create(el: *\<HTMLElement\>*, options?: *\<Map Options\>*)| Instantiates a map object given an instance of a <div> HTML element and optionally an object literal with Map options.
 
+### Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+| create(element: *\<HTMLElement\>*, options: *\<Map Update Properties\>*) | *\<Map\>* ||
+| load() | *\<Promise\<Map\>\>* ||
+| destroy() | *\<Promise\<Map\>\>* ||
+| updateProperties(options: *\<Map Update Properties\>*) | *\<Promise\<Map\>\>* ||
+| hasInstance() | *\<boolean\>* ||
+| getInstance() | *\<object\>* ||
+| setCenter(coords: *\<Coords constructor params\>*) | *\<Promise\<Map\>\>* ||
+| getCenter() | *\<Coords\>* ||
+| setZoom(value: *\<number\>*) | *\<Promise\<Map\>\>* ||
+| getZoom() | *\<number\>* ||
+| setBounds(coords: *\<Bounds constructor params\>*) | *\<Promise\<Map\>\>* ||
+| getBounds() | *\<Bounds\>* ||
+| fitToViewport() | *\<Promise\<Map\>\>* ||
+| addControl(control: *\<object\>*) | *\<Promise\<Map\>\>* ||
+| on(type: *\<string\>*, fn: *\<function\>*) | *\<Map\>* ||
+| off(type: *\<string\>*, fn: *\<function\>*) | *\<Map\>* ||
+
 ---
 
 
