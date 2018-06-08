@@ -15733,6 +15733,12 @@ module.exports = isObject;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "Geo", {
+  enumerable: true,
+  get: function get() {
+    return _geo.Geo;
+  }
+});
 Object.defineProperty(exports, "Coords", {
   enumerable: true,
   get: function get() {
@@ -15745,7 +15751,7 @@ Object.defineProperty(exports, "Bounds", {
     return _bounds.Bounds;
   }
 });
-exports.geo = exports.GeoConstructor = exports.Strategy = void 0;
+exports.geo = exports.Strategy = void 0;
 
 var _geo = __webpack_require__(19);
 
@@ -15762,8 +15768,6 @@ var Strategy = {
   Yandex: _index2.YandexGeoStrategy
 };
 exports.Strategy = Strategy;
-var GeoConstructor = _geo.Geo;
-exports.GeoConstructor = GeoConstructor;
 var geo = new _geo.Geo();
 exports.geo = geo;
 

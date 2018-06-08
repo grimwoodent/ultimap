@@ -2,7 +2,7 @@ import {
     Coords,
     Bounds,
     Strategy,
-    GeoConstructor as Geo,
+    Geo,
     geo,
 } from './src/index';
 
