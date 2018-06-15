@@ -27,7 +27,7 @@ export class LeafletPolygonStrategy implements IPolygonStrategy {
 
         // @TODO move to style factory
         Object.keys(POLYGON_PROPS).forEach((key: keyof (LPolylineOptions)) => {
-            const propKey = POLYGON_PROPS[key];
+            const propKey = POLYGON_PROPS[key as string];
             let option = options[propKey];
 
             if (option === undefined) {
@@ -89,7 +89,7 @@ export class LeafletPolygonStrategy implements IPolygonStrategy {
 
         // @TODO move to style factory
         Object.keys(POLYGON_STYLE).forEach((key: keyof (LPolylineOptions)) => {
-            const option = style[POLYGON_STYLE[key]];
+            const option = style[POLYGON_STYLE[key as string]];
 
             if (option !== undefined) {
                 props[key] = option;

@@ -12,9 +12,44 @@ Universal api for different maps.
 
 ---
 
+# Geo
+
+The central class of the API - it is used for get access for other classes.
+
+### Usage example
+``` javascript
+import { Geo, geo } from 'ultimap';
+```
+
+### Constructor
+
+| Factory | Description |
+| ------- | ----------- |
+| new Geo(strategy: *\<GeoStrategy\>*)| Create new geo-controller. |
+
+### Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+| getStrategy() | *\<GeoStrategy\>* | Get the current work strategy. |
+| setStrategy(strategy: *\<GeoStrategy\>*) | *\<Geo\>* | Set the current work strategy. |
+| byStrategy(strategy: *\<GeoStrategy\>*) | *\<Geo\>* | Create new geo-controller for the strategy. |
+| isAllowed() | *\<boolean\>* | Check is the strategy is allowed to work. |
+| map | *\<Map\>* | Create new Map controller. |
+| marker | *\<Marker\>* | Create new Marker controller. |
+| polygon | *\<Polygon\>* | Create new Polygon controller. |
+| mapControl | *\<MapControl\>* | Create new MapControl controller. |
+| domEvent | *\<DOMEvent\>* | Create new DOMEvent controller. |
+| event | *\<GeoEvent\>* | Create new GeoEvent controller. |
+| geocoder | *\<Geocoder\>* | Create new Geocoder controller. |
+| preset | *\<object\>* | Returns object with preset controllers. |
+| Collections | *\<object\>* | Contains object with Collections controllers and settings. |
+
+---
+
 # Map
 
-The central class of the API — it is used to create a map on a page and manipulate it.
+The class is used to create a map on a page and manipulate it.
 
 ### Usage example
 

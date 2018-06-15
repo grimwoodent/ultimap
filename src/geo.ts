@@ -33,7 +33,7 @@ export class Geo {
     }
 
     /**
-     * Получить текущую стратегию для работы с гео данными
+     * Get the current work strategy.
      *
      * @return {IGeoStrategy}
      */
@@ -46,7 +46,7 @@ export class Geo {
     }
 
     /**
-     * Установить стратегию для работы
+     * Set the current work strategy.
      *
      * @param {IGeoStrategy} strategy
      *
@@ -58,11 +58,18 @@ export class Geo {
         return this;
     }
 
+    /**
+     * Create new geo-controller for the strategy.
+     *
+     * @param {IGeoStrategy} strategy
+     *
+     * @return {Geo}
+     */
     public byStrategy(strategy: IGeoStrategy): Geo {
         return new (this.constructor as any)(strategy);
     }
 
-    public isAllowed() {
+    public isAllowed(): boolean {
         return this.getStrategy().isAllowed();
     }
 
