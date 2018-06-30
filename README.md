@@ -117,6 +117,25 @@ geo.marker.create([57.767131, 40.928349], {
 | ------- | ----------- |
 |geo.marker.create(coords: *\<Coords\>*, options?: *\<Marker Options\>* | Instantiates a Marker object given a geographical point and optionally an options object. |
 
+### Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+|getUid()|*\<string\>*||
+|setCoords(coords: *\<Coords constructor params\>*)|*\<Marker\>*||
+|getCoords()|*\<Coords\>*||
+|getBounds()|*\<Bounds\>*||
+|addTo(map: *\<Map\>*)|*\<Marker\>*||
+|remove()|*\<Marker\>*||
+|getMap()|*\<Map\>*||
+|onMap()|*\<boolean\>*||
+|clone()|*\<Marker\>*||
+|setEditable(value: *\<boolean\>*)|*\<Promise\<Marker\>\>*||
+|setData(value: *\<object\>*)|*\<Promise\<Marker\>\>*||
+|getData()|*\<object\>*||
+|setIcon(value: *\<object\>*)|*\<Marker\>*||
+|setPreset(value: *\<string\>*)|*\<Marker\>*||
+
 ---
 
 

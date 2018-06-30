@@ -26211,7 +26211,7 @@ function () {
     this.strategy = strategy || null;
   }
   /**
-   * Получить текущую стратегию для работы с гео данными
+   * Get the current work strategy.
    *
    * @return {IGeoStrategy}
    */
@@ -26227,7 +26227,7 @@ function () {
       return this.strategy;
     }
     /**
-     * Установить стратегию для работы
+     * Set the current work strategy.
      *
      * @param {IGeoStrategy} strategy
      *
@@ -26240,6 +26240,14 @@ function () {
       this.strategy = strategy;
       return this;
     }
+    /**
+     * Create new geo-controller for the strategy.
+     *
+     * @param {IGeoStrategy} strategy
+     *
+     * @return {Geo}
+     */
+
   }, {
     key: "byStrategy",
     value: function byStrategy(strategy) {
@@ -29504,17 +29512,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
+    // Open Street
     const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
     const osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
         center: [57.767131, 40.928349],
         zoom: 16,
     });
+    let osmMarker;
 
     console.log('OSM Map created', osm);
     osm.load().then((map) => {
         console.log('OSM Map loaded', map);
 
-        osmGeo.marker.create(map.getCenter(), {
+        osmMarker = osmGeo.marker.create(map.getCenter(), {
             icon: {
                 src: './image/map-marker-black.png',
                 size: [32, 32],
@@ -29523,23 +29533,44 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
         }).addTo(map);
     });
 
+    // Yandex
     const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
     const ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
         center: [57.767131, 40.928349],
         zoom: 16,
     });
+    let ymapsMarker;
 
     console.log('YMaps Map created', ymap);
     ymap.load().then((map) => {
         console.log('YMaps Map loaded', map);
 
-        ymapGeo.marker.create(map.getCenter(), {
+        ymapsMarker = ymapGeo.marker.create(map.getCenter(), {
             icon: {
                 src: './image/map-marker-black.png',
                 size: [32, 32],
                 offset: [16, 32],
             },
         }).addTo(map);
+    });
+
+    // Move to
+    const $moveToLat = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#input-move-to-lat');
+    const $moveToLng = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#input-move-to-lng');
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#btn-move-to').on('click', () => {
+        const lat = $moveToLat.val() || 0;
+        const lng = $moveToLng.val() || 0;
+
+        if (osmMarker) {
+            osmMarker.setCoords([lat, lng]);
+            osm.setCenter([lat, lng]);
+        }
+
+        if (ymapsMarker) {
+            ymapsMarker.setCoords([lat, lng]);
+            ymap.setCenter([lat, lng]);
+        }
     });
 });
 
