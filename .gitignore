@@ -27,6 +27,3 @@ composer.phar
 
 # Linter cahce
 .eslintcache
-
-#builds
-/dist

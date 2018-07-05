@@ -1,7 +1,7 @@
 import { IGeoStrategy } from './drivers/interface/index';
 import { IGeoEventNames, IGeoEventStrategy } from './drivers/interface/geo-event';
 
-interface IGeoEvent {
+export interface IGeoEvent {
     name: IGeoEventNames;
 }
 

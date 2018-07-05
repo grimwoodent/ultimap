@@ -2,7 +2,7 @@ import { IGeoStrategy } from './drivers/interface/index';
 import { IGeocodeResult, IGeocoderStrategy } from './drivers/interface/geocoder';
 import { tCoords } from './coords';
 
-interface IGeocoder {
+export interface IGeocoder {
     whatAt(coords: any): Promise<any>;
     whereIs(address: string, coords?: any): Promise<any>;
 }

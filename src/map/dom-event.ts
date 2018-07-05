@@ -2,7 +2,7 @@ import { IGeoStrategy } from './drivers/interface/index';
 import { Coords } from './coords';
 import { IDOMEventStrategy } from './drivers/interface/dom-event';
 
-interface IDOMEvent {
+export interface IDOMEvent {
     create(instance: any): IDOMEvent;
     stop(): IDOMEvent;
     getCoords(domEvent: any): Coords;
