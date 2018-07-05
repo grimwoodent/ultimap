@@ -26211,7 +26211,7 @@ function () {
     this.strategy = strategy || null;
   }
   /**
-   * Получить текущую стратегию для работы с гео данными
+   * Get the current work strategy.
    *
    * @return {IGeoStrategy}
    */
@@ -26227,7 +26227,7 @@ function () {
       return this.strategy;
     }
     /**
-     * Установить стратегию для работы
+     * Set the current work strategy.
      *
      * @param {IGeoStrategy} strategy
      *
@@ -26240,6 +26240,14 @@ function () {
       this.strategy = strategy;
       return this;
     }
+    /**
+     * Create new geo-controller for the strategy.
+     *
+     * @param {IGeoStrategy} strategy
+     *
+     * @return {Geo}
+     */
+
   }, {
     key: "byStrategy",
     value: function byStrategy(strategy) {
