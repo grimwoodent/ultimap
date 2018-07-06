@@ -15,6 +15,10 @@ var _marker = require("./marker");
 
 var _polygon = require("./polygon");
 
+var _geoEvent = require("./geo-event");
+
+var _domEvent = require("./dom-event");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -37,9 +41,9 @@ function () {
 
     _defineProperty(this, "mapControl", null);
 
-    _defineProperty(this, "domEvent", null);
+    _defineProperty(this, "domEvent", new _domEvent.YandexDOMEventStrategy());
 
-    _defineProperty(this, "geoEvent", null);
+    _defineProperty(this, "geoEvent", new _geoEvent.YandexGeoEventStrategy());
 
     _defineProperty(this, "preset", {
       marker: null,

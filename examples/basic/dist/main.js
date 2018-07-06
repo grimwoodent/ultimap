@@ -71,6 +71,21 @@ function () {
       };
     }
   }, {
+    key: "toJson",
+    value: function toJson() {
+      try {
+        return JSON.stringify(this.toLatLng());
+      } catch (err) {
+        console.error(err);
+        return '';
+      }
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[".concat(this.lat, ", ").concat(this.lng, "]");
+    }
+  }, {
     key: "getBounds",
     value: function getBounds() {
       var center = this.toArray();
@@ -14006,9 +14021,74 @@ exports.Api = Api;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Icon = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Icon =
+/*#__PURE__*/
+function () {
+  function Icon(src, size, offset) {
+    _classCallCheck(this, Icon);
+
+    _defineProperty(this, "src", void 0);
+
+    _defineProperty(this, "size", void 0);
+
+    _defineProperty(this, "offset", void 0);
+
+    if (_typeof(src) === 'object') {
+      this.src = src.src;
+      this.size = src.size;
+      this.offset = src.offset;
+    } else {
+      this.src = src;
+      this.size = size;
+      this.offset = offset;
+    }
+
+    if (!this.src || !this.size) {
+      throw new Error('Empty icon');
+    }
+  }
+
+  _createClass(Icon, [{
+    key: "toObject",
+    value: function toObject() {
+      return {
+        src: this.src,
+        size: this.size,
+        offset: this.offset
+      };
+    }
+  }]);
+
+  return Icon;
+}();
+
+exports.Icon = Icon;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Events = void 0;
 
-var _group = __webpack_require__(42);
+var _group = __webpack_require__(48);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -14116,786 +14196,7 @@ function () {
 exports.Events = Events;
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Icon = void 0;
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Icon =
-/*#__PURE__*/
-function () {
-  function Icon(src, size, offset) {
-    _classCallCheck(this, Icon);
-
-    _defineProperty(this, "src", void 0);
-
-    _defineProperty(this, "size", void 0);
-
-    _defineProperty(this, "offset", void 0);
-
-    if (_typeof(src) === 'object') {
-      this.src = src.src;
-      this.size = src.size;
-      this.offset = src.offset;
-    } else {
-      this.src = src;
-      this.size = size;
-      this.offset = offset;
-    }
-
-    if (!this.src || !this.size) {
-      throw new Error('Empty icon');
-    }
-  }
-
-  _createClass(Icon, [{
-    key: "toObject",
-    value: function toObject() {
-      return {
-        src: this.src,
-        size: this.size,
-        offset: this.offset
-      };
-    }
-  }]);
-
-  return Icon;
-}();
-
-exports.Icon = Icon;
-
-/***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "Define", {
-  enumerable: true,
-  get: function get() {
-    return _define.Define;
-  }
-});
-Object.defineProperty(exports, "Callbacks", {
-  enumerable: true,
-  get: function get() {
-    return _callbacks.Callbacks;
-  }
-});
-Object.defineProperty(exports, "Cookie", {
-  enumerable: true,
-  get: function get() {
-    return _cookie.Cookie;
-  }
-});
-Object.defineProperty(exports, "UID", {
-  enumerable: true,
-  get: function get() {
-    return _uid.default;
-  }
-});
-exports.Collection = void 0;
-
-var _define = __webpack_require__(61);
-
-var _callbacks = __webpack_require__(56);
-
-var _cookie = __webpack_require__(60);
-
-var _uid = _interopRequireDefault(__webpack_require__(52));
-
-var Collection = _interopRequireWildcard(__webpack_require__(58));
-
-exports.Collection = Collection;
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.LeafletGeoStrategy = void 0;
-
-var _map = __webpack_require__(30);
-
-var _marker = __webpack_require__(31);
-
-var _marker2 = __webpack_require__(33);
-
-var _polygon = __webpack_require__(32);
-
-var _polygon2 = __webpack_require__(34);
-
-var _mapControl = __webpack_require__(29);
-
-var _domEvent = __webpack_require__(26);
-
-var _geoEvent = __webpack_require__(27);
-
-var _geocoder = __webpack_require__(28);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var LeafletGeoStrategy =
-/*#__PURE__*/
-function () {
-  function LeafletGeoStrategy() {
-    _classCallCheck(this, LeafletGeoStrategy);
-
-    _defineProperty(this, "map", new _map.LeafletMapStrategy());
-
-    _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
-
-    _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
-
-    _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
-
-    _defineProperty(this, "domEvent", new _domEvent.LeafletDOMEventStrategy());
-
-    _defineProperty(this, "geoEvent", new _geoEvent.LeafletGeoEventStrategy());
-
-    _defineProperty(this, "preset", {
-      marker: new _marker2.LeafletMarkerPresetStrategy(),
-      polygon: new _polygon2.LeafletPolygonPresetStrategy()
-    });
-
-    _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
-  }
-
-  _createClass(LeafletGeoStrategy, [{
-    key: "isAllowed",
-    value: function isAllowed() {
-      return true;
-    }
-  }]);
-
-  return LeafletGeoStrategy;
-}();
-
-exports.LeafletGeoStrategy = LeafletGeoStrategy;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.markerPresetStorage = void 0;
-
-var _icon = __webpack_require__(5);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var MarkerPresetStorage =
-/*#__PURE__*/
-function () {
-  function MarkerPresetStorage() {
-    _classCallCheck(this, MarkerPresetStorage);
-
-    _defineProperty(this, "presets", {});
-  }
-
-  _createClass(MarkerPresetStorage, [{
-    key: "add",
-
-    /**
-     * Добавить новый пресет
-     *
-     * @param {string} preset
-     * @param {{icon: IIcon}} props
-     *
-     * @return {MarkerPresetStorage}
-     */
-    value: function add(preset, props) {
-      this.presets[preset] = {
-        icon: props.icon ? new _icon.Icon(props.icon) : null
-      };
-      return this;
-    }
-    /**
-     * Получить пресет по названию
-     *
-     * @param {string} preset
-     *
-     * @return {IMarkerPreset}
-     */
-
-  }, {
-    key: "get",
-    value: function get(preset) {
-      if (!preset) {
-        return null;
-      }
-
-      if (!this.presets[preset]) {
-        throw new Error('Preset not found');
-      }
-
-      return this.presets[preset];
-    }
-  }]);
-
-  return MarkerPresetStorage;
-}();
-
-var markerPresetStorage = new MarkerPresetStorage();
-exports.markerPresetStorage = markerPresetStorage;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.polygonPresetStorge = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var PolygonPresetStorge =
-/*#__PURE__*/
-function () {
-  function PolygonPresetStorge() {
-    _classCallCheck(this, PolygonPresetStorge);
-
-    _defineProperty(this, "presets", {});
-  }
-
-  _createClass(PolygonPresetStorge, [{
-    key: "add",
-
-    /**
-     * Добавить новый пресет
-     *
-     * @param {string} preset
-     * @param {{style: ICreatePolygonStyle}} props
-     *
-     * @return {PolygonPresetStorge}
-     */
-    value: function add(preset, props) {
-      this.presets[preset] = {
-        // @TODO Потенциальная ошибка, в случае не соответствия полей при обновлении и создании
-        style: props.style || null
-      };
-      return this;
-    }
-    /**
-     * Получить пресет по названию
-     *
-     * @param {string} preset
-     *
-     * @return {IPolygonPresetProperties}
-     */
-
-  }, {
-    key: "get",
-    value: function get(preset) {
-      if (!preset) {
-        return null;
-      }
-
-      if (!this.presets[preset]) {
-        throw new Error('Preset not found');
-      }
-
-      return this.presets[preset];
-    }
-  }]);
-
-  return PolygonPresetStorge;
-}();
-
-var polygonPresetStorge = new PolygonPresetStorge();
-exports.polygonPresetStorge = polygonPresetStorge;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Evented = void 0;
-
-var _events = __webpack_require__(4);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Evented =
-/*#__PURE__*/
-function () {
-  function Evented(strategy) {
-    var _this = this;
-
-    _classCallCheck(this, Evented);
-
-    _defineProperty(this, "instance", void 0);
-
-    _defineProperty(this, "strategy", void 0);
-
-    _defineProperty(this, "props", void 0);
-
-    _defineProperty(this, "events", void 0);
-
-    if (!strategy) {
-      throw new Error('Geo strategy not found');
-    }
-
-    this.props = {}; // Передаем провайдер событий в стратегию
-
-    this.events = new _events.Events({
-      on: function on(type, fn) {
-        if (_this.hasInstance()) {
-          _this.getStrategy().on(_this.getInstance(), type, fn);
-        }
-      },
-      off: function off(type, fn) {
-        if (_this.hasInstance()) {
-          _this.getStrategy().off(_this.getInstance(), type, fn);
-        }
-      }
-    });
-    this.strategy = strategy;
-  }
-  /**
-   * Обновить параметры объекта
-   *
-   * @param {TPropertiesForUpdate} options
-   *
-   * @return {Promise<IGeoObject>}
-   */
-
-
-  _createClass(Evented, [{
-    key: "hasInstance",
-
-    /**
-     * Есть ли созданный экземпляр объекта для стратегии
-     *
-     * @return {boolean}
-     */
-    value: function hasInstance() {
-      return !!this.instance;
-    }
-    /**
-     * Получить элемент для работы со стратегиями
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "on",
-
-    /**
-     * Включить событие
-     *
-     * @param {string | IEventHandlerFnMap} type
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvented<TPropertiesForUpdate>}
-     */
-    value: function on(type, fn) {
-      var _this2 = this;
-
-      var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
-
-      Object.keys(events).forEach(function (key) {
-        _this2.events.add(key, events[key]);
-      });
-      return this;
-    }
-    /**
-     * Отключить событие
-     *
-     * @param {string} type
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvented<TPropertiesForUpdate>}
-     */
-
-  }, {
-    key: "off",
-    value: function off(type, fn) {
-      if (this.events.isEmpty(type)) {
-        return this;
-      } // Работа со стратегией перенесена в группы через strategyProvider
-
-
-      this.events.remove(type, fn);
-      return this;
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-
-  }]);
-
-  return Evented;
-}();
-
-exports.Evented = Evented;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GeoObject = void 0;
-
-var _evented = __webpack_require__(10);
-
-var _index = __webpack_require__(14);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var GeoObject =
-/*#__PURE__*/
-function (_Evented) {
-  _inherits(GeoObject, _Evented);
-
-  function GeoObject(strategy) {
-    var _this;
-
-    _classCallCheck(this, GeoObject);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(GeoObject).call(this, strategy));
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "map", void 0);
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "coords", void 0);
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "data", {});
-
-    _this.data.uid = _index.uid.next();
-    _this.data.name = '';
-    return _this;
-  }
-  /**
-   * Создаем новый экземпляр с параметрами
-   *
-   * @param {TCoordsForUpdate} coords
-   * @param {TPropertiesForUpdate} options
-   *
-   * @return {any}
-   */
-
-
-  _createClass(GeoObject, [{
-    key: "create",
-    value: function create(coords, options) {
-      this.setCoords(coords);
-      this.updateProperties(options);
-      return this;
-    }
-    /**
-     * Получить уникальный ключ объекта
-     *
-     * @return {string}
-     */
-
-  }, {
-    key: "getUid",
-    value: function getUid() {
-      return this.getData().uid;
-    }
-    /**
-     * Получить элемент для работы со стратегиями
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "getInstance",
-    value: function getInstance() {
-      var createNewInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (this.hasInstance()) {
-        return this.instance;
-      }
-
-      if (!createNewInstance) {
-        throw new Error('Instance not found');
-      } // set events for new instance in addTo method
-
-
-      this.instance = this.getStrategy().create(this.coords, this.props);
-      return this.instance;
-    }
-    /**
-     * Установить координаты геообъекта
-     *
-     * @return {Promise<IGeoObject>}
-     */
-
-  }, {
-    key: "setCoords",
-    value: function setCoords(value) {
-      var _this2 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this2);
-          return;
-        }
-
-        _this2.coords = new _this2.constructor.Coords(value);
-
-        if (_this2.hasInstance()) {
-          _this2.getStrategy().setCoords(_this2.getInstance(), _this2.coords);
-
-          resolve(_this2);
-        } else {
-          resolve(_this2);
-        }
-      });
-    }
-    /**
-     * Получить координаты объекта
-     *
-     * @param {boolean} byInstance
-     *
-     * @return {Coords}
-     */
-
-  }, {
-    key: "getCoords",
-    value: function getCoords() {
-      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      if (byInstance) {
-        return this.getStrategy().getCoords(this.getInstance());
-      }
-
-      return this.coords || null;
-    }
-    /**
-     * Получит местоположение
-     *
-     * @param {boolean} byInstance
-     *
-     * @return {Bounds}
-     */
-
-  }, {
-    key: "addTo",
-
-    /**
-     * Установить объект на карту
-     *
-     * @param {Map} map
-     *
-     * @return {IGeoObject}
-     */
-    value: function addTo(map) {
-      if (this.onMap()) {
-        this.remove();
-      }
-
-      this.getStrategy().addToMap(this.getInstance(true), map);
-      this.map = map; // Обновим параметры которые нельзя выставить напрямую через создание или которые работают только на карте
-
-      this.events.resetAll();
-      this.setEditable(this.props.editable || false);
-      return this;
-    }
-    /**
-     * Удалить геообъект с карты
-     *
-     * @return {IGeoObject}
-     */
-
-  }, {
-    key: "remove",
-    value: function remove() {
-      if (this.onMap()) {
-        this.events.removeAll();
-        this.getStrategy().removeFromMap(this.getInstance(), this.getMap());
-        this.map = null;
-      }
-
-      return this;
-    }
-    /**
-     * Получить текущую карту
-     *
-     * @return {Map}
-     */
-
-  }, {
-    key: "getMap",
-    value: function getMap() {
-      return this.map || null;
-    }
-    /**
-     * Находится ли объект на карте
-     *
-     * @return {boolean}
-     */
-
-  }, {
-    key: "onMap",
-    value: function onMap() {
-      return !!this.getMap() && this.hasInstance();
-    }
-    /**
-     * Копировать текущий объект
-     * @return {IGeoObject<TCoordsForUpdate, TPropertiesForUpdate extends IUpdateGeoObjectOptions>}
-     */
-
-  }, {
-    key: "setEditable",
-
-    /**
-     * Установить состояние редактирования
-     *
-     * @param {boolean} value
-     *
-     * @return {Promise<IGeoObject>}
-     */
-    value: function setEditable(value) {
-      var _this3 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this3);
-          return;
-        }
-
-        _this3.props.editable = value;
-
-        if (_this3.hasInstance()) {
-          _this3.getStrategy().setEditable(_this3.getInstance(), _this3.props.editable);
-
-          resolve(_this3);
-        } else {
-          resolve(_this3);
-        }
-      });
-    }
-  }, {
-    key: "setData",
-    value: function setData(value) {
-      var _this4 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this4);
-          return;
-        }
-
-        _this4.data = Object.assign(_this4.data || {}, value);
-        resolve(_this4);
-      });
-    }
-  }, {
-    key: "getData",
-    value: function getData() {
-      return this.data || {};
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {IEditableGeoObjectStrategy}
-     */
-
-  }]);
-
-  return GeoObject;
-}(_evented.Evented);
-
-exports.GeoObject = GeoObject;
-
-_defineProperty(GeoObject, "Coords", null);
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14910,7 +14211,7 @@ var _coords = __webpack_require__(0);
 
 var _bounds = __webpack_require__(1);
 
-var _evented = __webpack_require__(10);
+var _evented = __webpack_require__(13);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -15260,7 +14561,7 @@ function (_Evented) {
 exports.Map = Map;
 
 /***/ }),
-/* 13 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15273,7 +14574,7 @@ exports.PolygonCoords = void 0;
 
 var _bounds = __webpack_require__(1);
 
-var _polygonCoords = __webpack_require__(15);
+var _polygonCoords = __webpack_require__(20);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15366,7 +14667,1368 @@ function () {
 exports.PolygonCoords = PolygonCoords;
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Define", {
+  enumerable: true,
+  get: function get() {
+    return _define.Define;
+  }
+});
+Object.defineProperty(exports, "Callbacks", {
+  enumerable: true,
+  get: function get() {
+    return _callbacks.Callbacks;
+  }
+});
+Object.defineProperty(exports, "Cookie", {
+  enumerable: true,
+  get: function get() {
+    return _cookie.Cookie;
+  }
+});
+Object.defineProperty(exports, "UID", {
+  enumerable: true,
+  get: function get() {
+    return _uid.default;
+  }
+});
+exports.Collection = void 0;
+
+var _define = __webpack_require__(63);
+
+var _callbacks = __webpack_require__(58);
+
+var _cookie = __webpack_require__(62);
+
+var _uid = _interopRequireDefault(__webpack_require__(54));
+
+var Collection = _interopRequireWildcard(__webpack_require__(60));
+
+exports.Collection = Collection;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DOMEvent = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var DOMEvent =
+/*#__PURE__*/
+function () {
+  function DOMEvent(strategy) {
+    _classCallCheck(this, DOMEvent);
+
+    _defineProperty(this, "instance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+  /**
+   * Создать экземпляр объекта события
+   *
+   * @param instance
+   *
+   * @return {IDOMEvent}
+   */
+
+
+  _createClass(DOMEvent, [{
+    key: "create",
+    value: function create(instance) {
+      this.instance = instance;
+      return this;
+    }
+    /**
+     * Получить координаты объекта
+     *
+     * @param domEvent
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords() {
+      return this.getStrategy().getCoords(this.getInstance());
+    }
+    /**
+     * Остановить распространение события
+     *
+     * @return {IDOMEvent}
+     */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      this.getStrategy().stop(this.getInstance());
+      return this;
+    }
+    /**
+     * Получить элемент события
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "getInstance",
+    value: function getInstance() {
+      return this.instance;
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.domEvent;
+    }
+  }]);
+
+  return DOMEvent;
+}();
+
+exports.DOMEvent = DOMEvent;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LeafletGeoStrategy = void 0;
+
+var _map = __webpack_require__(34);
+
+var _marker = __webpack_require__(35);
+
+var _marker2 = __webpack_require__(37);
+
+var _polygon = __webpack_require__(36);
+
+var _polygon2 = __webpack_require__(38);
+
+var _mapControl = __webpack_require__(33);
+
+var _domEvent = __webpack_require__(30);
+
+var _geoEvent = __webpack_require__(31);
+
+var _geocoder = __webpack_require__(32);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var LeafletGeoStrategy =
+/*#__PURE__*/
+function () {
+  function LeafletGeoStrategy() {
+    _classCallCheck(this, LeafletGeoStrategy);
+
+    _defineProperty(this, "map", new _map.LeafletMapStrategy());
+
+    _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
+
+    _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
+
+    _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
+
+    _defineProperty(this, "domEvent", new _domEvent.LeafletDOMEventStrategy());
+
+    _defineProperty(this, "geoEvent", new _geoEvent.LeafletGeoEventStrategy());
+
+    _defineProperty(this, "preset", {
+      marker: new _marker2.LeafletMarkerPresetStrategy(),
+      polygon: new _polygon2.LeafletPolygonPresetStrategy()
+    });
+
+    _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
+  }
+
+  _createClass(LeafletGeoStrategy, [{
+    key: "isAllowed",
+    value: function isAllowed() {
+      return true;
+    }
+  }]);
+
+  return LeafletGeoStrategy;
+}();
+
+exports.LeafletGeoStrategy = LeafletGeoStrategy;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.markerPresetStorage = void 0;
+
+var _icon = __webpack_require__(4);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MarkerPresetStorage =
+/*#__PURE__*/
+function () {
+  function MarkerPresetStorage() {
+    _classCallCheck(this, MarkerPresetStorage);
+
+    _defineProperty(this, "presets", {});
+  }
+
+  _createClass(MarkerPresetStorage, [{
+    key: "add",
+
+    /**
+     * Добавить новый пресет
+     *
+     * @param {string} preset
+     * @param {{icon: IIcon}} props
+     *
+     * @return {MarkerPresetStorage}
+     */
+    value: function add(preset, props) {
+      this.presets[preset] = {
+        icon: props.icon ? new _icon.Icon(props.icon) : null
+      };
+      return this;
+    }
+    /**
+     * Получить пресет по названию
+     *
+     * @param {string} preset
+     *
+     * @return {IMarkerPreset}
+     */
+
+  }, {
+    key: "get",
+    value: function get(preset) {
+      if (!preset) {
+        return null;
+      }
+
+      if (!this.presets[preset]) {
+        throw new Error('Preset not found');
+      }
+
+      return this.presets[preset];
+    }
+  }]);
+
+  return MarkerPresetStorage;
+}();
+
+var markerPresetStorage = new MarkerPresetStorage();
+exports.markerPresetStorage = markerPresetStorage;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.polygonPresetStorge = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PolygonPresetStorge =
+/*#__PURE__*/
+function () {
+  function PolygonPresetStorge() {
+    _classCallCheck(this, PolygonPresetStorge);
+
+    _defineProperty(this, "presets", {});
+  }
+
+  _createClass(PolygonPresetStorge, [{
+    key: "add",
+
+    /**
+     * Добавить новый пресет
+     *
+     * @param {string} preset
+     * @param {{style: ICreatePolygonStyle}} props
+     *
+     * @return {PolygonPresetStorge}
+     */
+    value: function add(preset, props) {
+      this.presets[preset] = {
+        // @TODO Потенциальная ошибка, в случае не соответствия полей при обновлении и создании
+        style: props.style || null
+      };
+      return this;
+    }
+    /**
+     * Получить пресет по названию
+     *
+     * @param {string} preset
+     *
+     * @return {IPolygonPresetProperties}
+     */
+
+  }, {
+    key: "get",
+    value: function get(preset) {
+      if (!preset) {
+        return null;
+      }
+
+      if (!this.presets[preset]) {
+        throw new Error('Preset not found');
+      }
+
+      return this.presets[preset];
+    }
+  }]);
+
+  return PolygonPresetStorge;
+}();
+
+var polygonPresetStorge = new PolygonPresetStorge();
+exports.polygonPresetStorge = polygonPresetStorge;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Evented = void 0;
+
+var _events = __webpack_require__(5);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Evented =
+/*#__PURE__*/
+function () {
+  function Evented(strategy) {
+    var _this = this;
+
+    _classCallCheck(this, Evented);
+
+    _defineProperty(this, "instance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    _defineProperty(this, "props", void 0);
+
+    _defineProperty(this, "events", void 0);
+
+    if (!strategy) {
+      throw new Error('Geo strategy not found');
+    }
+
+    this.props = {}; // Передаем провайдер событий в стратегию
+
+    this.events = new _events.Events({
+      on: function on(type, fn) {
+        if (_this.hasInstance()) {
+          _this.getStrategy().on(_this.getInstance(), type, fn);
+        }
+      },
+      off: function off(type, fn) {
+        if (_this.hasInstance()) {
+          _this.getStrategy().off(_this.getInstance(), type, fn);
+        }
+      }
+    });
+    this.strategy = strategy;
+  }
+  /**
+   * Обновить параметры объекта
+   *
+   * @param {TPropertiesForUpdate} options
+   *
+   * @return {Promise<IGeoObject>}
+   */
+
+
+  _createClass(Evented, [{
+    key: "hasInstance",
+
+    /**
+     * Есть ли созданный экземпляр объекта для стратегии
+     *
+     * @return {boolean}
+     */
+    value: function hasInstance() {
+      return !!this.instance;
+    }
+    /**
+     * Получить элемент для работы со стратегиями
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "on",
+
+    /**
+     * Включить событие
+     *
+     * @param {string | IEventHandlerFnMap} type
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvented<TPropertiesForUpdate>}
+     */
+    value: function on(type, fn) {
+      var _this2 = this;
+
+      var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
+
+      Object.keys(events).forEach(function (key) {
+        _this2.events.add(key, events[key]);
+      });
+      return this;
+    }
+    /**
+     * Отключить событие
+     *
+     * @param {string} type
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvented<TPropertiesForUpdate>}
+     */
+
+  }, {
+    key: "off",
+    value: function off(type, fn) {
+      if (this.events.isEmpty(type)) {
+        return this;
+      } // Работа со стратегией перенесена в группы через strategyProvider
+
+
+      this.events.remove(type, fn);
+      return this;
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+
+  }]);
+
+  return Evented;
+}();
+
+exports.Evented = Evented;
+
+/***/ }),
 /* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GeoEvent = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GeoEvent =
+/*#__PURE__*/
+function () {
+  function GeoEvent(strategy) {
+    _classCallCheck(this, GeoEvent);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+
+  _createClass(GeoEvent, [{
+    key: "getStrategy",
+
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+    value: function getStrategy() {
+      return this.strategy.geoEvent;
+    }
+  }, {
+    key: "name",
+    get: function get() {
+      return this.getStrategy().getNames();
+    }
+  }]);
+
+  return GeoEvent;
+}();
+
+exports.GeoEvent = GeoEvent;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Geocoder = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Geocoder =
+/*#__PURE__*/
+function () {
+  function Geocoder(strategy) {
+    _classCallCheck(this, Geocoder);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+  /**
+   * Какие объекты находятся рядом с точкой
+   * @param {tCoords} coords
+   * @return {Promise<IGeocodeResult>}
+   */
+
+
+  _createClass(Geocoder, [{
+    key: "whatAt",
+    value: function whatAt(coords) {
+      return this.getStrategy().whatAt(coords);
+    }
+    /**
+     * Где находится этот адресс
+     * @param {string} address
+     * @param {tCoords} coords
+     * @return {Promise<IGeocodeResult>}
+     */
+
+  }, {
+    key: "whereIs",
+    value: function whereIs(address, coords) {
+      return this.getStrategy().whereIs(address, coords);
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {IGeocoderStrategy}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.geocoder;
+    }
+  }]);
+
+  return Geocoder;
+}();
+
+exports.Geocoder = Geocoder;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GeoObject = void 0;
+
+var _evented = __webpack_require__(13);
+
+var _index = __webpack_require__(19);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GeoObject =
+/*#__PURE__*/
+function (_Evented) {
+  _inherits(GeoObject, _Evented);
+
+  function GeoObject(strategy) {
+    var _this;
+
+    _classCallCheck(this, GeoObject);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(GeoObject).call(this, strategy));
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "map", void 0);
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "coords", void 0);
+
+    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "data", {});
+
+    _this.data.uid = _index.uid.next();
+    _this.data.name = '';
+    return _this;
+  }
+  /**
+   * Создаем новый экземпляр с параметрами
+   *
+   * @param {TCoordsForUpdate} coords
+   * @param {TPropertiesForUpdate} options
+   *
+   * @return {any}
+   */
+
+
+  _createClass(GeoObject, [{
+    key: "create",
+    value: function create(coords, options) {
+      this.setCoords(coords);
+      this.updateProperties(options);
+      return this;
+    }
+    /**
+     * Получить уникальный ключ объекта
+     *
+     * @return {string}
+     */
+
+  }, {
+    key: "getUid",
+    value: function getUid() {
+      return this.getData().uid;
+    }
+    /**
+     * Получить элемент для работы со стратегиями
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "getInstance",
+    value: function getInstance() {
+      var createNewInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (this.hasInstance()) {
+        return this.instance;
+      }
+
+      if (!createNewInstance) {
+        throw new Error('Instance not found');
+      } // set events for new instance in addTo method
+
+
+      this.instance = this.getStrategy().create(this.coords, this.props);
+      return this.instance;
+    }
+    /**
+     * Установить координаты геообъекта
+     *
+     * @return {Promise<IGeoObject>}
+     */
+
+  }, {
+    key: "setCoords",
+    value: function setCoords(value) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this2);
+          return;
+        }
+
+        _this2.coords = new _this2.constructor.Coords(value);
+
+        if (_this2.hasInstance()) {
+          _this2.getStrategy().setCoords(_this2.getInstance(), _this2.coords);
+
+          resolve(_this2);
+        } else {
+          resolve(_this2);
+        }
+      });
+    }
+    /**
+     * Получить координаты объекта
+     *
+     * @param {boolean} byInstance
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getCoords(this.getInstance());
+      }
+
+      return this.coords || null;
+    }
+    /**
+     * Получит местоположение
+     *
+     * @param {boolean} byInstance
+     *
+     * @return {Bounds}
+     */
+
+  }, {
+    key: "addTo",
+
+    /**
+     * Установить объект на карту
+     *
+     * @param {Map} map
+     *
+     * @return {IGeoObject}
+     */
+    value: function addTo(map) {
+      if (this.onMap()) {
+        this.remove();
+      }
+
+      this.getStrategy().addToMap(this.getInstance(true), map);
+      this.map = map; // Обновим параметры которые нельзя выставить напрямую через создание или которые работают только на карте
+
+      this.events.resetAll();
+      this.setEditable(this.props.editable || false);
+      return this;
+    }
+    /**
+     * Удалить геообъект с карты
+     *
+     * @return {IGeoObject}
+     */
+
+  }, {
+    key: "remove",
+    value: function remove() {
+      if (this.onMap()) {
+        this.events.removeAll();
+        this.getStrategy().removeFromMap(this.getInstance(), this.getMap());
+        this.map = null;
+      }
+
+      return this;
+    }
+    /**
+     * Получить текущую карту
+     *
+     * @return {Map}
+     */
+
+  }, {
+    key: "getMap",
+    value: function getMap() {
+      return this.map || null;
+    }
+    /**
+     * Находится ли объект на карте
+     *
+     * @return {boolean}
+     */
+
+  }, {
+    key: "onMap",
+    value: function onMap() {
+      return !!this.getMap() && this.hasInstance();
+    }
+    /**
+     * Копировать текущий объект
+     * @return {IGeoObject<TCoordsForUpdate, TPropertiesForUpdate extends IUpdateGeoObjectOptions>}
+     */
+
+  }, {
+    key: "setEditable",
+
+    /**
+     * Установить состояние редактирования
+     *
+     * @param {boolean} value
+     *
+     * @return {Promise<IGeoObject>}
+     */
+    value: function setEditable(value) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this3);
+          return;
+        }
+
+        _this3.props.editable = value;
+
+        if (_this3.hasInstance()) {
+          _this3.getStrategy().setEditable(_this3.getInstance(), _this3.props.editable);
+
+          resolve(_this3);
+        } else {
+          resolve(_this3);
+        }
+      });
+    }
+  }, {
+    key: "setData",
+    value: function setData(value) {
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this4);
+          return;
+        }
+
+        _this4.data = Object.assign(_this4.data || {}, value);
+        resolve(_this4);
+      });
+    }
+  }, {
+    key: "getData",
+    value: function getData() {
+      return this.data || {};
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {IEditableGeoObjectStrategy}
+     */
+
+  }]);
+
+  return GeoObject;
+}(_evented.Evented);
+
+exports.GeoObject = GeoObject;
+
+_defineProperty(GeoObject, "Coords", null);
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Marker = void 0;
+
+var _coords = __webpack_require__(0);
+
+var _icon = __webpack_require__(4);
+
+var _geoobject = __webpack_require__(16);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Marker =
+/*#__PURE__*/
+function (_GeoObject) {
+  _inherits(Marker, _GeoObject);
+
+  function Marker() {
+    _classCallCheck(this, Marker);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Marker).apply(this, arguments));
+  }
+
+  _createClass(Marker, [{
+    key: "updateProperties",
+
+    /**
+     * Обновить параметры метки
+     *
+     * @param {IUpdateMarkerProperties} options
+     *
+     * @return {Promise<IMarker>}
+     */
+    value: function updateProperties(options) {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        Promise.all([_this.setData((options || {}).data), _this.setIcon((options || {}).icon), _this.setPreset((options || {}).preset), _this.setEditable((options || {}).editable)]).then(function () {
+          resolve(_this);
+        }, function (message) {
+          reject(message);
+        });
+      });
+    }
+    /**
+     * Копировать объект
+     *
+     * @return {IMarker}
+     */
+
+  }, {
+    key: "clone",
+    value: function clone() {
+      var clone = new this.constructor(this.strategy);
+      return clone.create(this.coords.toArray(), {
+        data: this.data,
+        icon: this.props.icon ? this.props.icon.toObject() : undefined,
+        preset: this.props.preset,
+        editable: this.props.editable
+      });
+    }
+    /**
+     * Установить иконку
+     *
+     * @param {IIcon} value
+     *
+     * @return {IMarker}
+     */
+
+  }, {
+    key: "setIcon",
+    value: function setIcon(value) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this2);
+          return;
+        }
+
+        _this2.props.icon = new _icon.Icon(value);
+
+        if (_this2.hasInstance()) {
+          _this2.getStrategy().setIcon(_this2.getInstance(), _this2.props.icon);
+
+          resolve(_this2);
+        } else {
+          resolve(_this2);
+        }
+
+        resolve(_this2);
+      });
+    }
+    /**
+     * Установить стили из хранилища
+     *
+     * @param {string} value
+     *
+     * @return {Promise<IMarker>}
+     */
+
+  }, {
+    key: "setPreset",
+    value: function setPreset(value) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this3);
+          return;
+        }
+
+        _this3.props.preset = value;
+
+        if (_this3.hasInstance()) {
+          _this3.getStrategy().setPreset(_this3.getInstance(), _this3.props.preset);
+
+          resolve(_this3);
+        } else {
+          resolve(_this3);
+        }
+
+        resolve(_this3);
+      });
+    }
+    /**
+     * Получить координаты объекта
+     *
+     * @param {boolean} byInstance
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getCoords(this.getInstance());
+      }
+
+      return this.coords || null;
+    }
+    /**
+     * Получит местоположение
+     *
+     * @param {boolean} byInstance
+     *
+     * @return {Bounds}
+     */
+
+  }, {
+    key: "getBounds",
+    value: function getBounds() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getBounds(this.getInstance());
+      }
+
+      return this.getCoords(false).getBounds();
+    }
+    /**
+     * Стратегия работы с маркером
+     * @return {IMarkerStrategy}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.marker;
+    }
+  }]);
+
+  return Marker;
+}(_geoobject.GeoObject);
+
+exports.Marker = Marker;
+
+_defineProperty(Marker, "Coords", _coords.Coords);
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Polygon = void 0;
+
+var _geoobject = __webpack_require__(16);
+
+var _polygonCoords = __webpack_require__(7);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Polygon =
+/*#__PURE__*/
+function (_GeoObject) {
+  _inherits(Polygon, _GeoObject);
+
+  function Polygon() {
+    _classCallCheck(this, Polygon);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Polygon).apply(this, arguments));
+  }
+
+  _createClass(Polygon, [{
+    key: "updateProperties",
+    value: function updateProperties(options) {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        Promise.all([_this.setData((options || {}).data), _this.setStyle(options), _this.setPreset((options || {}).preset), _this.setEditable((options || {}).editable)]).then(function () {
+          resolve(_this);
+        }, function (message) {
+          reject(message);
+        });
+      });
+    }
+    /**
+     * Копировать объект
+     *
+     * @return {IPolygon}
+     */
+
+  }, {
+    key: "clone",
+    value: function clone() {
+      var clone = new this.constructor(this.strategy);
+      return clone.create(this.coords.toArray(), {
+        data: this.data,
+        preset: this.props.preset,
+        editable: this.props.editable,
+        // @TODO Подумать над более красивым решением
+        fillColor: this.props.fillColor,
+        fillOpacity: this.props.fillOpacity,
+        strokeColor: this.props.strokeColor,
+        strokeOpacit: this.props.strokeOpacity,
+        strokeWidth: this.props.strokeWidth
+      });
+    }
+    /**
+     * Установить стили для полигона
+     *
+     * @param {IUpdatePolygonStyle} value
+     *
+     * @return {Promise<IPolygon>}
+     */
+
+  }, {
+    key: "setStyle",
+    value: function setStyle(value) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this2);
+          return;
+        } // @TODO Подумать над более красивым решением
+
+
+        _this2.props.fillColor = value.fillColor || _this2.props.fillColor;
+        _this2.props.fillOpacity = value.fillOpacity || _this2.props.fillOpacity;
+        _this2.props.strokeColor = value.strokeColor || _this2.props.strokeColor;
+        _this2.props.strokeOpacity = value.strokeOpacity || _this2.props.strokeOpacity;
+        _this2.props.strokeWidth = value.strokeWidth || _this2.props.strokeWidth;
+
+        if (_this2.hasInstance()) {
+          _this2.getStrategy().setStyle(_this2.getInstance(), _this2.props);
+
+          resolve(_this2);
+        } else {
+          resolve(_this2);
+        }
+      });
+    }
+    /**
+     * Установить пресет
+     * @param {string} value
+     * @return {Promise<IPolygon>}
+     */
+
+  }, {
+    key: "setPreset",
+    value: function setPreset(value) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this3);
+          return;
+        }
+
+        _this3.props.preset = value;
+
+        if (_this3.hasInstance()) {
+          _this3.getStrategy().setPreset(_this3.getInstance(), _this3.props.preset);
+
+          resolve(_this3);
+        } else {
+          resolve(_this3);
+        }
+
+        resolve(_this3);
+      });
+    }
+    /**
+     * Получить местоположение объекта
+     * @param {boolean} byInstance
+     * @return {Bounds}
+     */
+
+  }, {
+    key: "getBounds",
+    value: function getBounds() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getBounds(this.getInstance());
+      }
+
+      return this.getCoords(false).getBounds();
+    }
+    /**
+     * Начать рисовать полигон
+     *
+     * @param {boolean} value
+     *
+     * @return {Promise<IPolygon>}
+     */
+
+  }, {
+    key: "setDrawing",
+    value: function setDrawing(value) {
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (!_this4.hasInstance()) {
+          resolve(_this4);
+          return;
+        }
+
+        if (value) {
+          _this4.setEditable(true).then(function () {
+            _this4.getStrategy().setDrawing(_this4.getInstance(), value);
+
+            resolve(_this4);
+          }, reject);
+
+          return;
+        }
+
+        _this4.setEditable(false).then(resolve, reject);
+      });
+    }
+    /**
+     * Стратегия работы с полигоном
+     * @return {IPolygonStrategy}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.polygon;
+    }
+  }]);
+
+  return Polygon;
+}(_geoobject.GeoObject);
+
+exports.Polygon = Polygon;
+
+_defineProperty(Polygon, "Coords", _polygonCoords.PolygonCoords);
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15400,7 +16062,7 @@ var uid = function () {
 exports.uid = uid;
 
 /***/ }),
-/* 15 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15702,7 +16364,7 @@ function () {
 exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 /***/ }),
-/* 16 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15724,7 +16386,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 17 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15745,23 +16407,141 @@ Object.defineProperty(exports, "Coords", {
     return _coords.Coords;
   }
 });
+Object.defineProperty(exports, "ILatLng", {
+  enumerable: true,
+  get: function get() {
+    return _coords.ILatLng;
+  }
+});
+Object.defineProperty(exports, "IPoint", {
+  enumerable: true,
+  get: function get() {
+    return _coords.IPoint;
+  }
+});
+Object.defineProperty(exports, "PolygonCoords", {
+  enumerable: true,
+  get: function get() {
+    return _polygonCoords.PolygonCoords;
+  }
+});
 Object.defineProperty(exports, "Bounds", {
   enumerable: true,
   get: function get() {
     return _bounds.Bounds;
   }
 });
+Object.defineProperty(exports, "IMarker", {
+  enumerable: true,
+  get: function get() {
+    return _marker.IMarker;
+  }
+});
+Object.defineProperty(exports, "Marker", {
+  enumerable: true,
+  get: function get() {
+    return _marker.Marker;
+  }
+});
+Object.defineProperty(exports, "IPolygon", {
+  enumerable: true,
+  get: function get() {
+    return _polygon.IPolygon;
+  }
+});
+Object.defineProperty(exports, "Polygon", {
+  enumerable: true,
+  get: function get() {
+    return _polygon.Polygon;
+  }
+});
+Object.defineProperty(exports, "IMap", {
+  enumerable: true,
+  get: function get() {
+    return _index3.IMap;
+  }
+});
+Object.defineProperty(exports, "Map", {
+  enumerable: true,
+  get: function get() {
+    return _index3.Map;
+  }
+});
+Object.defineProperty(exports, "IIcon", {
+  enumerable: true,
+  get: function get() {
+    return _icon.IIcon;
+  }
+});
+Object.defineProperty(exports, "Icon", {
+  enumerable: true,
+  get: function get() {
+    return _icon.Icon;
+  }
+});
+Object.defineProperty(exports, "IGeocoder", {
+  enumerable: true,
+  get: function get() {
+    return _geocoder.IGeocoder;
+  }
+});
+Object.defineProperty(exports, "Geocoder", {
+  enumerable: true,
+  get: function get() {
+    return _geocoder.Geocoder;
+  }
+});
+Object.defineProperty(exports, "IGeoEvent", {
+  enumerable: true,
+  get: function get() {
+    return _geoEvent.IGeoEvent;
+  }
+});
+Object.defineProperty(exports, "GeoEvent", {
+  enumerable: true,
+  get: function get() {
+    return _geoEvent.GeoEvent;
+  }
+});
+Object.defineProperty(exports, "IDOMEvent", {
+  enumerable: true,
+  get: function get() {
+    return _domEvent.IDOMEvent;
+  }
+});
+Object.defineProperty(exports, "DOMEvent", {
+  enumerable: true,
+  get: function get() {
+    return _domEvent.DOMEvent;
+  }
+});
 exports.geo = exports.Strategy = void 0;
 
-var _geo = __webpack_require__(19);
+var _geo = __webpack_require__(24);
 
 var _coords = __webpack_require__(0);
 
+var _polygonCoords = __webpack_require__(7);
+
 var _bounds = __webpack_require__(1);
 
-var _index = __webpack_require__(7);
+var _index = __webpack_require__(10);
 
-var _index2 = __webpack_require__(37);
+var _index2 = __webpack_require__(43);
+
+var _marker = __webpack_require__(17);
+
+var _polygon = __webpack_require__(18);
+
+var _index3 = __webpack_require__(6);
+
+var _icon = __webpack_require__(4);
+
+var _geocoder = __webpack_require__(15);
+
+var _geoEvent = __webpack_require__(14);
+
+var _domEvent = __webpack_require__(9);
 
 var Strategy = {
   Leaflet: _index.LeafletGeoStrategy,
@@ -15772,7 +16552,7 @@ var geo = new _geo.Geo();
 exports.geo = geo;
 
 /***/ }),
-/* 18 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -26143,7 +26923,7 @@ return jQuery;
 
 
 /***/ }),
-/* 19 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26154,31 +26934,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Geo = void 0;
 
-var _map = __webpack_require__(12);
+var _map = __webpack_require__(6);
 
-var _leaflet = __webpack_require__(7);
+var _leaflet = __webpack_require__(10);
 
-var _marker = __webpack_require__(46);
+var _marker = __webpack_require__(17);
 
-var _marker2 = __webpack_require__(48);
+var _marker2 = __webpack_require__(50);
 
-var _polygon = __webpack_require__(47);
+var _polygon = __webpack_require__(18);
 
-var _polygon2 = __webpack_require__(49);
+var _polygon2 = __webpack_require__(51);
 
-var _mapControl = __webpack_require__(45);
+var _mapControl = __webpack_require__(49);
 
-var _domEvent = __webpack_require__(23);
+var _domEvent = __webpack_require__(9);
 
-var _constructor = __webpack_require__(20);
+var _constructor = __webpack_require__(25);
 
-var _marker3 = __webpack_require__(21);
+var _marker3 = __webpack_require__(26);
 
-var _polygon3 = __webpack_require__(22);
+var _polygon3 = __webpack_require__(27);
 
-var _geoEvent = __webpack_require__(43);
+var _geoEvent = __webpack_require__(14);
 
-var _geocoder = __webpack_require__(44);
+var _geocoder = __webpack_require__(15);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -26309,7 +27089,7 @@ function () {
 exports.Geo = Geo;
 
 /***/ }),
-/* 20 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26320,7 +27100,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Constructor = exports.Strategy = void 0;
 
-var _grim = __webpack_require__(6);
+var _grim = __webpack_require__(8);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -26369,7 +27149,7 @@ function (_Collection$Construct) {
 exports.Constructor = Constructor;
 
 /***/ }),
-/* 21 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26380,7 +27160,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MarkerStrategy = void 0;
 
-var _grim = __webpack_require__(6);
+var _grim = __webpack_require__(8);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -26435,7 +27215,7 @@ function (_Collection$Strategy) {
 exports.MarkerStrategy = MarkerStrategy;
 
 /***/ }),
-/* 22 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26446,7 +27226,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PolygonStrategy = void 0;
 
-var _grim = __webpack_require__(6);
+var _grim = __webpack_require__(8);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -26501,121 +27281,21 @@ function (_Collection$Strategy) {
 exports.PolygonStrategy = PolygonStrategy;
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DOMEvent = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var DOMEvent =
-/*#__PURE__*/
-function () {
-  function DOMEvent(strategy) {
-    _classCallCheck(this, DOMEvent);
-
-    _defineProperty(this, "instance", void 0);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-  /**
-   * Создать экземпляр объекта события
-   *
-   * @param instance
-   *
-   * @return {IDOMEvent}
-   */
-
-
-  _createClass(DOMEvent, [{
-    key: "create",
-    value: function create(instance) {
-      this.instance = instance;
-      return this;
-    }
-    /**
-     * Получить координаты объекта
-     *
-     * @param domEvent
-     *
-     * @return {Coords}
-     */
-
-  }, {
-    key: "getCoords",
-    value: function getCoords() {
-      return this.getStrategy().getCoords(this.getInstance());
-    }
-    /**
-     * Остановить распространение события
-     *
-     * @return {IDOMEvent}
-     */
-
-  }, {
-    key: "stop",
-    value: function stop() {
-      this.getStrategy().stop(this.getInstance());
-      return this;
-    }
-    /**
-     * Получить элемент события
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "getInstance",
-    value: function getInstance() {
-      return this.instance;
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.domEvent;
-    }
-  }]);
-
-  return DOMEvent;
-}();
-
-exports.DOMEvent = DOMEvent;
-
-/***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 /***/ }),
-/* 26 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26680,7 +27360,7 @@ function () {
 exports.LeafletDOMEventStrategy = LeafletDOMEventStrategy;
 
 /***/ }),
-/* 27 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26716,7 +27396,8 @@ function () {
         drag: 'drag',
         dragstart: 'dragstart',
         dragend: 'dragend',
-        contextmenu: 'contextmenu'
+        contextmenu: 'contextmenu',
+        move: 'move'
       };
     }
   }]);
@@ -26727,7 +27408,7 @@ function () {
 exports.LeafletGeoEventStrategy = LeafletGeoEventStrategy;
 
 /***/ }),
-/* 28 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26738,7 +27419,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimJs = __webpack_require__(64);
+var _nominatimJs = __webpack_require__(66);
 
 var _coords = __webpack_require__(0);
 
@@ -26809,7 +27490,7 @@ function () {
 exports.LeafletGeocoderStrategy = LeafletGeocoderStrategy;
 
 /***/ }),
-/* 29 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26872,7 +27553,7 @@ function () {
 exports.LeafletMapControlStrategy = LeafletMapControlStrategy;
 
 /***/ }),
-/* 30 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26885,15 +27566,15 @@ exports.LeafletMapStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-__webpack_require__(55);
+__webpack_require__(57);
 
-var _map = __webpack_require__(24);
+var _map = __webpack_require__(28);
 
 var _coords = __webpack_require__(0);
 
 var _bounds = __webpack_require__(1);
 
-var _events = __webpack_require__(4);
+var _events = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27113,7 +27794,7 @@ function () {
 exports.LeafletMapStrategy = LeafletMapStrategy;
 
 /***/ }),
-/* 31 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27126,23 +27807,23 @@ exports.LeafletMarkerStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-__webpack_require__(63);
+__webpack_require__(65);
 
-var _index = __webpack_require__(12);
+var _index = __webpack_require__(6);
 
 var _coords = __webpack_require__(0);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(4);
 
-var _marker = __webpack_require__(25);
+var _marker = __webpack_require__(29);
 
-var _iconFactory = __webpack_require__(35);
+var _iconFactory = __webpack_require__(39);
 
-var _markerPresetStorage = __webpack_require__(8);
+var _markerPresetStorage = __webpack_require__(11);
 
 var _bounds = __webpack_require__(1);
 
-var _events = __webpack_require__(4);
+var _events = __webpack_require__(5);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27313,7 +27994,7 @@ function () {
 exports.LeafletMarkerStrategy = LeafletMarkerStrategy;
 
 /***/ }),
-/* 32 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27326,13 +28007,13 @@ exports.LeafletPolygonStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-var _polygonCoords = __webpack_require__(13);
+var _polygonCoords = __webpack_require__(7);
 
 var _bounds = __webpack_require__(1);
 
-var _polygonPresetStorge = __webpack_require__(9);
+var _polygonPresetStorge = __webpack_require__(12);
 
-var _polygonCoords2 = __webpack_require__(15);
+var _polygonCoords2 = __webpack_require__(20);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27518,7 +28199,7 @@ function () {
 exports.LeafletPolygonStrategy = LeafletPolygonStrategy;
 
 /***/ }),
-/* 33 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27529,7 +28210,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMarkerPresetStrategy = void 0;
 
-var _markerPresetStorage = __webpack_require__(8);
+var _markerPresetStorage = __webpack_require__(11);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27561,7 +28242,7 @@ function () {
 exports.LeafletMarkerPresetStrategy = LeafletMarkerPresetStrategy;
 
 /***/ }),
-/* 34 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27572,7 +28253,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletPolygonPresetStrategy = void 0;
 
-var _polygonPresetStorge = __webpack_require__(9);
+var _polygonPresetStorge = __webpack_require__(12);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27609,7 +28290,7 @@ function () {
 exports.LeafletPolygonPresetStrategy = LeafletPolygonPresetStrategy;
 
 /***/ }),
-/* 35 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27659,7 +28340,119 @@ var iconFactory = new IconFactory();
 exports.iconFactory = iconFactory;
 
 /***/ }),
-/* 36 */
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.YandexDOMEventStrategy = void 0;
+
+var _coords = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var YandexDOMEventStrategy =
+/*#__PURE__*/
+function () {
+  function YandexDOMEventStrategy() {
+    _classCallCheck(this, YandexDOMEventStrategy);
+  }
+
+  _createClass(YandexDOMEventStrategy, [{
+    key: "getCoords",
+
+    /**
+     * Получить координаты от события
+     *
+     * @param domEvent
+     *
+     * @return {Coords}
+     */
+    value: function getCoords(domEvent) {
+      return new _coords.Coords(domEvent.get('coords'));
+    }
+    /**
+     * Остановить распространение события
+     *
+     * @param domEvent
+     *
+     * @return {IDOMEventStrategy}
+     */
+
+  }, {
+    key: "stop",
+    value: function stop(domEvent) {
+      domEvent.stopPropagation();
+      return this;
+    }
+  }]);
+
+  return YandexDOMEventStrategy;
+}();
+
+exports.YandexDOMEventStrategy = YandexDOMEventStrategy;
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.YandexGeoEventStrategy = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var YandexGeoEventStrategy =
+/*#__PURE__*/
+function () {
+  function YandexGeoEventStrategy() {
+    _classCallCheck(this, YandexGeoEventStrategy);
+  }
+
+  _createClass(YandexGeoEventStrategy, [{
+    key: "getNames",
+    value: function getNames() {
+      return {
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave',
+        drag: 'boundschange',
+        // other action?
+        dragstart: 'actionbegin',
+        // other action?
+        dragend: 'actionend',
+        // other action?
+        contextmenu: 'contextmenu',
+        move: 'boundschange'
+      };
+    }
+  }]);
+
+  return YandexGeoEventStrategy;
+}();
+
+exports.YandexGeoEventStrategy = YandexGeoEventStrategy;
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27743,7 +28536,7 @@ function () {
 exports.YandexGeocoderStrategy = YandexGeocoderStrategy;
 
 /***/ }),
-/* 37 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27756,13 +28549,17 @@ exports.YandexGeoStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _map = __webpack_require__(38);
+var _map = __webpack_require__(44);
 
-var _geocoder = __webpack_require__(36);
+var _geocoder = __webpack_require__(42);
 
-var _marker = __webpack_require__(39);
+var _marker = __webpack_require__(45);
 
-var _polygon = __webpack_require__(40);
+var _polygon = __webpack_require__(46);
+
+var _geoEvent = __webpack_require__(41);
+
+var _domEvent = __webpack_require__(40);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27786,9 +28583,9 @@ function () {
 
     _defineProperty(this, "mapControl", null);
 
-    _defineProperty(this, "domEvent", null);
+    _defineProperty(this, "domEvent", new _domEvent.YandexDOMEventStrategy());
 
-    _defineProperty(this, "geoEvent", null);
+    _defineProperty(this, "geoEvent", new _geoEvent.YandexGeoEventStrategy());
 
     _defineProperty(this, "preset", {
       marker: null,
@@ -27811,7 +28608,7 @@ function () {
 exports.YandexGeoStrategy = YandexGeoStrategy;
 
 /***/ }),
-/* 38 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28035,7 +28832,7 @@ function () {
 exports.YandexMapStrategy = YandexMapStrategy;
 
 /***/ }),
-/* 39 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28048,7 +28845,7 @@ exports.YandexMarkerStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _iconFactory = __webpack_require__(41);
+var _iconFactory = __webpack_require__(47);
 
 var _coords = __webpack_require__(0);
 
@@ -28242,7 +29039,7 @@ function () {
 exports.YandexMarkerStrategy = YandexMarkerStrategy;
 
 /***/ }),
-/* 40 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28480,7 +29277,7 @@ function () {
 exports.YandexPolygonStrategy = YandexPolygonStrategy;
 
 /***/ }),
-/* 41 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28529,7 +29326,7 @@ function () {
 exports.IconFactory = IconFactory;
 
 /***/ }),
-/* 42 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28540,7 +29337,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.EventsGroup = void 0;
 
-var Utils = _interopRequireWildcard(__webpack_require__(14));
+var Utils = _interopRequireWildcard(__webpack_require__(19));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28707,131 +29504,7 @@ function () {
 exports.EventsGroup = EventsGroup;
 
 /***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GeoEvent = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var GeoEvent =
-/*#__PURE__*/
-function () {
-  function GeoEvent(strategy) {
-    _classCallCheck(this, GeoEvent);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-
-  _createClass(GeoEvent, [{
-    key: "getStrategy",
-
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-    value: function getStrategy() {
-      return this.strategy.geoEvent;
-    }
-  }, {
-    key: "name",
-    get: function get() {
-      return this.getStrategy().getNames();
-    }
-  }]);
-
-  return GeoEvent;
-}();
-
-exports.GeoEvent = GeoEvent;
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Geocoder = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Geocoder =
-/*#__PURE__*/
-function () {
-  function Geocoder(strategy) {
-    _classCallCheck(this, Geocoder);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-  /**
-   * Какие объекты находятся рядом с точкой
-   * @param {tCoords} coords
-   * @return {Promise<IGeocodeResult>}
-   */
-
-
-  _createClass(Geocoder, [{
-    key: "whatAt",
-    value: function whatAt(coords) {
-      return this.getStrategy().whatAt(coords);
-    }
-    /**
-     * Где находится этот адресс
-     * @param {string} address
-     * @param {tCoords} coords
-     * @return {Promise<IGeocodeResult>}
-     */
-
-  }, {
-    key: "whereIs",
-    value: function whereIs(address, coords) {
-      return this.getStrategy().whereIs(address, coords);
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {IGeocoderStrategy}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.geocoder;
-    }
-  }]);
-
-  return Geocoder;
-}();
-
-exports.Geocoder = Geocoder;
-
-/***/ }),
-/* 45 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28931,430 +29604,7 @@ function () {
 exports.MapControl = MapControl;
 
 /***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Marker = void 0;
-
-var _coords = __webpack_require__(0);
-
-var _icon = __webpack_require__(5);
-
-var _geoobject = __webpack_require__(11);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Marker =
-/*#__PURE__*/
-function (_GeoObject) {
-  _inherits(Marker, _GeoObject);
-
-  function Marker() {
-    _classCallCheck(this, Marker);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Marker).apply(this, arguments));
-  }
-
-  _createClass(Marker, [{
-    key: "updateProperties",
-
-    /**
-     * Обновить параметры метки
-     *
-     * @param {IUpdateMarkerProperties} options
-     *
-     * @return {Promise<IMarker>}
-     */
-    value: function updateProperties(options) {
-      var _this = this;
-
-      return new Promise(function (resolve, reject) {
-        Promise.all([_this.setData((options || {}).data), _this.setIcon((options || {}).icon), _this.setPreset((options || {}).preset), _this.setEditable((options || {}).editable)]).then(function () {
-          resolve(_this);
-        }, function (message) {
-          reject(message);
-        });
-      });
-    }
-    /**
-     * Копировать объект
-     *
-     * @return {IMarker}
-     */
-
-  }, {
-    key: "clone",
-    value: function clone() {
-      var clone = new this.constructor(this.strategy);
-      return clone.create(this.coords.toArray(), {
-        data: this.data,
-        icon: this.props.icon ? this.props.icon.toObject() : undefined,
-        preset: this.props.preset,
-        editable: this.props.editable
-      });
-    }
-    /**
-     * Установить иконку
-     *
-     * @param {IIcon} value
-     *
-     * @return {IMarker}
-     */
-
-  }, {
-    key: "setIcon",
-    value: function setIcon(value) {
-      var _this2 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this2);
-          return;
-        }
-
-        _this2.props.icon = new _icon.Icon(value);
-
-        if (_this2.hasInstance()) {
-          _this2.getStrategy().setIcon(_this2.getInstance(), _this2.props.icon);
-
-          resolve(_this2);
-        } else {
-          resolve(_this2);
-        }
-
-        resolve(_this2);
-      });
-    }
-    /**
-     * Установить стили из хранилища
-     *
-     * @param {string} value
-     *
-     * @return {Promise<IMarker>}
-     */
-
-  }, {
-    key: "setPreset",
-    value: function setPreset(value) {
-      var _this3 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this3);
-          return;
-        }
-
-        _this3.props.preset = value;
-
-        if (_this3.hasInstance()) {
-          _this3.getStrategy().setPreset(_this3.getInstance(), _this3.props.preset);
-
-          resolve(_this3);
-        } else {
-          resolve(_this3);
-        }
-
-        resolve(_this3);
-      });
-    }
-    /**
-     * Получить координаты объекта
-     *
-     * @param {boolean} byInstance
-     *
-     * @return {Coords}
-     */
-
-  }, {
-    key: "getCoords",
-    value: function getCoords() {
-      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      if (byInstance) {
-        return this.getStrategy().getCoords(this.getInstance());
-      }
-
-      return this.coords || null;
-    }
-    /**
-     * Получит местоположение
-     *
-     * @param {boolean} byInstance
-     *
-     * @return {Bounds}
-     */
-
-  }, {
-    key: "getBounds",
-    value: function getBounds() {
-      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      if (byInstance) {
-        return this.getStrategy().getBounds(this.getInstance());
-      }
-
-      return this.getCoords(false).getBounds();
-    }
-    /**
-     * Стратегия работы с маркером
-     * @return {IMarkerStrategy}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.marker;
-    }
-  }]);
-
-  return Marker;
-}(_geoobject.GeoObject);
-
-exports.Marker = Marker;
-
-_defineProperty(Marker, "Coords", _coords.Coords);
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Polygon = void 0;
-
-var _geoobject = __webpack_require__(11);
-
-var _polygonCoords = __webpack_require__(13);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Polygon =
-/*#__PURE__*/
-function (_GeoObject) {
-  _inherits(Polygon, _GeoObject);
-
-  function Polygon() {
-    _classCallCheck(this, Polygon);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Polygon).apply(this, arguments));
-  }
-
-  _createClass(Polygon, [{
-    key: "updateProperties",
-    value: function updateProperties(options) {
-      var _this = this;
-
-      return new Promise(function (resolve, reject) {
-        Promise.all([_this.setData((options || {}).data), _this.setStyle(options), _this.setPreset((options || {}).preset), _this.setEditable((options || {}).editable)]).then(function () {
-          resolve(_this);
-        }, function (message) {
-          reject(message);
-        });
-      });
-    }
-    /**
-     * Копировать объект
-     *
-     * @return {IPolygon}
-     */
-
-  }, {
-    key: "clone",
-    value: function clone() {
-      var clone = new this.constructor(this.strategy);
-      return clone.create(this.coords.toArray(), {
-        data: this.data,
-        preset: this.props.preset,
-        editable: this.props.editable,
-        // @TODO Подумать над более красивым решением
-        fillColor: this.props.fillColor,
-        fillOpacity: this.props.fillOpacity,
-        strokeColor: this.props.strokeColor,
-        strokeOpacit: this.props.strokeOpacity,
-        strokeWidth: this.props.strokeWidth
-      });
-    }
-    /**
-     * Установить стили для полигона
-     *
-     * @param {IUpdatePolygonStyle} value
-     *
-     * @return {Promise<IPolygon>}
-     */
-
-  }, {
-    key: "setStyle",
-    value: function setStyle(value) {
-      var _this2 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this2);
-          return;
-        } // @TODO Подумать над более красивым решением
-
-
-        _this2.props.fillColor = value.fillColor || _this2.props.fillColor;
-        _this2.props.fillOpacity = value.fillOpacity || _this2.props.fillOpacity;
-        _this2.props.strokeColor = value.strokeColor || _this2.props.strokeColor;
-        _this2.props.strokeOpacity = value.strokeOpacity || _this2.props.strokeOpacity;
-        _this2.props.strokeWidth = value.strokeWidth || _this2.props.strokeWidth;
-
-        if (_this2.hasInstance()) {
-          _this2.getStrategy().setStyle(_this2.getInstance(), _this2.props);
-
-          resolve(_this2);
-        } else {
-          resolve(_this2);
-        }
-      });
-    }
-    /**
-     * Установить пресет
-     * @param {string} value
-     * @return {Promise<IPolygon>}
-     */
-
-  }, {
-    key: "setPreset",
-    value: function setPreset(value) {
-      var _this3 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this3);
-          return;
-        }
-
-        _this3.props.preset = value;
-
-        if (_this3.hasInstance()) {
-          _this3.getStrategy().setPreset(_this3.getInstance(), _this3.props.preset);
-
-          resolve(_this3);
-        } else {
-          resolve(_this3);
-        }
-
-        resolve(_this3);
-      });
-    }
-    /**
-     * Получить местоположение объекта
-     * @param {boolean} byInstance
-     * @return {Bounds}
-     */
-
-  }, {
-    key: "getBounds",
-    value: function getBounds() {
-      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      if (byInstance) {
-        return this.getStrategy().getBounds(this.getInstance());
-      }
-
-      return this.getCoords(false).getBounds();
-    }
-    /**
-     * Начать рисовать полигон
-     *
-     * @param {boolean} value
-     *
-     * @return {Promise<IPolygon>}
-     */
-
-  }, {
-    key: "setDrawing",
-    value: function setDrawing(value) {
-      var _this4 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (!_this4.hasInstance()) {
-          resolve(_this4);
-          return;
-        }
-
-        if (value) {
-          _this4.setEditable(true).then(function () {
-            _this4.getStrategy().setDrawing(_this4.getInstance(), value);
-
-            resolve(_this4);
-          }, reject);
-
-          return;
-        }
-
-        _this4.setEditable(false).then(resolve, reject);
-      });
-    }
-    /**
-     * Стратегия работы с полигоном
-     * @return {IPolygonStrategy}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.polygon;
-    }
-  }]);
-
-  return Polygon;
-}(_geoobject.GeoObject);
-
-exports.Polygon = Polygon;
-
-_defineProperty(Polygon, "Coords", _polygonCoords.PolygonCoords);
-
-/***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29421,7 +29671,7 @@ function () {
 exports.MarkerPreset = MarkerPreset;
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29499,14 +29749,14 @@ function () {
 exports.PolygonPreset = PolygonPreset;
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ultimap__);
 
 
@@ -29537,7 +29787,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29585,7 +29835,7 @@ function () {
 exports.UIDGenerator = UIDGenerator;
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29596,9 +29846,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _queue = __webpack_require__(53);
+var _queue = __webpack_require__(55);
 
-var _generator = __webpack_require__(51);
+var _generator = __webpack_require__(53);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29615,7 +29865,7 @@ _defineProperty(UID, "Queue", _queue.UIDQueue);
 _defineProperty(UID, "Generator", _generator.UIDGenerator);
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29661,7 +29911,7 @@ function () {
 exports.UIDQueue = UIDQueue;
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -29830,13 +30080,13 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29938,7 +30188,7 @@ function () {
 exports.Callbacks = Callbacks;
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30165,7 +30415,7 @@ function () {
 exports.Collections = Collections;
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30199,12 +30449,12 @@ Object.defineProperty(exports, "IStrategy", {
   }
 });
 
-var _constructor = __webpack_require__(57);
+var _constructor = __webpack_require__(59);
 
-var _strategy = __webpack_require__(59);
+var _strategy = __webpack_require__(61);
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30305,7 +30555,7 @@ function () {
 exports.Strategy = Strategy;
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30423,7 +30673,7 @@ function () {
 exports.Cookie = Cookie;
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30434,7 +30684,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Define = void 0;
 
-var _property = __webpack_require__(62);
+var _property = __webpack_require__(64);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30478,7 +30728,7 @@ function () {
 exports.Define = Define;
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30617,7 +30867,7 @@ function () {
 exports.Property = Property;
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32544,7 +32794,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32585,7 +32835,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(66);
+var superagent = __webpack_require__(68);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -32637,7 +32887,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -32663,7 +32913,7 @@ module.exports = Agent;
 
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -32680,11 +32930,11 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(54);
-var RequestBase = __webpack_require__(67);
-var isObject = __webpack_require__(16);
-var ResponseBase = __webpack_require__(68);
-var Agent = __webpack_require__(65);
+var Emitter = __webpack_require__(56);
+var RequestBase = __webpack_require__(69);
+var isObject = __webpack_require__(21);
+var ResponseBase = __webpack_require__(70);
+var Agent = __webpack_require__(67);
 
 /**
  * Noop.
@@ -33589,7 +33839,7 @@ request.put = function(url, data, fn) {
 
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33598,7 +33848,7 @@ request.put = function(url, data, fn) {
 /**
  * Module of mixed-in functions shared between node and client code
  */
-var isObject = __webpack_require__(16);
+var isObject = __webpack_require__(21);
 
 /**
  * Expose `RequestBase`.
@@ -34290,7 +34540,7 @@ RequestBase.prototype._setTimeouts = function() {
 
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34300,7 +34550,7 @@ RequestBase.prototype._setTimeouts = function() {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(69);
+var utils = __webpack_require__(71);
 
 /**
  * Expose `ResponseBase`.
@@ -34433,7 +34683,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34511,5 +34761,5 @@ exports.cleanHeader = function(header, changesOrigin){
 
 
 /***/ })
-],[50]);
+],[52]);
 //# sourceMappingURL=main.js.map

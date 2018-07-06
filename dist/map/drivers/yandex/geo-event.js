@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LeafletGeoEventStrategy = void 0;
+exports.YandexGeoEventStrategy = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -11,32 +11,35 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var LeafletGeoEventStrategy =
+var YandexGeoEventStrategy =
 /*#__PURE__*/
 function () {
-  function LeafletGeoEventStrategy() {
-    _classCallCheck(this, LeafletGeoEventStrategy);
+  function YandexGeoEventStrategy() {
+    _classCallCheck(this, YandexGeoEventStrategy);
   }
 
-  _createClass(LeafletGeoEventStrategy, [{
+  _createClass(YandexGeoEventStrategy, [{
     key: "getNames",
     value: function getNames() {
       return {
         click: 'click',
         mousedown: 'mousedown',
         mouseup: 'mouseup',
-        mouseenter: 'mouseover',
-        mouseleave: 'mouseout',
-        drag: 'drag',
-        dragstart: 'dragstart',
-        dragend: 'dragend',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave',
+        drag: 'boundschange',
+        // other action?
+        dragstart: 'actionbegin',
+        // other action?
+        dragend: 'actionend',
+        // other action?
         contextmenu: 'contextmenu',
-        move: 'move'
+        move: 'boundschange'
       };
     }
   }]);
 
-  return LeafletGeoEventStrategy;
+  return YandexGeoEventStrategy;
 }();
 
-exports.LeafletGeoEventStrategy = LeafletGeoEventStrategy;
+exports.YandexGeoEventStrategy = YandexGeoEventStrategy;

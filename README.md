@@ -5,6 +5,7 @@ Universal api for different maps.
 ---
 
 #### Contents
+- [Geo](#geo)
 - [Map](#map)
 - [Marker](#marker)
 - [Coords](#coords)
@@ -72,22 +73,22 @@ geo.map.create(document.getElementById('map'), {
 
 | Method | Returns | Description |
 | ------ | ------- | ----------- |
-| create(element: *\<HTMLElement\>*, options: *\<Map Update Properties\>*) | *\<Map\>* ||
-| load() | *\<Promise\<Map\>\>* ||
-| destroy() | *\<Promise\<Map\>\>* ||
-| updateProperties(options: *\<Map Update Properties\>*) | *\<Promise\<Map\>\>* ||
+| create(element: *\<HTMLElement\>*, options: *\<Map Update Properties\>*) | *\<[Map](#map)\>* ||
+| load() | *\<Promise\<[Map](#map)\>\>* ||
+| destroy() | *\<Promise\<[Map](#map)\>\>* ||
+| updateProperties(options: *\<Map Update Properties\>*) | *\<Promise\<[Map](#map)\>\>* ||
 | hasInstance() | *\<boolean\>* ||
 | getInstance() | *\<object\>* ||
-| setCenter(coords: *\<Coords constructor params\>*) | *\<Promise\<Map\>\>* ||
-| getCenter() | *\<Coords\>* ||
-| setZoom(value: *\<number\>*) | *\<Promise\<Map\>\>* ||
+| setCenter(coords: *\<[Coords](#coords) constructor params\>*) | *\<Promise\<[Map](#map)\>\>* ||
+| getCenter() | *\<[Coords](#coords)\>* ||
+| setZoom(value: *\<number\>*) | *\<Promise\<[Map](#map)\>\>* ||
 | getZoom() | *\<number\>* ||
-| setBounds(coords: *\<Bounds constructor params\>*) | *\<Promise\<Map\>\>* ||
-| getBounds() | *\<Bounds\>* ||
-| fitToViewport() | *\<Promise\<Map\>\>* ||
-| addControl(control: *\<object\>*) | *\<Promise\<Map\>\>* ||
-| on(type: *\<string\>*, fn: *\<function\>*) | *\<Map\>* ||
-| off(type: *\<string\>*, fn: *\<function\>*) | *\<Map\>* ||
+| setBounds(coords: *\<[Bounds](#bounds) constructor params\>*) | *\<Promise\<[Map](#map)\>\>* ||
+| getBounds() | *\<[Bounds](#bounds)\>* ||
+| fitToViewport() | *\<Promise\<[Map](#map)\>\>* ||
+| addControl(control: *\<object\>*) | *\<Promise\<[Map](#map)\>\>* ||
+| on(type: *\<string\>*, fn: *\<function\>*) | *\<[Map](#map)\>* ||
+| off(type: *\<string\>*, fn: *\<function\>*) | *\<[Map](#map)\>* ||
 
 ---
 
@@ -169,6 +170,8 @@ const coords = new Coords(57.767131, 40.928349);
 | toLatLng() | *\<object\>* | Returns an object of the form {lat: *\<number\>*, lng: *\<number\>*}.
 | toPoint() | *\<object\>* | Returns an object of the form {x: *\<number\>*, y: *\<number\>*}.
 | getBounds() | *\<Bounds\>* | Returns a new Bounds object.
+| toJson() | *\<string\>* | Returns a string with json of the form {lat: number, lng: number}.
+| toString() | *\<string\>* | Returns a string of the form [number, number].
 
 ---
 

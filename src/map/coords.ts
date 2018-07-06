@@ -16,7 +16,18 @@ export type tCoord = number | string;
 
 export type tCoords = [number | string, number | string] | ILatLng;
 
-export class Coords {
+export interface ICoords {
+    lat: number;
+    lng: number;
+    toArray(): tSimpleCoords;
+    toLatLng(): { lat: number, lng: number };
+    toPoint(): IPoint;
+    toJson(): string;
+    toString(): string;
+    getBounds(): Bounds;
+}
+
+export class Coords implements ICoords {
     public lat: number = null;
     public lng: number = null;
 
@@ -53,6 +64,19 @@ export class Coords {
             x: this.lat,
             y: this.lng,
         };
+    }
+
+    public toJson(): string {
+        try {
+            return JSON.stringify(this.toLatLng());
+        } catch (err) {
+            console.error(err);
+            return '';
+        }
+    }
+
+    public toString(): string {
+        return `[${this.lat}, ${this.lng}]`;
     }
 
     public getBounds(): Bounds {

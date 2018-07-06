@@ -65,6 +65,21 @@ function () {
       };
     }
   }, {
+    key: "toJson",
+    value: function toJson() {
+      try {
+        return JSON.stringify(this.toLatLng());
+      } catch (err) {
+        console.error(err);
+        return '';
+      }
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[".concat(this.lat, ", ").concat(this.lng, "]");
+    }
+  }, {
     key: "getBounds",
     value: function getBounds() {
       var center = this.toArray();

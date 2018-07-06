@@ -12,6 +12,7 @@ export class LeafletGeoEventStrategy implements IGeoEventStrategy {
             dragstart: 'dragstart',
             dragend: 'dragend',
             contextmenu: 'contextmenu',
+            move: 'move',
         };
     }
 }

@@ -114,6 +114,7 @@ module.exports = [
     'basic',
     'marker',
     'polygon',
+    'events',
 ].map((exampleName) => Object.assign({}, resultConfig, {
     name: exampleName,
     entry: `./${exampleName}/js/index.js`,

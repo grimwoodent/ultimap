@@ -8,6 +8,7 @@ export interface IGeoEventNames {
     dragstart?: string;
     dragend?: string;
     contextmenu?: string;
+    boundschange?: string;
 }
 
 export interface IGeoEventStrategy {

@@ -43,6 +43,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mocha": "^5.2.0",
+    "moment": "^2.22.2",
     "style-loader": "^0.21.0",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
@@ -58,9 +59,10 @@
   "scripts": {
     "clear": "del-cli dist",
     "build": "npm run clear && babel -x \".js\",\".ts\" --optional runtime --copy-files -d dist/ src/",
+    "build-examples": "webpack --progress --display-error-details",
     "test": "mocha -r ts-node/register -r ignore-styles -r jsdom-global/register test/**/*.ts",
     "git-push-all": "git push origin && git push origin --tags",
-    "build-dev": "npm run build && webpack --progress --display-error-details",
+    "build-dev": "npm run build && npm run build-examples",
     "type-check": "tsc -w --noEmit"
   },
   "repository": {
