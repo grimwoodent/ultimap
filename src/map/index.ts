@@ -16,7 +16,7 @@ export interface IMap extends IEvented<IUpdateMapProperties> {
     destroy(): Promise<IMap>;
     hasInstance(): boolean;
     setCenter(value: tCoords): Promise<IMap>;
-    getCenter(byInstance: boolean): Coords;
+    getCenter(byInstance?: boolean): Coords;
     setZoom(value: number): Promise<IMap>;
     getZoom(byInstance?: boolean): number;
     setBounds(corner1: tCoords|[tCoords, tCoords], corner2?: tCoords): Promise<IMap>;
