@@ -19,8 +19,8 @@ function () {
   }
 
   _createClass(YandexGeoEventStrategy, [{
-    key: "getNames",
-    value: function getNames() {
+    key: "getMapEventName",
+    value: function getMapEventName() {
       return {
         click: 'click',
         mousedown: 'mousedown',
@@ -28,13 +28,28 @@ function () {
         mouseenter: 'mouseenter',
         mouseleave: 'mouseleave',
         drag: 'boundschange',
-        // other action?
+        // ?
         dragstart: 'actionbegin',
-        // other action?
+        //?
         dragend: 'actionend',
-        // other action?
+        // ?
         contextmenu: 'contextmenu',
         move: 'boundschange'
+      };
+    }
+  }, {
+    key: "getMarkerEventName",
+    value: function getMarkerEventName() {
+      return {
+        drag: 'drag',
+        dragstart: 'dragstart',
+        dragend: 'dragend',
+        move: 'geometrychange',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave'
       };
     }
   }]);

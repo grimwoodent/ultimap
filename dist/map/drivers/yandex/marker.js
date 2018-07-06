@@ -157,7 +157,7 @@ function () {
   }, {
     key: "setEditable",
     value: function setEditable(geoobject, value) {
-      // @TODO implements method
+      geoobject.options.set('draggable', value);
       return this;
     }
     /**
@@ -174,7 +174,11 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
-      // @TODO implements method
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.events.add(type, fn, context);
       return this;
     }
     /**
@@ -191,7 +195,12 @@ function () {
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
-      return undefined;
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.events.remove(type, fn, context);
+      return this;
     }
   }]);
 

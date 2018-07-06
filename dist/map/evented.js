@@ -93,9 +93,19 @@ function () {
     value: function on(type, fn) {
       var _this2 = this;
 
+      if (!type) {
+        // throw new Error(`Geo event name is not defined`);
+        console.error('Geo event name is not defined');
+        return this;
+      }
+
       var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
 
       Object.keys(events).forEach(function (key) {
+        if (!events[key]) {
+          throw new Error("Geo event \"".concat(key, "\" is not defined"));
+        }
+
         _this2.events.add(key, events[key]);
       });
       return this;

@@ -19660,9 +19660,19 @@ function () {
     value: function on(type, fn) {
       var _this2 = this;
 
+      if (!type) {
+        // throw new Error(`Geo event name is not defined`);
+        console.error('Geo event name is not defined');
+        return this;
+      }
+
       var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
 
       Object.keys(events).forEach(function (key) {
+        if (!events[key]) {
+          throw new Error("Geo event \"".concat(key, "\" is not defined"));
+        }
+
         _this2.events.add(key, events[key]);
       });
       return this;
@@ -19729,6 +19739,11 @@ function () {
 
     this.strategy = strategy;
   }
+  /**
+   * @deprecated use map
+   * @return {IMapGeoEventName}
+   */
+
 
   _createClass(GeoEvent, [{
     key: "getStrategy",
@@ -19743,7 +19758,17 @@ function () {
   }, {
     key: "name",
     get: function get() {
-      return this.getStrategy().getNames();
+      return this.map;
+    }
+  }, {
+    key: "map",
+    get: function get() {
+      return this.getStrategy().getMapEventName();
+    }
+  }, {
+    key: "marker",
+    get: function get() {
+      return this.getStrategy().getMarkerEventName();
     }
   }]);
 
@@ -43743,8 +43768,8 @@ function () {
   }
 
   _createClass(LeafletGeoEventStrategy, [{
-    key: "getNames",
-    value: function getNames() {
+    key: "getMapEventName",
+    value: function getMapEventName() {
       return {
         click: 'click',
         mousedown: 'mousedown',
@@ -43756,6 +43781,23 @@ function () {
         dragend: 'dragend',
         contextmenu: 'contextmenu',
         move: 'move'
+      };
+    }
+  }, {
+    key: "getMarkerEventName",
+    value: function getMarkerEventName() {
+      return {
+        add: 'add',
+        remove: 'remove',
+        drag: 'drag',
+        dragstart: 'dragstart',
+        dragend: 'dragend',
+        move: 'move',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseover',
+        mouseleave: 'mouseout'
       };
     }
   }]);
@@ -44335,12 +44377,20 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
       geoObject.on(type, fn, context);
       return this;
     }
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
       geoObject.off(type, fn, context);
       return this;
     }
@@ -44784,8 +44834,8 @@ function () {
   }
 
   _createClass(YandexGeoEventStrategy, [{
-    key: "getNames",
-    value: function getNames() {
+    key: "getMapEventName",
+    value: function getMapEventName() {
       return {
         click: 'click',
         mousedown: 'mousedown',
@@ -44793,13 +44843,28 @@ function () {
         mouseenter: 'mouseenter',
         mouseleave: 'mouseleave',
         drag: 'boundschange',
-        // other action?
+        // ?
         dragstart: 'actionbegin',
-        // other action?
+        //?
         dragend: 'actionend',
-        // other action?
+        // ?
         contextmenu: 'contextmenu',
         move: 'boundschange'
+      };
+    }
+  }, {
+    key: "getMarkerEventName",
+    value: function getMarkerEventName() {
+      return {
+        drag: 'drag',
+        dragstart: 'dragstart',
+        dragend: 'dragend',
+        move: 'geometrychange',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave'
       };
     }
   }]);
@@ -45353,7 +45418,7 @@ function () {
   }, {
     key: "setEditable",
     value: function setEditable(geoobject, value) {
-      // @TODO implements method
+      geoobject.options.set('draggable', value);
       return this;
     }
     /**
@@ -45370,7 +45435,11 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
-      // @TODO implements method
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.events.add(type, fn, context);
       return this;
     }
     /**
@@ -45387,7 +45456,12 @@ function () {
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
-      return undefined;
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.events.remove(type, fn, context);
+      return this;
     }
   }]);
 
@@ -46163,13 +46237,14 @@ class Example {
     load() {
         this.map.load().then((map) => {
             this.console.log('Map loaded', map);
-            this._initEvents();
+            this._initMapEvents();
+            this._addMarker();
         });
 
         return this;
     }
 
-    _initEvents() {
+    _initMapEvents() {
         this.map.on(this.geo.event.name.click, (e) => {
             const ev = this.geo.domEvent.create(e);
             const coords = ev.getCoords();
@@ -46177,19 +46252,38 @@ class Example {
             this.console.log(`Map click ${coords.toString()}`, ev);
         });
 
-        this.map.on(this.geo.event.name.dragstart, (e) => {
+        this.map.on(this.geo.event.map.dragstart, (e) => {
             const ev = this.geo.domEvent.create(e);
 
             this.console.log(`Map drag start`);
         });
 
-        this.map.on(this.geo.event.name.dragend, (e) => {
+        this.map.on(this.geo.event.map.dragend, (e) => {
             const ev = this.geo.domEvent.create(e);
 
             this.console.log(`Map drag dragend`);
         });
 
         this.console.log('Map events added');
+    }
+
+    _addMarker() {
+        this.marker = this.geo.marker.create(this.map.getCenter(), {
+            editable: true,
+            icon: {
+                src: './image/map-marker-black.png',
+                size: [32, 32],
+                offset: [16, 32],
+            },
+        }).addTo(this.map);
+
+        this.marker.on(this.geo.event.marker.click, (e) => { this.console.log(`Marker click`); });
+        this.marker.on(this.geo.event.marker.mousedown, (e) => { this.console.log(`Marker mousedown`); });
+        this.marker.on(this.geo.event.marker.mouseup, (e) => { this.console.log(`Marker mouseup`); });
+        this.marker.on(this.geo.event.marker.mouseenter, (e) => { this.console.log(`Marker mouseenter`); });
+        this.marker.on(this.geo.event.marker.mouseleave, (e) => { this.console.log(`Marker mouseleave`); });
+
+        this.console.log('Marker added');
     }
 }
 

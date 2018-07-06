@@ -1,8 +1,10 @@
 import { IGeoStrategy } from './drivers/interface/index';
-import { IGeoEventNames, IGeoEventStrategy } from './drivers/interface/geo-event';
+import { IMapGeoEventName, IGeoEventStrategy, IMarkerGeoEventName } from './drivers/interface/geo-event';
 
 export interface IGeoEvent {
-    name: IGeoEventNames;
+    name: IMapGeoEventName;
+    map: IMapGeoEventName;
+    marker: IMarkerGeoEventName;
 }
 
 export class GeoEvent implements IGeoEvent {
@@ -12,8 +14,20 @@ export class GeoEvent implements IGeoEvent {
         this.strategy = strategy;
     }
 
-    public get name(): IGeoEventNames {
-        return this.getStrategy().getNames();
+    /**
+     * @deprecated use map
+     * @return {IMapGeoEventName}
+     */
+    public get name(): IMapGeoEventName {
+        return this.map;
+    }
+
+    public get map(): IMapGeoEventName {
+        return this.getStrategy().getMapEventName();
+    }
+
+    public get marker(): IMapGeoEventName {
+        return this.getStrategy().getMarkerEventName();
     }
 
     /**

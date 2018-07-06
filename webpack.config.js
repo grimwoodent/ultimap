@@ -111,15 +111,15 @@ if (!DEBUG) {
 }
 
 module.exports = [
-    'basic',
-    'marker',
-    'polygon',
-    'events',
-].map((exampleName) => Object.assign({}, resultConfig, {
-    name: exampleName,
-    entry: `./${exampleName}/js/index.js`,
+    { name: 'basic', path: 'basic', entry: '/js/index.js' },
+    { name: 'marker', path: 'marker', entry: '/js/index.js' },
+    { name: 'polygon', path: 'polygon', entry: '/js/index.js' },
+    { name: 'events', path: 'events', entry: '/js/index.js' },
+].map((m) => Object.assign({}, resultConfig, {
+    name: m.name,
+    entry: `./${m.path}${m.entry}`,
     output: {
-        path: path.resolve(EXAMPLES_PATH, `${exampleName}/dist`),
+        path: path.resolve(EXAMPLES_PATH, `${m.path}/dist`),
         filename: "[name].js",
         library: '[name]',
         libraryTarget: 'this'

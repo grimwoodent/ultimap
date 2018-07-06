@@ -177,12 +177,20 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
       geoObject.on(type, fn, context);
       return this;
     }
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
       geoObject.off(type, fn, context);
       return this;
     }

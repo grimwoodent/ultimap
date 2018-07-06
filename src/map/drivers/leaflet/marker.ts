@@ -135,12 +135,20 @@ export class LeafletMarkerStrategy implements IMarkerStrategy {
     }
 
     public on(geoObject: any, type: string | IEventHandlerFnMap, fn?: EventHandlerFn, context?: any): IMarkerStrategy {
+        if (!type) {
+            throw new Error('Marker event name is not defined');
+        }
+
         geoObject.on(type as string, fn, context);
 
         return this;
     }
 
     public off(geoObject: any, type: string, fn?: EventHandlerFn, context?: any): IMarkerStrategy {
+        if (!type) {
+            throw new Error('Marker event name is not defined');
+        }
+
         geoObject.off(type as string, fn, context);
 
         return this;

@@ -15147,9 +15147,19 @@ function () {
     value: function on(type, fn) {
       var _this2 = this;
 
+      if (!type) {
+        // throw new Error(`Geo event name is not defined`);
+        console.error('Geo event name is not defined');
+        return this;
+      }
+
       var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
 
       Object.keys(events).forEach(function (key) {
+        if (!events[key]) {
+          throw new Error("Geo event \"".concat(key, "\" is not defined"));
+        }
+
         _this2.events.add(key, events[key]);
       });
       return this;
@@ -15216,6 +15226,11 @@ function () {
 
     this.strategy = strategy;
   }
+  /**
+   * @deprecated use map
+   * @return {IMapGeoEventName}
+   */
+
 
   _createClass(GeoEvent, [{
     key: "getStrategy",
@@ -15230,7 +15245,17 @@ function () {
   }, {
     key: "name",
     get: function get() {
-      return this.getStrategy().getNames();
+      return this.map;
+    }
+  }, {
+    key: "map",
+    get: function get() {
+      return this.getStrategy().getMapEventName();
+    }
+  }, {
+    key: "marker",
+    get: function get() {
+      return this.getStrategy().getMarkerEventName();
     }
   }]);
 
@@ -27385,8 +27410,8 @@ function () {
   }
 
   _createClass(LeafletGeoEventStrategy, [{
-    key: "getNames",
-    value: function getNames() {
+    key: "getMapEventName",
+    value: function getMapEventName() {
       return {
         click: 'click',
         mousedown: 'mousedown',
@@ -27398,6 +27423,23 @@ function () {
         dragend: 'dragend',
         contextmenu: 'contextmenu',
         move: 'move'
+      };
+    }
+  }, {
+    key: "getMarkerEventName",
+    value: function getMarkerEventName() {
+      return {
+        add: 'add',
+        remove: 'remove',
+        drag: 'drag',
+        dragstart: 'dragstart',
+        dragend: 'dragend',
+        move: 'move',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseover',
+        mouseleave: 'mouseout'
       };
     }
   }]);
@@ -27977,12 +28019,20 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
       geoObject.on(type, fn, context);
       return this;
     }
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
       geoObject.off(type, fn, context);
       return this;
     }
@@ -28426,8 +28476,8 @@ function () {
   }
 
   _createClass(YandexGeoEventStrategy, [{
-    key: "getNames",
-    value: function getNames() {
+    key: "getMapEventName",
+    value: function getMapEventName() {
       return {
         click: 'click',
         mousedown: 'mousedown',
@@ -28435,13 +28485,28 @@ function () {
         mouseenter: 'mouseenter',
         mouseleave: 'mouseleave',
         drag: 'boundschange',
-        // other action?
+        // ?
         dragstart: 'actionbegin',
-        // other action?
+        //?
         dragend: 'actionend',
-        // other action?
+        // ?
         contextmenu: 'contextmenu',
         move: 'boundschange'
+      };
+    }
+  }, {
+    key: "getMarkerEventName",
+    value: function getMarkerEventName() {
+      return {
+        drag: 'drag',
+        dragstart: 'dragstart',
+        dragend: 'dragend',
+        move: 'geometrychange',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave'
       };
     }
   }]);
@@ -28995,7 +29060,7 @@ function () {
   }, {
     key: "setEditable",
     value: function setEditable(geoobject, value) {
-      // @TODO implements method
+      geoobject.options.set('draggable', value);
       return this;
     }
     /**
@@ -29012,7 +29077,11 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
-      // @TODO implements method
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.events.add(type, fn, context);
       return this;
     }
     /**
@@ -29029,7 +29098,12 @@ function () {
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
-      return undefined;
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.events.remove(type, fn, context);
+      return this;
     }
   }]);
 

@@ -19,8 +19,8 @@ function () {
   }
 
   _createClass(LeafletGeoEventStrategy, [{
-    key: "getNames",
-    value: function getNames() {
+    key: "getMapEventName",
+    value: function getMapEventName() {
       return {
         click: 'click',
         mousedown: 'mousedown',
@@ -32,6 +32,23 @@ function () {
         dragend: 'dragend',
         contextmenu: 'contextmenu',
         move: 'move'
+      };
+    }
+  }, {
+    key: "getMarkerEventName",
+    value: function getMarkerEventName() {
+      return {
+        add: 'add',
+        remove: 'remove',
+        drag: 'drag',
+        dragstart: 'dragstart',
+        dragend: 'dragend',
+        move: 'move',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseover',
+        mouseleave: 'mouseout'
       };
     }
   }]);

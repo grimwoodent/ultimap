@@ -75,12 +75,23 @@ export abstract class Evented<TPropertiesForUpdate, TPropertiesForCreate> implem
      * @return {IEvented<TPropertiesForUpdate>}
      */
     public on(type: string | IEventHandlerFnMap, fn?: EventHandlerFn): IEvented<TPropertiesForUpdate> {
+        if (!type) {
+            // throw new Error(`Geo event name is not defined`);
+            console.error('Geo event name is not defined');
+
+            return this;
+        }
+
         const events = typeof type === 'object'
             ? type
             : { [type]: fn };
 
         // Работа со стратегией перенесена в группы через strategyProvider
         Object.keys(events).forEach((key) => {
+            if (!events[key]) {
+                throw new Error(`Geo event "${key}" is not defined`);
+            }
+
             this.events.add(key, events[key]);
         });
 

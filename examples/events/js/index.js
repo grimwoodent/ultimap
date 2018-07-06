@@ -43,13 +43,14 @@ class Example {
     load() {
         this.map.load().then((map) => {
             this.console.log('Map loaded', map);
-            this._initEvents();
+            this._initMapEvents();
+            this._addMarker();
         });
 
         return this;
     }
 
-    _initEvents() {
+    _initMapEvents() {
         this.map.on(this.geo.event.name.click, (e) => {
             const ev = this.geo.domEvent.create(e);
             const coords = ev.getCoords();
@@ -57,19 +58,38 @@ class Example {
             this.console.log(`Map click ${coords.toString()}`, ev);
         });
 
-        this.map.on(this.geo.event.name.dragstart, (e) => {
+        this.map.on(this.geo.event.map.dragstart, (e) => {
             const ev = this.geo.domEvent.create(e);
 
             this.console.log(`Map drag start`);
         });
 
-        this.map.on(this.geo.event.name.dragend, (e) => {
+        this.map.on(this.geo.event.map.dragend, (e) => {
             const ev = this.geo.domEvent.create(e);
 
             this.console.log(`Map drag dragend`);
         });
 
         this.console.log('Map events added');
+    }
+
+    _addMarker() {
+        this.marker = this.geo.marker.create(this.map.getCenter(), {
+            editable: true,
+            icon: {
+                src: './image/map-marker-black.png',
+                size: [32, 32],
+                offset: [16, 32],
+            },
+        }).addTo(this.map);
+
+        this.marker.on(this.geo.event.marker.click, (e) => { this.console.log(`Marker click`); });
+        this.marker.on(this.geo.event.marker.mousedown, (e) => { this.console.log(`Marker mousedown`); });
+        this.marker.on(this.geo.event.marker.mouseup, (e) => { this.console.log(`Marker mouseup`); });
+        this.marker.on(this.geo.event.marker.mouseenter, (e) => { this.console.log(`Marker mouseenter`); });
+        this.marker.on(this.geo.event.marker.mouseleave, (e) => { this.console.log(`Marker mouseleave`); });
+
+        this.console.log('Marker added');
     }
 }
 

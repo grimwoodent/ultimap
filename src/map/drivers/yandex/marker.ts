@@ -130,7 +130,7 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {IMarkerStrategy}
      */
     public setEditable(geoobject: YMarker, value: boolean): IMarkerStrategy {
-        // @TODO implements method
+        (geoobject as any).options.set('draggable', value);
 
         return this;
     }
@@ -146,7 +146,11 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {IMarkerStrategy}
      */
     public on(geoObject: YMarker, type: string | IEventHandlerFnMap, fn?: EventHandlerFn, context?: any): IMarkerStrategy {
-        // @TODO implements method
+        if (!type) {
+            throw new Error('Marker event name is not defined');
+        }
+
+        geoObject.events.add(type as string, fn, context);
 
         return this;
     }
@@ -162,6 +166,12 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {IMarkerStrategy}
      */
     public off(geoObject: YMarker, type: string, fn?: EventHandlerFn, context?: any): IMarkerStrategy {
-        return undefined;
+        if (!type) {
+            throw new Error('Marker event name is not defined');
+        }
+
+        geoObject.events.remove(type as string, fn, context);
+
+        return this;
     }
 }

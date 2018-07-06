@@ -23,6 +23,11 @@ function () {
 
     this.strategy = strategy;
   }
+  /**
+   * @deprecated use map
+   * @return {IMapGeoEventName}
+   */
+
 
   _createClass(GeoEvent, [{
     key: "getStrategy",
@@ -37,7 +42,17 @@ function () {
   }, {
     key: "name",
     get: function get() {
-      return this.getStrategy().getNames();
+      return this.map;
+    }
+  }, {
+    key: "map",
+    get: function get() {
+      return this.getStrategy().getMapEventName();
+    }
+  }, {
+    key: "marker",
+    get: function get() {
+      return this.getStrategy().getMarkerEventName();
     }
   }]);
 
