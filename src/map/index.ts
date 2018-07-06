@@ -20,7 +20,7 @@ export interface IMap extends IEvented<IUpdateMapProperties> {
     setZoom(value: number): Promise<IMap>;
     getZoom(byInstance?: boolean): number;
     setBounds(corner1: tCoords|[tCoords, tCoords], corner2?: tCoords): Promise<IMap>;
-    getBounds(byInstance: boolean): Bounds;
+    getBounds(byInstance?: boolean): Bounds;
     getInstance(): any;
     fitToViewport(): Promise<IMap>;
     addControl(control: any): Promise<IMap>;
