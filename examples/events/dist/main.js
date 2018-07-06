@@ -4655,6 +4655,11 @@ function () {
   }
 
   _createClass(Bounds, [{
+    key: "toLatLng",
+    value: function toLatLng() {
+      return [this.corner1.toLatLng(), this.corner2.toLatLng()];
+    }
+  }, {
     key: "toArray",
     value: function toArray() {
       return [this.corner1.toArray(), this.corner2.toArray()];
@@ -4663,6 +4668,24 @@ function () {
     key: "toPoint",
     value: function toPoint() {
       return [this.corner1.toPoint(), this.corner2.toPoint()];
+    }
+    /**
+     * Get bounds coords lake rectangle
+     * @param {boolean} closed
+     * @return {Array<[number , number]>}
+     */
+
+  }, {
+    key: "toRectangle",
+    value: function toRectangle() {
+      var closed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var rectangle = [[this.corner1.lat, this.corner1.lng], [this.corner2.lat, this.corner1.lng], [this.corner2.lat, this.corner2.lng], [this.corner1.lat, this.corner2.lng]];
+
+      if (closed) {
+        rectangle.push([this.corner1.lat, this.corner1.lng]);
+      }
+
+      return rectangle;
     }
   }]);
 

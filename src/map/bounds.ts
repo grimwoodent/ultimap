@@ -1,6 +1,13 @@
 import { Coords, IPoint, tCoords } from './coords';
 
-export class Bounds {
+export interface IBounds {
+    toLatLng(): Array<{ lat: number, lng: number }>;
+    toArray(): [[number, number], [number, number]];
+    toPoint(): IPoint[];
+    toRectangle(closed?: boolean): Array<[number, number]>;
+}
+
+export class Bounds implements IBounds {
     protected corner1: Coords;
     protected corner2: Coords;
 
@@ -16,11 +23,35 @@ export class Bounds {
         }
     }
 
+    public toLatLng(): Array<{ lat: number, lng: number }> {
+        return [this.corner1.toLatLng(), this.corner2.toLatLng()];
+    }
+
     public toArray(): [[number, number], [number, number]] {
         return [this.corner1.toArray(), this.corner2.toArray()];
     }
 
     public toPoint(): IPoint[] {
         return [this.corner1.toPoint(), this.corner2.toPoint()];
+    }
+
+    /**
+     * Get bounds coords lake rectangle
+     * @param {boolean} closed
+     * @return {Array<[number , number]>}
+     */
+    public toRectangle(closed: boolean = false): Array<[number, number]> {
+        const rectangle = [
+            [this.corner1.lat, this.corner1.lng],
+            [this.corner2.lat, this.corner1.lng],
+            [this.corner2.lat, this.corner2.lng],
+            [this.corner1.lat, this.corner2.lng],
+        ];
+
+        if (closed) {
+            rectangle.push([this.corner1.lat, this.corner1.lng]);
+        }
+
+        return rectangle as Array<[number, number]>;
     }
 }
