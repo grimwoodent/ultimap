@@ -1,7 +1,7 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { JSDOM } from 'jsdom';
-import { geo } from '../dist';
+import { geo, Coords } from '../dist';
 
 describe('Polygon', () => {
     const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
@@ -23,6 +23,12 @@ describe('Polygon', () => {
         it('should be created', () => {
             expect(() => {
                 polygon = geo.polygon.create(coords, {});
+            }).to.not.throw();
+        });
+
+        it('should be created by Coords', () => {
+            expect(() => {
+                geo.polygon.create(coords.map((coord) => new Coords(coord)), {});
             }).to.not.throw();
         });
 

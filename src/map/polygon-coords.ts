@@ -1,3 +1,5 @@
+const concavehull = require('concaveman');
+const convexhull = require('quick-hull-2d');
 import { tSimpleCoords } from './coords';
 import { Bounds } from './bounds';
 import { UtilsPolygonCoords } from './utils/polygon-coords';
@@ -5,9 +7,17 @@ import { UtilsPolygonCoords } from './utils/polygon-coords';
 export type tPolygonCoords = tSimpleCoords[];
 
 export class PolygonCoords {
+    public static createByConcaveHull(points: tPolygonCoords) {
+        return new (this as any)(concavehull(points));
+    }
+
+    public static createByConvexHull(points: tPolygonCoords) {
+        return new (this as any)(convexhull(points));
+    }
+
+
     public points: tPolygonCoords = null;
 
-    // @TODO Сделать возможность создания по объектам Coords
     constructor(points: tPolygonCoords) {
         this.points = UtilsPolygonCoords.toNumbers(points as any) as tPolygonCoords;
     }

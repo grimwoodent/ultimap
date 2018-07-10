@@ -17,10 +17,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var concavehull = require('concaveman');
+
+var convexhull = require('quick-hull-2d');
+
 var PolygonCoords =
 /*#__PURE__*/
 function () {
-  // @TODO Сделать возможность создания по объектам Coords
+  _createClass(PolygonCoords, null, [{
+    key: "createByConcaveHull",
+    value: function createByConcaveHull(points) {
+      return new this(concavehull(points));
+    }
+  }, {
+    key: "createByConvexHull",
+    value: function createByConvexHull(points) {
+      return new this(convexhull(points));
+    }
+  }]);
+
   function PolygonCoords(points) {
     _classCallCheck(this, PolygonCoords);
 

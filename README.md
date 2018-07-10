@@ -10,6 +10,7 @@ Universal api for different maps.
 - [Marker](#marker)
 - [Coords](#coords)
 - [Bounds](#bounds)
+- [PolygonCoords](#polygoncoords)
 
 ---
 
@@ -188,6 +189,49 @@ import { Bounds } from 'ultimap';
 
 const bounds = new Bounds([57.767131, 40.928349], [57.867131, 40.1028349]);
 ```
+
+### Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+|toLatLng()| *\<array\>* | Returns an array of the form \[{lat: *\<number\>*, lng: *\<number\>*}, {lat: *\<number\>*, lng: *\<number\>*}\]. |
+|toArray()| *\<array\>* | Returns an array of the form \[\[*\<number\>*, *\<number\>*\], \[*\<number\>*, *\<number\>*\]\]. |
+|toPoint()| *\<array\>* | Returns an array of the form \[{x: *\<number\>*, y: *\<number\>*}, {x: *\<number\>*, y: *\<number\>*}\]. |
+|toRectangle(closed: *\<boolean\>*)| *\<array\>* | Returns an array of rectangle points of form \[*\<number\>*, *\<number\>*\]. |
+
+---
+
+
+# PolygonCoords
+
+Represents an array of geographical points for polygon.
+
+### Usage example
+
+``` javascript
+import { PolygonCoords } from 'ultimap';
+
+const coords = new PolygonCoords([[57.767131, 40.928349], [57.867131, 40.1028349], [57.767131, 40.928349]]);
+
+ymapGeo.polygon.create(coords.toArray(), {}).addTo(map);
+```
+
+### Constructor
+
+| Factory | Description |
+| ------- | ----------- |
+|new PolygonCoords(coords: *\<array\>*)| Create polygon coords object by array of [Coords](#coords) constructor params.|
+|PolygonCoords.createByConcaveHull(coords: *\<array\>*)| Create concave hull of point before create object. |
+|PolygonCoords.createByConvexHull(coords: *\<array\>*)| Create convex hull of point before create object. |
+
+### Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+|toArray(normalize: *\<boolean\>*)| *\<array\>* | |
+|toJson(normalize: *\<boolean\>*)| *\<string\>* | |
+|getCount()| *\<number\>* | |
+|getBounds()| *\<[Bounds](#bounds)\>* | |
 
 ---
 
