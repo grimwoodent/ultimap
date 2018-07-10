@@ -1,4 +1,4 @@
-import { Map } from './index';
+import { Map, IMap } from './index';
 import { Bounds } from './bounds';
 import {
     ICreateGeoObjectOptions,
@@ -18,9 +18,9 @@ export interface IGeoObject<TC, TP> extends IEvented<TP> {
     getCoords(byInstance: boolean): any;
     getBounds(byInstance: boolean): Bounds;
 
-    addTo(map: Map): IGeoObject<TC, TP>;
+    addTo(map: IMap): IGeoObject<TC, TP>;
     remove(): IGeoObject<TC, TP>;
-    getMap(): Map;
+    getMap(): IMap;
     onMap(): boolean;
     clone(): IGeoObject<TC, TP>;
 
