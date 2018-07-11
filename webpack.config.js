@@ -115,6 +115,7 @@ module.exports = [
     { name: 'marker', path: 'marker', entry: '/js/index.js' },
     { name: 'polygon', path: 'polygon', entry: '/js/index.js' },
     { name: 'events', path: 'events', entry: '/js/index.js' },
+    { name: 'controls', path: 'controls', entry: '/js/index.js' },
 ].map((m) => Object.assign({}, resultConfig, {
     name: m.name,
     entry: `./${m.path}${m.entry}`,

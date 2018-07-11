@@ -24,6 +24,7 @@ export interface IMap extends IEvented<IUpdateMapProperties> {
     getInstance(): any;
     fitToViewport(): Promise<IMap>;
     addControl(control: any): Promise<IMap>;
+    removeControl(control: any): Promise<IMap>;
 }
 
 /**
@@ -306,6 +307,28 @@ export class Map extends Evented<IUpdateMapProperties, ICreateMapStrategyOptions
             if (this.hasInstance()) {
                 this.getStrategy()
                     .addControl(this.getInstance(), control)
+                    .then(() => {
+                        resolve(this);
+                    }, reject);
+            } else {
+                resolve(this);
+            }
+        });
+    }
+
+    /**
+     * Remove control element from map
+     * @param control
+     * @return {Promise<IMap>}
+     */
+    public removeControl(control: any): Promise<IMap> {
+        return new Promise((
+            resolve: (map: IMap) => void,
+            reject: (error?: string) => void,
+        ) => {
+            if (this.hasInstance()) {
+                this.getStrategy()
+                    .removeControl(this.getInstance(), control)
                     .then(() => {
                         resolve(this);
                     }, reject);

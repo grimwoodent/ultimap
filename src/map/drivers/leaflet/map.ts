@@ -178,9 +178,23 @@ export class LeafletMapStrategy implements IMapStrategy {
      *
      * @return {Promise<IMapStrategy>}
      */
-    public addControl(map: any, control: any): Promise<IMapStrategy> {
+    public addControl(map: L.Map, control: L.Control): Promise<IMapStrategy> {
         return new Promise((resolve: (result: IMapStrategy) => void) => {
             control.addTo(map);
+
+            resolve(this);
+        });
+    }
+
+    /**
+     * Remove control from map
+     * @param map
+     * @param control
+     * @return {Promise<IMapStrategy>}
+     */
+    public removeControl(map: L.Map, control: L.Control): Promise<IMapStrategy> {
+        return new Promise((resolve: (result: IMapStrategy) => void) => {
+            control.remove();
 
             resolve(this);
         });

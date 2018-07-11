@@ -1,21 +1,18 @@
-import { IMapControlStrategy } from './drivers/interface/map-control';
+import { IMapControlStrategy, TGetControlInstanceHandler } from './drivers/interface/map-control';
 import { IGeoStrategy } from './drivers/interface/index';
-
-interface IMapControlProps { [key: string]: any; }
-interface IMapControlEvents { [key: string]: (control: any) => void; }
 
 export interface IMapControl {
     createConstructor(
-        baseConstructor: () => void,
+        baseConstructor: (...args: any[]) => void,
         onAdd: (parentDomContainer: HTMLElement) => void,
         onRemove: () => void,
-    ): Promise<any>;
+    ): Promise<void>;
 
-    createControl(props?: IMapControlProps, events?: IMapControlEvents): Promise<any>;
+    createControl(...args: any[]): Promise<any>;
 }
 
 export class MapControl implements IMapControl {
-    protected ControlConstructor: any;
+    protected ControlConstructor: TGetControlInstanceHandler;
     protected strategy: IGeoStrategy;
 
     constructor(strategy: IGeoStrategy) {
@@ -39,14 +36,18 @@ export class MapControl implements IMapControl {
         baseConstructor: () => void,
         onAdd: (parentDomContainer: HTMLElement) => void,
         onRemove: () => void,
-    ): Promise<any> {
+    ): Promise<void> {
         return new Promise((resolve: (result: any) => void) => {
             if (!this.ControlConstructor) {
-                this.ControlConstructor = this.getStrategy()
-                    .createConstructor(baseConstructor, onAdd, onRemove);
+                this.getStrategy()
+                    .createConstructor(baseConstructor, onAdd, onRemove)
+                    .then((ControlConstructor) => {
+                        this.ControlConstructor = ControlConstructor;
+                        resolve(null);
+                    });
+            } else {
+                resolve(null);
             }
-
-            resolve(this.ControlConstructor);
         });
     }
 
@@ -58,13 +59,13 @@ export class MapControl implements IMapControl {
      *
      * @return {Promise<any>}
      */
-    public createControl(props?: IMapControlProps, events?: IMapControlEvents): Promise<any> {
+    public createControl(...args: any[]): Promise<any> {
         return new Promise((
             resolve: (result: any) => void,
             reject: (msg: string) => void,
         ) => {
             if (this.ControlConstructor) {
-                resolve(new this.ControlConstructor(props, events));
+                resolve(this.ControlConstructor(...args));
             } else {
                 reject('Control Constructor doesn`t created');
             }

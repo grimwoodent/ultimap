@@ -342,6 +342,27 @@ function (_Evented) {
       });
     }
     /**
+     * Remove control element from map
+     * @param control
+     * @return {Promise<IMap>}
+     */
+
+  }, {
+    key: "removeControl",
+    value: function removeControl(control) {
+      var _this10 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (_this10.hasInstance()) {
+          _this10.getStrategy().removeControl(_this10.getInstance(), control).then(function () {
+            resolve(_this10);
+          }, reject);
+        } else {
+          resolve(_this10);
+        }
+      });
+    }
+    /**
      * Стратегия работы с картой
      * @return {IMapStrategy}
      */

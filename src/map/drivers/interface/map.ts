@@ -22,4 +22,5 @@ export interface IMapStrategy extends IEventedMapObjectStrategy {
     getBounds(map: any): Bounds;
     fitToViewport(map: any): Promise<IMapStrategy>;
     addControl(map: any, control: any): Promise<IMapStrategy>;
+    removeControl(map: any, control: any): Promise<IMapStrategy>;
 }

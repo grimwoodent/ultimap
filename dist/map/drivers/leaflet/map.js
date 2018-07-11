@@ -227,6 +227,23 @@ function () {
         resolve(_this6);
       });
     }
+    /**
+     * Remove control from map
+     * @param map
+     * @param control
+     * @return {Promise<IMapStrategy>}
+     */
+
+  }, {
+    key: "removeControl",
+    value: function removeControl(map, control) {
+      var _this7 = this;
+
+      return new Promise(function (resolve) {
+        control.remove();
+        resolve(_this7);
+      });
+    }
   }]);
 
   return LeafletMapStrategy;

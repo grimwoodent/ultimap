@@ -88,6 +88,7 @@ geo.map.create(document.getElementById('map'), {
 | getBounds() | *\<[Bounds](#bounds)\>* ||
 | fitToViewport() | *\<Promise\<[Map](#map)\>\>* ||
 | addControl(control: *\<object\>*) | *\<Promise\<[Map](#map)\>\>* ||
+| removeControl(control: *\<object\>*) | *\<Promise\<[Map](#map)\>\>* ||
 | on(type: *\<string\>*, fn: *\<function\>*) | *\<[Map](#map)\>* ||
 | off(type: *\<string\>*, fn: *\<function\>*) | *\<[Map](#map)\>* ||
 

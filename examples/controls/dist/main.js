@@ -46691,53 +46691,47 @@ class Example {
     load() {
         this.map.load().then((map) => {
             this.console.log('Map loaded', map);
-            this._initMapEvents();
-            this._addMarker();
+            this.createControl();
         });
 
         return this;
     }
 
-    _initMapEvents() {
-        this.map.on(this.geo.event.name.click, (e) => {
-            const ev = this.geo.domEvent.create(e);
-            const coords = ev.getCoords();
+    createControl() {
+        const mapControl = this.geo.mapControl;
+        const $element = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(`<div class="panel" style="padding:15px;">
+            <button class="js-click-me btn btn-default">Click me!</button>
+            <button class="js-remove-me btn btn-default">Remove me!</button>
+        </div>`);
 
-            this.console.log(`Map click ${coords.toString()}`, ev);
+        $element.on('click', '.js-click-me', () => {
+            this.console.log('Control button clicked!');
         });
 
-        this.map.on(this.geo.event.map.dragstart, (e) => {
-            const ev = this.geo.domEvent.create(e);
+        mapControl
+            .createConstructor(function controlConstructor(name) {
+                this.name = name;
+            }, function onAdd(parentDomContainer) {
+                $element.appendTo(parentDomContainer);
+            }, function onRemove() {
+                $element.detach().remove();
+            }).then(() => {
+                mapControl.createControl(this.name)
+                    .then((instance) => {
+                        this.console.log('Control Created');
+                        this.map.addControl(instance);
+                        this.console.log('Control added to map', instance.name);
 
-            this.console.log(`Map drag start`);
+                        $element.on('click', '.js-remove-me', () => {
+                            this.map.removeControl(instance);
+                            this.console.log('Control removed from map');
+                        });
+                    }, (message) => {
+                        this.console.log('Control Create Error', message);
+                    });
+        }, (message) => {
+            this.console.log('Control Constructor Create Error', message);
         });
-
-        this.map.on(this.geo.event.map.dragend, (e) => {
-            const ev = this.geo.domEvent.create(e);
-
-            this.console.log(`Map drag dragend`);
-        });
-
-        this.console.log('Map events added');
-    }
-
-    _addMarker() {
-        this.marker = this.geo.marker.create(this.map.getCenter(), {
-            editable: true,
-            icon: {
-                src: './image/map-marker-black.png',
-                size: [32, 32],
-                offset: [16, 32],
-            },
-        }).addTo(this.map);
-
-        this.marker.on(this.geo.event.marker.click, (e) => { this.console.log(`Marker click`); });
-        this.marker.on(this.geo.event.marker.mousedown, (e) => { this.console.log(`Marker mousedown`); });
-        this.marker.on(this.geo.event.marker.mouseup, (e) => { this.console.log(`Marker mouseup`); });
-        this.marker.on(this.geo.event.marker.mouseenter, (e) => { this.console.log(`Marker mouseenter`); });
-        this.marker.on(this.geo.event.marker.mouseleave, (e) => { this.console.log(`Marker mouseleave`); });
-
-        this.console.log('Marker added');
     }
 }
 

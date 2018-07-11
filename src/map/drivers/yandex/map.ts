@@ -161,6 +161,20 @@ export class YandexMapStrategy implements IMapStrategy {
         });
     }
 
+    /**
+     * Remove control from map
+     * @param map
+     * @param control
+     * @return {Promise<IMapStrategy>}
+     */
+    public removeControl(map: any, control: any): Promise<IMapStrategy> {
+        return new Promise((resolve: (result: IMapStrategy) => void) => {
+            map.controls.remove(control);
+
+            resolve(this);
+        });
+    }
+
     public on(geoObject: any, type: string | IEventHandlerFnMap, fn?: EventHandlerFn, context?: any): IMapStrategy {
         geoObject.events.add(type as string, fn, context);
 

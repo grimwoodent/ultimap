@@ -6,6 +6,7 @@ import { YandexMarkerStrategy } from './marker';
 import { YandexPolygonStrategy } from './polygon';
 import { YandexGeoEventStrategy } from './geo-event';
 import { YandexDOMEventStrategy } from './dom-event';
+import { YandexMapControlStrategy } from './map-control';
 
 export class YandexGeoStrategy implements IGeoStrategy {
     public map = new YandexMapStrategy();
@@ -14,7 +15,7 @@ export class YandexGeoStrategy implements IGeoStrategy {
 
     public polygon = new YandexPolygonStrategy();
 
-    public mapControl = null as any;
+    public mapControl = new YandexMapControlStrategy();
 
     public domEvent = new YandexDOMEventStrategy();
 

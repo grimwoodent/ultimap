@@ -47,10 +47,13 @@ function () {
 
       return new Promise(function (resolve) {
         if (!_this.ControlConstructor) {
-          _this.ControlConstructor = _this.getStrategy().createConstructor(baseConstructor, onAdd, onRemove);
+          _this.getStrategy().createConstructor(baseConstructor, onAdd, onRemove).then(function (ControlConstructor) {
+            _this.ControlConstructor = ControlConstructor;
+            resolve(null);
+          });
+        } else {
+          resolve(null);
         }
-
-        resolve(_this.ControlConstructor);
       });
     }
     /**
@@ -64,12 +67,16 @@ function () {
 
   }, {
     key: "createControl",
-    value: function createControl(props, events) {
+    value: function createControl() {
       var _this2 = this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
       return new Promise(function (resolve, reject) {
         if (_this2.ControlConstructor) {
-          resolve(new _this2.ControlConstructor(props, events));
+          resolve(_this2.ControlConstructor.apply(_this2, args));
         } else {
           reject('Control Constructor doesn`t created');
         }
