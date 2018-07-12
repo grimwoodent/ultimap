@@ -2,6 +2,7 @@ import { ICreateMapStrategyOptions, IMapStrategy } from './drivers/interface/map
 import { Coords, tCoords } from './coords';
 import { Bounds } from './bounds';
 import { Evented, IEvented } from './evented';
+import { IMapControl } from './map-control/map-control-instance';
 
 interface IUpdateMapProperties {
     center?: tCoords;
@@ -299,14 +300,14 @@ export class Map extends Evented<IUpdateMapProperties, ICreateMapStrategyOptions
      *
      * @return {IMap}
      */
-    public addControl(control: any): Promise<IMap> {
+    public addControl(control: IMapControl): Promise<IMap> {
         return new Promise((
             resolve: (map: IMap) => void,
             reject: (error?: string) => void,
         ) => {
             if (this.hasInstance()) {
                 this.getStrategy()
-                    .addControl(this.getInstance(), control)
+                    .addControl(this.getInstance(), control.getInstance())
                     .then(() => {
                         resolve(this);
                     }, reject);
@@ -321,14 +322,14 @@ export class Map extends Evented<IUpdateMapProperties, ICreateMapStrategyOptions
      * @param control
      * @return {Promise<IMap>}
      */
-    public removeControl(control: any): Promise<IMap> {
+    public removeControl(control: IMapControl): Promise<IMap> {
         return new Promise((
             resolve: (map: IMap) => void,
             reject: (error?: string) => void,
         ) => {
             if (this.hasInstance()) {
                 this.getStrategy()
-                    .removeControl(this.getInstance(), control)
+                    .removeControl(this.getInstance(), control.getInstance())
                     .then(() => {
                         resolve(this);
                     }, reject);

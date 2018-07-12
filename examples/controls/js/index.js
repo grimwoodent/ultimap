@@ -50,40 +50,61 @@ class Example {
     }
 
     createControl() {
-        const mapControl = this.geo.mapControl;
-        const $element = $(`<div class="panel" style="padding:15px;">
-            <button class="js-click-me btn btn-default">Click me!</button>
-            <button class="js-remove-me btn btn-default">Remove me!</button>
-        </div>`);
-
-        $element.on('click', '.js-click-me', () => {
-            this.console.log('Control button clicked!');
-        });
+        const mapControl = this.geo.mapControl
+            .setConstructor((control, name) => {
+                control.name = name;
+                control.$element = $(`<div class="panel panel-default">
+                        <div class="panel-heading">${control.name}</div>
+                        <div class="panel-body">
+                            <button class="js-click-me btn btn-xs btn-default">Click me!</button>
+                            <button class="js-remove-me btn btn-xs btn-default">Remove me!</button>
+                        </div>
+                    </div>`);
+                control.$element
+                    .on('click', '.js-click-me', () => {
+                        this.console.log('Control button clicked!');
+                    })
+                    .on('click', '.js-remove-me', () => {
+                        this.map.removeControl(control);
+                        this.console.log('Control removed from map');
+                    });
+            })
+            .setOnAddHandler((control, parentDomContainer) => {
+                control.$element.appendTo(parentDomContainer);
+            })
+            .setOnRemoveHandler((control) => {
+                control.$element.detach().remove();
+            });
 
         mapControl
-            .createConstructor(function controlConstructor(name) {
-                this.name = name;
-            }, function onAdd(parentDomContainer) {
-                $element.appendTo(parentDomContainer);
-            }, function onRemove() {
-                $element.detach().remove();
-            }).then(() => {
-                mapControl.createControl(this.name)
-                    .then((instance) => {
-                        this.console.log('Control Created');
-                        this.map.addControl(instance);
-                        this.console.log('Control added to map', instance.name);
+            .create(`${this.name} 1`)
+            .then((control) => {
+                this.console.log('Control Created');
+                this.map.addControl(control);
+                this.console.log('Control added to map', control.name);
+            }, (message) => {
+                this.console.log('Control Create Error', message);
+            });
 
-                        $element.on('click', '.js-remove-me', () => {
-                            this.map.removeControl(instance);
-                            this.console.log('Control removed from map');
-                        });
-                    }, (message) => {
-                        this.console.log('Control Create Error', message);
-                    });
-        }, (message) => {
-            this.console.log('Control Constructor Create Error', message);
-        });
+        mapControl
+            .create(`${this.name} 2`)
+            .then((control) => {
+                this.console.log('Control Created');
+                this.map.addControl(control);
+                this.console.log('Control added to map', control.name);
+            }, (message) => {
+                this.console.log('Control Create Error', message);
+            });
+
+        mapControl
+            .create(`${this.name} 3`)
+            .then((control) => {
+                this.console.log('Control Created');
+                this.map.addControl(control);
+                this.console.log('Control added to map', control.name);
+            }, (message) => {
+                this.console.log('Control Create Error', message);
+            });
     }
 }
 

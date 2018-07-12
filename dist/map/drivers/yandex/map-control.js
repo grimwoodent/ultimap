@@ -5,13 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.YandexMapControlStrategy = void 0;
 
+var _grim = require("grim.lib");
+
 var _ymaps = require("./utils/ymaps");
 
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var _mapControl = require("../interface/map-control");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27,54 +25,43 @@ function () {
   }
 
   _createClass(YandexMapControlStrategy, [{
-    key: "createConstructor",
-    value: function createConstructor(BaseConstructor, onAdd, onRemove) {
+    key: "getControlInstanceConstructor",
+    value: function getControlInstanceConstructor() {
       return new Promise(function (resolve, reject) {
-        if (typeof onAdd !== 'function' || typeof onRemove !== 'function') {
-          throw new Error('Empty constructor/destructor functions');
-        }
-
         if (!_ymaps.Api.ymaps) {
           throw new Error('Yandex maps script not found');
         }
 
         _ymaps.Api.ymaps.ready(function () {
-          var ymapsOptions = {}; // @TODO config this
-
           var ControlConstructor = function Constructor() {
-            var _ref;
+            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            this.props = {}; // props; // @TODO adapter
 
-            for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = arguments[_key];
-            }
-
-            (_ref = BaseConstructor).call.apply(_ref, [this].concat(args));
-
-            ControlConstructor.superclass.constructor.call(this, ymapsOptions);
+            this.callbacks = new _grim.Callbacks(events);
+            ControlConstructor.superclass.constructor.call(this, props);
           };
 
           _ymaps.Api.ymaps.util.augment(ControlConstructor, _ymaps.Api.ymaps.collection.Item, {
             onAddToMap: function onAddToMap(map) {
+              var _this = this;
+
               ControlConstructor.superclass.onAddToMap.call(this, map);
               this.getParent().getChildElement(this).then(function (parentDomContainer) {
                 try {
-                  onAdd.call(ControlConstructor, parentDomContainer);
+                  _this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
                 } catch (err) {
                   console.error(err);
                 }
               });
             },
             onRemoveFromMap: function onRemoveFromMap(map) {
-              onRemove.call(ControlConstructor);
+              this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_REMOVE);
             }
           });
 
-          resolve(function GetInstance() {
-            for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-              args[_key2] = arguments[_key2];
-            }
-
-            return _construct(ControlConstructor, args);
+          resolve(function (props, events) {
+            return new ControlConstructor(props, events);
           });
         }, function (message) {
           throw new Error(message);

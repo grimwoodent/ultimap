@@ -333,7 +333,7 @@ function (_Evented) {
 
       return new Promise(function (resolve, reject) {
         if (_this9.hasInstance()) {
-          _this9.getStrategy().addControl(_this9.getInstance(), control).then(function () {
+          _this9.getStrategy().addControl(_this9.getInstance(), control.getInstance()).then(function () {
             resolve(_this9);
           }, reject);
         } else {
@@ -354,7 +354,7 @@ function (_Evented) {
 
       return new Promise(function (resolve, reject) {
         if (_this10.hasInstance()) {
-          _this10.getStrategy().removeControl(_this10.getInstance(), control).then(function () {
+          _this10.getStrategy().removeControl(_this10.getInstance(), control.getInstance()).then(function () {
             resolve(_this10);
           }, reject);
         } else {

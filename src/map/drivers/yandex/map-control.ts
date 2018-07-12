@@ -1,26 +1,26 @@
+import { Callbacks } from 'grim.lib';
 import { Api } from './utils/ymaps';
-import { IMapControlStrategy, TGetControlInstanceHandler, TMapControlConstructor } from '../interface/map-control';
+import {
+    IMapControlStrategy,
+    TGetControlInstanceHandler,
+    TControlConstructor,
+    IMapControlEvents,
+    MAP_CONTROL_EVENTS,
+} from '../interface/map-control';
 
 export class YandexMapControlStrategy implements IMapControlStrategy {
-    public createConstructor(
-        BaseConstructor: TMapControlConstructor,
-        onAdd: (parentDomContainer: HTMLElement) => any,
-        onRemove: () => any,
-    ): Promise<TGetControlInstanceHandler> {
+    public getControlInstanceConstructor(): Promise<TGetControlInstanceHandler> {
         return new Promise((resolve, reject) => {
-            if (typeof(onAdd) !== 'function' || typeof(onRemove) !== 'function') {
-                throw new Error('Empty constructor/destructor functions');
-            }
-
             if (!Api.ymaps) {
                 throw new Error('Yandex maps script not found');
             }
 
             Api.ymaps.ready(() => {
-                const ymapsOptions = {}; // @TODO config this
-                const ControlConstructor = function Constructor(...args: any[]) {
-                    (BaseConstructor as any).call(this, ...args);
-                    (ControlConstructor as any).superclass.constructor.call(this, ymapsOptions);
+                const ControlConstructor = function Constructor(props: any = {}, events: IMapControlEvents = {}) {
+                    this.props = {}; // props; // @TODO adapter
+                    this.callbacks = new Callbacks(events as any);
+
+                    (ControlConstructor as any).superclass.constructor.call(this, props);
                 }
 
                 Api.ymaps.util.augment(ControlConstructor, Api.ymaps.collection.Item, {
@@ -29,7 +29,7 @@ export class YandexMapControlStrategy implements IMapControlStrategy {
                         this.getParent().getChildElement(this)
                             .then((parentDomContainer: HTMLElement) => {
                                 try {
-                                    onAdd.call(ControlConstructor, parentDomContainer);
+                                    this.callbacks.trigger(MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
                                 } catch (err) {
                                     console.error(err);
                                 }
@@ -37,13 +37,11 @@ export class YandexMapControlStrategy implements IMapControlStrategy {
                     },
 
                     onRemoveFromMap(map: any) {
-                        onRemove.call(ControlConstructor);
+                        this.callbacks.trigger(MAP_CONTROL_EVENTS.ON_REMOVE);
                     },
                 });
 
-                resolve(function GetInstance(...args: any[]) {
-                    return new (ControlConstructor as any)(...args);
-                });
+                resolve((props?: any, events?: IMapControlEvents) => new (ControlConstructor as any)(props, events));
             }, (message?: string) => {
                 throw new Error(message);
             })

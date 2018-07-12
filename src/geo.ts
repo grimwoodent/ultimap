@@ -5,7 +5,7 @@ import { Marker } from './map/marker';
 import { MarkerPreset } from './map/preset/marker';
 import { Polygon } from './map/polygon';
 import { PolygonPreset } from './map/preset/polygon';
-import { MapControl } from './map/map-control';
+import { MapControlConstructor } from './map/map-control';
 import { DOMEvent } from './map/dom-event';
 import { Constructor as CollectionsConstructor } from './map/collection/constructor';
 import { MarkerStrategy as MarkerCollectionsStrategy } from './map/collection/strategy/marker';
@@ -86,7 +86,7 @@ export class Geo {
     }
 
     public get mapControl() {
-        return new MapControl(this.getStrategy());
+        return new MapControlConstructor(this.getStrategy());
     }
 
     public get preset() {

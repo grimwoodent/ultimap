@@ -127,7 +127,7 @@ function () {
   }, {
     key: "mapControl",
     get: function get() {
-      return new _mapControl.MapControl(this.getStrategy());
+      return new _mapControl.MapControlConstructor(this.getStrategy());
     }
   }, {
     key: "preset",

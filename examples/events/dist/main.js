@@ -1838,7 +1838,7 @@ webpackJsonp_name_([0],[
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(194)("./" + name);
+                __webpack_require__(196)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4510,7 +4510,7 @@ webpackJsonp_name_([0],[
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(211)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(213)(module)))
 
 /***/ }),
 /* 1 */
@@ -18557,6 +18557,58 @@ exports.Api = Api;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "Define", {
+  enumerable: true,
+  get: function get() {
+    return _define.Define;
+  }
+});
+Object.defineProperty(exports, "Callbacks", {
+  enumerable: true,
+  get: function get() {
+    return _callbacks.Callbacks;
+  }
+});
+Object.defineProperty(exports, "Cookie", {
+  enumerable: true,
+  get: function get() {
+    return _cookie.Cookie;
+  }
+});
+Object.defineProperty(exports, "UID", {
+  enumerable: true,
+  get: function get() {
+    return _uid.default;
+  }
+});
+exports.Collection = void 0;
+
+var _define = __webpack_require__(193);
+
+var _callbacks = __webpack_require__(188);
+
+var _cookie = __webpack_require__(192);
+
+var _uid = _interopRequireDefault(__webpack_require__(183));
+
+var Collection = _interopRequireWildcard(__webpack_require__(190));
+
+exports.Collection = Collection;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Icon = void 0;
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -18613,7 +18665,26 @@ function () {
 exports.Icon = Icon;
 
 /***/ }),
-/* 6 */
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MAP_CONTROL_EVENTS = void 0;
+var MAP_CONTROL_EVENTS;
+exports.MAP_CONTROL_EVENTS = MAP_CONTROL_EVENTS;
+
+(function (MAP_CONTROL_EVENTS) {
+  MAP_CONTROL_EVENTS["ON_ADD"] = "onAdd";
+  MAP_CONTROL_EVENTS["ON_REMOVE"] = "onRemove";
+})(MAP_CONTROL_EVENTS || (exports.MAP_CONTROL_EVENTS = MAP_CONTROL_EVENTS = {}));
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18624,7 +18695,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Events = void 0;
 
-var _group = __webpack_require__(175);
+var _group = __webpack_require__(176);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -18732,7 +18803,7 @@ function () {
 exports.Events = Events;
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18747,7 +18818,7 @@ var _coords = __webpack_require__(1);
 
 var _bounds = __webpack_require__(2);
 
-var _evented = __webpack_require__(15);
+var _evented = __webpack_require__(16);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -19071,7 +19142,7 @@ function (_Evented) {
 
       return new Promise(function (resolve, reject) {
         if (_this9.hasInstance()) {
-          _this9.getStrategy().addControl(_this9.getInstance(), control).then(function () {
+          _this9.getStrategy().addControl(_this9.getInstance(), control.getInstance()).then(function () {
             resolve(_this9);
           }, reject);
         } else {
@@ -19092,7 +19163,7 @@ function (_Evented) {
 
       return new Promise(function (resolve, reject) {
         if (_this10.hasInstance()) {
-          _this10.getStrategy().removeControl(_this10.getInstance(), control).then(function () {
+          _this10.getStrategy().removeControl(_this10.getInstance(), control.getInstance()).then(function () {
             resolve(_this10);
           }, reject);
         } else {
@@ -19118,7 +19189,7 @@ function (_Evented) {
 exports.Map = Map;
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19131,7 +19202,7 @@ exports.PolygonCoords = void 0;
 
 var _bounds = __webpack_require__(2);
 
-var _polygonCoords = __webpack_require__(22);
+var _polygonCoords = __webpack_require__(23);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19141,9 +19212,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var concavehull = __webpack_require__(184);
+var concavehull = __webpack_require__(186);
 
-var convexhull = __webpack_require__(198);
+var convexhull = __webpack_require__(200);
 
 var PolygonCoords =
 /*#__PURE__*/
@@ -19239,68 +19310,16 @@ function () {
 exports.PolygonCoords = PolygonCoords;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "Define", {
-  enumerable: true,
-  get: function get() {
-    return _define.Define;
-  }
-});
-Object.defineProperty(exports, "Callbacks", {
-  enumerable: true,
-  get: function get() {
-    return _callbacks.Callbacks;
-  }
-});
-Object.defineProperty(exports, "Cookie", {
-  enumerable: true,
-  get: function get() {
-    return _cookie.Cookie;
-  }
-});
-Object.defineProperty(exports, "UID", {
-  enumerable: true,
-  get: function get() {
-    return _uid.default;
-  }
-});
-exports.Collection = void 0;
-
-var _define = __webpack_require__(191);
-
-var _callbacks = __webpack_require__(186);
-
-var _cookie = __webpack_require__(190);
-
-var _uid = _interopRequireDefault(__webpack_require__(181));
-
-var Collection = _interopRequireWildcard(__webpack_require__(188));
-
-exports.Collection = Collection;
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var twoProduct = __webpack_require__(147)
-var robustSum = __webpack_require__(203)
-var robustScale = __webpack_require__(201)
-var robustSubtract = __webpack_require__(202)
+var twoProduct = __webpack_require__(148)
+var robustSum = __webpack_require__(205)
+var robustScale = __webpack_require__(203)
+var robustSubtract = __webpack_require__(204)
 
 var NUM_EXPAND = 5
 
@@ -19487,7 +19506,7 @@ function generateOrientationProc() {
 generateOrientationProc()
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19587,7 +19606,7 @@ function () {
 exports.DOMEvent = DOMEvent;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19598,23 +19617,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeoStrategy = void 0;
 
-var _map = __webpack_require__(160);
+var _map = __webpack_require__(161);
 
-var _marker = __webpack_require__(161);
+var _marker = __webpack_require__(162);
 
-var _marker2 = __webpack_require__(163);
+var _marker2 = __webpack_require__(164);
 
-var _polygon = __webpack_require__(162);
+var _polygon = __webpack_require__(163);
 
-var _polygon2 = __webpack_require__(164);
+var _polygon2 = __webpack_require__(165);
 
-var _mapControl = __webpack_require__(159);
+var _mapControl = __webpack_require__(160);
 
-var _domEvent = __webpack_require__(156);
+var _domEvent = __webpack_require__(157);
 
-var _geoEvent = __webpack_require__(157);
+var _geoEvent = __webpack_require__(158);
 
-var _geocoder = __webpack_require__(158);
+var _geocoder = __webpack_require__(159);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19663,7 +19682,7 @@ function () {
 exports.LeafletGeoStrategy = LeafletGeoStrategy;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19674,7 +19693,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.markerPresetStorage = void 0;
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -19740,7 +19759,7 @@ var markerPresetStorage = new MarkerPresetStorage();
 exports.markerPresetStorage = markerPresetStorage;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19816,7 +19835,7 @@ var polygonPresetStorge = new PolygonPresetStorge();
 exports.polygonPresetStorge = polygonPresetStorge;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19827,7 +19846,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Evented = void 0;
 
-var _events = __webpack_require__(6);
+var _events = __webpack_require__(8);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -19965,7 +19984,7 @@ function () {
 exports.Evented = Evented;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20033,7 +20052,7 @@ function () {
 exports.GeoEvent = GeoEvent;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20104,7 +20123,7 @@ function () {
 exports.Geocoder = Geocoder;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20115,9 +20134,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GeoObject = void 0;
 
-var _evented = __webpack_require__(15);
+var _evented = __webpack_require__(16);
 
-var _index = __webpack_require__(21);
+var _index = __webpack_require__(22);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -20398,7 +20417,7 @@ exports.GeoObject = GeoObject;
 _defineProperty(GeoObject, "Coords", null);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20411,9 +20430,9 @@ exports.Marker = void 0;
 
 var _coords = __webpack_require__(1);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
-var _geoobject = __webpack_require__(18);
+var _geoobject = __webpack_require__(19);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -20606,7 +20625,7 @@ exports.Marker = Marker;
 _defineProperty(Marker, "Coords", _coords.Coords);
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20617,9 +20636,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Polygon = void 0;
 
-var _geoobject = __webpack_require__(18);
+var _geoobject = __webpack_require__(19);
 
-var _polygonCoords = __webpack_require__(8);
+var _polygonCoords = __webpack_require__(10);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -20821,7 +20840,7 @@ exports.Polygon = Polygon;
 _defineProperty(Polygon, "Coords", _polygonCoords.PolygonCoords);
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20855,7 +20874,7 @@ var uid = function () {
 exports.uid = uid;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21157,7 +21176,7 @@ function () {
 exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21234,7 +21253,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21297,7 +21316,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21360,7 +21379,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21486,7 +21505,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21549,7 +21568,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21657,7 +21676,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21720,7 +21739,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21859,7 +21878,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21968,7 +21987,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22104,7 +22123,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22198,7 +22217,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22260,7 +22279,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22383,7 +22402,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22506,7 +22525,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22618,7 +22637,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22773,7 +22792,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22865,7 +22884,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23048,7 +23067,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23115,7 +23134,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23199,7 +23218,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23263,7 +23282,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23343,7 +23362,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23423,7 +23442,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23503,7 +23522,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23606,7 +23625,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23710,7 +23729,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23781,7 +23800,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23848,7 +23867,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23919,7 +23938,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23990,7 +24009,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24056,7 +24075,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24127,7 +24146,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24202,7 +24221,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24298,7 +24317,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24385,7 +24404,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24481,7 +24500,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24565,7 +24584,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24635,7 +24654,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24745,7 +24764,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24858,7 +24877,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24922,7 +24941,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25000,7 +25019,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25082,7 +25101,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25169,7 +25188,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25248,7 +25267,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25328,7 +25347,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25409,7 +25428,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25536,7 +25555,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25664,7 +25683,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25765,7 +25784,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25893,7 +25912,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26051,7 +26070,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26165,7 +26184,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26264,7 +26283,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26350,7 +26369,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26486,7 +26505,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26559,7 +26578,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26655,7 +26674,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26741,7 +26760,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26834,7 +26853,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26925,7 +26944,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27039,7 +27058,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27169,7 +27188,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27254,7 +27273,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27345,7 +27364,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27485,7 +27504,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27559,7 +27578,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27681,7 +27700,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27782,7 +27801,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27898,7 +27917,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27966,7 +27985,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28060,7 +28079,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28145,7 +28164,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28253,7 +28272,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28417,7 +28436,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28503,7 +28522,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28589,7 +28608,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28653,7 +28672,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28750,7 +28769,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28816,7 +28835,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28943,7 +28962,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29034,7 +29053,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29125,7 +29144,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29189,7 +29208,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29317,7 +29336,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29447,7 +29466,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29512,7 +29531,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29581,7 +29600,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29660,7 +29679,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29846,7 +29865,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -29948,7 +29967,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30012,7 +30031,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30087,7 +30106,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30247,7 +30266,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30424,7 +30443,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30496,7 +30515,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30611,7 +30630,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30726,7 +30745,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30818,7 +30837,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30891,7 +30910,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -30954,7 +30973,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31087,7 +31106,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31180,7 +31199,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31251,7 +31270,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31371,7 +31390,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31442,7 +31461,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31508,7 +31527,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31634,7 +31653,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31732,7 +31751,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31827,7 +31846,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31889,7 +31908,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -31951,7 +31970,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
@@ -32074,7 +32093,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32229,7 +32248,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32331,7 +32350,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32393,7 +32412,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32455,7 +32474,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32538,7 +32557,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32610,7 +32629,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32674,7 +32693,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32788,7 +32807,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -32895,7 +32914,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -33002,7 +33021,7 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33024,7 +33043,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33063,7 +33082,7 @@ function twoProduct(a, b, result) {
 }
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33194,31 +33213,31 @@ Object.defineProperty(exports, "DOMEvent", {
 });
 exports.geo = exports.Strategy = void 0;
 
-var _geo = __webpack_require__(150);
+var _geo = __webpack_require__(151);
 
 var _coords = __webpack_require__(1);
 
-var _polygonCoords = __webpack_require__(8);
+var _polygonCoords = __webpack_require__(10);
 
 var _bounds = __webpack_require__(2);
 
-var _index = __webpack_require__(12);
+var _index = __webpack_require__(13);
 
-var _index2 = __webpack_require__(169);
+var _index2 = __webpack_require__(170);
 
-var _marker = __webpack_require__(19);
+var _marker = __webpack_require__(20);
 
-var _polygon = __webpack_require__(20);
+var _polygon = __webpack_require__(21);
 
-var _index3 = __webpack_require__(7);
+var _index3 = __webpack_require__(9);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
-var _geocoder = __webpack_require__(17);
+var _geocoder = __webpack_require__(18);
 
-var _geoEvent = __webpack_require__(16);
+var _geoEvent = __webpack_require__(17);
 
-var _domEvent = __webpack_require__(11);
+var _domEvent = __webpack_require__(12);
 
 var Strategy = {
   Leaflet: _index.LeafletGeoStrategy,
@@ -33229,7 +33248,7 @@ var geo = new _geo.Geo();
 exports.geo = geo;
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -43600,7 +43619,7 @@ return jQuery;
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43611,31 +43630,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Geo = void 0;
 
-var _map = __webpack_require__(7);
+var _map = __webpack_require__(9);
 
-var _leaflet = __webpack_require__(12);
+var _leaflet = __webpack_require__(13);
 
-var _marker = __webpack_require__(19);
+var _marker = __webpack_require__(20);
 
-var _marker2 = __webpack_require__(177);
+var _marker2 = __webpack_require__(179);
 
-var _polygon = __webpack_require__(20);
+var _polygon = __webpack_require__(21);
 
-var _polygon2 = __webpack_require__(178);
+var _polygon2 = __webpack_require__(180);
 
-var _mapControl = __webpack_require__(176);
+var _mapControl = __webpack_require__(177);
 
-var _domEvent = __webpack_require__(11);
+var _domEvent = __webpack_require__(12);
 
-var _constructor = __webpack_require__(151);
+var _constructor = __webpack_require__(152);
 
-var _marker3 = __webpack_require__(152);
+var _marker3 = __webpack_require__(153);
 
-var _polygon3 = __webpack_require__(153);
+var _polygon3 = __webpack_require__(154);
 
-var _geoEvent = __webpack_require__(16);
+var _geoEvent = __webpack_require__(17);
 
-var _geocoder = __webpack_require__(17);
+var _geocoder = __webpack_require__(18);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -43733,7 +43752,7 @@ function () {
   }, {
     key: "mapControl",
     get: function get() {
-      return new _mapControl.MapControl(this.getStrategy());
+      return new _mapControl.MapControlConstructor(this.getStrategy());
     }
   }, {
     key: "preset",
@@ -43766,7 +43785,7 @@ function () {
 exports.Geo = Geo;
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43777,7 +43796,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Constructor = exports.Strategy = void 0;
 
-var _grim = __webpack_require__(9);
+var _grim = __webpack_require__(5);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -43826,7 +43845,7 @@ function (_Collection$Construct) {
 exports.Constructor = Constructor;
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43837,7 +43856,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MarkerStrategy = void 0;
 
-var _grim = __webpack_require__(9);
+var _grim = __webpack_require__(5);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -43892,7 +43911,7 @@ function (_Collection$Strategy) {
 exports.MarkerStrategy = MarkerStrategy;
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -43903,7 +43922,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PolygonStrategy = void 0;
 
-var _grim = __webpack_require__(9);
+var _grim = __webpack_require__(5);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -43958,13 +43977,6 @@ function (_Collection$Strategy) {
 exports.PolygonStrategy = PolygonStrategy;
 
 /***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43973,6 +43985,13 @@ exports.PolygonStrategy = PolygonStrategy;
 
 /***/ }),
 /* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44037,7 +44056,7 @@ function () {
 exports.LeafletDOMEventStrategy = LeafletDOMEventStrategy;
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44102,7 +44121,7 @@ function () {
 exports.LeafletGeoEventStrategy = LeafletGeoEventStrategy;
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44113,7 +44132,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimJs = __webpack_require__(196);
+var _nominatimJs = __webpack_require__(198);
 
 var _coords = __webpack_require__(1);
 
@@ -44184,7 +44203,7 @@ function () {
 exports.LeafletGeocoderStrategy = LeafletGeocoderStrategy;
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44195,15 +44214,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMapControlStrategy = void 0;
 
+var _grim = __webpack_require__(5);
+
 var L = _interopRequireWildcard(__webpack_require__(3));
 
+var _mapControl = __webpack_require__(7);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -44219,27 +44236,21 @@ function () {
   }
 
   _createClass(LeafletMapControlStrategy, [{
-    key: "createConstructor",
-    value: function createConstructor(BaseConstructor, onAdd, onRemove) {
+    key: "getControlInstanceConstructor",
+    value: function getControlInstanceConstructor() {
       return new Promise(function (resolve, reject) {
-        if (typeof onAdd !== 'function' || typeof onRemove !== 'function') {
-          throw new Error('Empty constructor/destructor functions');
-        }
-
         var ControlConstructor = function ControlConstructor() {
-          var _ref;
+          var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+          var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+          this.props = {}; // props; // @TODO adapter
 
-          for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-          }
-
-          (_ref = BaseConstructor).call.apply(_ref, [this].concat(args));
+          this.callbacks = new _grim.Callbacks(events);
         };
 
         ControlConstructor.prototype.onAdd = function onAddMapControl(map) {
           try {
             var parentDomContainer = L.DomUtil.create('div');
-            onAdd.call(this, parentDomContainer);
+            this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
             L.DomEvent.disableScrollPropagation(parentDomContainer);
             L.DomEvent.disableClickPropagation(parentDomContainer);
             return parentDomContainer;
@@ -44249,15 +44260,12 @@ function () {
         };
 
         ControlConstructor.prototype.onRemove = function onRemoveMapControl(map) {
-          onRemove.call(this);
+          this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_REMOVE);
         };
 
-        resolve(function () {
-          for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            args[_key2] = arguments[_key2];
-          }
-
-          return new (L.Control.extend(_construct(ControlConstructor, args)))();
+        resolve(function (props, events) {
+          var control = new ControlConstructor(props, events);
+          return new (L.Control.extend(control))();
         });
       });
     }
@@ -44269,7 +44277,7 @@ function () {
 exports.LeafletMapControlStrategy = LeafletMapControlStrategy;
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44282,15 +44290,15 @@ exports.LeafletMapStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(3));
 
-__webpack_require__(185);
+__webpack_require__(187);
 
-var _map = __webpack_require__(154);
+var _map = __webpack_require__(155);
 
 var _coords = __webpack_require__(1);
 
 var _bounds = __webpack_require__(2);
 
-var _events = __webpack_require__(6);
+var _events = __webpack_require__(8);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -44527,7 +44535,7 @@ function () {
 exports.LeafletMapStrategy = LeafletMapStrategy;
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44540,23 +44548,23 @@ exports.LeafletMarkerStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(3));
 
-__webpack_require__(193);
+__webpack_require__(195);
 
-var _index = __webpack_require__(7);
+var _index = __webpack_require__(9);
 
 var _coords = __webpack_require__(1);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
-var _marker = __webpack_require__(155);
+var _marker = __webpack_require__(156);
 
-var _iconFactory = __webpack_require__(165);
+var _iconFactory = __webpack_require__(166);
 
-var _markerPresetStorage = __webpack_require__(13);
+var _markerPresetStorage = __webpack_require__(14);
 
 var _bounds = __webpack_require__(2);
 
-var _events = __webpack_require__(6);
+var _events = __webpack_require__(8);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -44735,7 +44743,7 @@ function () {
 exports.LeafletMarkerStrategy = LeafletMarkerStrategy;
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44748,13 +44756,13 @@ exports.LeafletPolygonStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(3));
 
-var _polygonCoords = __webpack_require__(8);
+var _polygonCoords = __webpack_require__(10);
 
 var _bounds = __webpack_require__(2);
 
-var _polygonPresetStorge = __webpack_require__(14);
+var _polygonPresetStorge = __webpack_require__(15);
 
-var _polygonCoords2 = __webpack_require__(22);
+var _polygonCoords2 = __webpack_require__(23);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -44940,7 +44948,7 @@ function () {
 exports.LeafletPolygonStrategy = LeafletPolygonStrategy;
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44951,7 +44959,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMarkerPresetStrategy = void 0;
 
-var _markerPresetStorage = __webpack_require__(13);
+var _markerPresetStorage = __webpack_require__(14);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -44983,7 +44991,7 @@ function () {
 exports.LeafletMarkerPresetStrategy = LeafletMarkerPresetStrategy;
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44994,7 +45002,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletPolygonPresetStrategy = void 0;
 
-var _polygonPresetStorge = __webpack_require__(14);
+var _polygonPresetStorge = __webpack_require__(15);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -45031,7 +45039,7 @@ function () {
 exports.LeafletPolygonPresetStrategy = LeafletPolygonPresetStrategy;
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45081,7 +45089,7 @@ var iconFactory = new IconFactory();
 exports.iconFactory = iconFactory;
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45142,7 +45150,7 @@ function () {
 exports.YandexDOMEventStrategy = YandexDOMEventStrategy;
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45208,7 +45216,7 @@ function () {
 exports.YandexGeoEventStrategy = YandexGeoEventStrategy;
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45292,7 +45300,7 @@ function () {
 exports.YandexGeocoderStrategy = YandexGeocoderStrategy;
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45305,19 +45313,19 @@ exports.YandexGeoStrategy = void 0;
 
 var _ymaps = __webpack_require__(4);
 
-var _map = __webpack_require__(171);
+var _map = __webpack_require__(172);
 
-var _geocoder = __webpack_require__(168);
+var _geocoder = __webpack_require__(169);
 
-var _marker = __webpack_require__(172);
+var _marker = __webpack_require__(173);
 
-var _polygon = __webpack_require__(173);
+var _polygon = __webpack_require__(174);
 
-var _geoEvent = __webpack_require__(167);
+var _geoEvent = __webpack_require__(168);
 
-var _domEvent = __webpack_require__(166);
+var _domEvent = __webpack_require__(167);
 
-var _mapControl = __webpack_require__(170);
+var _mapControl = __webpack_require__(171);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -45366,7 +45374,7 @@ function () {
 exports.YandexGeoStrategy = YandexGeoStrategy;
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45377,13 +45385,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.YandexMapControlStrategy = void 0;
 
+var _grim = __webpack_require__(5);
+
 var _ymaps = __webpack_require__(4);
 
-function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var _mapControl = __webpack_require__(7);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -45399,54 +45405,43 @@ function () {
   }
 
   _createClass(YandexMapControlStrategy, [{
-    key: "createConstructor",
-    value: function createConstructor(BaseConstructor, onAdd, onRemove) {
+    key: "getControlInstanceConstructor",
+    value: function getControlInstanceConstructor() {
       return new Promise(function (resolve, reject) {
-        if (typeof onAdd !== 'function' || typeof onRemove !== 'function') {
-          throw new Error('Empty constructor/destructor functions');
-        }
-
         if (!_ymaps.Api.ymaps) {
           throw new Error('Yandex maps script not found');
         }
 
         _ymaps.Api.ymaps.ready(function () {
-          var ymapsOptions = {}; // @TODO config this
-
           var ControlConstructor = function Constructor() {
-            var _ref;
+            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            this.props = {}; // props; // @TODO adapter
 
-            for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-              args[_key] = arguments[_key];
-            }
-
-            (_ref = BaseConstructor).call.apply(_ref, [this].concat(args));
-
-            ControlConstructor.superclass.constructor.call(this, ymapsOptions);
+            this.callbacks = new _grim.Callbacks(events);
+            ControlConstructor.superclass.constructor.call(this, props);
           };
 
           _ymaps.Api.ymaps.util.augment(ControlConstructor, _ymaps.Api.ymaps.collection.Item, {
             onAddToMap: function onAddToMap(map) {
+              var _this = this;
+
               ControlConstructor.superclass.onAddToMap.call(this, map);
               this.getParent().getChildElement(this).then(function (parentDomContainer) {
                 try {
-                  onAdd.call(ControlConstructor, parentDomContainer);
+                  _this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
                 } catch (err) {
                   console.error(err);
                 }
               });
             },
             onRemoveFromMap: function onRemoveFromMap(map) {
-              onRemove.call(ControlConstructor);
+              this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_REMOVE);
             }
           });
 
-          resolve(function GetInstance() {
-            for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-              args[_key2] = arguments[_key2];
-            }
-
-            return _construct(ControlConstructor, args);
+          resolve(function (props, events) {
+            return new ControlConstructor(props, events);
           });
         }, function (message) {
           throw new Error(message);
@@ -45461,7 +45456,7 @@ function () {
 exports.YandexMapControlStrategy = YandexMapControlStrategy;
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45702,7 +45697,7 @@ function () {
 exports.YandexMapStrategy = YandexMapStrategy;
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45715,7 +45710,7 @@ exports.YandexMarkerStrategy = void 0;
 
 var _ymaps = __webpack_require__(4);
 
-var _iconFactory = __webpack_require__(174);
+var _iconFactory = __webpack_require__(175);
 
 var _coords = __webpack_require__(1);
 
@@ -45918,7 +45913,7 @@ function () {
 exports.YandexMarkerStrategy = YandexMarkerStrategy;
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46156,7 +46151,7 @@ function () {
 exports.YandexPolygonStrategy = YandexPolygonStrategy;
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46205,7 +46200,7 @@ function () {
 exports.IconFactory = IconFactory;
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46216,7 +46211,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.EventsGroup = void 0;
 
-var Utils = _interopRequireWildcard(__webpack_require__(21));
+var Utils = _interopRequireWildcard(__webpack_require__(22));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -46383,7 +46378,144 @@ function () {
 exports.EventsGroup = EventsGroup;
 
 /***/ }),
-/* 176 */
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MapControlConstructor = void 0;
+
+var _mapControl = __webpack_require__(7);
+
+var _mapControlInstance = __webpack_require__(178);
+
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MapControlConstructor =
+/*#__PURE__*/
+function () {
+  function MapControlConstructor(strategy) {
+    _classCallCheck(this, MapControlConstructor);
+
+    _defineProperty(this, "constructorInstance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    _defineProperty(this, "props", {
+      constructorHandler: null,
+      onAddHandler: null,
+      onRemoveHandler: null
+    });
+
+    if (!strategy) {
+      throw new Error('Geo strategy not found');
+    }
+
+    this.strategy = strategy;
+  }
+
+  _createClass(MapControlConstructor, [{
+    key: "setConstructor",
+    value: function setConstructor(handler) {
+      this.props.constructorHandler = handler;
+      return this;
+    }
+  }, {
+    key: "setOnAddHandler",
+    value: function setOnAddHandler(handler) {
+      this.props.onAddHandler = handler;
+      return this;
+    }
+  }, {
+    key: "setOnRemoveHandler",
+    value: function setOnRemoveHandler(handler) {
+      this.props.onRemoveHandler = handler;
+      return this;
+    }
+    /**
+     * Create new control instance
+     * @param args
+     * @return {Promise<any>}
+     */
+
+  }, {
+    key: "create",
+    value: function create() {
+      var _this = this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return new Promise(function (resolve, reject) {
+        try {
+          if (!_this.constructorInstance) {
+            _this.constructorInstance = new Promise(function (resolve) {
+              _this.getStrategy().getControlInstanceConstructor().then(function (constructorInstance) {
+                _this.constructorInstance = constructorInstance;
+                resolve(_this.constructorInstance);
+              });
+            });
+          }
+
+          _this.constructorInstance.then(function (constructorInstance) {
+            var _constructorInstance;
+
+            var control = _construct(_mapControlInstance.MapControl, [constructorInstance({}, (_constructorInstance = {}, _defineProperty(_constructorInstance, _mapControl.MAP_CONTROL_EVENTS.ON_ADD, function (parentDomNode) {
+              if (_this.props.onAddHandler) {
+                _this.props.onAddHandler.call(control, control, parentDomNode);
+              }
+            }), _defineProperty(_constructorInstance, _mapControl.MAP_CONTROL_EVENTS.ON_REMOVE, function () {
+              if (_this.props.onRemoveHandler) {
+                _this.props.onRemoveHandler.call(control, control);
+              }
+            }), _constructorInstance)), _this.props.constructorHandler].concat(args));
+
+            resolve(control);
+          }, function () {
+            reject('Create Control Error');
+          });
+        } catch (err) {
+          reject(err);
+        }
+      });
+    }
+    /**
+     * Стратегия работы с картой
+     *
+     * @return {IMapControlStrategy}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.mapControl;
+    }
+  }]);
+
+  return MapControlConstructor;
+}();
+
+exports.MapControlConstructor = MapControlConstructor;
+
+/***/ }),
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46405,82 +46537,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var MapControl =
 /*#__PURE__*/
 function () {
-  function MapControl(strategy) {
+  function MapControl(instance, baseConstructor) {
     _classCallCheck(this, MapControl);
 
-    _defineProperty(this, "ControlConstructor", void 0);
+    _defineProperty(this, "instance", void 0);
 
-    _defineProperty(this, "strategy", void 0);
+    if (baseConstructor) {
+      var _ref;
 
-    if (!strategy) {
-      throw new Error('Geo strategy not found');
-    }
-
-    this.strategy = strategy;
-  }
-  /**
-   * Создать конструктор элемента управления
-   *
-   * @param {() => void} baseConstructor
-   * @param {(parentDomContainer: HTMLElement) => void} onAdd
-   * @param {() => void} onRemove
-   *
-   * @return {Promise<any>}
-   */
-
-
-  _createClass(MapControl, [{
-    key: "createConstructor",
-    value: function createConstructor(baseConstructor, onAdd, onRemove) {
-      var _this = this;
-
-      return new Promise(function (resolve) {
-        if (!_this.ControlConstructor) {
-          _this.getStrategy().createConstructor(baseConstructor, onAdd, onRemove).then(function (ControlConstructor) {
-            _this.ControlConstructor = ControlConstructor;
-            resolve(null);
-          });
-        } else {
-          resolve(null);
-        }
-      });
-    }
-    /**
-     * Создать элемент управления по конструктору
-     *
-     * @param {IMapControlProps} props
-     * @param {IMapControlEvents} events
-     *
-     * @return {Promise<any>}
-     */
-
-  }, {
-    key: "createControl",
-    value: function createControl() {
-      var _this2 = this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
+      for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
       }
 
-      return new Promise(function (resolve, reject) {
-        if (_this2.ControlConstructor) {
-          resolve(_this2.ControlConstructor.apply(_this2, args));
-        } else {
-          reject('Control Constructor doesn`t created');
-        }
-      });
+      (_ref = baseConstructor).call.apply(_ref, [this, this].concat(args));
     }
-    /**
-     * Стратегия работы с картой
-     *
-     * @return {IMapControlStrategy}
-     */
 
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.mapControl;
+    this.instance = instance;
+  }
+
+  _createClass(MapControl, [{
+    key: "getInstance",
+    value: function getInstance() {
+      return this.instance;
     }
   }]);
 
@@ -46490,7 +46568,7 @@ function () {
 exports.MapControl = MapControl;
 
 /***/ }),
-/* 177 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46557,7 +46635,7 @@ function () {
 exports.MarkerPreset = MarkerPreset;
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46635,16 +46713,16 @@ function () {
 exports.PolygonPreset = PolygonPreset;
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ultimap__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ultimap__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ultimap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_ultimap__);
 
 
@@ -46759,7 +46837,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46807,7 +46885,7 @@ function () {
 exports.UIDGenerator = UIDGenerator;
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46818,9 +46896,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _queue = __webpack_require__(182);
+var _queue = __webpack_require__(184);
 
-var _generator = __webpack_require__(180);
+var _generator = __webpack_require__(182);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -46837,7 +46915,7 @@ _defineProperty(UID, "Queue", _queue.UIDQueue);
 _defineProperty(UID, "Generator", _generator.UIDGenerator);
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46883,7 +46961,7 @@ function () {
 exports.UIDQueue = UIDQueue;
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -47052,17 +47130,17 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var rbush = __webpack_require__(200);
-var convexHull = __webpack_require__(195);
-var Queue = __webpack_require__(209);
-var pointInPolygon = __webpack_require__(197);
-var orient = __webpack_require__(10)[3];
+var rbush = __webpack_require__(202);
+var convexHull = __webpack_require__(197);
+var Queue = __webpack_require__(211);
+var pointInPolygon = __webpack_require__(199);
+var orient = __webpack_require__(11)[3];
 
 module.exports = concaveman;
 module.exports.default = concaveman;
@@ -47399,13 +47477,13 @@ function sqSegSegDist(x0, y0, x1, y1, x2, y2, x3, y3) {
 
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47507,7 +47585,7 @@ function () {
 exports.Callbacks = Callbacks;
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47734,7 +47812,7 @@ function () {
 exports.Collections = Collections;
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47768,12 +47846,12 @@ Object.defineProperty(exports, "IStrategy", {
   }
 });
 
-var _constructor = __webpack_require__(187);
+var _constructor = __webpack_require__(189);
 
-var _strategy = __webpack_require__(189);
+var _strategy = __webpack_require__(191);
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47874,7 +47952,7 @@ function () {
 exports.Strategy = Strategy;
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47992,7 +48070,7 @@ function () {
 exports.Cookie = Cookie;
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48003,7 +48081,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Define = void 0;
 
-var _property = __webpack_require__(192);
+var _property = __webpack_require__(194);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -48047,7 +48125,7 @@ function () {
 exports.Define = Define;
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48186,7 +48264,7 @@ function () {
 exports.Property = Property;
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50113,256 +50191,256 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 23,
-	"./af.js": 23,
-	"./ar": 30,
-	"./ar-dz": 24,
-	"./ar-dz.js": 24,
-	"./ar-kw": 25,
-	"./ar-kw.js": 25,
-	"./ar-ly": 26,
-	"./ar-ly.js": 26,
-	"./ar-ma": 27,
-	"./ar-ma.js": 27,
-	"./ar-sa": 28,
-	"./ar-sa.js": 28,
-	"./ar-tn": 29,
-	"./ar-tn.js": 29,
-	"./ar.js": 30,
-	"./az": 31,
-	"./az.js": 31,
-	"./be": 32,
-	"./be.js": 32,
-	"./bg": 33,
-	"./bg.js": 33,
-	"./bm": 34,
-	"./bm.js": 34,
-	"./bn": 35,
-	"./bn.js": 35,
-	"./bo": 36,
-	"./bo.js": 36,
-	"./br": 37,
-	"./br.js": 37,
-	"./bs": 38,
-	"./bs.js": 38,
-	"./ca": 39,
-	"./ca.js": 39,
-	"./cs": 40,
-	"./cs.js": 40,
-	"./cv": 41,
-	"./cv.js": 41,
-	"./cy": 42,
-	"./cy.js": 42,
-	"./da": 43,
-	"./da.js": 43,
-	"./de": 46,
-	"./de-at": 44,
-	"./de-at.js": 44,
-	"./de-ch": 45,
-	"./de-ch.js": 45,
-	"./de.js": 46,
-	"./dv": 47,
-	"./dv.js": 47,
-	"./el": 48,
-	"./el.js": 48,
-	"./en-au": 49,
-	"./en-au.js": 49,
-	"./en-ca": 50,
-	"./en-ca.js": 50,
-	"./en-gb": 51,
-	"./en-gb.js": 51,
-	"./en-ie": 52,
-	"./en-ie.js": 52,
-	"./en-il": 53,
-	"./en-il.js": 53,
-	"./en-nz": 54,
-	"./en-nz.js": 54,
-	"./eo": 55,
-	"./eo.js": 55,
-	"./es": 58,
-	"./es-do": 56,
-	"./es-do.js": 56,
-	"./es-us": 57,
-	"./es-us.js": 57,
-	"./es.js": 58,
-	"./et": 59,
-	"./et.js": 59,
-	"./eu": 60,
-	"./eu.js": 60,
-	"./fa": 61,
-	"./fa.js": 61,
-	"./fi": 62,
-	"./fi.js": 62,
-	"./fo": 63,
-	"./fo.js": 63,
-	"./fr": 66,
-	"./fr-ca": 64,
-	"./fr-ca.js": 64,
-	"./fr-ch": 65,
-	"./fr-ch.js": 65,
-	"./fr.js": 66,
-	"./fy": 67,
-	"./fy.js": 67,
-	"./gd": 68,
-	"./gd.js": 68,
-	"./gl": 69,
-	"./gl.js": 69,
-	"./gom-latn": 70,
-	"./gom-latn.js": 70,
-	"./gu": 71,
-	"./gu.js": 71,
-	"./he": 72,
-	"./he.js": 72,
-	"./hi": 73,
-	"./hi.js": 73,
-	"./hr": 74,
-	"./hr.js": 74,
-	"./hu": 75,
-	"./hu.js": 75,
-	"./hy-am": 76,
-	"./hy-am.js": 76,
-	"./id": 77,
-	"./id.js": 77,
-	"./is": 78,
-	"./is.js": 78,
-	"./it": 79,
-	"./it.js": 79,
-	"./ja": 80,
-	"./ja.js": 80,
-	"./jv": 81,
-	"./jv.js": 81,
-	"./ka": 82,
-	"./ka.js": 82,
-	"./kk": 83,
-	"./kk.js": 83,
-	"./km": 84,
-	"./km.js": 84,
-	"./kn": 85,
-	"./kn.js": 85,
-	"./ko": 86,
-	"./ko.js": 86,
-	"./ky": 87,
-	"./ky.js": 87,
-	"./lb": 88,
-	"./lb.js": 88,
-	"./lo": 89,
-	"./lo.js": 89,
-	"./lt": 90,
-	"./lt.js": 90,
-	"./lv": 91,
-	"./lv.js": 91,
-	"./me": 92,
-	"./me.js": 92,
-	"./mi": 93,
-	"./mi.js": 93,
-	"./mk": 94,
-	"./mk.js": 94,
-	"./ml": 95,
-	"./ml.js": 95,
-	"./mn": 96,
-	"./mn.js": 96,
-	"./mr": 97,
-	"./mr.js": 97,
-	"./ms": 99,
-	"./ms-my": 98,
-	"./ms-my.js": 98,
-	"./ms.js": 99,
-	"./mt": 100,
-	"./mt.js": 100,
-	"./my": 101,
-	"./my.js": 101,
-	"./nb": 102,
-	"./nb.js": 102,
-	"./ne": 103,
-	"./ne.js": 103,
-	"./nl": 105,
-	"./nl-be": 104,
-	"./nl-be.js": 104,
-	"./nl.js": 105,
-	"./nn": 106,
-	"./nn.js": 106,
-	"./pa-in": 107,
-	"./pa-in.js": 107,
-	"./pl": 108,
-	"./pl.js": 108,
-	"./pt": 110,
-	"./pt-br": 109,
-	"./pt-br.js": 109,
-	"./pt.js": 110,
-	"./ro": 111,
-	"./ro.js": 111,
-	"./ru": 112,
-	"./ru.js": 112,
-	"./sd": 113,
-	"./sd.js": 113,
-	"./se": 114,
-	"./se.js": 114,
-	"./si": 115,
-	"./si.js": 115,
-	"./sk": 116,
-	"./sk.js": 116,
-	"./sl": 117,
-	"./sl.js": 117,
-	"./sq": 118,
-	"./sq.js": 118,
-	"./sr": 120,
-	"./sr-cyrl": 119,
-	"./sr-cyrl.js": 119,
-	"./sr.js": 120,
-	"./ss": 121,
-	"./ss.js": 121,
-	"./sv": 122,
-	"./sv.js": 122,
-	"./sw": 123,
-	"./sw.js": 123,
-	"./ta": 124,
-	"./ta.js": 124,
-	"./te": 125,
-	"./te.js": 125,
-	"./tet": 126,
-	"./tet.js": 126,
-	"./tg": 127,
-	"./tg.js": 127,
-	"./th": 128,
-	"./th.js": 128,
-	"./tl-ph": 129,
-	"./tl-ph.js": 129,
-	"./tlh": 130,
-	"./tlh.js": 130,
-	"./tr": 131,
-	"./tr.js": 131,
-	"./tzl": 132,
-	"./tzl.js": 132,
-	"./tzm": 134,
-	"./tzm-latn": 133,
-	"./tzm-latn.js": 133,
-	"./tzm.js": 134,
-	"./ug-cn": 135,
-	"./ug-cn.js": 135,
-	"./uk": 136,
-	"./uk.js": 136,
-	"./ur": 137,
-	"./ur.js": 137,
-	"./uz": 139,
-	"./uz-latn": 138,
-	"./uz-latn.js": 138,
-	"./uz.js": 139,
-	"./vi": 140,
-	"./vi.js": 140,
-	"./x-pseudo": 141,
-	"./x-pseudo.js": 141,
-	"./yo": 142,
-	"./yo.js": 142,
-	"./zh-cn": 143,
-	"./zh-cn.js": 143,
-	"./zh-hk": 144,
-	"./zh-hk.js": 144,
-	"./zh-tw": 145,
-	"./zh-tw.js": 145
+	"./af": 24,
+	"./af.js": 24,
+	"./ar": 31,
+	"./ar-dz": 25,
+	"./ar-dz.js": 25,
+	"./ar-kw": 26,
+	"./ar-kw.js": 26,
+	"./ar-ly": 27,
+	"./ar-ly.js": 27,
+	"./ar-ma": 28,
+	"./ar-ma.js": 28,
+	"./ar-sa": 29,
+	"./ar-sa.js": 29,
+	"./ar-tn": 30,
+	"./ar-tn.js": 30,
+	"./ar.js": 31,
+	"./az": 32,
+	"./az.js": 32,
+	"./be": 33,
+	"./be.js": 33,
+	"./bg": 34,
+	"./bg.js": 34,
+	"./bm": 35,
+	"./bm.js": 35,
+	"./bn": 36,
+	"./bn.js": 36,
+	"./bo": 37,
+	"./bo.js": 37,
+	"./br": 38,
+	"./br.js": 38,
+	"./bs": 39,
+	"./bs.js": 39,
+	"./ca": 40,
+	"./ca.js": 40,
+	"./cs": 41,
+	"./cs.js": 41,
+	"./cv": 42,
+	"./cv.js": 42,
+	"./cy": 43,
+	"./cy.js": 43,
+	"./da": 44,
+	"./da.js": 44,
+	"./de": 47,
+	"./de-at": 45,
+	"./de-at.js": 45,
+	"./de-ch": 46,
+	"./de-ch.js": 46,
+	"./de.js": 47,
+	"./dv": 48,
+	"./dv.js": 48,
+	"./el": 49,
+	"./el.js": 49,
+	"./en-au": 50,
+	"./en-au.js": 50,
+	"./en-ca": 51,
+	"./en-ca.js": 51,
+	"./en-gb": 52,
+	"./en-gb.js": 52,
+	"./en-ie": 53,
+	"./en-ie.js": 53,
+	"./en-il": 54,
+	"./en-il.js": 54,
+	"./en-nz": 55,
+	"./en-nz.js": 55,
+	"./eo": 56,
+	"./eo.js": 56,
+	"./es": 59,
+	"./es-do": 57,
+	"./es-do.js": 57,
+	"./es-us": 58,
+	"./es-us.js": 58,
+	"./es.js": 59,
+	"./et": 60,
+	"./et.js": 60,
+	"./eu": 61,
+	"./eu.js": 61,
+	"./fa": 62,
+	"./fa.js": 62,
+	"./fi": 63,
+	"./fi.js": 63,
+	"./fo": 64,
+	"./fo.js": 64,
+	"./fr": 67,
+	"./fr-ca": 65,
+	"./fr-ca.js": 65,
+	"./fr-ch": 66,
+	"./fr-ch.js": 66,
+	"./fr.js": 67,
+	"./fy": 68,
+	"./fy.js": 68,
+	"./gd": 69,
+	"./gd.js": 69,
+	"./gl": 70,
+	"./gl.js": 70,
+	"./gom-latn": 71,
+	"./gom-latn.js": 71,
+	"./gu": 72,
+	"./gu.js": 72,
+	"./he": 73,
+	"./he.js": 73,
+	"./hi": 74,
+	"./hi.js": 74,
+	"./hr": 75,
+	"./hr.js": 75,
+	"./hu": 76,
+	"./hu.js": 76,
+	"./hy-am": 77,
+	"./hy-am.js": 77,
+	"./id": 78,
+	"./id.js": 78,
+	"./is": 79,
+	"./is.js": 79,
+	"./it": 80,
+	"./it.js": 80,
+	"./ja": 81,
+	"./ja.js": 81,
+	"./jv": 82,
+	"./jv.js": 82,
+	"./ka": 83,
+	"./ka.js": 83,
+	"./kk": 84,
+	"./kk.js": 84,
+	"./km": 85,
+	"./km.js": 85,
+	"./kn": 86,
+	"./kn.js": 86,
+	"./ko": 87,
+	"./ko.js": 87,
+	"./ky": 88,
+	"./ky.js": 88,
+	"./lb": 89,
+	"./lb.js": 89,
+	"./lo": 90,
+	"./lo.js": 90,
+	"./lt": 91,
+	"./lt.js": 91,
+	"./lv": 92,
+	"./lv.js": 92,
+	"./me": 93,
+	"./me.js": 93,
+	"./mi": 94,
+	"./mi.js": 94,
+	"./mk": 95,
+	"./mk.js": 95,
+	"./ml": 96,
+	"./ml.js": 96,
+	"./mn": 97,
+	"./mn.js": 97,
+	"./mr": 98,
+	"./mr.js": 98,
+	"./ms": 100,
+	"./ms-my": 99,
+	"./ms-my.js": 99,
+	"./ms.js": 100,
+	"./mt": 101,
+	"./mt.js": 101,
+	"./my": 102,
+	"./my.js": 102,
+	"./nb": 103,
+	"./nb.js": 103,
+	"./ne": 104,
+	"./ne.js": 104,
+	"./nl": 106,
+	"./nl-be": 105,
+	"./nl-be.js": 105,
+	"./nl.js": 106,
+	"./nn": 107,
+	"./nn.js": 107,
+	"./pa-in": 108,
+	"./pa-in.js": 108,
+	"./pl": 109,
+	"./pl.js": 109,
+	"./pt": 111,
+	"./pt-br": 110,
+	"./pt-br.js": 110,
+	"./pt.js": 111,
+	"./ro": 112,
+	"./ro.js": 112,
+	"./ru": 113,
+	"./ru.js": 113,
+	"./sd": 114,
+	"./sd.js": 114,
+	"./se": 115,
+	"./se.js": 115,
+	"./si": 116,
+	"./si.js": 116,
+	"./sk": 117,
+	"./sk.js": 117,
+	"./sl": 118,
+	"./sl.js": 118,
+	"./sq": 119,
+	"./sq.js": 119,
+	"./sr": 121,
+	"./sr-cyrl": 120,
+	"./sr-cyrl.js": 120,
+	"./sr.js": 121,
+	"./ss": 122,
+	"./ss.js": 122,
+	"./sv": 123,
+	"./sv.js": 123,
+	"./sw": 124,
+	"./sw.js": 124,
+	"./ta": 125,
+	"./ta.js": 125,
+	"./te": 126,
+	"./te.js": 126,
+	"./tet": 127,
+	"./tet.js": 127,
+	"./tg": 128,
+	"./tg.js": 128,
+	"./th": 129,
+	"./th.js": 129,
+	"./tl-ph": 130,
+	"./tl-ph.js": 130,
+	"./tlh": 131,
+	"./tlh.js": 131,
+	"./tr": 132,
+	"./tr.js": 132,
+	"./tzl": 133,
+	"./tzl.js": 133,
+	"./tzm": 135,
+	"./tzm-latn": 134,
+	"./tzm-latn.js": 134,
+	"./tzm.js": 135,
+	"./ug-cn": 136,
+	"./ug-cn.js": 136,
+	"./uk": 137,
+	"./uk.js": 137,
+	"./ur": 138,
+	"./ur.js": 138,
+	"./uz": 140,
+	"./uz-latn": 139,
+	"./uz-latn.js": 139,
+	"./uz.js": 140,
+	"./vi": 141,
+	"./vi.js": 141,
+	"./x-pseudo": 142,
+	"./x-pseudo.js": 142,
+	"./yo": 143,
+	"./yo.js": 143,
+	"./zh-cn": 144,
+	"./zh-cn.js": 144,
+	"./zh-hk": 145,
+	"./zh-hk.js": 145,
+	"./zh-tw": 146,
+	"./zh-tw.js": 146
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -50378,10 +50456,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 194;
+webpackContext.id = 196;
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50389,7 +50467,7 @@ webpackContext.id = 194;
 
 module.exports = monotoneConvexHull2D
 
-var orient = __webpack_require__(10)[3]
+var orient = __webpack_require__(11)[3]
 
 function monotoneConvexHull2D(points) {
   var n = points.length
@@ -50468,7 +50546,7 @@ function monotoneConvexHull2D(points) {
 }
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50509,7 +50587,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(205);
+var superagent = __webpack_require__(207);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -50561,7 +50639,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 197 */
+/* 199 */
 /***/ (function(module, exports) {
 
 module.exports = function (point, vs) {
@@ -50585,13 +50663,13 @@ module.exports = function (point, vs) {
 
 
 /***/ }),
-/* 198 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var lr = __webpack_require__(10)
+var lr = __webpack_require__(11)
 
 // these should probably use robust-sum, etc
 function vectSum(a,b) {
@@ -50714,7 +50792,7 @@ module.exports = quickHull
 
 
 /***/ }),
-/* 199 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -50783,7 +50861,7 @@ return quickselect;
 
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50792,7 +50870,7 @@ return quickselect;
 module.exports = rbush;
 module.exports.default = rbush;
 
-var quickselect = __webpack_require__(199);
+var quickselect = __webpack_require__(201);
 
 function rbush(maxEntries, format) {
     if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -51352,14 +51430,14 @@ function multiSelect(arr, left, right, n, compare) {
 
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var twoProduct = __webpack_require__(147)
-var twoSum = __webpack_require__(210)
+var twoProduct = __webpack_require__(148)
+var twoSum = __webpack_require__(212)
 
 module.exports = scaleLinearExpansion
 
@@ -51408,7 +51486,7 @@ function scaleLinearExpansion(e, scale) {
 }
 
 /***/ }),
-/* 202 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51570,7 +51648,7 @@ function robustSubtract(e, f) {
 }
 
 /***/ }),
-/* 203 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51732,7 +51810,7 @@ function linearExpansionSum(e, f) {
 }
 
 /***/ }),
-/* 204 */
+/* 206 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -51758,7 +51836,7 @@ module.exports = Agent;
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -51775,11 +51853,11 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(183);
-var RequestBase = __webpack_require__(206);
-var isObject = __webpack_require__(146);
-var ResponseBase = __webpack_require__(207);
-var Agent = __webpack_require__(204);
+var Emitter = __webpack_require__(185);
+var RequestBase = __webpack_require__(208);
+var isObject = __webpack_require__(147);
+var ResponseBase = __webpack_require__(209);
+var Agent = __webpack_require__(206);
 
 /**
  * Noop.
@@ -52684,7 +52762,7 @@ request.put = function(url, data, fn) {
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52693,7 +52771,7 @@ request.put = function(url, data, fn) {
 /**
  * Module of mixed-in functions shared between node and client code
  */
-var isObject = __webpack_require__(146);
+var isObject = __webpack_require__(147);
 
 /**
  * Expose `RequestBase`.
@@ -53385,7 +53463,7 @@ RequestBase.prototype._setTimeouts = function() {
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53395,7 +53473,7 @@ RequestBase.prototype._setTimeouts = function() {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(208);
+var utils = __webpack_require__(210);
 
 /**
  * Expose `ResponseBase`.
@@ -53528,7 +53606,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53606,7 +53684,7 @@ exports.cleanHeader = function(header, changesOrigin){
 
 
 /***/ }),
-/* 209 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53701,7 +53779,7 @@ TinyQueue.prototype = {
 
 
 /***/ }),
-/* 210 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53724,7 +53802,7 @@ function fastTwoSum(a, b, result) {
 }
 
 /***/ }),
-/* 211 */
+/* 213 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -53752,5 +53830,5 @@ module.exports = function(module) {
 
 
 /***/ })
-],[179]);
+],[181]);
 //# sourceMappingURL=main.js.map
