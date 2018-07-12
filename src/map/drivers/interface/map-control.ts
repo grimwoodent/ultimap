@@ -6,6 +6,10 @@ export type TOnAddHandler = (parentDomContainer: HTMLElement) => void;
 
 export type TOnRemoveHandler = () => void;
 
+export interface IMapControlProperties {
+
+}
+
 export enum MAP_CONTROL_EVENTS {
     ON_ADD = 'onAdd',
     ON_REMOVE = 'onRemove',

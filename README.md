@@ -40,7 +40,7 @@ import { Geo, geo } from 'ultimap';
 | map | *\<Map\>* | Create new Map controller. |
 | marker | *\<Marker\>* | Create new Marker controller. |
 | polygon | *\<Polygon\>* | Create new Polygon controller. |
-| mapControl | *\<MapControl\>* | Create new MapControl controller. |
+| control | *\<MapControlController\>* | Create new MapControl controller. |
 | domEvent | *\<DOMEvent\>* | Create new DOMEvent controller. |
 | event | *\<GeoEvent\>* | Create new GeoEvent controller. |
 | geocoder | *\<Geocoder\>* | Create new Geocoder controller. |

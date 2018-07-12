@@ -1838,7 +1838,7 @@ webpackJsonp_name_([0],[
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(196)("./" + name);
+                __webpack_require__(197)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4510,7 +4510,7 @@ webpackJsonp_name_([0],[
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(213)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(214)(module)))
 
 /***/ }),
 /* 1 */
@@ -18583,15 +18583,15 @@ Object.defineProperty(exports, "UID", {
 });
 exports.Collection = void 0;
 
-var _define = __webpack_require__(193);
+var _define = __webpack_require__(194);
 
-var _callbacks = __webpack_require__(188);
+var _callbacks = __webpack_require__(189);
 
-var _cookie = __webpack_require__(192);
+var _cookie = __webpack_require__(193);
 
-var _uid = _interopRequireDefault(__webpack_require__(183));
+var _uid = _interopRequireDefault(__webpack_require__(184));
 
-var Collection = _interopRequireWildcard(__webpack_require__(190));
+var Collection = _interopRequireWildcard(__webpack_require__(191));
 
 exports.Collection = Collection;
 
@@ -19212,9 +19212,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var concavehull = __webpack_require__(186);
+var concavehull = __webpack_require__(187);
 
-var convexhull = __webpack_require__(200);
+var convexhull = __webpack_require__(201);
 
 var PolygonCoords =
 /*#__PURE__*/
@@ -19317,9 +19317,9 @@ exports.PolygonCoords = PolygonCoords;
 
 
 var twoProduct = __webpack_require__(148)
-var robustSum = __webpack_require__(205)
-var robustScale = __webpack_require__(203)
-var robustSubtract = __webpack_require__(204)
+var robustSum = __webpack_require__(206)
+var robustScale = __webpack_require__(204)
+var robustSubtract = __webpack_require__(205)
 
 var NUM_EXPAND = 5
 
@@ -20013,11 +20013,6 @@ function () {
 
     this.strategy = strategy;
   }
-  /**
-   * @deprecated use map
-   * @return {IMapGeoEventName}
-   */
-
 
   _createClass(GeoEvent, [{
     key: "getStrategy",
@@ -20028,11 +20023,6 @@ function () {
      */
     value: function getStrategy() {
       return this.strategy.geoEvent;
-    }
-  }, {
-    key: "name",
-    get: function get() {
-      return this.map;
     }
   }, {
     key: "map",
@@ -43636,13 +43626,13 @@ var _leaflet = __webpack_require__(13);
 
 var _marker = __webpack_require__(20);
 
-var _marker2 = __webpack_require__(179);
+var _marker2 = __webpack_require__(180);
 
 var _polygon = __webpack_require__(21);
 
-var _polygon2 = __webpack_require__(180);
+var _polygon2 = __webpack_require__(181);
 
-var _mapControl = __webpack_require__(177);
+var _mapControl = __webpack_require__(178);
 
 var _domEvent = __webpack_require__(12);
 
@@ -43750,9 +43740,9 @@ function () {
       return new _polygon.Polygon(this.getStrategy());
     }
   }, {
-    key: "mapControl",
+    key: "control",
     get: function get() {
-      return new _mapControl.MapControlConstructor(this.getStrategy());
+      return new _mapControl.MapControlController(this.getStrategy());
     }
   }, {
     key: "preset",
@@ -44132,7 +44122,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimJs = __webpack_require__(198);
+var _nominatimJs = __webpack_require__(199);
 
 var _coords = __webpack_require__(1);
 
@@ -44290,7 +44280,7 @@ exports.LeafletMapStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(3));
 
-__webpack_require__(187);
+__webpack_require__(188);
 
 var _map = __webpack_require__(155);
 
@@ -44548,7 +44538,7 @@ exports.LeafletMarkerStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(3));
 
-__webpack_require__(195);
+__webpack_require__(196);
 
 var _index = __webpack_require__(9);
 
@@ -46391,7 +46381,7 @@ exports.MapControlConstructor = void 0;
 
 var _mapControl = __webpack_require__(7);
 
-var _mapControlInstance = __webpack_require__(178);
+var _mapControlInstance = __webpack_require__(179);
 
 function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -46413,11 +46403,11 @@ function () {
   function MapControlConstructor(strategy) {
     _classCallCheck(this, MapControlConstructor);
 
-    _defineProperty(this, "constructorInstance", void 0);
+    _defineProperty(this, "createInstanceHandler", void 0);
 
     _defineProperty(this, "strategy", void 0);
 
-    _defineProperty(this, "props", {
+    _defineProperty(this, "handler", {
       constructorHandler: null,
       onAddHandler: null,
       onRemoveHandler: null
@@ -46433,19 +46423,19 @@ function () {
   _createClass(MapControlConstructor, [{
     key: "setConstructor",
     value: function setConstructor(handler) {
-      this.props.constructorHandler = handler;
+      this.handler.constructorHandler = handler;
       return this;
     }
   }, {
     key: "setOnAddHandler",
     value: function setOnAddHandler(handler) {
-      this.props.onAddHandler = handler;
+      this.handler.onAddHandler = handler;
       return this;
     }
   }, {
     key: "setOnRemoveHandler",
     value: function setOnRemoveHandler(handler) {
-      this.props.onRemoveHandler = handler;
+      this.handler.onRemoveHandler = handler;
       return this;
     }
     /**
@@ -46456,36 +46446,33 @@ function () {
 
   }, {
     key: "create",
-    value: function create() {
+    value: function create(props) {
       var _this = this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
       }
 
       return new Promise(function (resolve, reject) {
         try {
-          if (!_this.constructorInstance) {
-            _this.constructorInstance = new Promise(function (resolve) {
-              _this.getStrategy().getControlInstanceConstructor().then(function (constructorInstance) {
-                _this.constructorInstance = constructorInstance;
-                resolve(_this.constructorInstance);
-              });
+          if (!_this.createInstanceHandler) {
+            _this.createInstanceHandler = new Promise(function (resolve) {
+              _this.getStrategy().getControlInstanceConstructor().then(resolve);
             });
           }
 
-          _this.constructorInstance.then(function (constructorInstance) {
-            var _constructorInstance;
+          _this.createInstanceHandler.then(function (getInstanceHandler) {
+            var _getInstanceHandler;
 
-            var control = _construct(_mapControlInstance.MapControl, [constructorInstance({}, (_constructorInstance = {}, _defineProperty(_constructorInstance, _mapControl.MAP_CONTROL_EVENTS.ON_ADD, function (parentDomNode) {
-              if (_this.props.onAddHandler) {
-                _this.props.onAddHandler.call(control, control, parentDomNode);
+            var control = _construct(_mapControlInstance.MapControl, [getInstanceHandler(props, (_getInstanceHandler = {}, _defineProperty(_getInstanceHandler, _mapControl.MAP_CONTROL_EVENTS.ON_ADD, function (parentDomNode) {
+              if (_this.handler.onAddHandler) {
+                _this.handler.onAddHandler.call(control, control, parentDomNode);
               }
-            }), _defineProperty(_constructorInstance, _mapControl.MAP_CONTROL_EVENTS.ON_REMOVE, function () {
-              if (_this.props.onRemoveHandler) {
-                _this.props.onRemoveHandler.call(control, control);
+            }), _defineProperty(_getInstanceHandler, _mapControl.MAP_CONTROL_EVENTS.ON_REMOVE, function () {
+              if (_this.handler.onRemoveHandler) {
+                _this.handler.onRemoveHandler.call(control, control);
               }
-            }), _constructorInstance)), _this.props.constructorHandler].concat(args));
+            }), _getInstanceHandler)), _this.handler.constructorHandler].concat(args));
 
             resolve(control);
           }, function () {
@@ -46516,6 +46503,62 @@ exports.MapControlConstructor = MapControlConstructor;
 
 /***/ }),
 /* 178 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MapControlController = void 0;
+
+var _controlConstructor = __webpack_require__(177);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MapControlController =
+/*#__PURE__*/
+function () {
+  function MapControlController(strategy) {
+    _classCallCheck(this, MapControlController);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy || null;
+  }
+
+  _createClass(MapControlController, [{
+    key: "getStrategy",
+
+    /**
+     * Get the current work strategy.
+     *
+     * @return {IGeoStrategy}
+     */
+    value: function getStrategy() {
+      return this.strategy;
+    }
+  }, {
+    key: "element",
+    get: function get() {
+      return new _controlConstructor.MapControlConstructor(this.getStrategy());
+    }
+  }]);
+
+  return MapControlController;
+}();
+
+exports.MapControlController = MapControlController;
+
+/***/ }),
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46568,7 +46611,7 @@ function () {
 exports.MapControl = MapControl;
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46635,7 +46678,7 @@ function () {
 exports.MarkerPreset = MarkerPreset;
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46713,7 +46756,7 @@ function () {
 exports.PolygonPreset = PolygonPreset;
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46776,7 +46819,7 @@ class Example {
     }
 
     createControl() {
-        const mapControl = this.geo.mapControl
+        const mapControl = this.geo.control.element
             .setConstructor((control, name) => {
                 control.name = name;
                 control.$element = __WEBPACK_IMPORTED_MODULE_0_jquery___default()(`<div class="panel panel-default">
@@ -46803,7 +46846,7 @@ class Example {
             });
 
         mapControl
-            .create(`${this.name} 1`)
+            .create({}, `${this.name} 1`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -46813,7 +46856,7 @@ class Example {
             });
 
         mapControl
-            .create(`${this.name} 2`)
+            .create({}, `${this.name} 2`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -46823,7 +46866,7 @@ class Example {
             });
 
         mapControl
-            .create(`${this.name} 3`)
+            .create({}, `${this.name} 3`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -46852,7 +46895,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
 
 /***/ }),
-/* 182 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46900,7 +46943,7 @@ function () {
 exports.UIDGenerator = UIDGenerator;
 
 /***/ }),
-/* 183 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46911,9 +46954,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _queue = __webpack_require__(184);
+var _queue = __webpack_require__(185);
 
-var _generator = __webpack_require__(182);
+var _generator = __webpack_require__(183);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -46930,7 +46973,7 @@ _defineProperty(UID, "Queue", _queue.UIDQueue);
 _defineProperty(UID, "Generator", _generator.UIDGenerator);
 
 /***/ }),
-/* 184 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46976,7 +47019,7 @@ function () {
 exports.UIDQueue = UIDQueue;
 
 /***/ }),
-/* 185 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -47145,16 +47188,16 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 186 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var rbush = __webpack_require__(202);
-var convexHull = __webpack_require__(197);
-var Queue = __webpack_require__(211);
-var pointInPolygon = __webpack_require__(199);
+var rbush = __webpack_require__(203);
+var convexHull = __webpack_require__(198);
+var Queue = __webpack_require__(212);
+var pointInPolygon = __webpack_require__(200);
 var orient = __webpack_require__(11)[3];
 
 module.exports = concaveman;
@@ -47492,13 +47535,13 @@ function sqSegSegDist(x0, y0, x1, y1, x2, y2, x3, y3) {
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47600,7 +47643,7 @@ function () {
 exports.Callbacks = Callbacks;
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47827,7 +47870,7 @@ function () {
 exports.Collections = Collections;
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47861,12 +47904,12 @@ Object.defineProperty(exports, "IStrategy", {
   }
 });
 
-var _constructor = __webpack_require__(189);
+var _constructor = __webpack_require__(190);
 
-var _strategy = __webpack_require__(191);
+var _strategy = __webpack_require__(192);
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47967,7 +48010,7 @@ function () {
 exports.Strategy = Strategy;
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48085,7 +48128,7 @@ function () {
 exports.Cookie = Cookie;
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48096,7 +48139,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Define = void 0;
 
-var _property = __webpack_require__(194);
+var _property = __webpack_require__(195);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -48140,7 +48183,7 @@ function () {
 exports.Define = Define;
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48279,7 +48322,7 @@ function () {
 exports.Property = Property;
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50206,7 +50249,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -50471,10 +50514,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 196;
+webpackContext.id = 197;
 
 /***/ }),
-/* 197 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50561,7 +50604,7 @@ function monotoneConvexHull2D(points) {
 }
 
 /***/ }),
-/* 198 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50602,7 +50645,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(207);
+var superagent = __webpack_require__(208);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -50654,7 +50697,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, exports) {
 
 module.exports = function (point, vs) {
@@ -50678,7 +50721,7 @@ module.exports = function (point, vs) {
 
 
 /***/ }),
-/* 200 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50807,7 +50850,7 @@ module.exports = quickHull
 
 
 /***/ }),
-/* 201 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -50876,7 +50919,7 @@ return quickselect;
 
 
 /***/ }),
-/* 202 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50885,7 +50928,7 @@ return quickselect;
 module.exports = rbush;
 module.exports.default = rbush;
 
-var quickselect = __webpack_require__(201);
+var quickselect = __webpack_require__(202);
 
 function rbush(maxEntries, format) {
     if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -51445,14 +51488,14 @@ function multiSelect(arr, left, right, n, compare) {
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var twoProduct = __webpack_require__(148)
-var twoSum = __webpack_require__(212)
+var twoSum = __webpack_require__(213)
 
 module.exports = scaleLinearExpansion
 
@@ -51501,7 +51544,7 @@ function scaleLinearExpansion(e, scale) {
 }
 
 /***/ }),
-/* 204 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51663,7 +51706,7 @@ function robustSubtract(e, f) {
 }
 
 /***/ }),
-/* 205 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51825,7 +51868,7 @@ function linearExpansionSum(e, f) {
 }
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -51851,7 +51894,7 @@ module.exports = Agent;
 
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -51868,11 +51911,11 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(185);
-var RequestBase = __webpack_require__(208);
+var Emitter = __webpack_require__(186);
+var RequestBase = __webpack_require__(209);
 var isObject = __webpack_require__(147);
-var ResponseBase = __webpack_require__(209);
-var Agent = __webpack_require__(206);
+var ResponseBase = __webpack_require__(210);
+var Agent = __webpack_require__(207);
 
 /**
  * Noop.
@@ -52777,7 +52820,7 @@ request.put = function(url, data, fn) {
 
 
 /***/ }),
-/* 208 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53478,7 +53521,7 @@ RequestBase.prototype._setTimeouts = function() {
 
 
 /***/ }),
-/* 209 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53488,7 +53531,7 @@ RequestBase.prototype._setTimeouts = function() {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(210);
+var utils = __webpack_require__(211);
 
 /**
  * Expose `ResponseBase`.
@@ -53621,7 +53664,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 
 
 /***/ }),
-/* 210 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53699,7 +53742,7 @@ exports.cleanHeader = function(header, changesOrigin){
 
 
 /***/ }),
-/* 211 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53794,7 +53837,7 @@ TinyQueue.prototype = {
 
 
 /***/ }),
-/* 212 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53817,7 +53860,7 @@ function fastTwoSum(a, b, result) {
 }
 
 /***/ }),
-/* 213 */
+/* 214 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -53845,5 +53888,5 @@ module.exports = function(module) {
 
 
 /***/ })
-],[181]);
+],[182]);
 //# sourceMappingURL=main.js.map

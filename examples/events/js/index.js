@@ -51,7 +51,7 @@ class Example {
     }
 
     _initMapEvents() {
-        this.map.on(this.geo.event.name.click, (e) => {
+        this.map.on(this.geo.event.map.click, (e) => {
             const ev = this.geo.domEvent.create(e);
             const coords = ev.getCoords();
 

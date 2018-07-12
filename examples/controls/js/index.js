@@ -50,7 +50,7 @@ class Example {
     }
 
     createControl() {
-        const mapControl = this.geo.mapControl
+        const mapControl = this.geo.control.element
             .setConstructor((control, name) => {
                 control.name = name;
                 control.$element = $(`<div class="panel panel-default">
@@ -77,7 +77,7 @@ class Example {
             });
 
         mapControl
-            .create(`${this.name} 1`)
+            .create({}, `${this.name} 1`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -87,7 +87,7 @@ class Example {
             });
 
         mapControl
-            .create(`${this.name} 2`)
+            .create({}, `${this.name} 2`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -97,7 +97,7 @@ class Example {
             });
 
         mapControl
-            .create(`${this.name} 3`)
+            .create({}, `${this.name} 3`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);

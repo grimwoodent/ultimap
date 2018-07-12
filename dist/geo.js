@@ -125,9 +125,9 @@ function () {
       return new _polygon.Polygon(this.getStrategy());
     }
   }, {
-    key: "mapControl",
+    key: "control",
     get: function get() {
-      return new _mapControl.MapControlConstructor(this.getStrategy());
+      return new _mapControl.MapControlController(this.getStrategy());
     }
   }, {
     key: "preset",
