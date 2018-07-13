@@ -5,6 +5,7 @@ import { ICreateMapStrategyOptions, IMapStrategy } from '../interface/map';
 import { Coords } from '../../coords';
 import { Bounds } from '../../bounds';
 import { EventHandlerFn, IEventHandlerFnMap } from '../../events';
+import './style/map.less';
 
 export class LeafletMapStrategy implements IMapStrategy {
     /**
@@ -36,6 +37,9 @@ export class LeafletMapStrategy implements IMapStrategy {
                 : null;
 
             instance.setView(center || boundsCenter, options.zoom);
+
+            (instance as any)._controlCorners['custom'] = L.DomUtil
+                .create('div', 'leaflet-custom', (instance as any)._controlContainer);
         });
     }
 

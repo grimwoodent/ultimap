@@ -77,7 +77,9 @@ class Example {
             });
 
         mapControl
-            .create({}, `${this.name} 1`)
+            .create({
+                float : 'left',
+            }, `${this.name} 1`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -87,7 +89,9 @@ class Example {
             });
 
         mapControl
-            .create({}, `${this.name} 2`)
+            .create({
+                float : 'top',
+            }, `${this.name} 2`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);
@@ -97,7 +101,12 @@ class Example {
             });
 
         mapControl
-            .create({}, `${this.name} 3`)
+            .create({
+                position : {
+                    bottom: '30px',
+                    right: '40px',
+                },
+            }, `${this.name} 3`)
             .then((control) => {
                 this.console.log('Control Created');
                 this.map.addControl(control);

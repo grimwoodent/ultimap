@@ -7,19 +7,29 @@ import {
     TControlConstructor,
     IMapControlEvents,
     MAP_CONTROL_EVENTS,
-} from '../interface/map-control';
+} from '../../interface/map-control';
+import { IAdaptedControlProps, PropsAdapter } from './props-adapter';
 
 export class LeafletMapControlStrategy implements IMapControlStrategy {
     public getControlInstanceConstructor(): Promise<TGetControlInstanceHandler> {
         return new Promise((resolve, reject) => {
-            const ControlConstructor = function ControlConstructor(props: any = {}, events: IMapControlEvents = {}) {
-                this.props = {}; // props; // @TODO adapter
+            const ControlConstructor = function ControlConstructor(props: IAdaptedControlProps, events: IMapControlEvents = {}) {
+                this.props = props || {};
                 this.callbacks = new Callbacks(events as any);
             }
 
             ControlConstructor.prototype.onAdd = function onAddMapControl(map: Map) {
                 try {
                     const parentDomContainer = L.DomUtil.create('div');
+                    const position = this.props.position;
+
+                    if (position) {
+                        parentDomContainer.style.position = 'inherit';
+                        parentDomContainer.style.top = position.top || 'auto';
+                        parentDomContainer.style.bottom = position.bottom || 'auto';
+                        parentDomContainer.style.left = position.left || 'auto';
+                        parentDomContainer.style.right = position.right || 'auto';
+                    }
 
                     this.callbacks.trigger(MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
 
@@ -37,9 +47,10 @@ export class LeafletMapControlStrategy implements IMapControlStrategy {
             };
 
             resolve((props?: any, events?: IMapControlEvents) => {
-                const control = new (ControlConstructor as any)(props, events);
+                const propsAdapter = new PropsAdapter(props);
+                const control = new (ControlConstructor as any)(propsAdapter.getAdaptedControlProps(), events);
 
-                return new (L.Control.extend(control) as any)();
+                return new (L.Control.extend(control) as any)(propsAdapter.getAdapted());
             });
         });
     }

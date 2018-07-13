@@ -7,9 +7,11 @@ exports.YandexMapControlStrategy = void 0;
 
 var _grim = require("grim.lib");
 
-var _ymaps = require("./utils/ymaps");
+var _ymaps = require("../utils/ymaps");
 
-var _mapControl = require("../interface/map-control");
+var _mapControl = require("../../interface/map-control");
+
+var _propsAdapter = require("./props-adapter");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -33,11 +35,8 @@ function () {
         }
 
         _ymaps.Api.ymaps.ready(function () {
-          var ControlConstructor = function Constructor() {
-            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+          var ControlConstructor = function Constructor(props) {
             var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-            this.props = {}; // props; // @TODO adapter
-
             this.callbacks = new _grim.Callbacks(events);
             ControlConstructor.superclass.constructor.call(this, props);
           };
@@ -61,7 +60,8 @@ function () {
           });
 
           resolve(function (props, events) {
-            return new ControlConstructor(props, events);
+            var propsAdapter = new _propsAdapter.PropsAdapter(props);
+            return new ControlConstructor(propsAdapter.getAdapted(), events);
           });
         }, function (message) {
           throw new Error(message);

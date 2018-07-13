@@ -1,12 +1,13 @@
 import { Callbacks } from 'grim.lib';
-import { Api } from './utils/ymaps';
+import { Api } from '../utils/ymaps';
 import {
     IMapControlStrategy,
     TGetControlInstanceHandler,
     TControlConstructor,
     IMapControlEvents,
     MAP_CONTROL_EVENTS,
-} from '../interface/map-control';
+} from '../../interface/map-control';
+import { IAdaptedProps, PropsAdapter } from './props-adapter';
 
 export class YandexMapControlStrategy implements IMapControlStrategy {
     public getControlInstanceConstructor(): Promise<TGetControlInstanceHandler> {
@@ -16,8 +17,7 @@ export class YandexMapControlStrategy implements IMapControlStrategy {
             }
 
             Api.ymaps.ready(() => {
-                const ControlConstructor = function Constructor(props: any = {}, events: IMapControlEvents = {}) {
-                    this.props = {}; // props; // @TODO adapter
+                const ControlConstructor = function Constructor(props: IAdaptedProps, events: IMapControlEvents = {}) {
                     this.callbacks = new Callbacks(events as any);
 
                     (ControlConstructor as any).superclass.constructor.call(this, props);
@@ -41,7 +41,11 @@ export class YandexMapControlStrategy implements IMapControlStrategy {
                     },
                 });
 
-                resolve((props?: any, events?: IMapControlEvents) => new (ControlConstructor as any)(props, events));
+                resolve((props?: any, events?: IMapControlEvents) => {
+                    const propsAdapter = new PropsAdapter(props);
+
+                    return new (ControlConstructor as any)(propsAdapter.getAdapted(), events);
+                });
             }, (message?: string) => {
                 throw new Error(message);
             })

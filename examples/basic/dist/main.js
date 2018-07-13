@@ -14044,6 +14044,33 @@ exports.Api = Api;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.MAP_CONTROL_EVENTS = exports.MAP_CONTROL_PROPS = void 0;
+var MAP_CONTROL_PROPS;
+exports.MAP_CONTROL_PROPS = MAP_CONTROL_PROPS;
+
+(function (MAP_CONTROL_PROPS) {
+  MAP_CONTROL_PROPS["FLOAT"] = "float";
+  MAP_CONTROL_PROPS["POSITION"] = "position";
+})(MAP_CONTROL_PROPS || (exports.MAP_CONTROL_PROPS = MAP_CONTROL_PROPS = {}));
+
+var MAP_CONTROL_EVENTS;
+exports.MAP_CONTROL_EVENTS = MAP_CONTROL_EVENTS;
+
+(function (MAP_CONTROL_EVENTS) {
+  MAP_CONTROL_EVENTS["ON_ADD"] = "onAdd";
+  MAP_CONTROL_EVENTS["ON_REMOVE"] = "onRemove";
+})(MAP_CONTROL_EVENTS || (exports.MAP_CONTROL_EVENTS = MAP_CONTROL_EVENTS = {}));
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 Object.defineProperty(exports, "Define", {
   enumerable: true,
   get: function get() {
@@ -14070,15 +14097,15 @@ Object.defineProperty(exports, "UID", {
 });
 exports.Collection = void 0;
 
-var _define = __webpack_require__(70);
+var _define = __webpack_require__(73);
 
-var _callbacks = __webpack_require__(65);
+var _callbacks = __webpack_require__(68);
 
-var _cookie = __webpack_require__(69);
+var _cookie = __webpack_require__(72);
 
-var _uid = _interopRequireDefault(__webpack_require__(60));
+var _uid = _interopRequireDefault(__webpack_require__(62));
 
-var Collection = _interopRequireWildcard(__webpack_require__(67));
+var Collection = _interopRequireWildcard(__webpack_require__(70));
 
 exports.Collection = Collection;
 
@@ -14087,7 +14114,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14152,25 +14179,6 @@ function () {
 exports.Icon = Icon;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MAP_CONTROL_EVENTS = void 0;
-var MAP_CONTROL_EVENTS;
-exports.MAP_CONTROL_EVENTS = MAP_CONTROL_EVENTS;
-
-(function (MAP_CONTROL_EVENTS) {
-  MAP_CONTROL_EVENTS["ON_ADD"] = "onAdd";
-  MAP_CONTROL_EVENTS["ON_REMOVE"] = "onRemove";
-})(MAP_CONTROL_EVENTS || (exports.MAP_CONTROL_EVENTS = MAP_CONTROL_EVENTS = {}));
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14182,7 +14190,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Events = void 0;
 
-var _group = __webpack_require__(52);
+var _group = __webpack_require__(54);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -14699,9 +14707,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var concavehull = __webpack_require__(63);
+var concavehull = __webpack_require__(65);
 
-var convexhull = __webpack_require__(76);
+var convexhull = __webpack_require__(79);
 
 var PolygonCoords =
 /*#__PURE__*/
@@ -14804,9 +14812,9 @@ exports.PolygonCoords = PolygonCoords;
 
 
 var twoProduct = __webpack_require__(24)
-var robustSum = __webpack_require__(81)
-var robustScale = __webpack_require__(79)
-var robustSubtract = __webpack_require__(80)
+var robustSum = __webpack_require__(84)
+var robustScale = __webpack_require__(82)
+var robustSubtract = __webpack_require__(83)
 
 var NUM_EXPAND = 5
 
@@ -15104,15 +15112,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeoStrategy = void 0;
 
-var _map = __webpack_require__(37);
+var _map = __webpack_require__(38);
 
-var _marker = __webpack_require__(38);
+var _marker = __webpack_require__(39);
 
-var _marker2 = __webpack_require__(40);
+var _marker2 = __webpack_require__(41);
 
-var _polygon = __webpack_require__(39);
+var _polygon = __webpack_require__(40);
 
-var _polygon2 = __webpack_require__(41);
+var _polygon2 = __webpack_require__(42);
 
 var _mapControl = __webpack_require__(36);
 
@@ -15180,7 +15188,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.markerPresetStorage = void 0;
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -15907,7 +15915,7 @@ exports.Marker = void 0;
 
 var _coords = __webpack_require__(0);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
 var _geoobject = __webpack_require__(18);
 
@@ -16855,7 +16863,7 @@ var _bounds = __webpack_require__(1);
 
 var _index = __webpack_require__(12);
 
-var _index2 = __webpack_require__(46);
+var _index2 = __webpack_require__(47);
 
 var _marker = __webpack_require__(19);
 
@@ -16863,7 +16871,7 @@ var _polygon = __webpack_require__(20);
 
 var _index3 = __webpack_require__(8);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
 var _geocoder = __webpack_require__(17);
 
@@ -27268,13 +27276,13 @@ var _leaflet = __webpack_require__(12);
 
 var _marker = __webpack_require__(19);
 
-var _marker2 = __webpack_require__(56);
+var _marker2 = __webpack_require__(58);
 
 var _polygon = __webpack_require__(20);
 
-var _polygon2 = __webpack_require__(57);
+var _polygon2 = __webpack_require__(59);
 
-var _mapControl = __webpack_require__(54);
+var _mapControl = __webpack_require__(56);
 
 var _domEvent = __webpack_require__(11);
 
@@ -27428,7 +27436,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Constructor = exports.Strategy = void 0;
 
-var _grim = __webpack_require__(4);
+var _grim = __webpack_require__(5);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -27488,7 +27496,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MarkerStrategy = void 0;
 
-var _grim = __webpack_require__(4);
+var _grim = __webpack_require__(5);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -27554,7 +27562,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PolygonStrategy = void 0;
 
-var _grim = __webpack_require__(4);
+var _grim = __webpack_require__(5);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -27764,7 +27772,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimJs = __webpack_require__(74);
+var _nominatimJs = __webpack_require__(77);
 
 var _coords = __webpack_require__(0);
 
@@ -27846,11 +27854,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMapControlStrategy = void 0;
 
-var _grim = __webpack_require__(4);
+var _grim = __webpack_require__(5);
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-var _mapControl = __webpack_require__(6);
+var _mapControl = __webpack_require__(4);
+
+var _propsAdapter = __webpack_require__(37);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27871,17 +27881,25 @@ function () {
     key: "getControlInstanceConstructor",
     value: function getControlInstanceConstructor() {
       return new Promise(function (resolve, reject) {
-        var ControlConstructor = function ControlConstructor() {
-          var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var ControlConstructor = function ControlConstructor(props) {
           var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-          this.props = {}; // props; // @TODO adapter
-
+          this.props = props || {};
           this.callbacks = new _grim.Callbacks(events);
         };
 
         ControlConstructor.prototype.onAdd = function onAddMapControl(map) {
           try {
             var parentDomContainer = L.DomUtil.create('div');
+            var position = this.props.position;
+
+            if (position) {
+              parentDomContainer.style.position = 'inherit';
+              parentDomContainer.style.top = position.top || 'auto';
+              parentDomContainer.style.bottom = position.bottom || 'auto';
+              parentDomContainer.style.left = position.left || 'auto';
+              parentDomContainer.style.right = position.right || 'auto';
+            }
+
             this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
             L.DomEvent.disableScrollPropagation(parentDomContainer);
             L.DomEvent.disableClickPropagation(parentDomContainer);
@@ -27896,8 +27914,9 @@ function () {
         };
 
         resolve(function (props, events) {
-          var control = new ControlConstructor(props, events);
-          return new (L.Control.extend(control))();
+          var propsAdapter = new _propsAdapter.PropsAdapter(props);
+          var control = new ControlConstructor(propsAdapter.getAdaptedControlProps(), events);
+          return new (L.Control.extend(control))(propsAdapter.getAdapted());
         });
       });
     }
@@ -27918,11 +27937,90 @@ exports.LeafletMapControlStrategy = LeafletMapControlStrategy;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.PropsAdapter = void 0;
+
+var _mapControl = __webpack_require__(4);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PropsAdapter =
+/*#__PURE__*/
+function () {
+  function PropsAdapter(props) {
+    _classCallCheck(this, PropsAdapter);
+
+    _defineProperty(this, "props", void 0);
+
+    _defineProperty(this, "adaptedProps", {});
+
+    _defineProperty(this, "adaptedControlProps", {});
+
+    this.props = props;
+    this.adaptPosition();
+  }
+
+  _createClass(PropsAdapter, [{
+    key: "getAdapted",
+    value: function getAdapted() {
+      return this.adaptedProps;
+    }
+  }, {
+    key: "getAdaptedControlProps",
+    value: function getAdaptedControlProps() {
+      return this.adaptedControlProps;
+    }
+  }, {
+    key: "adaptPosition",
+    value: function adaptPosition() {
+      var position = this.props[_mapControl.MAP_CONTROL_PROPS.POSITION];
+
+      if (position) {
+        this.adaptedProps.position = 'custom';
+        this.adaptedControlProps.position = {
+          top: position.top,
+          bottom: position.bottom,
+          left: position.left,
+          right: position.right
+        };
+      } else {
+        var adaptMap = {
+          left: 'topleft',
+          right: 'bottomright',
+          top: 'topright',
+          bottom: 'bottomleft'
+        };
+        var float = this.props[_mapControl.MAP_CONTROL_PROPS.FLOAT];
+        this.adaptedProps.position = adaptMap[float] || adaptMap.left;
+      }
+    }
+  }]);
+
+  return PropsAdapter;
+}();
+
+exports.PropsAdapter = PropsAdapter;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.LeafletMapStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-__webpack_require__(64);
+__webpack_require__(66);
 
 var _map = __webpack_require__(31);
 
@@ -27931,6 +28029,8 @@ var _coords = __webpack_require__(0);
 var _bounds = __webpack_require__(1);
 
 var _events = __webpack_require__(7);
+
+__webpack_require__(67);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27971,6 +28071,7 @@ function () {
         var boundsCoords = options.bounds ? new L.Bounds(options.bounds.toArray()).getCenter() : null;
         var boundsCenter = boundsCoords ? [boundsCoords.x, boundsCoords.y] : null;
         instance.setView(center || boundsCenter, options.zoom);
+        instance._controlCorners['custom'] = L.DomUtil.create('div', 'leaflet-custom', instance._controlContainer);
       });
     }
     /**
@@ -28167,7 +28268,7 @@ function () {
 exports.LeafletMapStrategy = LeafletMapStrategy;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28180,17 +28281,17 @@ exports.LeafletMarkerStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-__webpack_require__(72);
+__webpack_require__(75);
 
 var _index = __webpack_require__(8);
 
 var _coords = __webpack_require__(0);
 
-var _icon = __webpack_require__(5);
+var _icon = __webpack_require__(6);
 
 var _marker = __webpack_require__(32);
 
-var _iconFactory = __webpack_require__(42);
+var _iconFactory = __webpack_require__(43);
 
 var _markerPresetStorage = __webpack_require__(13);
 
@@ -28375,7 +28476,7 @@ function () {
 exports.LeafletMarkerStrategy = LeafletMarkerStrategy;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28580,7 +28681,7 @@ function () {
 exports.LeafletPolygonStrategy = LeafletPolygonStrategy;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28623,7 +28724,7 @@ function () {
 exports.LeafletMarkerPresetStrategy = LeafletMarkerPresetStrategy;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28671,7 +28772,7 @@ function () {
 exports.LeafletPolygonPresetStrategy = LeafletPolygonPresetStrategy;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28721,7 +28822,7 @@ var iconFactory = new IconFactory();
 exports.iconFactory = iconFactory;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28782,7 +28883,7 @@ function () {
 exports.YandexDOMEventStrategy = YandexDOMEventStrategy;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28848,7 +28949,7 @@ function () {
 exports.YandexGeoEventStrategy = YandexGeoEventStrategy;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28932,7 +29033,7 @@ function () {
 exports.YandexGeocoderStrategy = YandexGeocoderStrategy;
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28945,19 +29046,19 @@ exports.YandexGeoStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _map = __webpack_require__(48);
+var _map = __webpack_require__(50);
 
-var _geocoder = __webpack_require__(45);
+var _geocoder = __webpack_require__(46);
 
-var _marker = __webpack_require__(49);
+var _marker = __webpack_require__(51);
 
-var _polygon = __webpack_require__(50);
+var _polygon = __webpack_require__(52);
 
-var _geoEvent = __webpack_require__(44);
+var _geoEvent = __webpack_require__(45);
 
-var _domEvent = __webpack_require__(43);
+var _domEvent = __webpack_require__(44);
 
-var _mapControl = __webpack_require__(47);
+var _mapControl = __webpack_require__(48);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29006,7 +29107,7 @@ function () {
 exports.YandexGeoStrategy = YandexGeoStrategy;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29017,11 +29118,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.YandexMapControlStrategy = void 0;
 
-var _grim = __webpack_require__(4);
+var _grim = __webpack_require__(5);
 
 var _ymaps = __webpack_require__(3);
 
-var _mapControl = __webpack_require__(6);
+var _mapControl = __webpack_require__(4);
+
+var _propsAdapter = __webpack_require__(49);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29045,11 +29148,8 @@ function () {
         }
 
         _ymaps.Api.ymaps.ready(function () {
-          var ControlConstructor = function Constructor() {
-            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+          var ControlConstructor = function Constructor(props) {
             var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-            this.props = {}; // props; // @TODO adapter
-
             this.callbacks = new _grim.Callbacks(events);
             ControlConstructor.superclass.constructor.call(this, props);
           };
@@ -29073,7 +29173,8 @@ function () {
           });
 
           resolve(function (props, events) {
-            return new ControlConstructor(props, events);
+            var propsAdapter = new _propsAdapter.PropsAdapter(props);
+            return new ControlConstructor(propsAdapter.getAdapted(), events);
           });
         }, function (message) {
           throw new Error(message);
@@ -29088,7 +29189,79 @@ function () {
 exports.YandexMapControlStrategy = YandexMapControlStrategy;
 
 /***/ }),
-/* 48 */
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PropsAdapter = void 0;
+
+var _mapControl = __webpack_require__(4);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PropsAdapter =
+/*#__PURE__*/
+function () {
+  function PropsAdapter(props) {
+    _classCallCheck(this, PropsAdapter);
+
+    _defineProperty(this, "props", void 0);
+
+    _defineProperty(this, "adaptedProps", {});
+
+    this.props = props;
+    this.adaptPosition();
+  }
+
+  _createClass(PropsAdapter, [{
+    key: "getAdapted",
+    value: function getAdapted() {
+      return this.adaptedProps;
+    }
+  }, {
+    key: "adaptPosition",
+    value: function adaptPosition() {
+      var position = this.props[_mapControl.MAP_CONTROL_PROPS.POSITION];
+
+      if (position) {
+        this.adaptedProps.float = 'none';
+        this.adaptedProps.position = {
+          top: position.top,
+          bottom: position.bottom,
+          left: position.left,
+          right: position.right
+        };
+      } else {
+        var adaptMap = {
+          left: 'left',
+          right: 'right',
+          top: 'top',
+          bottom: 'bottom'
+        };
+        var _float = this.props[_mapControl.MAP_CONTROL_PROPS.FLOAT];
+        this.adaptedProps.float = adaptMap[_float] || adaptMap.left;
+      }
+    }
+  }]);
+
+  return PropsAdapter;
+}();
+
+exports.PropsAdapter = PropsAdapter;
+
+/***/ }),
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29329,7 +29502,7 @@ function () {
 exports.YandexMapStrategy = YandexMapStrategy;
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29342,7 +29515,7 @@ exports.YandexMarkerStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _iconFactory = __webpack_require__(51);
+var _iconFactory = __webpack_require__(53);
 
 var _coords = __webpack_require__(0);
 
@@ -29545,7 +29718,7 @@ function () {
 exports.YandexMarkerStrategy = YandexMarkerStrategy;
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29783,7 +29956,7 @@ function () {
 exports.YandexPolygonStrategy = YandexPolygonStrategy;
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29832,7 +30005,7 @@ function () {
 exports.IconFactory = IconFactory;
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30010,7 +30183,7 @@ function () {
 exports.EventsGroup = EventsGroup;
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30021,9 +30194,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MapControlConstructor = void 0;
 
-var _mapControl = __webpack_require__(6);
+var _mapControl = __webpack_require__(4);
 
-var _mapControlInstance = __webpack_require__(55);
+var _mapControlInstance = __webpack_require__(57);
 
 function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -30144,7 +30317,7 @@ function () {
 exports.MapControlConstructor = MapControlConstructor;
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30155,7 +30328,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MapControlController = void 0;
 
-var _controlConstructor = __webpack_require__(53);
+var _controlConstructor = __webpack_require__(55);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30200,7 +30373,7 @@ function () {
 exports.MapControlController = MapControlController;
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30253,7 +30426,7 @@ function () {
 exports.MapControl = MapControl;
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30320,7 +30493,7 @@ function () {
 exports.MarkerPreset = MarkerPreset;
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30398,7 +30571,7 @@ function () {
 exports.PolygonPreset = PolygonPreset;
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30436,7 +30609,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30484,7 +30657,7 @@ function () {
 exports.UIDGenerator = UIDGenerator;
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30495,9 +30668,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _queue = __webpack_require__(61);
+var _queue = __webpack_require__(63);
 
-var _generator = __webpack_require__(59);
+var _generator = __webpack_require__(61);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30514,7 +30687,7 @@ _defineProperty(UID, "Queue", _queue.UIDQueue);
 _defineProperty(UID, "Generator", _generator.UIDGenerator);
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30560,7 +30733,7 @@ function () {
 exports.UIDQueue = UIDQueue;
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30729,16 +30902,16 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var rbush = __webpack_require__(78);
-var convexHull = __webpack_require__(73);
-var Queue = __webpack_require__(87);
-var pointInPolygon = __webpack_require__(75);
+var rbush = __webpack_require__(81);
+var convexHull = __webpack_require__(76);
+var Queue = __webpack_require__(90);
+var pointInPolygon = __webpack_require__(78);
 var orient = __webpack_require__(10)[3];
 
 module.exports = concaveman;
@@ -31076,13 +31249,19 @@ function sqSegSegDist(x0, y0, x1, y1, x2, y2, x3, y3) {
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 65 */
+/* 67 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31184,7 +31363,7 @@ function () {
 exports.Callbacks = Callbacks;
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31411,7 +31590,7 @@ function () {
 exports.Collections = Collections;
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31445,12 +31624,12 @@ Object.defineProperty(exports, "IStrategy", {
   }
 });
 
-var _constructor = __webpack_require__(66);
+var _constructor = __webpack_require__(69);
 
-var _strategy = __webpack_require__(68);
+var _strategy = __webpack_require__(71);
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31551,7 +31730,7 @@ function () {
 exports.Strategy = Strategy;
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31669,7 +31848,7 @@ function () {
 exports.Cookie = Cookie;
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31680,7 +31859,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Define = void 0;
 
-var _property = __webpack_require__(71);
+var _property = __webpack_require__(74);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31724,7 +31903,7 @@ function () {
 exports.Define = Define;
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31863,7 +32042,7 @@ function () {
 exports.Property = Property;
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33790,7 +33969,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 73 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33877,7 +34056,7 @@ function monotoneConvexHull2D(points) {
 }
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33918,7 +34097,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(83);
+var superagent = __webpack_require__(86);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -33970,7 +34149,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports) {
 
 module.exports = function (point, vs) {
@@ -33994,7 +34173,7 @@ module.exports = function (point, vs) {
 
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34123,7 +34302,7 @@ module.exports = quickHull
 
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -34192,7 +34371,7 @@ return quickselect;
 
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34201,7 +34380,7 @@ return quickselect;
 module.exports = rbush;
 module.exports.default = rbush;
 
-var quickselect = __webpack_require__(77);
+var quickselect = __webpack_require__(80);
 
 function rbush(maxEntries, format) {
     if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -34761,14 +34940,14 @@ function multiSelect(arr, left, right, n, compare) {
 
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var twoProduct = __webpack_require__(24)
-var twoSum = __webpack_require__(88)
+var twoSum = __webpack_require__(91)
 
 module.exports = scaleLinearExpansion
 
@@ -34817,7 +34996,7 @@ function scaleLinearExpansion(e, scale) {
 }
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34979,7 +35158,7 @@ function robustSubtract(e, f) {
 }
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35141,7 +35320,7 @@ function linearExpansionSum(e, f) {
 }
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -35167,7 +35346,7 @@ module.exports = Agent;
 
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -35184,11 +35363,11 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(62);
-var RequestBase = __webpack_require__(84);
+var Emitter = __webpack_require__(64);
+var RequestBase = __webpack_require__(87);
 var isObject = __webpack_require__(23);
-var ResponseBase = __webpack_require__(85);
-var Agent = __webpack_require__(82);
+var ResponseBase = __webpack_require__(88);
+var Agent = __webpack_require__(85);
 
 /**
  * Noop.
@@ -36093,7 +36272,7 @@ request.put = function(url, data, fn) {
 
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36794,7 +36973,7 @@ RequestBase.prototype._setTimeouts = function() {
 
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36804,7 +36983,7 @@ RequestBase.prototype._setTimeouts = function() {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(86);
+var utils = __webpack_require__(89);
 
 /**
  * Expose `ResponseBase`.
@@ -36937,7 +37116,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37015,7 +37194,7 @@ exports.cleanHeader = function(header, changesOrigin){
 
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37110,7 +37289,7 @@ TinyQueue.prototype = {
 
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37133,5 +37312,5 @@ function fastTwoSum(a, b, result) {
 }
 
 /***/ })
-],[58]);
+],[60]);
 //# sourceMappingURL=main.js.map

@@ -9,7 +9,9 @@ var _grim = require("grim.lib");
 
 var L = _interopRequireWildcard(require("leaflet"));
 
-var _mapControl = require("../interface/map-control");
+var _mapControl = require("../../interface/map-control");
+
+var _propsAdapter = require("./props-adapter");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -30,17 +32,25 @@ function () {
     key: "getControlInstanceConstructor",
     value: function getControlInstanceConstructor() {
       return new Promise(function (resolve, reject) {
-        var ControlConstructor = function ControlConstructor() {
-          var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var ControlConstructor = function ControlConstructor(props) {
           var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-          this.props = {}; // props; // @TODO adapter
-
+          this.props = props || {};
           this.callbacks = new _grim.Callbacks(events);
         };
 
         ControlConstructor.prototype.onAdd = function onAddMapControl(map) {
           try {
             var parentDomContainer = L.DomUtil.create('div');
+            var position = this.props.position;
+
+            if (position) {
+              parentDomContainer.style.position = 'inherit';
+              parentDomContainer.style.top = position.top || 'auto';
+              parentDomContainer.style.bottom = position.bottom || 'auto';
+              parentDomContainer.style.left = position.left || 'auto';
+              parentDomContainer.style.right = position.right || 'auto';
+            }
+
             this.callbacks.trigger(_mapControl.MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
             L.DomEvent.disableScrollPropagation(parentDomContainer);
             L.DomEvent.disableClickPropagation(parentDomContainer);
@@ -55,8 +65,9 @@ function () {
         };
 
         resolve(function (props, events) {
-          var control = new ControlConstructor(props, events);
-          return new (L.Control.extend(control))();
+          var propsAdapter = new _propsAdapter.PropsAdapter(props);
+          var control = new ControlConstructor(propsAdapter.getAdaptedControlProps(), events);
+          return new (L.Control.extend(control))(propsAdapter.getAdapted());
         });
       });
     }

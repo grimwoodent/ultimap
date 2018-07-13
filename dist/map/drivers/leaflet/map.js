@@ -17,6 +17,8 @@ var _bounds = require("../../bounds");
 
 var _events = require("../../events");
 
+require("./style/map.less");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56,6 +58,7 @@ function () {
         var boundsCoords = options.bounds ? new L.Bounds(options.bounds.toArray()).getCenter() : null;
         var boundsCenter = boundsCoords ? [boundsCoords.x, boundsCoords.y] : null;
         instance.setView(center || boundsCenter, options.zoom);
+        instance._controlCorners['custom'] = L.DomUtil.create('div', 'leaflet-custom', instance._controlContainer);
       });
     }
     /**
