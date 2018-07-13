@@ -1,10 +1,10 @@
 export type TGetControlInstanceHandler = (...args: any[]) => any;
 
-export type TControlConstructor = (...args: any[]) => void;
+export type TControlConstructor = (control: any, ...args: any[]) => void;
 
-export type TOnAddHandler = (parentDomContainer: HTMLElement) => void;
+export type TOnAddHandler = (control: any, parentDomContainer: HTMLElement) => void;
 
-export type TOnRemoveHandler = () => void;
+export type TOnRemoveHandler = (control: any, ) => void;
 
 export interface IMapControlProperties {
 
