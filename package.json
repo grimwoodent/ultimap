@@ -40,7 +40,7 @@
     "file-loader": "^0.8.5",
     "ignore-styles": "^5.0.1",
     "jquery": "^3.0.0",
-    "jsdom": "^11.7.0",
+    "jsdom": "^14.0.0",
     "jsdom-global": "^3.0.2",
     "json-loader": "^0.5.7",
     "less": "^3.0.4",
