@@ -54,8 +54,8 @@ function () {
           top: 'top',
           bottom: 'bottom'
         };
-        var _float = this.props[_mapControl.MAP_CONTROL_PROPS.FLOAT];
-        this.adaptedProps.float = adaptMap[_float] || adaptMap.left;
+        var float = this.props[_mapControl.MAP_CONTROL_PROPS.FLOAT];
+        this.adaptedProps.float = adaptMap[float] || adaptMap.left;
       }
     }
   }]);

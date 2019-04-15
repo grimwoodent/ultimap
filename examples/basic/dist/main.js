@@ -14097,15 +14097,15 @@ Object.defineProperty(exports, "UID", {
 });
 exports.Collection = void 0;
 
-var _define = __webpack_require__(73);
+var _define = __webpack_require__(71);
 
-var _callbacks = __webpack_require__(68);
+var _callbacks = __webpack_require__(66);
 
-var _cookie = __webpack_require__(72);
+var _cookie = __webpack_require__(70);
 
-var _uid = _interopRequireDefault(__webpack_require__(62));
+var _uid = _interopRequireDefault(__webpack_require__(60));
 
-var Collection = _interopRequireWildcard(__webpack_require__(70));
+var Collection = _interopRequireWildcard(__webpack_require__(68));
 
 exports.Collection = Collection;
 
@@ -14188,9 +14188,11 @@ exports.Icon = Icon;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Events = void 0;
+exports.PolygonCoords = void 0;
 
-var _group = __webpack_require__(54);
+var _bounds = __webpack_require__(1);
+
+var _polygonCoords = __webpack_require__(21);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -14200,105 +14202,1202 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var Events =
+var concavehull = __webpack_require__(63);
+
+var convexhull = __webpack_require__(82);
+
+var PolygonCoords =
 /*#__PURE__*/
 function () {
-  /** @var {IEventsGroup} general Основная группа событий для объекта */
+  _createClass(PolygonCoords, null, [{
+    key: "createByConcaveHull",
+    value: function createByConcaveHull(points) {
+      return new this(concavehull(points));
+    }
+  }, {
+    key: "createByConvexHull",
+    value: function createByConvexHull(points) {
+      return new this(convexhull(points));
+    }
+  }]);
 
-  /** @var {IEventsStrategyProvider} strategyProvider Провайдер методов для работы со стратегией объекта */
-  function Events(strategyProvider) {
-    _classCallCheck(this, Events);
+  function PolygonCoords(points) {
+    _classCallCheck(this, PolygonCoords);
 
-    _defineProperty(this, "general", void 0);
+    _defineProperty(this, "points", null);
 
-    _defineProperty(this, "strategyProvider", void 0);
+    this.points = _polygonCoords.UtilsPolygonCoords.toNumbers(points);
+  }
+  /**
+   * Привести в массив
+   *
+   * @param {boolean} normalize Нормализировать объект к виду вложенности 3
+   *
+   * @return {tPolygonCoords}
+   */
 
-    this.strategyProvider = strategyProvider;
-    this.general = new _group.EventsGroup(this.strategyProvider);
+
+  _createClass(PolygonCoords, [{
+    key: "toArray",
+    value: function toArray() {
+      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (normalize) {
+        return _polygonCoords.UtilsPolygonCoords.normalize(this.points);
+      }
+
+      return this.points;
+    }
+  }, {
+    key: "toJson",
+    value: function toJson() {
+      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (!this.getCount()) {
+        console.error('Empty polygon coords');
+
+        if (normalize) {
+          return '[[[]]]';
+        }
+
+        return JSON.stringify(this.points || []);
+      }
+
+      return JSON.stringify(this.toArray(normalize));
+    }
+  }, {
+    key: "getCount",
+    value: function getCount() {
+      return _polygonCoords.UtilsPolygonCoords.count(this.points);
+    }
+  }, {
+    key: "getBounds",
+    value: function getBounds() {
+      var points = {
+        left: null,
+        right: null,
+        bottom: null,
+        top: null
+      };
+
+      _polygonCoords.UtilsPolygonCoords.simplify(this.points).forEach(function (point) {
+        var coords = Array.isArray(point[0]) ? point[0] : point;
+        var lat = coords[0];
+        var lng = coords[1];
+        points.left = points.left === null || lat < points.left ? lat : points.left;
+        points.right = points.right === null || lat > points.right ? lat : points.right;
+        points.bottom = points.bottom === null || lng < points.bottom ? lng : points.bottom;
+        points.top = points.top === null || lng > points.top ? lng : points.top;
+      });
+
+      return new _bounds.Bounds([points.left, points.top], [points.right, points.bottom]);
+    }
+  }]);
+
+  return PolygonCoords;
+}();
+
+exports.PolygonCoords = PolygonCoords;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var twoProduct = __webpack_require__(23)
+var robustSum = __webpack_require__(87)
+var robustScale = __webpack_require__(85)
+var robustSubtract = __webpack_require__(86)
+
+var NUM_EXPAND = 5
+
+var EPSILON     = 1.1102230246251565e-16
+var ERRBOUND3   = (3.0 + 16.0 * EPSILON) * EPSILON
+var ERRBOUND4   = (7.0 + 56.0 * EPSILON) * EPSILON
+
+function cofactor(m, c) {
+  var result = new Array(m.length-1)
+  for(var i=1; i<m.length; ++i) {
+    var r = result[i-1] = new Array(m.length-1)
+    for(var j=0,k=0; j<m.length; ++j) {
+      if(j === c) {
+        continue
+      }
+      r[k++] = m[i][j]
+    }
+  }
+  return result
+}
+
+function matrix(n) {
+  var result = new Array(n)
+  for(var i=0; i<n; ++i) {
+    result[i] = new Array(n)
+    for(var j=0; j<n; ++j) {
+      result[i][j] = ["m", j, "[", (n-i-1), "]"].join("")
+    }
+  }
+  return result
+}
+
+function sign(n) {
+  if(n & 1) {
+    return "-"
+  }
+  return ""
+}
+
+function generateSum(expr) {
+  if(expr.length === 1) {
+    return expr[0]
+  } else if(expr.length === 2) {
+    return ["sum(", expr[0], ",", expr[1], ")"].join("")
+  } else {
+    var m = expr.length>>1
+    return ["sum(", generateSum(expr.slice(0, m)), ",", generateSum(expr.slice(m)), ")"].join("")
+  }
+}
+
+function determinant(m) {
+  if(m.length === 2) {
+    return [["sum(prod(", m[0][0], ",", m[1][1], "),prod(-", m[0][1], ",", m[1][0], "))"].join("")]
+  } else {
+    var expr = []
+    for(var i=0; i<m.length; ++i) {
+      expr.push(["scale(", generateSum(determinant(cofactor(m, i))), ",", sign(i), m[0][i], ")"].join(""))
+    }
+    return expr
+  }
+}
+
+function orientation(n) {
+  var pos = []
+  var neg = []
+  var m = matrix(n)
+  var args = []
+  for(var i=0; i<n; ++i) {
+    if((i&1)===0) {
+      pos.push.apply(pos, determinant(cofactor(m, i)))
+    } else {
+      neg.push.apply(neg, determinant(cofactor(m, i)))
+    }
+    args.push("m" + i)
+  }
+  var posExpr = generateSum(pos)
+  var negExpr = generateSum(neg)
+  var funcName = "orientation" + n + "Exact"
+  var code = ["function ", funcName, "(", args.join(), "){var p=", posExpr, ",n=", negExpr, ",d=sub(p,n);\
+return d[d.length-1];};return ", funcName].join("")
+  var proc = new Function("sum", "prod", "scale", "sub", code)
+  return proc(robustSum, twoProduct, robustScale, robustSubtract)
+}
+
+var orientation3Exact = orientation(3)
+var orientation4Exact = orientation(4)
+
+var CACHED = [
+  function orientation0() { return 0 },
+  function orientation1() { return 0 },
+  function orientation2(a, b) { 
+    return b[0] - a[0]
+  },
+  function orientation3(a, b, c) {
+    var l = (a[1] - c[1]) * (b[0] - c[0])
+    var r = (a[0] - c[0]) * (b[1] - c[1])
+    var det = l - r
+    var s
+    if(l > 0) {
+      if(r <= 0) {
+        return det
+      } else {
+        s = l + r
+      }
+    } else if(l < 0) {
+      if(r >= 0) {
+        return det
+      } else {
+        s = -(l + r)
+      }
+    } else {
+      return det
+    }
+    var tol = ERRBOUND3 * s
+    if(det >= tol || det <= -tol) {
+      return det
+    }
+    return orientation3Exact(a, b, c)
+  },
+  function orientation4(a,b,c,d) {
+    var adx = a[0] - d[0]
+    var bdx = b[0] - d[0]
+    var cdx = c[0] - d[0]
+    var ady = a[1] - d[1]
+    var bdy = b[1] - d[1]
+    var cdy = c[1] - d[1]
+    var adz = a[2] - d[2]
+    var bdz = b[2] - d[2]
+    var cdz = c[2] - d[2]
+    var bdxcdy = bdx * cdy
+    var cdxbdy = cdx * bdy
+    var cdxady = cdx * ady
+    var adxcdy = adx * cdy
+    var adxbdy = adx * bdy
+    var bdxady = bdx * ady
+    var det = adz * (bdxcdy - cdxbdy) 
+            + bdz * (cdxady - adxcdy)
+            + cdz * (adxbdy - bdxady)
+    var permanent = (Math.abs(bdxcdy) + Math.abs(cdxbdy)) * Math.abs(adz)
+                  + (Math.abs(cdxady) + Math.abs(adxcdy)) * Math.abs(bdz)
+                  + (Math.abs(adxbdy) + Math.abs(bdxady)) * Math.abs(cdz)
+    var tol = ERRBOUND4 * permanent
+    if ((det > tol) || (-det > tol)) {
+      return det
+    }
+    return orientation4Exact(a,b,c,d)
+  }
+]
+
+function slowOrient(args) {
+  var proc = CACHED[args.length]
+  if(!proc) {
+    proc = CACHED[args.length] = orientation(args.length)
+  }
+  return proc.apply(undefined, args)
+}
+
+function generateOrientationProc() {
+  while(CACHED.length <= NUM_EXPAND) {
+    CACHED.push(orientation(CACHED.length))
+  }
+  var args = []
+  var procArgs = ["slow"]
+  for(var i=0; i<=NUM_EXPAND; ++i) {
+    args.push("a" + i)
+    procArgs.push("o" + i)
+  }
+  var code = [
+    "function getOrientation(", args.join(), "){switch(arguments.length){case 0:case 1:return 0;"
+  ]
+  for(var i=2; i<=NUM_EXPAND; ++i) {
+    code.push("case ", i, ":return o", i, "(", args.slice(0, i).join(), ");")
+  }
+  code.push("}var s=new Array(arguments.length);for(var i=0;i<arguments.length;++i){s[i]=arguments[i]};return slow(s);}return getOrientation")
+  procArgs.push(code.join(""))
+
+  var proc = Function.apply(undefined, procArgs)
+  module.exports = proc.apply(undefined, [slowOrient].concat(CACHED))
+  for(var i=0; i<=NUM_EXPAND; ++i) {
+    module.exports[i] = CACHED[i]
+  }
+}
+
+generateOrientationProc()
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DOMEvent = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var DOMEvent =
+/*#__PURE__*/
+function () {
+  function DOMEvent(strategy) {
+    _classCallCheck(this, DOMEvent);
+
+    _defineProperty(this, "instance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+  /**
+   * Создать экземпляр объекта события
+   *
+   * @param instance
+   *
+   * @return {IDOMEvent}
+   */
+
+
+  _createClass(DOMEvent, [{
+    key: "create",
+    value: function create(instance) {
+      this.instance = instance;
+      return this;
+    }
+    /**
+     * Получить координаты объекта
+     *
+     * @param domEvent
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords() {
+      return this.getStrategy().getCoords(this.getInstance());
+    }
+    /**
+     * Остановить распространение события
+     *
+     * @return {IDOMEvent}
+     */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      this.getStrategy().stop(this.getInstance());
+      return this;
+    }
+    /**
+     * Получить элемент события
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "getInstance",
+    value: function getInstance() {
+      return this.instance;
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.domEvent;
+    }
+  }]);
+
+  return DOMEvent;
+}();
+
+exports.DOMEvent = DOMEvent;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LeafletGeoStrategy = void 0;
+
+var _map = __webpack_require__(35);
+
+var _marker = __webpack_require__(36);
+
+var _marker2 = __webpack_require__(38);
+
+var _polygon = __webpack_require__(37);
+
+var _polygon2 = __webpack_require__(39);
+
+var _mapControl = __webpack_require__(33);
+
+var _domEvent = __webpack_require__(30);
+
+var _geoEvent = __webpack_require__(31);
+
+var _geocoder = __webpack_require__(32);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var LeafletGeoStrategy =
+/*#__PURE__*/
+function () {
+  function LeafletGeoStrategy() {
+    _classCallCheck(this, LeafletGeoStrategy);
+
+    _defineProperty(this, "map", new _map.LeafletMapStrategy());
+
+    _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
+
+    _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
+
+    _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
+
+    _defineProperty(this, "domEvent", new _domEvent.LeafletDOMEventStrategy());
+
+    _defineProperty(this, "geoEvent", new _geoEvent.LeafletGeoEventStrategy());
+
+    _defineProperty(this, "preset", {
+      marker: new _marker2.LeafletMarkerPresetStrategy(),
+      polygon: new _polygon2.LeafletPolygonPresetStrategy()
+    });
+
+    _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
   }
 
-  _createClass(Events, [{
-    key: "resetAll",
-    value: function resetAll() {
-      this.general.resetAll();
-      return this;
+  _createClass(LeafletGeoStrategy, [{
+    key: "isAllowed",
+    value: function isAllowed() {
+      return true;
     }
-  }, {
-    key: "removeAll",
-    value: function removeAll() {
-      this.general.removeAll();
-      return this;
-    }
-  }, {
-    key: "group",
-    value: function group() {
-      return new _group.EventsGroup(this.strategyProvider);
-    }
-    /**
-     * Добавить событие
-     *
-     * @param {string} key
-     * @param {IEventInList | EventHandlerFn} event
-     *
-     * @return {IEvents}
-     */
+  }]);
 
-  }, {
+  return LeafletGeoStrategy;
+}();
+
+exports.LeafletGeoStrategy = LeafletGeoStrategy;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.markerPresetStorage = void 0;
+
+var _icon = __webpack_require__(6);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MarkerPresetStorage =
+/*#__PURE__*/
+function () {
+  function MarkerPresetStorage() {
+    _classCallCheck(this, MarkerPresetStorage);
+
+    _defineProperty(this, "presets", {});
+  }
+
+  _createClass(MarkerPresetStorage, [{
     key: "add",
-    value: function add(key, event) {
-      this.general.add(key, event);
-      return this;
-    }
-    /**
-     * Удалить события/событие по ключу
-     *
-     * @param {string} key
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvents}
-     */
 
-  }, {
-    key: "remove",
-    value: function remove(key, fn) {
-      this.general.remove(key, fn);
+    /**
+     * Добавить новый пресет
+     *
+     * @param {string} preset
+     * @param {{icon: IIcon}} props
+     *
+     * @return {MarkerPresetStorage}
+     */
+    value: function add(preset, props) {
+      this.presets[preset] = {
+        icon: props.icon ? new _icon.Icon(props.icon) : null
+      };
       return this;
     }
     /**
-     * Получить все соыбтия по этому ключу
+     * Получить пресет по названию
      *
-     * @param {string} key
+     * @param {string} preset
      *
-     * @return {Array<IEventInList>}
+     * @return {IMarkerPreset}
      */
 
   }, {
     key: "get",
-    value: function get(key) {
-      return this.general.get(key);
+    value: function get(preset) {
+      if (!preset) {
+        return null;
+      }
+
+      if (!this.presets[preset]) {
+        throw new Error('Preset not found');
+      }
+
+      return this.presets[preset];
+    }
+  }]);
+
+  return MarkerPresetStorage;
+}();
+
+var markerPresetStorage = new MarkerPresetStorage();
+exports.markerPresetStorage = markerPresetStorage;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.polygonPresetStorge = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PolygonPresetStorge =
+/*#__PURE__*/
+function () {
+  function PolygonPresetStorge() {
+    _classCallCheck(this, PolygonPresetStorge);
+
+    _defineProperty(this, "presets", {});
+  }
+
+  _createClass(PolygonPresetStorge, [{
+    key: "add",
+
+    /**
+     * Добавить новый пресет
+     *
+     * @param {string} preset
+     * @param {{style: ICreatePolygonStyle}} props
+     *
+     * @return {PolygonPresetStorge}
+     */
+    value: function add(preset, props) {
+      this.presets[preset] = {
+        // @TODO Потенциальная ошибка, в случае не соответствия полей при обновлении и создании
+        style: props.style || null
+      };
+      return this;
     }
     /**
-     * Есть ли события по этому ключу
+     * Получить пресет по названию
      *
-     * @param {string} key
+     * @param {string} preset
+     *
+     * @return {IPolygonPresetProperties}
+     */
+
+  }, {
+    key: "get",
+    value: function get(preset) {
+      if (!preset) {
+        return null;
+      }
+
+      if (!this.presets[preset]) {
+        throw new Error('Preset not found');
+      }
+
+      return this.presets[preset];
+    }
+  }]);
+
+  return PolygonPresetStorge;
+}();
+
+var polygonPresetStorge = new PolygonPresetStorge();
+exports.polygonPresetStorge = polygonPresetStorge;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Evented = void 0;
+
+var _events = __webpack_require__(52);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Evented =
+/*#__PURE__*/
+function () {
+  function Evented(strategy) {
+    var _this = this;
+
+    _classCallCheck(this, Evented);
+
+    _defineProperty(this, "instance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    _defineProperty(this, "props", void 0);
+
+    _defineProperty(this, "events", void 0);
+
+    if (!strategy) {
+      throw new Error('Geo strategy not found');
+    }
+
+    this.props = {}; // Передаем провайдер событий в стратегию
+
+    this.events = new _events.Events({
+      on: function on(type, fn) {
+        if (_this.hasInstance()) {
+          _this.getStrategy().on(_this.getInstance(), type, fn);
+        }
+      },
+      off: function off(type, fn) {
+        if (_this.hasInstance()) {
+          _this.getStrategy().off(_this.getInstance(), type, fn);
+        }
+      }
+    });
+    this.strategy = strategy;
+  }
+  /**
+   * Обновить параметры объекта
+   *
+   * @param {TPropertiesForUpdate} options
+   *
+   * @return {Promise<IGeoObject>}
+   */
+
+
+  _createClass(Evented, [{
+    key: "hasInstance",
+
+    /**
+     * Есть ли созданный экземпляр объекта для стратегии
+     *
+     * @return {boolean}
+     */
+    value: function hasInstance() {
+      return !!this.instance;
+    }
+    /**
+     * Получить элемент для работы со стратегиями
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "on",
+
+    /**
+     * Включить событие
+     *
+     * @param {string | IEventHandlerFnMap} type
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvented<TPropertiesForUpdate>}
+     */
+    value: function on(type, fn) {
+      var _this2 = this;
+
+      if (!type) {
+        // throw new Error(`Geo event name is not defined`);
+        console.error('Geo event name is not defined');
+        return this;
+      }
+
+      var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
+
+      Object.keys(events).forEach(function (key) {
+        if (!events[key]) {
+          throw new Error("Geo event \"".concat(key, "\" is not defined"));
+        }
+
+        _this2.events.add(key, events[key]);
+      });
+      return this;
+    }
+    /**
+     * Отключить событие
+     *
+     * @param {string} type
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvented<TPropertiesForUpdate>}
+     */
+
+  }, {
+    key: "off",
+    value: function off(type, fn) {
+      if (this.events.isEmpty(type)) {
+        return this;
+      } // Работа со стратегией перенесена в группы через strategyProvider
+
+
+      this.events.remove(type, fn);
+      return this;
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+
+  }]);
+
+  return Evented;
+}();
+
+exports.Evented = Evented;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GeoEvent = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GeoEvent =
+/*#__PURE__*/
+function () {
+  function GeoEvent(strategy) {
+    _classCallCheck(this, GeoEvent);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+
+  _createClass(GeoEvent, [{
+    key: "getStrategy",
+
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+    value: function getStrategy() {
+      return this.strategy.geoEvent;
+    }
+  }, {
+    key: "map",
+    get: function get() {
+      return this.getStrategy().getMapEventName();
+    }
+  }, {
+    key: "marker",
+    get: function get() {
+      return this.getStrategy().getMarkerEventName();
+    }
+  }]);
+
+  return GeoEvent;
+}();
+
+exports.GeoEvent = GeoEvent;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Geocoder = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Geocoder =
+/*#__PURE__*/
+function () {
+  function Geocoder(strategy) {
+    _classCallCheck(this, Geocoder);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+  /**
+   * Какие объекты находятся рядом с точкой
+   * @param {tCoords} coords
+   * @return {Promise<IGeocodeResult>}
+   */
+
+
+  _createClass(Geocoder, [{
+    key: "whatAt",
+    value: function whatAt(coords) {
+      return this.getStrategy().whatAt(coords);
+    }
+    /**
+     * Где находится этот адресс
+     * @param {string} address
+     * @param {tCoords} coords
+     * @return {Promise<IGeocodeResult>}
+     */
+
+  }, {
+    key: "whereIs",
+    value: function whereIs(address, coords) {
+      return this.getStrategy().whereIs(address, coords);
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {IGeocoderStrategy}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.geocoder;
+    }
+  }]);
+
+  return Geocoder;
+}();
+
+exports.Geocoder = Geocoder;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GeoObject = void 0;
+
+var _evented = __webpack_require__(13);
+
+var _index = __webpack_require__(20);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GeoObject =
+/*#__PURE__*/
+function (_Evented) {
+  _inherits(GeoObject, _Evented);
+
+  function GeoObject(strategy) {
+    var _this;
+
+    _classCallCheck(this, GeoObject);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(GeoObject).call(this, strategy));
+
+    _defineProperty(_assertThisInitialized(_this), "map", void 0);
+
+    _defineProperty(_assertThisInitialized(_this), "coords", void 0);
+
+    _defineProperty(_assertThisInitialized(_this), "data", {});
+
+    _this.data.uid = _index.uid.next();
+    _this.data.name = '';
+    return _this;
+  }
+  /**
+   * Создаем новый экземпляр с параметрами
+   *
+   * @param {TCoordsForUpdate} coords
+   * @param {TPropertiesForUpdate} options
+   *
+   * @return {any}
+   */
+
+
+  _createClass(GeoObject, [{
+    key: "create",
+    value: function create(coords, options) {
+      this.setCoords(coords);
+      this.updateProperties(options);
+      return this;
+    }
+    /**
+     * Получить уникальный ключ объекта
+     *
+     * @return {string}
+     */
+
+  }, {
+    key: "getUid",
+    value: function getUid() {
+      return this.getData().uid;
+    }
+    /**
+     * Получить элемент для работы со стратегиями
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "getInstance",
+    value: function getInstance() {
+      var createNewInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (this.hasInstance()) {
+        return this.instance;
+      }
+
+      if (!createNewInstance) {
+        throw new Error('Instance not found');
+      } // set events for new instance in addTo method
+
+
+      this.instance = this.getStrategy().create(this.coords, this.props);
+      return this.instance;
+    }
+    /**
+     * Установить координаты геообъекта
+     *
+     * @return {Promise<IGeoObject>}
+     */
+
+  }, {
+    key: "setCoords",
+    value: function setCoords(value) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this2);
+          return;
+        }
+
+        _this2.coords = new _this2.constructor.Coords(value);
+
+        if (_this2.hasInstance()) {
+          _this2.getStrategy().setCoords(_this2.getInstance(), _this2.coords);
+
+          resolve(_this2);
+        } else {
+          resolve(_this2);
+        }
+      });
+    }
+    /**
+     * Получить координаты объекта
+     *
+     * @param {boolean} byInstance
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getCoords(this.getInstance());
+      }
+
+      return this.coords || null;
+    }
+    /**
+     * Получит местоположение
+     *
+     * @param {boolean} byInstance
+     *
+     * @return {Bounds}
+     */
+
+  }, {
+    key: "addTo",
+
+    /**
+     * Установить объект на карту
+     *
+     * @param {Map} map
+     *
+     * @return {IGeoObject}
+     */
+    value: function addTo(map) {
+      if (this.onMap()) {
+        this.remove();
+      }
+
+      this.getStrategy().addToMap(this.getInstance(true), map);
+      this.map = map; // Обновим параметры которые нельзя выставить напрямую через создание или которые работают только на карте
+
+      this.events.resetAll();
+      this.setEditable(this.props.editable || false);
+      return this;
+    }
+    /**
+     * Удалить геообъект с карты
+     *
+     * @return {IGeoObject}
+     */
+
+  }, {
+    key: "remove",
+    value: function remove() {
+      if (this.onMap()) {
+        this.events.removeAll();
+        this.getStrategy().removeFromMap(this.getInstance(), this.getMap());
+        this.map = null;
+      }
+
+      return this;
+    }
+    /**
+     * Получить текущую карту
+     *
+     * @return {Map}
+     */
+
+  }, {
+    key: "getMap",
+    value: function getMap() {
+      return this.map || null;
+    }
+    /**
+     * Находится ли объект на карте
      *
      * @return {boolean}
      */
 
   }, {
-    key: "isEmpty",
-    value: function isEmpty(key) {
-      return this.general.isEmpty(key);
+    key: "onMap",
+    value: function onMap() {
+      return !!this.getMap() && this.hasInstance();
     }
+    /**
+     * Копировать текущий объект
+     * @return {IGeoObject<TCoordsForUpdate, TPropertiesForUpdate extends IUpdateGeoObjectOptions>}
+     */
+
+  }, {
+    key: "setEditable",
+
+    /**
+     * Установить состояние редактирования
+     *
+     * @param {boolean} value
+     *
+     * @return {Promise<IGeoObject>}
+     */
+    value: function setEditable(value) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this3);
+          return;
+        }
+
+        _this3.props.editable = value;
+
+        if (_this3.hasInstance()) {
+          _this3.getStrategy().setEditable(_this3.getInstance(), _this3.props.editable);
+
+          resolve(_this3);
+        } else {
+          resolve(_this3);
+        }
+      });
+    }
+  }, {
+    key: "setData",
+    value: function setData(value) {
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this4);
+          return;
+        }
+
+        _this4.data = Object.assign(_this4.data || {}, value);
+        resolve(_this4);
+      });
+    }
+  }, {
+    key: "getData",
+    value: function getData() {
+      return this.data || {};
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {IEditableGeoObjectStrategy}
+     */
+
   }]);
 
-  return Events;
-}();
+  return GeoObject;
+}(_evented.Evented);
 
-exports.Events = Events;
+exports.GeoObject = GeoObject;
+
+_defineProperty(GeoObject, "Coords", null);
 
 /***/ }),
-/* 8 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14313,7 +15412,7 @@ var _coords = __webpack_require__(0);
 
 var _bounds = __webpack_require__(1);
 
-var _evented = __webpack_require__(15);
+var _evented = __webpack_require__(13);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -14327,11 +15426,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -14346,7 +15445,7 @@ function (_Evented) {
   function Map() {
     var _getPrototypeOf2;
 
-    var _temp, _this;
+    var _this;
 
     _classCallCheck(this, Map);
 
@@ -14354,7 +15453,11 @@ function (_Evented) {
       args[_key] = arguments[_key];
     }
 
-    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Map)).call.apply(_getPrototypeOf2, [this].concat(args))), _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "holder", void 0), _temp));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Map)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "holder", void 0);
+
+    return _this;
   }
 
   _createClass(Map, [{
@@ -14684,1225 +15787,7 @@ function (_Evented) {
 exports.Map = Map;
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PolygonCoords = void 0;
-
-var _bounds = __webpack_require__(1);
-
-var _polygonCoords = __webpack_require__(22);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var concavehull = __webpack_require__(65);
-
-var convexhull = __webpack_require__(79);
-
-var PolygonCoords =
-/*#__PURE__*/
-function () {
-  _createClass(PolygonCoords, null, [{
-    key: "createByConcaveHull",
-    value: function createByConcaveHull(points) {
-      return new this(concavehull(points));
-    }
-  }, {
-    key: "createByConvexHull",
-    value: function createByConvexHull(points) {
-      return new this(convexhull(points));
-    }
-  }]);
-
-  function PolygonCoords(points) {
-    _classCallCheck(this, PolygonCoords);
-
-    _defineProperty(this, "points", null);
-
-    this.points = _polygonCoords.UtilsPolygonCoords.toNumbers(points);
-  }
-  /**
-   * Привести в массив
-   *
-   * @param {boolean} normalize Нормализировать объект к виду вложенности 3
-   *
-   * @return {tPolygonCoords}
-   */
-
-
-  _createClass(PolygonCoords, [{
-    key: "toArray",
-    value: function toArray() {
-      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (normalize) {
-        return _polygonCoords.UtilsPolygonCoords.normalize(this.points);
-      }
-
-      return this.points;
-    }
-  }, {
-    key: "toJson",
-    value: function toJson() {
-      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (!this.getCount()) {
-        console.error('Empty polygon coords');
-
-        if (normalize) {
-          return '[[[]]]';
-        }
-
-        return JSON.stringify(this.points || []);
-      }
-
-      return JSON.stringify(this.toArray(normalize));
-    }
-  }, {
-    key: "getCount",
-    value: function getCount() {
-      return _polygonCoords.UtilsPolygonCoords.count(this.points);
-    }
-  }, {
-    key: "getBounds",
-    value: function getBounds() {
-      var points = {
-        left: null,
-        right: null,
-        bottom: null,
-        top: null
-      };
-
-      _polygonCoords.UtilsPolygonCoords.simplify(this.points).forEach(function (point) {
-        var coords = Array.isArray(point[0]) ? point[0] : point;
-        var lat = coords[0];
-        var lng = coords[1];
-        points.left = points.left === null || lat < points.left ? lat : points.left;
-        points.right = points.right === null || lat > points.right ? lat : points.right;
-        points.bottom = points.bottom === null || lng < points.bottom ? lng : points.bottom;
-        points.top = points.top === null || lng > points.top ? lng : points.top;
-      });
-
-      return new _bounds.Bounds([points.left, points.top], [points.right, points.bottom]);
-    }
-  }]);
-
-  return PolygonCoords;
-}();
-
-exports.PolygonCoords = PolygonCoords;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var twoProduct = __webpack_require__(24)
-var robustSum = __webpack_require__(84)
-var robustScale = __webpack_require__(82)
-var robustSubtract = __webpack_require__(83)
-
-var NUM_EXPAND = 5
-
-var EPSILON     = 1.1102230246251565e-16
-var ERRBOUND3   = (3.0 + 16.0 * EPSILON) * EPSILON
-var ERRBOUND4   = (7.0 + 56.0 * EPSILON) * EPSILON
-
-function cofactor(m, c) {
-  var result = new Array(m.length-1)
-  for(var i=1; i<m.length; ++i) {
-    var r = result[i-1] = new Array(m.length-1)
-    for(var j=0,k=0; j<m.length; ++j) {
-      if(j === c) {
-        continue
-      }
-      r[k++] = m[i][j]
-    }
-  }
-  return result
-}
-
-function matrix(n) {
-  var result = new Array(n)
-  for(var i=0; i<n; ++i) {
-    result[i] = new Array(n)
-    for(var j=0; j<n; ++j) {
-      result[i][j] = ["m", j, "[", (n-i-1), "]"].join("")
-    }
-  }
-  return result
-}
-
-function sign(n) {
-  if(n & 1) {
-    return "-"
-  }
-  return ""
-}
-
-function generateSum(expr) {
-  if(expr.length === 1) {
-    return expr[0]
-  } else if(expr.length === 2) {
-    return ["sum(", expr[0], ",", expr[1], ")"].join("")
-  } else {
-    var m = expr.length>>1
-    return ["sum(", generateSum(expr.slice(0, m)), ",", generateSum(expr.slice(m)), ")"].join("")
-  }
-}
-
-function determinant(m) {
-  if(m.length === 2) {
-    return [["sum(prod(", m[0][0], ",", m[1][1], "),prod(-", m[0][1], ",", m[1][0], "))"].join("")]
-  } else {
-    var expr = []
-    for(var i=0; i<m.length; ++i) {
-      expr.push(["scale(", generateSum(determinant(cofactor(m, i))), ",", sign(i), m[0][i], ")"].join(""))
-    }
-    return expr
-  }
-}
-
-function orientation(n) {
-  var pos = []
-  var neg = []
-  var m = matrix(n)
-  var args = []
-  for(var i=0; i<n; ++i) {
-    if((i&1)===0) {
-      pos.push.apply(pos, determinant(cofactor(m, i)))
-    } else {
-      neg.push.apply(neg, determinant(cofactor(m, i)))
-    }
-    args.push("m" + i)
-  }
-  var posExpr = generateSum(pos)
-  var negExpr = generateSum(neg)
-  var funcName = "orientation" + n + "Exact"
-  var code = ["function ", funcName, "(", args.join(), "){var p=", posExpr, ",n=", negExpr, ",d=sub(p,n);\
-return d[d.length-1];};return ", funcName].join("")
-  var proc = new Function("sum", "prod", "scale", "sub", code)
-  return proc(robustSum, twoProduct, robustScale, robustSubtract)
-}
-
-var orientation3Exact = orientation(3)
-var orientation4Exact = orientation(4)
-
-var CACHED = [
-  function orientation0() { return 0 },
-  function orientation1() { return 0 },
-  function orientation2(a, b) { 
-    return b[0] - a[0]
-  },
-  function orientation3(a, b, c) {
-    var l = (a[1] - c[1]) * (b[0] - c[0])
-    var r = (a[0] - c[0]) * (b[1] - c[1])
-    var det = l - r
-    var s
-    if(l > 0) {
-      if(r <= 0) {
-        return det
-      } else {
-        s = l + r
-      }
-    } else if(l < 0) {
-      if(r >= 0) {
-        return det
-      } else {
-        s = -(l + r)
-      }
-    } else {
-      return det
-    }
-    var tol = ERRBOUND3 * s
-    if(det >= tol || det <= -tol) {
-      return det
-    }
-    return orientation3Exact(a, b, c)
-  },
-  function orientation4(a,b,c,d) {
-    var adx = a[0] - d[0]
-    var bdx = b[0] - d[0]
-    var cdx = c[0] - d[0]
-    var ady = a[1] - d[1]
-    var bdy = b[1] - d[1]
-    var cdy = c[1] - d[1]
-    var adz = a[2] - d[2]
-    var bdz = b[2] - d[2]
-    var cdz = c[2] - d[2]
-    var bdxcdy = bdx * cdy
-    var cdxbdy = cdx * bdy
-    var cdxady = cdx * ady
-    var adxcdy = adx * cdy
-    var adxbdy = adx * bdy
-    var bdxady = bdx * ady
-    var det = adz * (bdxcdy - cdxbdy) 
-            + bdz * (cdxady - adxcdy)
-            + cdz * (adxbdy - bdxady)
-    var permanent = (Math.abs(bdxcdy) + Math.abs(cdxbdy)) * Math.abs(adz)
-                  + (Math.abs(cdxady) + Math.abs(adxcdy)) * Math.abs(bdz)
-                  + (Math.abs(adxbdy) + Math.abs(bdxady)) * Math.abs(cdz)
-    var tol = ERRBOUND4 * permanent
-    if ((det > tol) || (-det > tol)) {
-      return det
-    }
-    return orientation4Exact(a,b,c,d)
-  }
-]
-
-function slowOrient(args) {
-  var proc = CACHED[args.length]
-  if(!proc) {
-    proc = CACHED[args.length] = orientation(args.length)
-  }
-  return proc.apply(undefined, args)
-}
-
-function generateOrientationProc() {
-  while(CACHED.length <= NUM_EXPAND) {
-    CACHED.push(orientation(CACHED.length))
-  }
-  var args = []
-  var procArgs = ["slow"]
-  for(var i=0; i<=NUM_EXPAND; ++i) {
-    args.push("a" + i)
-    procArgs.push("o" + i)
-  }
-  var code = [
-    "function getOrientation(", args.join(), "){switch(arguments.length){case 0:case 1:return 0;"
-  ]
-  for(var i=2; i<=NUM_EXPAND; ++i) {
-    code.push("case ", i, ":return o", i, "(", args.slice(0, i).join(), ");")
-  }
-  code.push("}var s=new Array(arguments.length);for(var i=0;i<arguments.length;++i){s[i]=arguments[i]};return slow(s);}return getOrientation")
-  procArgs.push(code.join(""))
-
-  var proc = Function.apply(undefined, procArgs)
-  module.exports = proc.apply(undefined, [slowOrient].concat(CACHED))
-  for(var i=0; i<=NUM_EXPAND; ++i) {
-    module.exports[i] = CACHED[i]
-  }
-}
-
-generateOrientationProc()
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DOMEvent = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var DOMEvent =
-/*#__PURE__*/
-function () {
-  function DOMEvent(strategy) {
-    _classCallCheck(this, DOMEvent);
-
-    _defineProperty(this, "instance", void 0);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-  /**
-   * Создать экземпляр объекта события
-   *
-   * @param instance
-   *
-   * @return {IDOMEvent}
-   */
-
-
-  _createClass(DOMEvent, [{
-    key: "create",
-    value: function create(instance) {
-      this.instance = instance;
-      return this;
-    }
-    /**
-     * Получить координаты объекта
-     *
-     * @param domEvent
-     *
-     * @return {Coords}
-     */
-
-  }, {
-    key: "getCoords",
-    value: function getCoords() {
-      return this.getStrategy().getCoords(this.getInstance());
-    }
-    /**
-     * Остановить распространение события
-     *
-     * @return {IDOMEvent}
-     */
-
-  }, {
-    key: "stop",
-    value: function stop() {
-      this.getStrategy().stop(this.getInstance());
-      return this;
-    }
-    /**
-     * Получить элемент события
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "getInstance",
-    value: function getInstance() {
-      return this.instance;
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.domEvent;
-    }
-  }]);
-
-  return DOMEvent;
-}();
-
-exports.DOMEvent = DOMEvent;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.LeafletGeoStrategy = void 0;
-
-var _map = __webpack_require__(38);
-
-var _marker = __webpack_require__(39);
-
-var _marker2 = __webpack_require__(41);
-
-var _polygon = __webpack_require__(40);
-
-var _polygon2 = __webpack_require__(42);
-
-var _mapControl = __webpack_require__(36);
-
-var _domEvent = __webpack_require__(33);
-
-var _geoEvent = __webpack_require__(34);
-
-var _geocoder = __webpack_require__(35);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var LeafletGeoStrategy =
-/*#__PURE__*/
-function () {
-  function LeafletGeoStrategy() {
-    _classCallCheck(this, LeafletGeoStrategy);
-
-    _defineProperty(this, "map", new _map.LeafletMapStrategy());
-
-    _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
-
-    _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
-
-    _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
-
-    _defineProperty(this, "domEvent", new _domEvent.LeafletDOMEventStrategy());
-
-    _defineProperty(this, "geoEvent", new _geoEvent.LeafletGeoEventStrategy());
-
-    _defineProperty(this, "preset", {
-      marker: new _marker2.LeafletMarkerPresetStrategy(),
-      polygon: new _polygon2.LeafletPolygonPresetStrategy()
-    });
-
-    _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
-  }
-
-  _createClass(LeafletGeoStrategy, [{
-    key: "isAllowed",
-    value: function isAllowed() {
-      return true;
-    }
-  }]);
-
-  return LeafletGeoStrategy;
-}();
-
-exports.LeafletGeoStrategy = LeafletGeoStrategy;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.markerPresetStorage = void 0;
-
-var _icon = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var MarkerPresetStorage =
-/*#__PURE__*/
-function () {
-  function MarkerPresetStorage() {
-    _classCallCheck(this, MarkerPresetStorage);
-
-    _defineProperty(this, "presets", {});
-  }
-
-  _createClass(MarkerPresetStorage, [{
-    key: "add",
-
-    /**
-     * Добавить новый пресет
-     *
-     * @param {string} preset
-     * @param {{icon: IIcon}} props
-     *
-     * @return {MarkerPresetStorage}
-     */
-    value: function add(preset, props) {
-      this.presets[preset] = {
-        icon: props.icon ? new _icon.Icon(props.icon) : null
-      };
-      return this;
-    }
-    /**
-     * Получить пресет по названию
-     *
-     * @param {string} preset
-     *
-     * @return {IMarkerPreset}
-     */
-
-  }, {
-    key: "get",
-    value: function get(preset) {
-      if (!preset) {
-        return null;
-      }
-
-      if (!this.presets[preset]) {
-        throw new Error('Preset not found');
-      }
-
-      return this.presets[preset];
-    }
-  }]);
-
-  return MarkerPresetStorage;
-}();
-
-var markerPresetStorage = new MarkerPresetStorage();
-exports.markerPresetStorage = markerPresetStorage;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.polygonPresetStorge = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var PolygonPresetStorge =
-/*#__PURE__*/
-function () {
-  function PolygonPresetStorge() {
-    _classCallCheck(this, PolygonPresetStorge);
-
-    _defineProperty(this, "presets", {});
-  }
-
-  _createClass(PolygonPresetStorge, [{
-    key: "add",
-
-    /**
-     * Добавить новый пресет
-     *
-     * @param {string} preset
-     * @param {{style: ICreatePolygonStyle}} props
-     *
-     * @return {PolygonPresetStorge}
-     */
-    value: function add(preset, props) {
-      this.presets[preset] = {
-        // @TODO Потенциальная ошибка, в случае не соответствия полей при обновлении и создании
-        style: props.style || null
-      };
-      return this;
-    }
-    /**
-     * Получить пресет по названию
-     *
-     * @param {string} preset
-     *
-     * @return {IPolygonPresetProperties}
-     */
-
-  }, {
-    key: "get",
-    value: function get(preset) {
-      if (!preset) {
-        return null;
-      }
-
-      if (!this.presets[preset]) {
-        throw new Error('Preset not found');
-      }
-
-      return this.presets[preset];
-    }
-  }]);
-
-  return PolygonPresetStorge;
-}();
-
-var polygonPresetStorge = new PolygonPresetStorge();
-exports.polygonPresetStorge = polygonPresetStorge;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Evented = void 0;
-
-var _events = __webpack_require__(7);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Evented =
-/*#__PURE__*/
-function () {
-  function Evented(strategy) {
-    var _this = this;
-
-    _classCallCheck(this, Evented);
-
-    _defineProperty(this, "instance", void 0);
-
-    _defineProperty(this, "strategy", void 0);
-
-    _defineProperty(this, "props", void 0);
-
-    _defineProperty(this, "events", void 0);
-
-    if (!strategy) {
-      throw new Error('Geo strategy not found');
-    }
-
-    this.props = {}; // Передаем провайдер событий в стратегию
-
-    this.events = new _events.Events({
-      on: function on(type, fn) {
-        if (_this.hasInstance()) {
-          _this.getStrategy().on(_this.getInstance(), type, fn);
-        }
-      },
-      off: function off(type, fn) {
-        if (_this.hasInstance()) {
-          _this.getStrategy().off(_this.getInstance(), type, fn);
-        }
-      }
-    });
-    this.strategy = strategy;
-  }
-  /**
-   * Обновить параметры объекта
-   *
-   * @param {TPropertiesForUpdate} options
-   *
-   * @return {Promise<IGeoObject>}
-   */
-
-
-  _createClass(Evented, [{
-    key: "hasInstance",
-
-    /**
-     * Есть ли созданный экземпляр объекта для стратегии
-     *
-     * @return {boolean}
-     */
-    value: function hasInstance() {
-      return !!this.instance;
-    }
-    /**
-     * Получить элемент для работы со стратегиями
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "on",
-
-    /**
-     * Включить событие
-     *
-     * @param {string | IEventHandlerFnMap} type
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvented<TPropertiesForUpdate>}
-     */
-    value: function on(type, fn) {
-      var _this2 = this;
-
-      if (!type) {
-        // throw new Error(`Geo event name is not defined`);
-        console.error('Geo event name is not defined');
-        return this;
-      }
-
-      var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
-
-      Object.keys(events).forEach(function (key) {
-        if (!events[key]) {
-          throw new Error("Geo event \"".concat(key, "\" is not defined"));
-        }
-
-        _this2.events.add(key, events[key]);
-      });
-      return this;
-    }
-    /**
-     * Отключить событие
-     *
-     * @param {string} type
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvented<TPropertiesForUpdate>}
-     */
-
-  }, {
-    key: "off",
-    value: function off(type, fn) {
-      if (this.events.isEmpty(type)) {
-        return this;
-      } // Работа со стратегией перенесена в группы через strategyProvider
-
-
-      this.events.remove(type, fn);
-      return this;
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-
-  }]);
-
-  return Evented;
-}();
-
-exports.Evented = Evented;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GeoEvent = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var GeoEvent =
-/*#__PURE__*/
-function () {
-  function GeoEvent(strategy) {
-    _classCallCheck(this, GeoEvent);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-
-  _createClass(GeoEvent, [{
-    key: "getStrategy",
-
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-    value: function getStrategy() {
-      return this.strategy.geoEvent;
-    }
-  }, {
-    key: "map",
-    get: function get() {
-      return this.getStrategy().getMapEventName();
-    }
-  }, {
-    key: "marker",
-    get: function get() {
-      return this.getStrategy().getMarkerEventName();
-    }
-  }]);
-
-  return GeoEvent;
-}();
-
-exports.GeoEvent = GeoEvent;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Geocoder = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Geocoder =
-/*#__PURE__*/
-function () {
-  function Geocoder(strategy) {
-    _classCallCheck(this, Geocoder);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-  /**
-   * Какие объекты находятся рядом с точкой
-   * @param {tCoords} coords
-   * @return {Promise<IGeocodeResult>}
-   */
-
-
-  _createClass(Geocoder, [{
-    key: "whatAt",
-    value: function whatAt(coords) {
-      return this.getStrategy().whatAt(coords);
-    }
-    /**
-     * Где находится этот адресс
-     * @param {string} address
-     * @param {tCoords} coords
-     * @return {Promise<IGeocodeResult>}
-     */
-
-  }, {
-    key: "whereIs",
-    value: function whereIs(address, coords) {
-      return this.getStrategy().whereIs(address, coords);
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {IGeocoderStrategy}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.geocoder;
-    }
-  }]);
-
-  return Geocoder;
-}();
-
-exports.Geocoder = Geocoder;
-
-/***/ }),
 /* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GeoObject = void 0;
-
-var _evented = __webpack_require__(15);
-
-var _index = __webpack_require__(21);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var GeoObject =
-/*#__PURE__*/
-function (_Evented) {
-  _inherits(GeoObject, _Evented);
-
-  function GeoObject(strategy) {
-    var _this;
-
-    _classCallCheck(this, GeoObject);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(GeoObject).call(this, strategy));
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "map", void 0);
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "coords", void 0);
-
-    _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "data", {});
-
-    _this.data.uid = _index.uid.next();
-    _this.data.name = '';
-    return _this;
-  }
-  /**
-   * Создаем новый экземпляр с параметрами
-   *
-   * @param {TCoordsForUpdate} coords
-   * @param {TPropertiesForUpdate} options
-   *
-   * @return {any}
-   */
-
-
-  _createClass(GeoObject, [{
-    key: "create",
-    value: function create(coords, options) {
-      this.setCoords(coords);
-      this.updateProperties(options);
-      return this;
-    }
-    /**
-     * Получить уникальный ключ объекта
-     *
-     * @return {string}
-     */
-
-  }, {
-    key: "getUid",
-    value: function getUid() {
-      return this.getData().uid;
-    }
-    /**
-     * Получить элемент для работы со стратегиями
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "getInstance",
-    value: function getInstance() {
-      var createNewInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (this.hasInstance()) {
-        return this.instance;
-      }
-
-      if (!createNewInstance) {
-        throw new Error('Instance not found');
-      } // set events for new instance in addTo method
-
-
-      this.instance = this.getStrategy().create(this.coords, this.props);
-      return this.instance;
-    }
-    /**
-     * Установить координаты геообъекта
-     *
-     * @return {Promise<IGeoObject>}
-     */
-
-  }, {
-    key: "setCoords",
-    value: function setCoords(value) {
-      var _this2 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this2);
-          return;
-        }
-
-        _this2.coords = new _this2.constructor.Coords(value);
-
-        if (_this2.hasInstance()) {
-          _this2.getStrategy().setCoords(_this2.getInstance(), _this2.coords);
-
-          resolve(_this2);
-        } else {
-          resolve(_this2);
-        }
-      });
-    }
-    /**
-     * Получить координаты объекта
-     *
-     * @param {boolean} byInstance
-     *
-     * @return {Coords}
-     */
-
-  }, {
-    key: "getCoords",
-    value: function getCoords() {
-      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-      if (byInstance) {
-        return this.getStrategy().getCoords(this.getInstance());
-      }
-
-      return this.coords || null;
-    }
-    /**
-     * Получит местоположение
-     *
-     * @param {boolean} byInstance
-     *
-     * @return {Bounds}
-     */
-
-  }, {
-    key: "addTo",
-
-    /**
-     * Установить объект на карту
-     *
-     * @param {Map} map
-     *
-     * @return {IGeoObject}
-     */
-    value: function addTo(map) {
-      if (this.onMap()) {
-        this.remove();
-      }
-
-      this.getStrategy().addToMap(this.getInstance(true), map);
-      this.map = map; // Обновим параметры которые нельзя выставить напрямую через создание или которые работают только на карте
-
-      this.events.resetAll();
-      this.setEditable(this.props.editable || false);
-      return this;
-    }
-    /**
-     * Удалить геообъект с карты
-     *
-     * @return {IGeoObject}
-     */
-
-  }, {
-    key: "remove",
-    value: function remove() {
-      if (this.onMap()) {
-        this.events.removeAll();
-        this.getStrategy().removeFromMap(this.getInstance(), this.getMap());
-        this.map = null;
-      }
-
-      return this;
-    }
-    /**
-     * Получить текущую карту
-     *
-     * @return {Map}
-     */
-
-  }, {
-    key: "getMap",
-    value: function getMap() {
-      return this.map || null;
-    }
-    /**
-     * Находится ли объект на карте
-     *
-     * @return {boolean}
-     */
-
-  }, {
-    key: "onMap",
-    value: function onMap() {
-      return !!this.getMap() && this.hasInstance();
-    }
-    /**
-     * Копировать текущий объект
-     * @return {IGeoObject<TCoordsForUpdate, TPropertiesForUpdate extends IUpdateGeoObjectOptions>}
-     */
-
-  }, {
-    key: "setEditable",
-
-    /**
-     * Установить состояние редактирования
-     *
-     * @param {boolean} value
-     *
-     * @return {Promise<IGeoObject>}
-     */
-    value: function setEditable(value) {
-      var _this3 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this3);
-          return;
-        }
-
-        _this3.props.editable = value;
-
-        if (_this3.hasInstance()) {
-          _this3.getStrategy().setEditable(_this3.getInstance(), _this3.props.editable);
-
-          resolve(_this3);
-        } else {
-          resolve(_this3);
-        }
-      });
-    }
-  }, {
-    key: "setData",
-    value: function setData(value) {
-      var _this4 = this;
-
-      return new Promise(function (resolve, reject) {
-        if (value === undefined) {
-          resolve(_this4);
-          return;
-        }
-
-        _this4.data = Object.assign(_this4.data || {}, value);
-        resolve(_this4);
-      });
-    }
-  }, {
-    key: "getData",
-    value: function getData() {
-      return this.data || {};
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {IEditableGeoObjectStrategy}
-     */
-
-  }]);
-
-  return GeoObject;
-}(_evented.Evented);
-
-exports.GeoObject = GeoObject;
-
-_defineProperty(GeoObject, "Coords", null);
-
-/***/ }),
-/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15917,7 +15802,7 @@ var _coords = __webpack_require__(0);
 
 var _icon = __webpack_require__(6);
 
-var _geoobject = __webpack_require__(18);
+var _geoobject = __webpack_require__(16);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -16110,7 +15995,7 @@ exports.Marker = Marker;
 _defineProperty(Marker, "Coords", _coords.Coords);
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16121,9 +16006,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Polygon = void 0;
 
-var _geoobject = __webpack_require__(18);
+var _geoobject = __webpack_require__(16);
 
-var _polygonCoords = __webpack_require__(9);
+var _polygonCoords = __webpack_require__(7);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -16325,7 +16210,7 @@ exports.Polygon = Polygon;
 _defineProperty(Polygon, "Coords", _polygonCoords.PolygonCoords);
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16359,7 +16244,7 @@ var uid = function () {
 exports.uid = uid;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16661,7 +16546,7 @@ function () {
 exports.UtilsPolygonCoords = UtilsPolygonCoords;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16683,7 +16568,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16722,7 +16607,7 @@ function twoProduct(a, b, result) {
 }
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16853,31 +16738,31 @@ Object.defineProperty(exports, "DOMEvent", {
 });
 exports.geo = exports.Strategy = void 0;
 
-var _geo = __webpack_require__(27);
+var _geo = __webpack_require__(26);
 
 var _coords = __webpack_require__(0);
 
-var _polygonCoords = __webpack_require__(9);
+var _polygonCoords = __webpack_require__(7);
 
 var _bounds = __webpack_require__(1);
 
-var _index = __webpack_require__(12);
+var _index = __webpack_require__(10);
 
-var _index2 = __webpack_require__(47);
+var _index2 = __webpack_require__(44);
 
-var _marker = __webpack_require__(19);
+var _marker = __webpack_require__(18);
 
-var _polygon = __webpack_require__(20);
+var _polygon = __webpack_require__(19);
 
-var _index3 = __webpack_require__(8);
+var _index3 = __webpack_require__(17);
 
 var _icon = __webpack_require__(6);
 
-var _geocoder = __webpack_require__(17);
+var _geocoder = __webpack_require__(15);
 
-var _geoEvent = __webpack_require__(16);
+var _geoEvent = __webpack_require__(14);
 
-var _domEvent = __webpack_require__(11);
+var _domEvent = __webpack_require__(9);
 
 var Strategy = {
   Leaflet: _index.LeafletGeoStrategy,
@@ -16888,7 +16773,7 @@ var geo = new _geo.Geo();
 exports.geo = geo;
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -27259,7 +27144,7 @@ return jQuery;
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27270,31 +27155,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Geo = void 0;
 
-var _map = __webpack_require__(8);
+var _map = __webpack_require__(17);
 
-var _leaflet = __webpack_require__(12);
+var _leaflet = __webpack_require__(10);
 
-var _marker = __webpack_require__(19);
+var _marker = __webpack_require__(18);
 
-var _marker2 = __webpack_require__(58);
+var _marker2 = __webpack_require__(56);
 
-var _polygon = __webpack_require__(20);
+var _polygon = __webpack_require__(19);
 
-var _polygon2 = __webpack_require__(59);
+var _polygon2 = __webpack_require__(57);
 
-var _mapControl = __webpack_require__(56);
+var _mapControl = __webpack_require__(54);
 
-var _domEvent = __webpack_require__(11);
+var _domEvent = __webpack_require__(9);
 
-var _constructor = __webpack_require__(28);
+var _constructor = __webpack_require__(27);
 
-var _marker3 = __webpack_require__(29);
+var _marker3 = __webpack_require__(28);
 
-var _polygon3 = __webpack_require__(30);
+var _polygon3 = __webpack_require__(29);
 
-var _geoEvent = __webpack_require__(16);
+var _geoEvent = __webpack_require__(14);
 
-var _geocoder = __webpack_require__(17);
+var _geocoder = __webpack_require__(15);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27425,7 +27310,7 @@ function () {
 exports.Geo = Geo;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27485,7 +27370,7 @@ function (_Collection$Construct) {
 exports.Constructor = Constructor;
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27551,7 +27436,7 @@ function (_Collection$Strategy) {
 exports.MarkerStrategy = MarkerStrategy;
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27617,21 +27502,7 @@ function (_Collection$Strategy) {
 exports.PolygonStrategy = PolygonStrategy;
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27696,7 +27567,7 @@ function () {
 exports.LeafletDOMEventStrategy = LeafletDOMEventStrategy;
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27761,7 +27632,7 @@ function () {
 exports.LeafletGeoEventStrategy = LeafletGeoEventStrategy;
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27772,7 +27643,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimJs = __webpack_require__(77);
+var _nominatimJs = __webpack_require__(75);
 
 var _coords = __webpack_require__(0);
 
@@ -27843,7 +27714,7 @@ function () {
 exports.LeafletGeocoderStrategy = LeafletGeocoderStrategy;
 
 /***/ }),
-/* 36 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27860,7 +27731,7 @@ var L = _interopRequireWildcard(__webpack_require__(2));
 
 var _mapControl = __webpack_require__(4);
 
-var _propsAdapter = __webpack_require__(37);
+var _propsAdapter = __webpack_require__(34);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -27928,7 +27799,7 @@ function () {
 exports.LeafletMapControlStrategy = LeafletMapControlStrategy;
 
 /***/ }),
-/* 37 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28007,7 +27878,7 @@ function () {
 exports.PropsAdapter = PropsAdapter;
 
 /***/ }),
-/* 38 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28020,17 +27891,13 @@ exports.LeafletMapStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-__webpack_require__(66);
-
-var _map = __webpack_require__(31);
+__webpack_require__(64);
 
 var _coords = __webpack_require__(0);
 
 var _bounds = __webpack_require__(1);
 
-var _events = __webpack_require__(7);
-
-__webpack_require__(67);
+__webpack_require__(65);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28268,7 +28135,7 @@ function () {
 exports.LeafletMapStrategy = LeafletMapStrategy;
 
 /***/ }),
-/* 39 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28281,23 +28148,13 @@ exports.LeafletMarkerStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-__webpack_require__(75);
-
-var _index = __webpack_require__(8);
+__webpack_require__(73);
 
 var _coords = __webpack_require__(0);
 
-var _icon = __webpack_require__(6);
+var _iconFactory = __webpack_require__(40);
 
-var _marker = __webpack_require__(32);
-
-var _iconFactory = __webpack_require__(43);
-
-var _markerPresetStorage = __webpack_require__(13);
-
-var _bounds = __webpack_require__(1);
-
-var _events = __webpack_require__(7);
+var _markerPresetStorage = __webpack_require__(11);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28476,7 +28333,7 @@ function () {
 exports.LeafletMarkerStrategy = LeafletMarkerStrategy;
 
 /***/ }),
-/* 40 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28489,13 +28346,13 @@ exports.LeafletPolygonStrategy = void 0;
 
 var L = _interopRequireWildcard(__webpack_require__(2));
 
-var _polygonCoords = __webpack_require__(9);
+var _polygonCoords = __webpack_require__(7);
 
 var _bounds = __webpack_require__(1);
 
-var _polygonPresetStorge = __webpack_require__(14);
+var _polygonPresetStorge = __webpack_require__(12);
 
-var _polygonCoords2 = __webpack_require__(22);
+var _polygonCoords2 = __webpack_require__(21);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28681,7 +28538,7 @@ function () {
 exports.LeafletPolygonStrategy = LeafletPolygonStrategy;
 
 /***/ }),
-/* 41 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28692,7 +28549,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMarkerPresetStrategy = void 0;
 
-var _markerPresetStorage = __webpack_require__(13);
+var _markerPresetStorage = __webpack_require__(11);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28724,7 +28581,7 @@ function () {
 exports.LeafletMarkerPresetStrategy = LeafletMarkerPresetStrategy;
 
 /***/ }),
-/* 42 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28735,7 +28592,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletPolygonPresetStrategy = void 0;
 
-var _polygonPresetStorge = __webpack_require__(14);
+var _polygonPresetStorge = __webpack_require__(12);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28772,7 +28629,7 @@ function () {
 exports.LeafletPolygonPresetStrategy = LeafletPolygonPresetStrategy;
 
 /***/ }),
-/* 43 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28822,7 +28679,7 @@ var iconFactory = new IconFactory();
 exports.iconFactory = iconFactory;
 
 /***/ }),
-/* 44 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28883,7 +28740,7 @@ function () {
 exports.YandexDOMEventStrategy = YandexDOMEventStrategy;
 
 /***/ }),
-/* 45 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28949,7 +28806,7 @@ function () {
 exports.YandexGeoEventStrategy = YandexGeoEventStrategy;
 
 /***/ }),
-/* 46 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29033,7 +28890,7 @@ function () {
 exports.YandexGeocoderStrategy = YandexGeocoderStrategy;
 
 /***/ }),
-/* 47 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29046,19 +28903,19 @@ exports.YandexGeoStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _map = __webpack_require__(50);
+var _map = __webpack_require__(47);
 
-var _geocoder = __webpack_require__(46);
+var _geocoder = __webpack_require__(43);
 
-var _marker = __webpack_require__(51);
+var _marker = __webpack_require__(48);
 
-var _polygon = __webpack_require__(52);
+var _polygon = __webpack_require__(49);
 
-var _geoEvent = __webpack_require__(45);
+var _geoEvent = __webpack_require__(42);
 
-var _domEvent = __webpack_require__(44);
+var _domEvent = __webpack_require__(41);
 
-var _mapControl = __webpack_require__(48);
+var _mapControl = __webpack_require__(45);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29107,7 +28964,7 @@ function () {
 exports.YandexGeoStrategy = YandexGeoStrategy;
 
 /***/ }),
-/* 48 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29124,7 +28981,7 @@ var _ymaps = __webpack_require__(3);
 
 var _mapControl = __webpack_require__(4);
 
-var _propsAdapter = __webpack_require__(49);
+var _propsAdapter = __webpack_require__(46);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29189,7 +29046,7 @@ function () {
 exports.YandexMapControlStrategy = YandexMapControlStrategy;
 
 /***/ }),
-/* 49 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29249,8 +29106,8 @@ function () {
           top: 'top',
           bottom: 'bottom'
         };
-        var _float = this.props[_mapControl.MAP_CONTROL_PROPS.FLOAT];
-        this.adaptedProps.float = adaptMap[_float] || adaptMap.left;
+        var float = this.props[_mapControl.MAP_CONTROL_PROPS.FLOAT];
+        this.adaptedProps.float = adaptMap[float] || adaptMap.left;
       }
     }
   }]);
@@ -29261,7 +29118,7 @@ function () {
 exports.PropsAdapter = PropsAdapter;
 
 /***/ }),
-/* 50 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29502,7 +29359,7 @@ function () {
 exports.YandexMapStrategy = YandexMapStrategy;
 
 /***/ }),
-/* 51 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29515,7 +29372,7 @@ exports.YandexMarkerStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _iconFactory = __webpack_require__(53);
+var _iconFactory = __webpack_require__(50);
 
 var _coords = __webpack_require__(0);
 
@@ -29718,7 +29575,7 @@ function () {
 exports.YandexMarkerStrategy = YandexMarkerStrategy;
 
 /***/ }),
-/* 52 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29956,7 +29813,7 @@ function () {
 exports.YandexPolygonStrategy = YandexPolygonStrategy;
 
 /***/ }),
-/* 53 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30005,7 +29862,7 @@ function () {
 exports.IconFactory = IconFactory;
 
 /***/ }),
-/* 54 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30016,7 +29873,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.EventsGroup = void 0;
 
-var Utils = _interopRequireWildcard(__webpack_require__(21));
+var Utils = _interopRequireWildcard(__webpack_require__(20));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -30183,7 +30040,126 @@ function () {
 exports.EventsGroup = EventsGroup;
 
 /***/ }),
-/* 55 */
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Events = void 0;
+
+var _group = __webpack_require__(51);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Events =
+/*#__PURE__*/
+function () {
+  /** @var {IEventsGroup} general Основная группа событий для объекта */
+
+  /** @var {IEventsStrategyProvider} strategyProvider Провайдер методов для работы со стратегией объекта */
+  function Events(strategyProvider) {
+    _classCallCheck(this, Events);
+
+    _defineProperty(this, "general", void 0);
+
+    _defineProperty(this, "strategyProvider", void 0);
+
+    this.strategyProvider = strategyProvider;
+    this.general = new _group.EventsGroup(this.strategyProvider);
+  }
+
+  _createClass(Events, [{
+    key: "resetAll",
+    value: function resetAll() {
+      this.general.resetAll();
+      return this;
+    }
+  }, {
+    key: "removeAll",
+    value: function removeAll() {
+      this.general.removeAll();
+      return this;
+    }
+  }, {
+    key: "group",
+    value: function group() {
+      return new _group.EventsGroup(this.strategyProvider);
+    }
+    /**
+     * Добавить событие
+     *
+     * @param {string} key
+     * @param {IEventInList | EventHandlerFn} event
+     *
+     * @return {IEvents}
+     */
+
+  }, {
+    key: "add",
+    value: function add(key, event) {
+      this.general.add(key, event);
+      return this;
+    }
+    /**
+     * Удалить события/событие по ключу
+     *
+     * @param {string} key
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvents}
+     */
+
+  }, {
+    key: "remove",
+    value: function remove(key, fn) {
+      this.general.remove(key, fn);
+      return this;
+    }
+    /**
+     * Получить все соыбтия по этому ключу
+     *
+     * @param {string} key
+     *
+     * @return {Array<IEventInList>}
+     */
+
+  }, {
+    key: "get",
+    value: function get(key) {
+      return this.general.get(key);
+    }
+    /**
+     * Есть ли события по этому ключу
+     *
+     * @param {string} key
+     *
+     * @return {boolean}
+     */
+
+  }, {
+    key: "isEmpty",
+    value: function isEmpty(key) {
+      return this.general.isEmpty(key);
+    }
+  }]);
+
+  return Events;
+}();
+
+exports.Events = Events;
+
+/***/ }),
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30196,7 +30172,7 @@ exports.MapControlConstructor = void 0;
 
 var _mapControl = __webpack_require__(4);
 
-var _mapControlInstance = __webpack_require__(57);
+var _mapControlInstance = __webpack_require__(55);
 
 function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -30317,7 +30293,7 @@ function () {
 exports.MapControlConstructor = MapControlConstructor;
 
 /***/ }),
-/* 56 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30328,7 +30304,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MapControlController = void 0;
 
-var _controlConstructor = __webpack_require__(55);
+var _controlConstructor = __webpack_require__(53);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30373,7 +30349,7 @@ function () {
 exports.MapControlController = MapControlController;
 
 /***/ }),
-/* 57 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30426,7 +30402,7 @@ function () {
 exports.MapControl = MapControl;
 
 /***/ }),
-/* 58 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30493,7 +30469,7 @@ function () {
 exports.MarkerPreset = MarkerPreset;
 
 /***/ }),
-/* 59 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30571,14 +30547,14 @@ function () {
 exports.PolygonPreset = PolygonPreset;
 
 /***/ }),
-/* 60 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ultimap__);
 
 
@@ -30609,7 +30585,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
 
 /***/ }),
-/* 61 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30657,7 +30633,7 @@ function () {
 exports.UIDGenerator = UIDGenerator;
 
 /***/ }),
-/* 62 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30668,9 +30644,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _queue = __webpack_require__(63);
+var _queue = __webpack_require__(61);
 
-var _generator = __webpack_require__(61);
+var _generator = __webpack_require__(59);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30687,7 +30663,7 @@ _defineProperty(UID, "Queue", _queue.UIDQueue);
 _defineProperty(UID, "Generator", _generator.UIDGenerator);
 
 /***/ }),
-/* 63 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30733,7 +30709,7 @@ function () {
 exports.UIDQueue = UIDQueue;
 
 /***/ }),
-/* 64 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30902,17 +30878,17 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 65 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var rbush = __webpack_require__(81);
-var convexHull = __webpack_require__(76);
-var Queue = __webpack_require__(90);
-var pointInPolygon = __webpack_require__(78);
-var orient = __webpack_require__(10)[3];
+var rbush = __webpack_require__(84);
+var convexHull = __webpack_require__(74);
+var Queue = __webpack_require__(88);
+var pointInPolygon = __webpack_require__(81);
+var orient = __webpack_require__(8)[3];
 
 module.exports = concaveman;
 module.exports.default = concaveman;
@@ -31249,19 +31225,19 @@ function sqSegSegDist(x0, y0, x1, y1, x2, y2, x3, y3) {
 
 
 /***/ }),
+/* 64 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
 /* 66 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 67 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31305,7 +31281,20 @@ function () {
   _createClass(Callbacks, [{
     key: "set",
     value: function set(events) {
-      this.events = Object.assign(this.events, events);
+      var _this = this;
+
+      Object.keys(events || {}).forEach(function (key) {
+        if (!_this.events[key]) {
+          _this.events[key] = [];
+        }
+
+        var newEvents = Array.isArray(events[key]) ? events[key] : [events[key]];
+        newEvents.forEach(function (event) {
+          if (typeof event === 'function') {
+            _this.events[key].push(event);
+          }
+        });
+      });
       return this;
     }
     /**
@@ -31319,7 +31308,65 @@ function () {
   }, {
     key: "get",
     value: function get(key) {
-      return this.events[key] || null;
+      if (!this.has(key)) {
+        return null;
+      }
+
+      var result = [].concat(this.events[key]);
+      return result.length > 1 ? result : result[0];
+    }
+    /**
+     * удалить событие
+     * @param {IEventHandlerSetProps} events
+     * @return {Callbacks}
+     */
+
+  }, {
+    key: "remove",
+    value: function remove(events) {
+      var _this2 = this;
+
+      Object.keys(events || {}).forEach(function (key) {
+        if (!_this2.has(key)) {
+          return;
+        }
+
+        var remoedEvents = Array.isArray(events[key]) ? events[key] : [events[key]];
+
+        var _loop = function _loop() {
+          var event = remoedEvents.pop();
+
+          var idx = _this2.events[key].findIndex(function (fn) {
+            return event === fn;
+          });
+
+          if (!!~idx) {
+            _this2.events[key].splice(idx, 1);
+          }
+        };
+
+        while (remoedEvents.length) {
+          _loop();
+        }
+      });
+      return this;
+    }
+    /**
+     * Возвращает установлена ли функция с таким ключом
+     *
+     * @param {String} key
+     *
+     * @return {Boolean}
+     */
+
+  }, {
+    key: "has",
+    value: function has(key) {
+      if (typeof key !== 'string') {
+        return false;
+      }
+
+      return key && this.events[key] && !!this.events[key].length;
     }
     /**
      * Вызвать функцию по ключу с аргументами
@@ -31332,18 +31379,23 @@ function () {
   }, {
     key: "trigger",
     value: function trigger(key) {
-      if (!this.isSet(key)) {
-        return undefined;
-      }
-
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
 
-      return this.events[key].apply(undefined, args);
+      if (!this.has(key)) {
+        return undefined;
+      }
+
+      var result = this.events[key].map(function (event) {
+        return event.apply(undefined, args);
+      });
+      return result.length > 1 ? result : result.pop();
     }
     /**
      * Возвращает установлена ли функция с таким ключом
+     *
+     * @deprecated
      *
      * @param {String} key
      *
@@ -31353,7 +31405,7 @@ function () {
   }, {
     key: "isSet",
     value: function isSet(key) {
-      return key && this.events[key] && typeof this.events[key] === 'function';
+      return this.has(key);
     }
   }]);
 
@@ -31363,7 +31415,7 @@ function () {
 exports.Callbacks = Callbacks;
 
 /***/ }),
-/* 69 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31590,7 +31642,7 @@ function () {
 exports.Collections = Collections;
 
 /***/ }),
-/* 70 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31624,12 +31676,12 @@ Object.defineProperty(exports, "IStrategy", {
   }
 });
 
-var _constructor = __webpack_require__(69);
+var _constructor = __webpack_require__(67);
 
-var _strategy = __webpack_require__(71);
+var _strategy = __webpack_require__(69);
 
 /***/ }),
-/* 71 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31730,7 +31782,7 @@ function () {
 exports.Strategy = Strategy;
 
 /***/ }),
-/* 72 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31848,7 +31900,7 @@ function () {
 exports.Cookie = Cookie;
 
 /***/ }),
-/* 73 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31859,7 +31911,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Define = void 0;
 
-var _property = __webpack_require__(74);
+var _property = __webpack_require__(72);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31903,7 +31955,7 @@ function () {
 exports.Define = Define;
 
 /***/ }),
-/* 74 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32042,7 +32094,7 @@ function () {
 exports.Property = Property;
 
 /***/ }),
-/* 75 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33969,7 +34021,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 76 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33977,7 +34029,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 module.exports = monotoneConvexHull2D
 
-var orient = __webpack_require__(10)[3]
+var orient = __webpack_require__(8)[3]
 
 function monotoneConvexHull2D(points) {
   var n = points.length
@@ -34056,7 +34108,7 @@ function monotoneConvexHull2D(points) {
 }
 
 /***/ }),
-/* 77 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34097,7 +34149,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(86);
+var superagent = __webpack_require__(77);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -34149,1178 +34201,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 78 */
-/***/ (function(module, exports) {
-
-module.exports = function (point, vs) {
-    // ray-casting algorithm based on
-    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-    
-    var x = point[0], y = point[1];
-    
-    var inside = false;
-    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-        var xi = vs[i][0], yi = vs[i][1];
-        var xj = vs[j][0], yj = vs[j][1];
-        
-        var intersect = ((yi > y) != (yj > y))
-            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-        if (intersect) inside = !inside;
-    }
-    
-    return inside;
-};
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var lr = __webpack_require__(10)
-
-// these should probably use robust-sum, etc
-function vectSum(a,b) {
-    return a.map(function(val,i) { return a[i]+b[i] })
-}
-function vectScale(a,b) {
-    return a.map(function(val,i) { return a[i]*b })
-}
-function vectDiff(a,b) {
-    return vectSum(a,vectScale(b,-1))
-}
-function dot(a,b) {
-    return a[0]*b[0] + a[1]*b[1]
-}
-
-// calculates the closest distance from a point to a line formed by two points
-// || (a-p) - ((a-p) \dot n) n ||
-function distLineToPoint(a, b, p) {
-    var n = vectDiff(b, a)
-    n = vectScale(n, 1/Math.sqrt(n[0]*n[0]+n[1]*n[1]))
-    
-    var amp = vectDiff(a, p)
-    var d = vectDiff(amp, vectScale(n,(dot(amp, n))))
-    //return { d:d, a:amp, nn:n, n:dot(amp,n)}
-    return Math.sqrt(d[0]*d[0]+d[1]*d[1])
-}
-
-function isStrictlyRight(p) {
-        return lr(this.a, this.b, p) < 0 ? 1 : 0
-}
-
-// sort the given points in CCW order
-// FIXME: 
-function sortHull(Sorig) {
-    var S = Sorig.slice()
-    var Ssorted = []
-    var last = S.shift()
-    Ssorted.push(last)
-
-    while (S.length > 0) {
-        var curr = S.shift()
-        var A = S.filter(isStrictlyRight, {a:curr, b:last})
-        if (A.length == 0) {
-            Ssorted.push(curr)
-            last = curr
-        } else {
-            S.push(curr)
-        }
-    }
-
-    return Ssorted
-}
-
-// remove colinear points
-// assume that the input points are already sorted
-// FIXME we could take this further and enforce points to be positively oriented
-function removeColinearPoints(S) {
-    var Sclean = []
-    var l = S.length
-
-    for (var i=0; i < S.length; i++) {
-        if ( lr(S[(i+l-1)%l], S[i], S[(i+1)%l]) != 0 ) {
-            Sclean.push(S[i]);
-        }
-    }
-
-    return Sclean
-}
-
-// QuickHull
-// O'Rourke - Computational Geometry in C, p. 70
-function quickHullInner(S, a, b) {
-    if (S.length == 0) {
-        return []
-    }
-
-    var d = S.map(function(p) {return {dist: lr(a,b,p)*distLineToPoint(a, b, p), point: p}})
-    d.sort(function(a,b) { return a.dist > b.dist ? 1 : -1 })
-    var dd = d.map(function(pp) { return pp.point })
-
-    var c = d.pop()
-    if (c.dist <= 0) {
-        return []
-    }
-    c = c.point
-
-    // seems like these should be reversed, but this works
-    var A = dd.filter(isStrictlyRight, {a:c, b:a})
-    var B = dd.filter(isStrictlyRight, {a:b, b:c})
-
-    // FIXME need better way in case qHI returns []
-    var ress = quickHullInner(A, a, c).concat([c], quickHullInner(B, c, b))
-    return ress
-
-}
-
-function quickHull(S) {
-    if (S.length < 3) {
-        return S
-    } else {
-        var d = S.slice()
-        // sort by x
-        d.sort(function(a,b) {return a[0] > b[0] ? 1 : -1})
-
-        var a = d.shift()
-        var b = d.pop()
-
-        var S1 = S.filter(isStrictlyRight, {a:b, b:a})
-        var S2 = S.filter(isStrictlyRight, {a:a, b:b})
-
-        var x = quickHullInner(S1,a,b)
-        var y = quickHullInner(S2,b,a)
-        var res = [a].concat(x, [b], y)
-
-        return removeColinearPoints(sortHull(res))
-    }
-}
-
-module.exports = quickHull
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function (global, factory) {
-	 true ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.quickselect = factory());
-}(this, (function () { 'use strict';
-
-function quickselect(arr, k, left, right, compare) {
-    quickselectStep(arr, k, left || 0, right || (arr.length - 1), compare || defaultCompare);
-}
-
-function quickselectStep(arr, k, left, right, compare) {
-
-    while (right > left) {
-        if (right - left > 600) {
-            var n = right - left + 1;
-            var m = k - left + 1;
-            var z = Math.log(n);
-            var s = 0.5 * Math.exp(2 * z / 3);
-            var sd = 0.5 * Math.sqrt(z * s * (n - s) / n) * (m - n / 2 < 0 ? -1 : 1);
-            var newLeft = Math.max(left, Math.floor(k - m * s / n + sd));
-            var newRight = Math.min(right, Math.floor(k + (n - m) * s / n + sd));
-            quickselectStep(arr, k, newLeft, newRight, compare);
-        }
-
-        var t = arr[k];
-        var i = left;
-        var j = right;
-
-        swap(arr, left, k);
-        if (compare(arr[right], t) > 0) swap(arr, left, right);
-
-        while (i < j) {
-            swap(arr, i, j);
-            i++;
-            j--;
-            while (compare(arr[i], t) < 0) i++;
-            while (compare(arr[j], t) > 0) j--;
-        }
-
-        if (compare(arr[left], t) === 0) swap(arr, left, j);
-        else {
-            j++;
-            swap(arr, j, right);
-        }
-
-        if (j <= k) left = j + 1;
-        if (k <= j) right = j - 1;
-    }
-}
-
-function swap(arr, i, j) {
-    var tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
-}
-
-function defaultCompare(a, b) {
-    return a < b ? -1 : a > b ? 1 : 0;
-}
-
-return quickselect;
-
-})));
-
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = rbush;
-module.exports.default = rbush;
-
-var quickselect = __webpack_require__(80);
-
-function rbush(maxEntries, format) {
-    if (!(this instanceof rbush)) return new rbush(maxEntries, format);
-
-    // max entries in a node is 9 by default; min node fill is 40% for best performance
-    this._maxEntries = Math.max(4, maxEntries || 9);
-    this._minEntries = Math.max(2, Math.ceil(this._maxEntries * 0.4));
-
-    if (format) {
-        this._initFormat(format);
-    }
-
-    this.clear();
-}
-
-rbush.prototype = {
-
-    all: function () {
-        return this._all(this.data, []);
-    },
-
-    search: function (bbox) {
-
-        var node = this.data,
-            result = [],
-            toBBox = this.toBBox;
-
-        if (!intersects(bbox, node)) return result;
-
-        var nodesToSearch = [],
-            i, len, child, childBBox;
-
-        while (node) {
-            for (i = 0, len = node.children.length; i < len; i++) {
-
-                child = node.children[i];
-                childBBox = node.leaf ? toBBox(child) : child;
-
-                if (intersects(bbox, childBBox)) {
-                    if (node.leaf) result.push(child);
-                    else if (contains(bbox, childBBox)) this._all(child, result);
-                    else nodesToSearch.push(child);
-                }
-            }
-            node = nodesToSearch.pop();
-        }
-
-        return result;
-    },
-
-    collides: function (bbox) {
-
-        var node = this.data,
-            toBBox = this.toBBox;
-
-        if (!intersects(bbox, node)) return false;
-
-        var nodesToSearch = [],
-            i, len, child, childBBox;
-
-        while (node) {
-            for (i = 0, len = node.children.length; i < len; i++) {
-
-                child = node.children[i];
-                childBBox = node.leaf ? toBBox(child) : child;
-
-                if (intersects(bbox, childBBox)) {
-                    if (node.leaf || contains(bbox, childBBox)) return true;
-                    nodesToSearch.push(child);
-                }
-            }
-            node = nodesToSearch.pop();
-        }
-
-        return false;
-    },
-
-    load: function (data) {
-        if (!(data && data.length)) return this;
-
-        if (data.length < this._minEntries) {
-            for (var i = 0, len = data.length; i < len; i++) {
-                this.insert(data[i]);
-            }
-            return this;
-        }
-
-        // recursively build the tree with the given data from scratch using OMT algorithm
-        var node = this._build(data.slice(), 0, data.length - 1, 0);
-
-        if (!this.data.children.length) {
-            // save as is if tree is empty
-            this.data = node;
-
-        } else if (this.data.height === node.height) {
-            // split root if trees have the same height
-            this._splitRoot(this.data, node);
-
-        } else {
-            if (this.data.height < node.height) {
-                // swap trees if inserted one is bigger
-                var tmpNode = this.data;
-                this.data = node;
-                node = tmpNode;
-            }
-
-            // insert the small tree into the large tree at appropriate level
-            this._insert(node, this.data.height - node.height - 1, true);
-        }
-
-        return this;
-    },
-
-    insert: function (item) {
-        if (item) this._insert(item, this.data.height - 1);
-        return this;
-    },
-
-    clear: function () {
-        this.data = createNode([]);
-        return this;
-    },
-
-    remove: function (item, equalsFn) {
-        if (!item) return this;
-
-        var node = this.data,
-            bbox = this.toBBox(item),
-            path = [],
-            indexes = [],
-            i, parent, index, goingUp;
-
-        // depth-first iterative tree traversal
-        while (node || path.length) {
-
-            if (!node) { // go up
-                node = path.pop();
-                parent = path[path.length - 1];
-                i = indexes.pop();
-                goingUp = true;
-            }
-
-            if (node.leaf) { // check current node
-                index = findItem(item, node.children, equalsFn);
-
-                if (index !== -1) {
-                    // item found, remove the item and condense tree upwards
-                    node.children.splice(index, 1);
-                    path.push(node);
-                    this._condense(path);
-                    return this;
-                }
-            }
-
-            if (!goingUp && !node.leaf && contains(node, bbox)) { // go down
-                path.push(node);
-                indexes.push(i);
-                i = 0;
-                parent = node;
-                node = node.children[0];
-
-            } else if (parent) { // go right
-                i++;
-                node = parent.children[i];
-                goingUp = false;
-
-            } else node = null; // nothing found
-        }
-
-        return this;
-    },
-
-    toBBox: function (item) { return item; },
-
-    compareMinX: compareNodeMinX,
-    compareMinY: compareNodeMinY,
-
-    toJSON: function () { return this.data; },
-
-    fromJSON: function (data) {
-        this.data = data;
-        return this;
-    },
-
-    _all: function (node, result) {
-        var nodesToSearch = [];
-        while (node) {
-            if (node.leaf) result.push.apply(result, node.children);
-            else nodesToSearch.push.apply(nodesToSearch, node.children);
-
-            node = nodesToSearch.pop();
-        }
-        return result;
-    },
-
-    _build: function (items, left, right, height) {
-
-        var N = right - left + 1,
-            M = this._maxEntries,
-            node;
-
-        if (N <= M) {
-            // reached leaf level; return leaf
-            node = createNode(items.slice(left, right + 1));
-            calcBBox(node, this.toBBox);
-            return node;
-        }
-
-        if (!height) {
-            // target height of the bulk-loaded tree
-            height = Math.ceil(Math.log(N) / Math.log(M));
-
-            // target number of root entries to maximize storage utilization
-            M = Math.ceil(N / Math.pow(M, height - 1));
-        }
-
-        node = createNode([]);
-        node.leaf = false;
-        node.height = height;
-
-        // split the items into M mostly square tiles
-
-        var N2 = Math.ceil(N / M),
-            N1 = N2 * Math.ceil(Math.sqrt(M)),
-            i, j, right2, right3;
-
-        multiSelect(items, left, right, N1, this.compareMinX);
-
-        for (i = left; i <= right; i += N1) {
-
-            right2 = Math.min(i + N1 - 1, right);
-
-            multiSelect(items, i, right2, N2, this.compareMinY);
-
-            for (j = i; j <= right2; j += N2) {
-
-                right3 = Math.min(j + N2 - 1, right2);
-
-                // pack each entry recursively
-                node.children.push(this._build(items, j, right3, height - 1));
-            }
-        }
-
-        calcBBox(node, this.toBBox);
-
-        return node;
-    },
-
-    _chooseSubtree: function (bbox, node, level, path) {
-
-        var i, len, child, targetNode, area, enlargement, minArea, minEnlargement;
-
-        while (true) {
-            path.push(node);
-
-            if (node.leaf || path.length - 1 === level) break;
-
-            minArea = minEnlargement = Infinity;
-
-            for (i = 0, len = node.children.length; i < len; i++) {
-                child = node.children[i];
-                area = bboxArea(child);
-                enlargement = enlargedArea(bbox, child) - area;
-
-                // choose entry with the least area enlargement
-                if (enlargement < minEnlargement) {
-                    minEnlargement = enlargement;
-                    minArea = area < minArea ? area : minArea;
-                    targetNode = child;
-
-                } else if (enlargement === minEnlargement) {
-                    // otherwise choose one with the smallest area
-                    if (area < minArea) {
-                        minArea = area;
-                        targetNode = child;
-                    }
-                }
-            }
-
-            node = targetNode || node.children[0];
-        }
-
-        return node;
-    },
-
-    _insert: function (item, level, isNode) {
-
-        var toBBox = this.toBBox,
-            bbox = isNode ? item : toBBox(item),
-            insertPath = [];
-
-        // find the best node for accommodating the item, saving all nodes along the path too
-        var node = this._chooseSubtree(bbox, this.data, level, insertPath);
-
-        // put the item into the node
-        node.children.push(item);
-        extend(node, bbox);
-
-        // split on node overflow; propagate upwards if necessary
-        while (level >= 0) {
-            if (insertPath[level].children.length > this._maxEntries) {
-                this._split(insertPath, level);
-                level--;
-            } else break;
-        }
-
-        // adjust bboxes along the insertion path
-        this._adjustParentBBoxes(bbox, insertPath, level);
-    },
-
-    // split overflowed node into two
-    _split: function (insertPath, level) {
-
-        var node = insertPath[level],
-            M = node.children.length,
-            m = this._minEntries;
-
-        this._chooseSplitAxis(node, m, M);
-
-        var splitIndex = this._chooseSplitIndex(node, m, M);
-
-        var newNode = createNode(node.children.splice(splitIndex, node.children.length - splitIndex));
-        newNode.height = node.height;
-        newNode.leaf = node.leaf;
-
-        calcBBox(node, this.toBBox);
-        calcBBox(newNode, this.toBBox);
-
-        if (level) insertPath[level - 1].children.push(newNode);
-        else this._splitRoot(node, newNode);
-    },
-
-    _splitRoot: function (node, newNode) {
-        // split root node
-        this.data = createNode([node, newNode]);
-        this.data.height = node.height + 1;
-        this.data.leaf = false;
-        calcBBox(this.data, this.toBBox);
-    },
-
-    _chooseSplitIndex: function (node, m, M) {
-
-        var i, bbox1, bbox2, overlap, area, minOverlap, minArea, index;
-
-        minOverlap = minArea = Infinity;
-
-        for (i = m; i <= M - m; i++) {
-            bbox1 = distBBox(node, 0, i, this.toBBox);
-            bbox2 = distBBox(node, i, M, this.toBBox);
-
-            overlap = intersectionArea(bbox1, bbox2);
-            area = bboxArea(bbox1) + bboxArea(bbox2);
-
-            // choose distribution with minimum overlap
-            if (overlap < minOverlap) {
-                minOverlap = overlap;
-                index = i;
-
-                minArea = area < minArea ? area : minArea;
-
-            } else if (overlap === minOverlap) {
-                // otherwise choose distribution with minimum area
-                if (area < minArea) {
-                    minArea = area;
-                    index = i;
-                }
-            }
-        }
-
-        return index;
-    },
-
-    // sorts node children by the best axis for split
-    _chooseSplitAxis: function (node, m, M) {
-
-        var compareMinX = node.leaf ? this.compareMinX : compareNodeMinX,
-            compareMinY = node.leaf ? this.compareMinY : compareNodeMinY,
-            xMargin = this._allDistMargin(node, m, M, compareMinX),
-            yMargin = this._allDistMargin(node, m, M, compareMinY);
-
-        // if total distributions margin value is minimal for x, sort by minX,
-        // otherwise it's already sorted by minY
-        if (xMargin < yMargin) node.children.sort(compareMinX);
-    },
-
-    // total margin of all possible split distributions where each node is at least m full
-    _allDistMargin: function (node, m, M, compare) {
-
-        node.children.sort(compare);
-
-        var toBBox = this.toBBox,
-            leftBBox = distBBox(node, 0, m, toBBox),
-            rightBBox = distBBox(node, M - m, M, toBBox),
-            margin = bboxMargin(leftBBox) + bboxMargin(rightBBox),
-            i, child;
-
-        for (i = m; i < M - m; i++) {
-            child = node.children[i];
-            extend(leftBBox, node.leaf ? toBBox(child) : child);
-            margin += bboxMargin(leftBBox);
-        }
-
-        for (i = M - m - 1; i >= m; i--) {
-            child = node.children[i];
-            extend(rightBBox, node.leaf ? toBBox(child) : child);
-            margin += bboxMargin(rightBBox);
-        }
-
-        return margin;
-    },
-
-    _adjustParentBBoxes: function (bbox, path, level) {
-        // adjust bboxes along the given tree path
-        for (var i = level; i >= 0; i--) {
-            extend(path[i], bbox);
-        }
-    },
-
-    _condense: function (path) {
-        // go through the path, removing empty nodes and updating bboxes
-        for (var i = path.length - 1, siblings; i >= 0; i--) {
-            if (path[i].children.length === 0) {
-                if (i > 0) {
-                    siblings = path[i - 1].children;
-                    siblings.splice(siblings.indexOf(path[i]), 1);
-
-                } else this.clear();
-
-            } else calcBBox(path[i], this.toBBox);
-        }
-    },
-
-    _initFormat: function (format) {
-        // data format (minX, minY, maxX, maxY accessors)
-
-        // uses eval-type function compilation instead of just accepting a toBBox function
-        // because the algorithms are very sensitive to sorting functions performance,
-        // so they should be dead simple and without inner calls
-
-        var compareArr = ['return a', ' - b', ';'];
-
-        this.compareMinX = new Function('a', 'b', compareArr.join(format[0]));
-        this.compareMinY = new Function('a', 'b', compareArr.join(format[1]));
-
-        this.toBBox = new Function('a',
-            'return {minX: a' + format[0] +
-            ', minY: a' + format[1] +
-            ', maxX: a' + format[2] +
-            ', maxY: a' + format[3] + '};');
-    }
-};
-
-function findItem(item, items, equalsFn) {
-    if (!equalsFn) return items.indexOf(item);
-
-    for (var i = 0; i < items.length; i++) {
-        if (equalsFn(item, items[i])) return i;
-    }
-    return -1;
-}
-
-// calculate node's bbox from bboxes of its children
-function calcBBox(node, toBBox) {
-    distBBox(node, 0, node.children.length, toBBox, node);
-}
-
-// min bounding rectangle of node children from k to p-1
-function distBBox(node, k, p, toBBox, destNode) {
-    if (!destNode) destNode = createNode(null);
-    destNode.minX = Infinity;
-    destNode.minY = Infinity;
-    destNode.maxX = -Infinity;
-    destNode.maxY = -Infinity;
-
-    for (var i = k, child; i < p; i++) {
-        child = node.children[i];
-        extend(destNode, node.leaf ? toBBox(child) : child);
-    }
-
-    return destNode;
-}
-
-function extend(a, b) {
-    a.minX = Math.min(a.minX, b.minX);
-    a.minY = Math.min(a.minY, b.minY);
-    a.maxX = Math.max(a.maxX, b.maxX);
-    a.maxY = Math.max(a.maxY, b.maxY);
-    return a;
-}
-
-function compareNodeMinX(a, b) { return a.minX - b.minX; }
-function compareNodeMinY(a, b) { return a.minY - b.minY; }
-
-function bboxArea(a)   { return (a.maxX - a.minX) * (a.maxY - a.minY); }
-function bboxMargin(a) { return (a.maxX - a.minX) + (a.maxY - a.minY); }
-
-function enlargedArea(a, b) {
-    return (Math.max(b.maxX, a.maxX) - Math.min(b.minX, a.minX)) *
-           (Math.max(b.maxY, a.maxY) - Math.min(b.minY, a.minY));
-}
-
-function intersectionArea(a, b) {
-    var minX = Math.max(a.minX, b.minX),
-        minY = Math.max(a.minY, b.minY),
-        maxX = Math.min(a.maxX, b.maxX),
-        maxY = Math.min(a.maxY, b.maxY);
-
-    return Math.max(0, maxX - minX) *
-           Math.max(0, maxY - minY);
-}
-
-function contains(a, b) {
-    return a.minX <= b.minX &&
-           a.minY <= b.minY &&
-           b.maxX <= a.maxX &&
-           b.maxY <= a.maxY;
-}
-
-function intersects(a, b) {
-    return b.minX <= a.maxX &&
-           b.minY <= a.maxY &&
-           b.maxX >= a.minX &&
-           b.maxY >= a.minY;
-}
-
-function createNode(children) {
-    return {
-        children: children,
-        height: 1,
-        leaf: true,
-        minX: Infinity,
-        minY: Infinity,
-        maxX: -Infinity,
-        maxY: -Infinity
-    };
-}
-
-// sort an array so that items come in groups of n unsorted items, with groups sorted between each other;
-// combines selection algorithm with binary divide & conquer approach
-
-function multiSelect(arr, left, right, n, compare) {
-    var stack = [left, right],
-        mid;
-
-    while (stack.length) {
-        right = stack.pop();
-        left = stack.pop();
-
-        if (right - left <= n) continue;
-
-        mid = left + Math.ceil((right - left) / n / 2) * n;
-        quickselect(arr, mid, left, right, compare);
-
-        stack.push(left, mid, mid, right);
-    }
-}
-
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var twoProduct = __webpack_require__(24)
-var twoSum = __webpack_require__(91)
-
-module.exports = scaleLinearExpansion
-
-function scaleLinearExpansion(e, scale) {
-  var n = e.length
-  if(n === 1) {
-    var ts = twoProduct(e[0], scale)
-    if(ts[0]) {
-      return ts
-    }
-    return [ ts[1] ]
-  }
-  var g = new Array(2 * n)
-  var q = [0.1, 0.1]
-  var t = [0.1, 0.1]
-  var count = 0
-  twoProduct(e[0], scale, q)
-  if(q[0]) {
-    g[count++] = q[0]
-  }
-  for(var i=1; i<n; ++i) {
-    twoProduct(e[i], scale, t)
-    var pq = q[1]
-    twoSum(pq, t[0], q)
-    if(q[0]) {
-      g[count++] = q[0]
-    }
-    var a = t[1]
-    var b = q[1]
-    var x = a + b
-    var bv = x - a
-    var y = b - bv
-    q[1] = x
-    if(y) {
-      g[count++] = y
-    }
-  }
-  if(q[1]) {
-    g[count++] = q[1]
-  }
-  if(count === 0) {
-    g[count++] = 0.0
-  }
-  g.length = count
-  return g
-}
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = robustSubtract
-
-//Easy case: Add two scalars
-function scalarScalar(a, b) {
-  var x = a + b
-  var bv = x - a
-  var av = x - bv
-  var br = b - bv
-  var ar = a - av
-  var y = ar + br
-  if(y) {
-    return [y, x]
-  }
-  return [x]
-}
-
-function robustSubtract(e, f) {
-  var ne = e.length|0
-  var nf = f.length|0
-  if(ne === 1 && nf === 1) {
-    return scalarScalar(e[0], -f[0])
-  }
-  var n = ne + nf
-  var g = new Array(n)
-  var count = 0
-  var eptr = 0
-  var fptr = 0
-  var abs = Math.abs
-  var ei = e[eptr]
-  var ea = abs(ei)
-  var fi = -f[fptr]
-  var fa = abs(fi)
-  var a, b
-  if(ea < fa) {
-    b = ei
-    eptr += 1
-    if(eptr < ne) {
-      ei = e[eptr]
-      ea = abs(ei)
-    }
-  } else {
-    b = fi
-    fptr += 1
-    if(fptr < nf) {
-      fi = -f[fptr]
-      fa = abs(fi)
-    }
-  }
-  if((eptr < ne && ea < fa) || (fptr >= nf)) {
-    a = ei
-    eptr += 1
-    if(eptr < ne) {
-      ei = e[eptr]
-      ea = abs(ei)
-    }
-  } else {
-    a = fi
-    fptr += 1
-    if(fptr < nf) {
-      fi = -f[fptr]
-      fa = abs(fi)
-    }
-  }
-  var x = a + b
-  var bv = x - a
-  var y = b - bv
-  var q0 = y
-  var q1 = x
-  var _x, _bv, _av, _br, _ar
-  while(eptr < ne && fptr < nf) {
-    if(ea < fa) {
-      a = ei
-      eptr += 1
-      if(eptr < ne) {
-        ei = e[eptr]
-        ea = abs(ei)
-      }
-    } else {
-      a = fi
-      fptr += 1
-      if(fptr < nf) {
-        fi = -f[fptr]
-        fa = abs(fi)
-      }
-    }
-    b = q0
-    x = a + b
-    bv = x - a
-    y = b - bv
-    if(y) {
-      g[count++] = y
-    }
-    _x = q1 + x
-    _bv = _x - q1
-    _av = _x - _bv
-    _br = x - _bv
-    _ar = q1 - _av
-    q0 = _ar + _br
-    q1 = _x
-  }
-  while(eptr < ne) {
-    a = ei
-    b = q0
-    x = a + b
-    bv = x - a
-    y = b - bv
-    if(y) {
-      g[count++] = y
-    }
-    _x = q1 + x
-    _bv = _x - q1
-    _av = _x - _bv
-    _br = x - _bv
-    _ar = q1 - _av
-    q0 = _ar + _br
-    q1 = _x
-    eptr += 1
-    if(eptr < ne) {
-      ei = e[eptr]
-    }
-  }
-  while(fptr < nf) {
-    a = fi
-    b = q0
-    x = a + b
-    bv = x - a
-    y = b - bv
-    if(y) {
-      g[count++] = y
-    } 
-    _x = q1 + x
-    _bv = _x - q1
-    _av = _x - _bv
-    _br = x - _bv
-    _ar = q1 - _av
-    q0 = _ar + _br
-    q1 = _x
-    fptr += 1
-    if(fptr < nf) {
-      fi = -f[fptr]
-    }
-  }
-  if(q0) {
-    g[count++] = q0
-  }
-  if(q1) {
-    g[count++] = q1
-  }
-  if(!count) {
-    g[count++] = 0.0  
-  }
-  g.length = count
-  return g
-}
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = linearExpansionSum
-
-//Easy case: Add two scalars
-function scalarScalar(a, b) {
-  var x = a + b
-  var bv = x - a
-  var av = x - bv
-  var br = b - bv
-  var ar = a - av
-  var y = ar + br
-  if(y) {
-    return [y, x]
-  }
-  return [x]
-}
-
-function linearExpansionSum(e, f) {
-  var ne = e.length|0
-  var nf = f.length|0
-  if(ne === 1 && nf === 1) {
-    return scalarScalar(e[0], f[0])
-  }
-  var n = ne + nf
-  var g = new Array(n)
-  var count = 0
-  var eptr = 0
-  var fptr = 0
-  var abs = Math.abs
-  var ei = e[eptr]
-  var ea = abs(ei)
-  var fi = f[fptr]
-  var fa = abs(fi)
-  var a, b
-  if(ea < fa) {
-    b = ei
-    eptr += 1
-    if(eptr < ne) {
-      ei = e[eptr]
-      ea = abs(ei)
-    }
-  } else {
-    b = fi
-    fptr += 1
-    if(fptr < nf) {
-      fi = f[fptr]
-      fa = abs(fi)
-    }
-  }
-  if((eptr < ne && ea < fa) || (fptr >= nf)) {
-    a = ei
-    eptr += 1
-    if(eptr < ne) {
-      ei = e[eptr]
-      ea = abs(ei)
-    }
-  } else {
-    a = fi
-    fptr += 1
-    if(fptr < nf) {
-      fi = f[fptr]
-      fa = abs(fi)
-    }
-  }
-  var x = a + b
-  var bv = x - a
-  var y = b - bv
-  var q0 = y
-  var q1 = x
-  var _x, _bv, _av, _br, _ar
-  while(eptr < ne && fptr < nf) {
-    if(ea < fa) {
-      a = ei
-      eptr += 1
-      if(eptr < ne) {
-        ei = e[eptr]
-        ea = abs(ei)
-      }
-    } else {
-      a = fi
-      fptr += 1
-      if(fptr < nf) {
-        fi = f[fptr]
-        fa = abs(fi)
-      }
-    }
-    b = q0
-    x = a + b
-    bv = x - a
-    y = b - bv
-    if(y) {
-      g[count++] = y
-    }
-    _x = q1 + x
-    _bv = _x - q1
-    _av = _x - _bv
-    _br = x - _bv
-    _ar = q1 - _av
-    q0 = _ar + _br
-    q1 = _x
-  }
-  while(eptr < ne) {
-    a = ei
-    b = q0
-    x = a + b
-    bv = x - a
-    y = b - bv
-    if(y) {
-      g[count++] = y
-    }
-    _x = q1 + x
-    _bv = _x - q1
-    _av = _x - _bv
-    _br = x - _bv
-    _ar = q1 - _av
-    q0 = _ar + _br
-    q1 = _x
-    eptr += 1
-    if(eptr < ne) {
-      ei = e[eptr]
-    }
-  }
-  while(fptr < nf) {
-    a = fi
-    b = q0
-    x = a + b
-    bv = x - a
-    y = b - bv
-    if(y) {
-      g[count++] = y
-    } 
-    _x = q1 + x
-    _bv = _x - q1
-    _av = _x - _bv
-    _br = x - _bv
-    _ar = q1 - _av
-    q0 = _ar + _br
-    q1 = _x
-    fptr += 1
-    if(fptr < nf) {
-      fi = f[fptr]
-    }
-  }
-  if(q0) {
-    g[count++] = q0
-  }
-  if(q1) {
-    g[count++] = q1
-  }
-  if(!count) {
-    g[count++] = 0.0  
-  }
-  g.length = count
-  return g
-}
-
-/***/ }),
-/* 85 */
+/* 76 */
 /***/ (function(module, exports) {
 
 function Agent() {
@@ -35346,7 +34227,7 @@ module.exports = Agent;
 
 
 /***/ }),
-/* 86 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -35363,11 +34244,11 @@ if (typeof window !== 'undefined') { // Browser window
   root = this;
 }
 
-var Emitter = __webpack_require__(64);
-var RequestBase = __webpack_require__(87);
-var isObject = __webpack_require__(23);
-var ResponseBase = __webpack_require__(88);
-var Agent = __webpack_require__(85);
+var Emitter = __webpack_require__(62);
+var RequestBase = __webpack_require__(78);
+var isObject = __webpack_require__(22);
+var ResponseBase = __webpack_require__(79);
+var Agent = __webpack_require__(76);
 
 /**
  * Noop.
@@ -36272,7 +35153,7 @@ request.put = function(url, data, fn) {
 
 
 /***/ }),
-/* 87 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36281,7 +35162,7 @@ request.put = function(url, data, fn) {
 /**
  * Module of mixed-in functions shared between node and client code
  */
-var isObject = __webpack_require__(23);
+var isObject = __webpack_require__(22);
 
 /**
  * Expose `RequestBase`.
@@ -36973,7 +35854,7 @@ RequestBase.prototype._setTimeouts = function() {
 
 
 /***/ }),
-/* 88 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36983,7 +35864,7 @@ RequestBase.prototype._setTimeouts = function() {
  * Module dependencies.
  */
 
-var utils = __webpack_require__(89);
+var utils = __webpack_require__(80);
 
 /**
  * Expose `ResponseBase`.
@@ -37116,7 +35997,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
 
 
 /***/ }),
-/* 89 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37194,7 +36075,1178 @@ exports.cleanHeader = function(header, changesOrigin){
 
 
 /***/ }),
-/* 90 */
+/* 81 */
+/***/ (function(module, exports) {
+
+module.exports = function (point, vs) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+    
+    var x = point[0], y = point[1];
+    
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+        var xi = vs[i][0], yi = vs[i][1];
+        var xj = vs[j][0], yj = vs[j][1];
+        
+        var intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+    
+    return inside;
+};
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var lr = __webpack_require__(8)
+
+// these should probably use robust-sum, etc
+function vectSum(a,b) {
+    return a.map(function(val,i) { return a[i]+b[i] })
+}
+function vectScale(a,b) {
+    return a.map(function(val,i) { return a[i]*b })
+}
+function vectDiff(a,b) {
+    return vectSum(a,vectScale(b,-1))
+}
+function dot(a,b) {
+    return a[0]*b[0] + a[1]*b[1]
+}
+
+// calculates the closest distance from a point to a line formed by two points
+// || (a-p) - ((a-p) \dot n) n ||
+function distLineToPoint(a, b, p) {
+    var n = vectDiff(b, a)
+    n = vectScale(n, 1/Math.sqrt(n[0]*n[0]+n[1]*n[1]))
+    
+    var amp = vectDiff(a, p)
+    var d = vectDiff(amp, vectScale(n,(dot(amp, n))))
+    //return { d:d, a:amp, nn:n, n:dot(amp,n)}
+    return Math.sqrt(d[0]*d[0]+d[1]*d[1])
+}
+
+function isStrictlyRight(p) {
+        return lr(this.a, this.b, p) < 0 ? 1 : 0
+}
+
+// sort the given points in CCW order
+// FIXME: 
+function sortHull(Sorig) {
+    var S = Sorig.slice()
+    var Ssorted = []
+    var last = S.shift()
+    Ssorted.push(last)
+
+    while (S.length > 0) {
+        var curr = S.shift()
+        var A = S.filter(isStrictlyRight, {a:curr, b:last})
+        if (A.length == 0) {
+            Ssorted.push(curr)
+            last = curr
+        } else {
+            S.push(curr)
+        }
+    }
+
+    return Ssorted
+}
+
+// remove colinear points
+// assume that the input points are already sorted
+// FIXME we could take this further and enforce points to be positively oriented
+function removeColinearPoints(S) {
+    var Sclean = []
+    var l = S.length
+
+    for (var i=0; i < S.length; i++) {
+        if ( lr(S[(i+l-1)%l], S[i], S[(i+1)%l]) != 0 ) {
+            Sclean.push(S[i]);
+        }
+    }
+
+    return Sclean
+}
+
+// QuickHull
+// O'Rourke - Computational Geometry in C, p. 70
+function quickHullInner(S, a, b) {
+    if (S.length == 0) {
+        return []
+    }
+
+    var d = S.map(function(p) {return {dist: lr(a,b,p)*distLineToPoint(a, b, p), point: p}})
+    d.sort(function(a,b) { return a.dist > b.dist ? 1 : -1 })
+    var dd = d.map(function(pp) { return pp.point })
+
+    var c = d.pop()
+    if (c.dist <= 0) {
+        return []
+    }
+    c = c.point
+
+    // seems like these should be reversed, but this works
+    var A = dd.filter(isStrictlyRight, {a:c, b:a})
+    var B = dd.filter(isStrictlyRight, {a:b, b:c})
+
+    // FIXME need better way in case qHI returns []
+    var ress = quickHullInner(A, a, c).concat([c], quickHullInner(B, c, b))
+    return ress
+
+}
+
+function quickHull(S) {
+    if (S.length < 3) {
+        return S
+    } else {
+        var d = S.slice()
+        // sort by x
+        d.sort(function(a,b) {return a[0] > b[0] ? 1 : -1})
+
+        var a = d.shift()
+        var b = d.pop()
+
+        var S1 = S.filter(isStrictlyRight, {a:b, b:a})
+        var S2 = S.filter(isStrictlyRight, {a:a, b:b})
+
+        var x = quickHullInner(S1,a,b)
+        var y = quickHullInner(S2,b,a)
+        var res = [a].concat(x, [b], y)
+
+        return removeColinearPoints(sortHull(res))
+    }
+}
+
+module.exports = quickHull
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+	 true ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.quickselect = factory());
+}(this, (function () { 'use strict';
+
+function quickselect(arr, k, left, right, compare) {
+    quickselectStep(arr, k, left || 0, right || (arr.length - 1), compare || defaultCompare);
+}
+
+function quickselectStep(arr, k, left, right, compare) {
+
+    while (right > left) {
+        if (right - left > 600) {
+            var n = right - left + 1;
+            var m = k - left + 1;
+            var z = Math.log(n);
+            var s = 0.5 * Math.exp(2 * z / 3);
+            var sd = 0.5 * Math.sqrt(z * s * (n - s) / n) * (m - n / 2 < 0 ? -1 : 1);
+            var newLeft = Math.max(left, Math.floor(k - m * s / n + sd));
+            var newRight = Math.min(right, Math.floor(k + (n - m) * s / n + sd));
+            quickselectStep(arr, k, newLeft, newRight, compare);
+        }
+
+        var t = arr[k];
+        var i = left;
+        var j = right;
+
+        swap(arr, left, k);
+        if (compare(arr[right], t) > 0) swap(arr, left, right);
+
+        while (i < j) {
+            swap(arr, i, j);
+            i++;
+            j--;
+            while (compare(arr[i], t) < 0) i++;
+            while (compare(arr[j], t) > 0) j--;
+        }
+
+        if (compare(arr[left], t) === 0) swap(arr, left, j);
+        else {
+            j++;
+            swap(arr, j, right);
+        }
+
+        if (j <= k) left = j + 1;
+        if (k <= j) right = j - 1;
+    }
+}
+
+function swap(arr, i, j) {
+    var tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+}
+
+function defaultCompare(a, b) {
+    return a < b ? -1 : a > b ? 1 : 0;
+}
+
+return quickselect;
+
+})));
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = rbush;
+module.exports.default = rbush;
+
+var quickselect = __webpack_require__(83);
+
+function rbush(maxEntries, format) {
+    if (!(this instanceof rbush)) return new rbush(maxEntries, format);
+
+    // max entries in a node is 9 by default; min node fill is 40% for best performance
+    this._maxEntries = Math.max(4, maxEntries || 9);
+    this._minEntries = Math.max(2, Math.ceil(this._maxEntries * 0.4));
+
+    if (format) {
+        this._initFormat(format);
+    }
+
+    this.clear();
+}
+
+rbush.prototype = {
+
+    all: function () {
+        return this._all(this.data, []);
+    },
+
+    search: function (bbox) {
+
+        var node = this.data,
+            result = [],
+            toBBox = this.toBBox;
+
+        if (!intersects(bbox, node)) return result;
+
+        var nodesToSearch = [],
+            i, len, child, childBBox;
+
+        while (node) {
+            for (i = 0, len = node.children.length; i < len; i++) {
+
+                child = node.children[i];
+                childBBox = node.leaf ? toBBox(child) : child;
+
+                if (intersects(bbox, childBBox)) {
+                    if (node.leaf) result.push(child);
+                    else if (contains(bbox, childBBox)) this._all(child, result);
+                    else nodesToSearch.push(child);
+                }
+            }
+            node = nodesToSearch.pop();
+        }
+
+        return result;
+    },
+
+    collides: function (bbox) {
+
+        var node = this.data,
+            toBBox = this.toBBox;
+
+        if (!intersects(bbox, node)) return false;
+
+        var nodesToSearch = [],
+            i, len, child, childBBox;
+
+        while (node) {
+            for (i = 0, len = node.children.length; i < len; i++) {
+
+                child = node.children[i];
+                childBBox = node.leaf ? toBBox(child) : child;
+
+                if (intersects(bbox, childBBox)) {
+                    if (node.leaf || contains(bbox, childBBox)) return true;
+                    nodesToSearch.push(child);
+                }
+            }
+            node = nodesToSearch.pop();
+        }
+
+        return false;
+    },
+
+    load: function (data) {
+        if (!(data && data.length)) return this;
+
+        if (data.length < this._minEntries) {
+            for (var i = 0, len = data.length; i < len; i++) {
+                this.insert(data[i]);
+            }
+            return this;
+        }
+
+        // recursively build the tree with the given data from scratch using OMT algorithm
+        var node = this._build(data.slice(), 0, data.length - 1, 0);
+
+        if (!this.data.children.length) {
+            // save as is if tree is empty
+            this.data = node;
+
+        } else if (this.data.height === node.height) {
+            // split root if trees have the same height
+            this._splitRoot(this.data, node);
+
+        } else {
+            if (this.data.height < node.height) {
+                // swap trees if inserted one is bigger
+                var tmpNode = this.data;
+                this.data = node;
+                node = tmpNode;
+            }
+
+            // insert the small tree into the large tree at appropriate level
+            this._insert(node, this.data.height - node.height - 1, true);
+        }
+
+        return this;
+    },
+
+    insert: function (item) {
+        if (item) this._insert(item, this.data.height - 1);
+        return this;
+    },
+
+    clear: function () {
+        this.data = createNode([]);
+        return this;
+    },
+
+    remove: function (item, equalsFn) {
+        if (!item) return this;
+
+        var node = this.data,
+            bbox = this.toBBox(item),
+            path = [],
+            indexes = [],
+            i, parent, index, goingUp;
+
+        // depth-first iterative tree traversal
+        while (node || path.length) {
+
+            if (!node) { // go up
+                node = path.pop();
+                parent = path[path.length - 1];
+                i = indexes.pop();
+                goingUp = true;
+            }
+
+            if (node.leaf) { // check current node
+                index = findItem(item, node.children, equalsFn);
+
+                if (index !== -1) {
+                    // item found, remove the item and condense tree upwards
+                    node.children.splice(index, 1);
+                    path.push(node);
+                    this._condense(path);
+                    return this;
+                }
+            }
+
+            if (!goingUp && !node.leaf && contains(node, bbox)) { // go down
+                path.push(node);
+                indexes.push(i);
+                i = 0;
+                parent = node;
+                node = node.children[0];
+
+            } else if (parent) { // go right
+                i++;
+                node = parent.children[i];
+                goingUp = false;
+
+            } else node = null; // nothing found
+        }
+
+        return this;
+    },
+
+    toBBox: function (item) { return item; },
+
+    compareMinX: compareNodeMinX,
+    compareMinY: compareNodeMinY,
+
+    toJSON: function () { return this.data; },
+
+    fromJSON: function (data) {
+        this.data = data;
+        return this;
+    },
+
+    _all: function (node, result) {
+        var nodesToSearch = [];
+        while (node) {
+            if (node.leaf) result.push.apply(result, node.children);
+            else nodesToSearch.push.apply(nodesToSearch, node.children);
+
+            node = nodesToSearch.pop();
+        }
+        return result;
+    },
+
+    _build: function (items, left, right, height) {
+
+        var N = right - left + 1,
+            M = this._maxEntries,
+            node;
+
+        if (N <= M) {
+            // reached leaf level; return leaf
+            node = createNode(items.slice(left, right + 1));
+            calcBBox(node, this.toBBox);
+            return node;
+        }
+
+        if (!height) {
+            // target height of the bulk-loaded tree
+            height = Math.ceil(Math.log(N) / Math.log(M));
+
+            // target number of root entries to maximize storage utilization
+            M = Math.ceil(N / Math.pow(M, height - 1));
+        }
+
+        node = createNode([]);
+        node.leaf = false;
+        node.height = height;
+
+        // split the items into M mostly square tiles
+
+        var N2 = Math.ceil(N / M),
+            N1 = N2 * Math.ceil(Math.sqrt(M)),
+            i, j, right2, right3;
+
+        multiSelect(items, left, right, N1, this.compareMinX);
+
+        for (i = left; i <= right; i += N1) {
+
+            right2 = Math.min(i + N1 - 1, right);
+
+            multiSelect(items, i, right2, N2, this.compareMinY);
+
+            for (j = i; j <= right2; j += N2) {
+
+                right3 = Math.min(j + N2 - 1, right2);
+
+                // pack each entry recursively
+                node.children.push(this._build(items, j, right3, height - 1));
+            }
+        }
+
+        calcBBox(node, this.toBBox);
+
+        return node;
+    },
+
+    _chooseSubtree: function (bbox, node, level, path) {
+
+        var i, len, child, targetNode, area, enlargement, minArea, minEnlargement;
+
+        while (true) {
+            path.push(node);
+
+            if (node.leaf || path.length - 1 === level) break;
+
+            minArea = minEnlargement = Infinity;
+
+            for (i = 0, len = node.children.length; i < len; i++) {
+                child = node.children[i];
+                area = bboxArea(child);
+                enlargement = enlargedArea(bbox, child) - area;
+
+                // choose entry with the least area enlargement
+                if (enlargement < minEnlargement) {
+                    minEnlargement = enlargement;
+                    minArea = area < minArea ? area : minArea;
+                    targetNode = child;
+
+                } else if (enlargement === minEnlargement) {
+                    // otherwise choose one with the smallest area
+                    if (area < minArea) {
+                        minArea = area;
+                        targetNode = child;
+                    }
+                }
+            }
+
+            node = targetNode || node.children[0];
+        }
+
+        return node;
+    },
+
+    _insert: function (item, level, isNode) {
+
+        var toBBox = this.toBBox,
+            bbox = isNode ? item : toBBox(item),
+            insertPath = [];
+
+        // find the best node for accommodating the item, saving all nodes along the path too
+        var node = this._chooseSubtree(bbox, this.data, level, insertPath);
+
+        // put the item into the node
+        node.children.push(item);
+        extend(node, bbox);
+
+        // split on node overflow; propagate upwards if necessary
+        while (level >= 0) {
+            if (insertPath[level].children.length > this._maxEntries) {
+                this._split(insertPath, level);
+                level--;
+            } else break;
+        }
+
+        // adjust bboxes along the insertion path
+        this._adjustParentBBoxes(bbox, insertPath, level);
+    },
+
+    // split overflowed node into two
+    _split: function (insertPath, level) {
+
+        var node = insertPath[level],
+            M = node.children.length,
+            m = this._minEntries;
+
+        this._chooseSplitAxis(node, m, M);
+
+        var splitIndex = this._chooseSplitIndex(node, m, M);
+
+        var newNode = createNode(node.children.splice(splitIndex, node.children.length - splitIndex));
+        newNode.height = node.height;
+        newNode.leaf = node.leaf;
+
+        calcBBox(node, this.toBBox);
+        calcBBox(newNode, this.toBBox);
+
+        if (level) insertPath[level - 1].children.push(newNode);
+        else this._splitRoot(node, newNode);
+    },
+
+    _splitRoot: function (node, newNode) {
+        // split root node
+        this.data = createNode([node, newNode]);
+        this.data.height = node.height + 1;
+        this.data.leaf = false;
+        calcBBox(this.data, this.toBBox);
+    },
+
+    _chooseSplitIndex: function (node, m, M) {
+
+        var i, bbox1, bbox2, overlap, area, minOverlap, minArea, index;
+
+        minOverlap = minArea = Infinity;
+
+        for (i = m; i <= M - m; i++) {
+            bbox1 = distBBox(node, 0, i, this.toBBox);
+            bbox2 = distBBox(node, i, M, this.toBBox);
+
+            overlap = intersectionArea(bbox1, bbox2);
+            area = bboxArea(bbox1) + bboxArea(bbox2);
+
+            // choose distribution with minimum overlap
+            if (overlap < minOverlap) {
+                minOverlap = overlap;
+                index = i;
+
+                minArea = area < minArea ? area : minArea;
+
+            } else if (overlap === minOverlap) {
+                // otherwise choose distribution with minimum area
+                if (area < minArea) {
+                    minArea = area;
+                    index = i;
+                }
+            }
+        }
+
+        return index;
+    },
+
+    // sorts node children by the best axis for split
+    _chooseSplitAxis: function (node, m, M) {
+
+        var compareMinX = node.leaf ? this.compareMinX : compareNodeMinX,
+            compareMinY = node.leaf ? this.compareMinY : compareNodeMinY,
+            xMargin = this._allDistMargin(node, m, M, compareMinX),
+            yMargin = this._allDistMargin(node, m, M, compareMinY);
+
+        // if total distributions margin value is minimal for x, sort by minX,
+        // otherwise it's already sorted by minY
+        if (xMargin < yMargin) node.children.sort(compareMinX);
+    },
+
+    // total margin of all possible split distributions where each node is at least m full
+    _allDistMargin: function (node, m, M, compare) {
+
+        node.children.sort(compare);
+
+        var toBBox = this.toBBox,
+            leftBBox = distBBox(node, 0, m, toBBox),
+            rightBBox = distBBox(node, M - m, M, toBBox),
+            margin = bboxMargin(leftBBox) + bboxMargin(rightBBox),
+            i, child;
+
+        for (i = m; i < M - m; i++) {
+            child = node.children[i];
+            extend(leftBBox, node.leaf ? toBBox(child) : child);
+            margin += bboxMargin(leftBBox);
+        }
+
+        for (i = M - m - 1; i >= m; i--) {
+            child = node.children[i];
+            extend(rightBBox, node.leaf ? toBBox(child) : child);
+            margin += bboxMargin(rightBBox);
+        }
+
+        return margin;
+    },
+
+    _adjustParentBBoxes: function (bbox, path, level) {
+        // adjust bboxes along the given tree path
+        for (var i = level; i >= 0; i--) {
+            extend(path[i], bbox);
+        }
+    },
+
+    _condense: function (path) {
+        // go through the path, removing empty nodes and updating bboxes
+        for (var i = path.length - 1, siblings; i >= 0; i--) {
+            if (path[i].children.length === 0) {
+                if (i > 0) {
+                    siblings = path[i - 1].children;
+                    siblings.splice(siblings.indexOf(path[i]), 1);
+
+                } else this.clear();
+
+            } else calcBBox(path[i], this.toBBox);
+        }
+    },
+
+    _initFormat: function (format) {
+        // data format (minX, minY, maxX, maxY accessors)
+
+        // uses eval-type function compilation instead of just accepting a toBBox function
+        // because the algorithms are very sensitive to sorting functions performance,
+        // so they should be dead simple and without inner calls
+
+        var compareArr = ['return a', ' - b', ';'];
+
+        this.compareMinX = new Function('a', 'b', compareArr.join(format[0]));
+        this.compareMinY = new Function('a', 'b', compareArr.join(format[1]));
+
+        this.toBBox = new Function('a',
+            'return {minX: a' + format[0] +
+            ', minY: a' + format[1] +
+            ', maxX: a' + format[2] +
+            ', maxY: a' + format[3] + '};');
+    }
+};
+
+function findItem(item, items, equalsFn) {
+    if (!equalsFn) return items.indexOf(item);
+
+    for (var i = 0; i < items.length; i++) {
+        if (equalsFn(item, items[i])) return i;
+    }
+    return -1;
+}
+
+// calculate node's bbox from bboxes of its children
+function calcBBox(node, toBBox) {
+    distBBox(node, 0, node.children.length, toBBox, node);
+}
+
+// min bounding rectangle of node children from k to p-1
+function distBBox(node, k, p, toBBox, destNode) {
+    if (!destNode) destNode = createNode(null);
+    destNode.minX = Infinity;
+    destNode.minY = Infinity;
+    destNode.maxX = -Infinity;
+    destNode.maxY = -Infinity;
+
+    for (var i = k, child; i < p; i++) {
+        child = node.children[i];
+        extend(destNode, node.leaf ? toBBox(child) : child);
+    }
+
+    return destNode;
+}
+
+function extend(a, b) {
+    a.minX = Math.min(a.minX, b.minX);
+    a.minY = Math.min(a.minY, b.minY);
+    a.maxX = Math.max(a.maxX, b.maxX);
+    a.maxY = Math.max(a.maxY, b.maxY);
+    return a;
+}
+
+function compareNodeMinX(a, b) { return a.minX - b.minX; }
+function compareNodeMinY(a, b) { return a.minY - b.minY; }
+
+function bboxArea(a)   { return (a.maxX - a.minX) * (a.maxY - a.minY); }
+function bboxMargin(a) { return (a.maxX - a.minX) + (a.maxY - a.minY); }
+
+function enlargedArea(a, b) {
+    return (Math.max(b.maxX, a.maxX) - Math.min(b.minX, a.minX)) *
+           (Math.max(b.maxY, a.maxY) - Math.min(b.minY, a.minY));
+}
+
+function intersectionArea(a, b) {
+    var minX = Math.max(a.minX, b.minX),
+        minY = Math.max(a.minY, b.minY),
+        maxX = Math.min(a.maxX, b.maxX),
+        maxY = Math.min(a.maxY, b.maxY);
+
+    return Math.max(0, maxX - minX) *
+           Math.max(0, maxY - minY);
+}
+
+function contains(a, b) {
+    return a.minX <= b.minX &&
+           a.minY <= b.minY &&
+           b.maxX <= a.maxX &&
+           b.maxY <= a.maxY;
+}
+
+function intersects(a, b) {
+    return b.minX <= a.maxX &&
+           b.minY <= a.maxY &&
+           b.maxX >= a.minX &&
+           b.maxY >= a.minY;
+}
+
+function createNode(children) {
+    return {
+        children: children,
+        height: 1,
+        leaf: true,
+        minX: Infinity,
+        minY: Infinity,
+        maxX: -Infinity,
+        maxY: -Infinity
+    };
+}
+
+// sort an array so that items come in groups of n unsorted items, with groups sorted between each other;
+// combines selection algorithm with binary divide & conquer approach
+
+function multiSelect(arr, left, right, n, compare) {
+    var stack = [left, right],
+        mid;
+
+    while (stack.length) {
+        right = stack.pop();
+        left = stack.pop();
+
+        if (right - left <= n) continue;
+
+        mid = left + Math.ceil((right - left) / n / 2) * n;
+        quickselect(arr, mid, left, right, compare);
+
+        stack.push(left, mid, mid, right);
+    }
+}
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var twoProduct = __webpack_require__(23)
+var twoSum = __webpack_require__(89)
+
+module.exports = scaleLinearExpansion
+
+function scaleLinearExpansion(e, scale) {
+  var n = e.length
+  if(n === 1) {
+    var ts = twoProduct(e[0], scale)
+    if(ts[0]) {
+      return ts
+    }
+    return [ ts[1] ]
+  }
+  var g = new Array(2 * n)
+  var q = [0.1, 0.1]
+  var t = [0.1, 0.1]
+  var count = 0
+  twoProduct(e[0], scale, q)
+  if(q[0]) {
+    g[count++] = q[0]
+  }
+  for(var i=1; i<n; ++i) {
+    twoProduct(e[i], scale, t)
+    var pq = q[1]
+    twoSum(pq, t[0], q)
+    if(q[0]) {
+      g[count++] = q[0]
+    }
+    var a = t[1]
+    var b = q[1]
+    var x = a + b
+    var bv = x - a
+    var y = b - bv
+    q[1] = x
+    if(y) {
+      g[count++] = y
+    }
+  }
+  if(q[1]) {
+    g[count++] = q[1]
+  }
+  if(count === 0) {
+    g[count++] = 0.0
+  }
+  g.length = count
+  return g
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = robustSubtract
+
+//Easy case: Add two scalars
+function scalarScalar(a, b) {
+  var x = a + b
+  var bv = x - a
+  var av = x - bv
+  var br = b - bv
+  var ar = a - av
+  var y = ar + br
+  if(y) {
+    return [y, x]
+  }
+  return [x]
+}
+
+function robustSubtract(e, f) {
+  var ne = e.length|0
+  var nf = f.length|0
+  if(ne === 1 && nf === 1) {
+    return scalarScalar(e[0], -f[0])
+  }
+  var n = ne + nf
+  var g = new Array(n)
+  var count = 0
+  var eptr = 0
+  var fptr = 0
+  var abs = Math.abs
+  var ei = e[eptr]
+  var ea = abs(ei)
+  var fi = -f[fptr]
+  var fa = abs(fi)
+  var a, b
+  if(ea < fa) {
+    b = ei
+    eptr += 1
+    if(eptr < ne) {
+      ei = e[eptr]
+      ea = abs(ei)
+    }
+  } else {
+    b = fi
+    fptr += 1
+    if(fptr < nf) {
+      fi = -f[fptr]
+      fa = abs(fi)
+    }
+  }
+  if((eptr < ne && ea < fa) || (fptr >= nf)) {
+    a = ei
+    eptr += 1
+    if(eptr < ne) {
+      ei = e[eptr]
+      ea = abs(ei)
+    }
+  } else {
+    a = fi
+    fptr += 1
+    if(fptr < nf) {
+      fi = -f[fptr]
+      fa = abs(fi)
+    }
+  }
+  var x = a + b
+  var bv = x - a
+  var y = b - bv
+  var q0 = y
+  var q1 = x
+  var _x, _bv, _av, _br, _ar
+  while(eptr < ne && fptr < nf) {
+    if(ea < fa) {
+      a = ei
+      eptr += 1
+      if(eptr < ne) {
+        ei = e[eptr]
+        ea = abs(ei)
+      }
+    } else {
+      a = fi
+      fptr += 1
+      if(fptr < nf) {
+        fi = -f[fptr]
+        fa = abs(fi)
+      }
+    }
+    b = q0
+    x = a + b
+    bv = x - a
+    y = b - bv
+    if(y) {
+      g[count++] = y
+    }
+    _x = q1 + x
+    _bv = _x - q1
+    _av = _x - _bv
+    _br = x - _bv
+    _ar = q1 - _av
+    q0 = _ar + _br
+    q1 = _x
+  }
+  while(eptr < ne) {
+    a = ei
+    b = q0
+    x = a + b
+    bv = x - a
+    y = b - bv
+    if(y) {
+      g[count++] = y
+    }
+    _x = q1 + x
+    _bv = _x - q1
+    _av = _x - _bv
+    _br = x - _bv
+    _ar = q1 - _av
+    q0 = _ar + _br
+    q1 = _x
+    eptr += 1
+    if(eptr < ne) {
+      ei = e[eptr]
+    }
+  }
+  while(fptr < nf) {
+    a = fi
+    b = q0
+    x = a + b
+    bv = x - a
+    y = b - bv
+    if(y) {
+      g[count++] = y
+    } 
+    _x = q1 + x
+    _bv = _x - q1
+    _av = _x - _bv
+    _br = x - _bv
+    _ar = q1 - _av
+    q0 = _ar + _br
+    q1 = _x
+    fptr += 1
+    if(fptr < nf) {
+      fi = -f[fptr]
+    }
+  }
+  if(q0) {
+    g[count++] = q0
+  }
+  if(q1) {
+    g[count++] = q1
+  }
+  if(!count) {
+    g[count++] = 0.0  
+  }
+  g.length = count
+  return g
+}
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = linearExpansionSum
+
+//Easy case: Add two scalars
+function scalarScalar(a, b) {
+  var x = a + b
+  var bv = x - a
+  var av = x - bv
+  var br = b - bv
+  var ar = a - av
+  var y = ar + br
+  if(y) {
+    return [y, x]
+  }
+  return [x]
+}
+
+function linearExpansionSum(e, f) {
+  var ne = e.length|0
+  var nf = f.length|0
+  if(ne === 1 && nf === 1) {
+    return scalarScalar(e[0], f[0])
+  }
+  var n = ne + nf
+  var g = new Array(n)
+  var count = 0
+  var eptr = 0
+  var fptr = 0
+  var abs = Math.abs
+  var ei = e[eptr]
+  var ea = abs(ei)
+  var fi = f[fptr]
+  var fa = abs(fi)
+  var a, b
+  if(ea < fa) {
+    b = ei
+    eptr += 1
+    if(eptr < ne) {
+      ei = e[eptr]
+      ea = abs(ei)
+    }
+  } else {
+    b = fi
+    fptr += 1
+    if(fptr < nf) {
+      fi = f[fptr]
+      fa = abs(fi)
+    }
+  }
+  if((eptr < ne && ea < fa) || (fptr >= nf)) {
+    a = ei
+    eptr += 1
+    if(eptr < ne) {
+      ei = e[eptr]
+      ea = abs(ei)
+    }
+  } else {
+    a = fi
+    fptr += 1
+    if(fptr < nf) {
+      fi = f[fptr]
+      fa = abs(fi)
+    }
+  }
+  var x = a + b
+  var bv = x - a
+  var y = b - bv
+  var q0 = y
+  var q1 = x
+  var _x, _bv, _av, _br, _ar
+  while(eptr < ne && fptr < nf) {
+    if(ea < fa) {
+      a = ei
+      eptr += 1
+      if(eptr < ne) {
+        ei = e[eptr]
+        ea = abs(ei)
+      }
+    } else {
+      a = fi
+      fptr += 1
+      if(fptr < nf) {
+        fi = f[fptr]
+        fa = abs(fi)
+      }
+    }
+    b = q0
+    x = a + b
+    bv = x - a
+    y = b - bv
+    if(y) {
+      g[count++] = y
+    }
+    _x = q1 + x
+    _bv = _x - q1
+    _av = _x - _bv
+    _br = x - _bv
+    _ar = q1 - _av
+    q0 = _ar + _br
+    q1 = _x
+  }
+  while(eptr < ne) {
+    a = ei
+    b = q0
+    x = a + b
+    bv = x - a
+    y = b - bv
+    if(y) {
+      g[count++] = y
+    }
+    _x = q1 + x
+    _bv = _x - q1
+    _av = _x - _bv
+    _br = x - _bv
+    _ar = q1 - _av
+    q0 = _ar + _br
+    q1 = _x
+    eptr += 1
+    if(eptr < ne) {
+      ei = e[eptr]
+    }
+  }
+  while(fptr < nf) {
+    a = fi
+    b = q0
+    x = a + b
+    bv = x - a
+    y = b - bv
+    if(y) {
+      g[count++] = y
+    } 
+    _x = q1 + x
+    _bv = _x - q1
+    _av = _x - _bv
+    _br = x - _bv
+    _ar = q1 - _av
+    q0 = _ar + _br
+    q1 = _x
+    fptr += 1
+    if(fptr < nf) {
+      fi = f[fptr]
+    }
+  }
+  if(q0) {
+    g[count++] = q0
+  }
+  if(q1) {
+    g[count++] = q1
+  }
+  if(!count) {
+    g[count++] = 0.0  
+  }
+  g.length = count
+  return g
+}
+
+/***/ }),
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37289,7 +37341,7 @@ TinyQueue.prototype = {
 
 
 /***/ }),
-/* 91 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37312,5 +37364,5 @@ function fastTwoSum(a, b, result) {
 }
 
 /***/ })
-],[60]);
+],[58]);
 //# sourceMappingURL=main.js.map

@@ -9,21 +9,11 @@ var L = _interopRequireWildcard(require("leaflet"));
 
 require("leaflet-editable/src/Leaflet.Editable");
 
-var _index = require("../../index");
-
 var _coords = require("../../coords");
-
-var _icon = require("../../icon");
-
-var _marker = require("../interface/marker");
 
 var _iconFactory = require("./utils/icon-factory");
 
 var _markerPresetStorage = require("./utils/marker-preset-storage");
-
-var _bounds = require("../../bounds");
-
-var _events = require("../../events");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 

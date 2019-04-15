@@ -9,13 +9,9 @@ var L = _interopRequireWildcard(require("leaflet"));
 
 require("leaflet/dist/leaflet.css");
 
-var _map = require("../interface/map");
-
 var _coords = require("../../coords");
 
 var _bounds = require("../../bounds");
-
-var _events = require("../../events");
 
 require("./style/map.less");
 
