@@ -7,7 +7,7 @@ const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
 const DEBUG = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-const EXAMPLES_PATH = path.join(__dirname, 'examples');
+const EXAMPLES_PATH = path.join(__dirname, 'docs/examples');
 const LIB_PATH = path.join(__dirname, 'dist');
 
 const resultConfig = {
