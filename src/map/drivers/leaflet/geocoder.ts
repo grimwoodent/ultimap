@@ -1,5 +1,5 @@
-import { NominatimJS } from 'nominatim-js';
-import { INominatimResult } from 'nominatim-js/dist';
+import { NominatimJS } from 'nominatim-search';
+import { INominatimResult } from 'nominatim-search/dist';
 import { IGeocodeResult, IGeocoderStrategy } from '../interface/geocoder';
 import { Coords, tCoords } from '../../coords';
 

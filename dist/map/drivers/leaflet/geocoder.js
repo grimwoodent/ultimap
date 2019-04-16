@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimJs = require("nominatim-js");
+var _nominatimSearch = require("nominatim-search");
 
 var _coords = require("../../coords");
 
@@ -28,7 +28,7 @@ function () {
       return new Promise(function (resolve, reject) {
         var point = new _coords.Coords(coords);
 
-        _nominatimJs.NominatimJS.reverse({
+        _nominatimSearch.NominatimJS.reverse({
           lat: point.lat,
           lon: point.lng
         }).then(function (res) {
@@ -50,7 +50,7 @@ function () {
     key: "whereIs",
     value: function whereIs(address, coords) {
       return new Promise(function (resolve, reject) {
-        _nominatimJs.NominatimJS.search({
+        _nominatimSearch.NominatimJS.search({
           q: address,
           addressdetails: 1
         }).then(function (res) {
