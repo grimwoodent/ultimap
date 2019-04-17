@@ -18,9 +18,8 @@
 import { geo, Strategy } from 'ultimap';
 
 geo.byStrategy(new Strategy.Leaflet({
-    tileLayerProviderLink: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+    tileLayerProviderLink: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     copyrights: [
-        '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a>',
         '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
     ],
 })).map.create(holder_element, {
@@ -40,10 +39,10 @@ geo.byStrategy(new Strategy.Leaflet({
 import { geo, Strategy } from 'ultimap';
 
 geo.byStrategy(new Strategy.Leaflet({
-    tileLayerProviderLink: 'https://maps.wikimedia.org/osm-intl/${z}/${x}/${y}.png',
+    tileLayerProviderLink: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
     copyrights: [
-        'Wikimedia maps',
-        'Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+        '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a>',
+        '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
     ],
 })).map.create(holder_element, {
     center: [57.767131, 40.928349],
