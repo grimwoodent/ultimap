@@ -14636,10 +14636,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var LeafletGeoStrategy =
 /*#__PURE__*/
 function () {
-  function LeafletGeoStrategy() {
+  function LeafletGeoStrategy(props) {
     _classCallCheck(this, LeafletGeoStrategy);
 
-    _defineProperty(this, "map", new _map.LeafletMapStrategy());
+    _defineProperty(this, "map", void 0);
 
     _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
 
@@ -14657,12 +14657,23 @@ function () {
     });
 
     _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
+
+    this.initMap(props);
   }
 
   _createClass(LeafletGeoStrategy, [{
     key: "isAllowed",
     value: function isAllowed() {
       return true;
+    }
+  }, {
+    key: "initMap",
+    value: function initMap(props) {
+      if (this.map) {
+        throw new Error('Map already exist');
+      }
+
+      this.map = new _map.LeafletMapStrategy(props);
     }
   }]);
 
@@ -27905,31 +27916,39 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var LeafletMapStrategy =
 /*#__PURE__*/
 function () {
-  function LeafletMapStrategy() {
+  function LeafletMapStrategy(props) {
     _classCallCheck(this, LeafletMapStrategy);
+
+    _defineProperty(this, "props", void 0);
+
+    this.initProps(props);
   }
+  /**
+   * Произвести загрузку карты в элемент
+   * @param {HTMLElement} element
+   * @param {ICreateMapStrategyOptions} options
+   * @return {Promise<any>}
+   */
+
 
   _createClass(LeafletMapStrategy, [{
     key: "load",
-
-    /**
-     * Произвести загрузку карты в элемент
-     * @param {HTMLElement} element
-     * @param {ICreateMapStrategyOptions} options
-     * @return {Promise<any>}
-     */
     value: function load(element, options) {
+      var _this = this;
+
       return new Promise(function (resolve) {
         var instance = L.map(element, {
           editable: true
         }).on('load', function () {
           resolve(instance);
         });
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© <a href="https://www.openstreetmap.org/copyright" ' + 'target="_blank">OpenStreetMap</a> contributors',
+        L.tileLayer(_this.props.tileLayerProviderLink, {
+          attribution: _this.props.copyrights.join(' | '),
           maxZoom: 18
         }).addTo(instance);
         var center = options.center ? options.center.toArray() : null;
@@ -27950,11 +27969,11 @@ function () {
   }, {
     key: "destroy",
     value: function destroy(map) {
-      var _this = this;
+      var _this2 = this;
 
       return new Promise(function (resolve) {
         map.remove();
-        resolve(_this);
+        resolve(_this2);
       });
     }
     /**
@@ -27969,14 +27988,14 @@ function () {
   }, {
     key: "setCenter",
     value: function setCenter(map, coords) {
-      var _this2 = this;
+      var _this3 = this;
 
       return new Promise(function (resolve) {
         // @TODO Проверка на то что можно остановить анимацию (при еще не загруженной карте все ломается)
         // map.stop();
         // @TODO listen event for complete
         map.panTo(coords.toArray());
-        resolve(_this2);
+        resolve(_this3);
       });
     }
     /**
@@ -28003,12 +28022,12 @@ function () {
   }, {
     key: "setZoom",
     value: function setZoom(map, value) {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve) {
         // @TODO listen event for complete
         map.setZoom(value);
-        resolve(_this3);
+        resolve(_this4);
       });
     }
     /**
@@ -28032,14 +28051,14 @@ function () {
   }, {
     key: "setBounds",
     value: function setBounds(map, value) {
-      var _this4 = this;
+      var _this5 = this;
 
       return new Promise(function (resolve) {
         // @TODO Проверка на то что можно остановить анимацию (при еще не загруженной карте все ломается)
         // map.stop();
         // @TODO listen event for complete change bounds
         map.fitBounds(value.toArray());
-        resolve(_this4);
+        resolve(_this5);
       });
     }
     /**
@@ -28082,11 +28101,11 @@ function () {
   }, {
     key: "fitToViewport",
     value: function fitToViewport(map) {
-      var _this5 = this;
+      var _this6 = this;
 
       return new Promise(function (resolve) {
         map.invalidateSize(false);
-        resolve(_this5);
+        resolve(_this6);
       });
     }
     /**
@@ -28101,11 +28120,11 @@ function () {
   }, {
     key: "addControl",
     value: function addControl(map, control) {
-      var _this6 = this;
+      var _this7 = this;
 
       return new Promise(function (resolve) {
         control.addTo(map);
-        resolve(_this6);
+        resolve(_this7);
       });
     }
     /**
@@ -28118,12 +28137,24 @@ function () {
   }, {
     key: "removeControl",
     value: function removeControl(map, control) {
-      var _this7 = this;
+      var _this8 = this;
 
       return new Promise(function (resolve) {
         control.remove();
-        resolve(_this7);
+        resolve(_this8);
       });
+    }
+  }, {
+    key: "initProps",
+    value: function initProps(props) {
+      if (this.props) {
+        throw new Error('Properties already exist');
+      }
+
+      this.props = Object.assign({
+        tileLayerProviderLink: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        copyrights: ['© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors']
+      }, props || {});
     }
   }]);
 

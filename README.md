@@ -2,9 +2,25 @@
 
 Universal api for different maps.
 
----
+---  
 
-#### Contents
+### Examples
+
+##### Common
+
+- [Basic usage](https://grimwoodent.github.io/ultimap/examples/basic/)
+- [Add map controls](https://grimwoodent.github.io/ultimap/examples/controls/)
+- [Map events](https://grimwoodent.github.io/ultimap/examples/events/)
+- [Markers](https://grimwoodent.github.io/ultimap/examples/marker/)
+- [Polygons](https://grimwoodent.github.io/ultimap/examples/polygon/)
+
+##### OSM
+
+- [OSM change tile provider](https://grimwoodent.github.io/ultimap/examples/OSM/tile-provider/)
+
+---  
+
+#### Api Contents
 - [Geo](#geo)
 - [Map](#map)
 - [Marker](#marker)
@@ -235,12 +251,3 @@ ymapGeo.polygon.create(coords.toArray(), {}).addTo(map);
 |getBounds()| *\<[Bounds](#bounds)\>* | |
 
 ---
-
-
-### Examples
-
-- [Basic usage](https://grimwoodent.github.io/ultimap/examples/basic/)
-- [Add map controls](https://grimwoodent.github.io/ultimap/examples/controls/)
-- [Map events](https://grimwoodent.github.io/ultimap/examples/events/)
-- [Markers](https://grimwoodent.github.io/ultimap/examples/marker/)
-- [Polygons](https://grimwoodent.github.io/ultimap/examples/polygon/)

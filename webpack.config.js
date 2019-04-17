@@ -116,6 +116,7 @@ module.exports = [
     { name: 'polygon', path: 'polygon', entry: '/js/index.js' },
     { name: 'events', path: 'events', entry: '/js/index.js' },
     { name: 'controls', path: 'controls', entry: '/js/index.js' },
+    { name: 'osm-tile-provider', path: 'OSM/tile-provider', entry: '/js/index.js' },
 ].map((m) => Object.assign({}, resultConfig, {
     name: m.name,
     entry: `./${m.path}${m.entry}`,

@@ -44,7 +44,6 @@ export interface IEditableGeoObjectStrategy<TCoords, TProps> extends IGeoObjectS
 }
 
 export interface IGeoStrategy {
-    isAllowed(): boolean;
     map: IMapStrategy;
     marker: IMarkerStrategy;
     polygon: IPolygonStrategy;
@@ -55,5 +54,6 @@ export interface IGeoStrategy {
         marker: IMarkerPresetStrategy,
         polygon: IPolygonPresetStrategy,
     };
-    geocoder: IGeocoderStrategy,
+    geocoder: IGeocoderStrategy;
+    isAllowed(): boolean;
 }

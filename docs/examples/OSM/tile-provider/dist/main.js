@@ -30589,46 +30589,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    const p1 = { lat : 57.769131, lng: 40.93534 };
-    const p2 = { lat : 57.765131, lng: 40.91834 };
-    const coords = [[
-        [p1.lat, p1.lng],
-        [p2.lat, p1.lng],
-        [p2.lat, p2.lng],
-        [p1.lat, p2.lng],
-    ]];
-    const style = {
-        fillColor: '#df362a',
-        fillOpacity: 0.33,
-        strokeColor: '#df362a',
-        strokeOpacity: 0.5,
-        strokeWidth: 2,
-    };
-
-    const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
-    const osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 14,
-    });
+    const osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet({
+        tileLayerProviderLink: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        copyrights: [
+            '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+        ],
+    })).map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+            center: [57.767131, 40.928349],
+            zoom: 12,
+        });
 
     console.log('OSM Map created', osm);
     osm.load().then((map) => {
         console.log('OSM Map loaded', map);
-
-        osmGeo.polygon.create(coords,  Object.assign({}, style)).addTo(map);
     });
 
-    const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
-    const ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+    const osmWikimedia = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet({
+        tileLayerProviderLink: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+        copyrights: [
+            '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a>',
+            '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+        ],
+    })).map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_wikimedia_holder').get(0), {
         center: [57.767131, 40.928349],
-        zoom: 14,
+        zoom: 12,
     });
 
-    console.log('YMaps Map created', ymap);
-    ymap.load().then((map) => {
-        console.log('YMaps Map loaded', map);
+    console.log('OSM Wikimedia Map created', osm);
+    osmWikimedia.load().then((map) => {
+        console.log('OSM Wikimedia Map loaded', map);
+    });
 
-        ymapGeo.polygon.create(coords, Object.assign({}, style)).addTo(map);
+    const osmBBBike = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet({
+        tileLayerProviderLink: 'http://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
+        copyrights: [
+            '<a href="https://bbbike.org/">BBBike</a>',
+            '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+        ],
+    })).map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_bbbike_holder').get(0), {
+        center: [57.767131, 40.928349],
+        zoom: 12,
+    });
+
+    console.log('OSM BBBike Map created', osm);
+    osmBBBike.load().then((map) => {
+        console.log('OSM BBBike Map loaded', map);
     });
 });
 

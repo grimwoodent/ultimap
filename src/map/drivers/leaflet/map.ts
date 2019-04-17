@@ -7,7 +7,18 @@ import { Bounds } from '../../bounds';
 import { EventHandlerFn, IEventHandlerFnMap } from '../../events';
 import './style/map.less';
 
+export interface ILeafletMapStrategyProps {
+    tileLayerProviderLink?: string;
+    copyrights?: string[];
+}
+
 export class LeafletMapStrategy implements IMapStrategy {
+    protected props: ILeafletMapStrategyProps;
+
+    constructor(props?: ILeafletMapStrategyProps) {
+        this.initProps(props);
+    }
+
     /**
      * Произвести загрузку карты в элемент
      * @param {HTMLElement} element
@@ -20,9 +31,8 @@ export class LeafletMapStrategy implements IMapStrategy {
                 resolve(instance);
             });
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© <a href="https://www.openstreetmap.org/copyright" ' +
-                'target="_blank">OpenStreetMap</a> contributors',
+            L.tileLayer(this.props.tileLayerProviderLink, {
+                attribution: this.props.copyrights.join(' | '),
                 maxZoom: 18,
             }).addTo(instance);
 
@@ -202,5 +212,18 @@ export class LeafletMapStrategy implements IMapStrategy {
 
             resolve(this);
         });
+    }
+
+    protected initProps(props?: ILeafletMapStrategyProps) {
+        if (this.props) {
+            throw new Error('Properties already exist');
+        }
+
+        this.props = Object.assign({
+            tileLayerProviderLink: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            copyrights: [
+                '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+            ],
+        }, props || { });
     }
 }

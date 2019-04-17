@@ -1,5 +1,7 @@
 import { IGeoStrategy } from './../interface';
-import { LeafletMapStrategy } from './map';
+import { IMapStrategy } from '../interface/map';
+
+import { ILeafletMapStrategyProps, LeafletMapStrategy } from './map';
 import { LeafletMarkerStrategy } from './marker';
 import { LeafletMarkerPresetStrategy } from './preset/marker';
 import { LeafletPolygonStrategy } from './polygon';
@@ -9,8 +11,12 @@ import { LeafletDOMEventStrategy } from './dom-event';
 import { LeafletGeoEventStrategy } from './geo-event';
 import { LeafletGeocoderStrategy } from './geocoder';
 
+export interface ILeafletGeoStrategyProps extends ILeafletMapStrategyProps {
+
+}
+
 export class LeafletGeoStrategy implements IGeoStrategy {
-    public map = new LeafletMapStrategy();
+    public map: IMapStrategy;
 
     public marker = new LeafletMarkerStrategy();
 
@@ -29,7 +35,19 @@ export class LeafletGeoStrategy implements IGeoStrategy {
 
     public geocoder = new LeafletGeocoderStrategy();
 
+    constructor(props?: ILeafletGeoStrategyProps) {
+        this.initMap(props);
+    }
+
     public isAllowed(): boolean {
         return true;
+    }
+
+    protected initMap(props?: ILeafletGeoStrategyProps) {
+        if (this.map) {
+            throw new Error('Map already exist');
+        }
+
+        this.map = new LeafletMapStrategy(props);
     }
 }

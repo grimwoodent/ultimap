@@ -34,10 +34,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var LeafletGeoStrategy =
 /*#__PURE__*/
 function () {
-  function LeafletGeoStrategy() {
+  function LeafletGeoStrategy(props) {
     _classCallCheck(this, LeafletGeoStrategy);
 
-    _defineProperty(this, "map", new _map.LeafletMapStrategy());
+    _defineProperty(this, "map", void 0);
 
     _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
 
@@ -55,12 +55,23 @@ function () {
     });
 
     _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
+
+    this.initMap(props);
   }
 
   _createClass(LeafletGeoStrategy, [{
     key: "isAllowed",
     value: function isAllowed() {
       return true;
+    }
+  }, {
+    key: "initMap",
+    value: function initMap(props) {
+      if (this.map) {
+        throw new Error('Map already exist');
+      }
+
+      this.map = new _map.LeafletMapStrategy(props);
     }
   }]);
 
