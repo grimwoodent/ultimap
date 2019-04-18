@@ -134,14 +134,14 @@ geo.marker.create([57.767131, 40.928349], {
 
 | Factory | Description |
 | ------- | ----------- |
-|geo.marker.create(coords: *\<Coords\>*, options?: *\<Marker Options\>* | Instantiates a Marker object given a geographical point and optionally an options object. |
+|geo.marker.create(coords: *\<[Coords](#coords) constructor params\>*, options?: *\<Marker Options\>*) | Instantiates a Marker object given a geographical point and optionally an options object. |
 
 ### Methods
 
 | Method | Returns | Description |
 | ------ | ------- | ----------- |
 |getUid()|*\<string\>*||
-|setCoords(coords: *\<Coords constructor params\>*)|*\<Marker\>*||
+|setCoords(coords: *\<Coords constructor params\>*)|*\<Promise\<Marker\>\>*||
 |getCoords()|*\<Coords\>*||
 |getBounds()|*\<Bounds\>*||
 |addTo(map: *\<Map\>*)|*\<Marker\>*||
@@ -154,6 +154,53 @@ geo.marker.create([57.767131, 40.928349], {
 |getData()|*\<object\>*||
 |setIcon(value: *\<object\>*)|*\<Marker\>*||
 |setPreset(value: *\<string\>*)|*\<Marker\>*||
+
+---
+
+# Polygon
+
+Polygon is used to display area on the map.
+
+### Usage example
+
+``` javascript
+import { geo } from 'ultimap';
+
+geo.polygon.create([[
+   [57.79968313324691,40.94109504772947],
+   [57.77263617196502,40.87964027478026],
+   [57.740061158662854,40.91328590466307],
+   [57.74354947014791,41.01868599011228],
+   [57.798949924647765,41.031903916137665],
+   [57.79968313324691,40.94109504772947],
+]], { }).addTo(map);
+```
+
+### Constructor
+
+| Factory | Description |
+| ------- | ----------- |
+|geo.polygon.create(coords: *\[[<[Coords](#coords) constructor params\>]]*, options?: *\<Polygon Options\>*)| Instantiates a Polygon object given a geographical points and optionally an options object. |
+
+### Methods
+
+| Method | Returns | Description |
+| ------ | ------- | ----------- |
+|getUid()|*\<string\>*||
+|setCoords(coords: *[[\<Coords constructor params\>]]*)|*\<Promise\<Polygon\>\>*||
+|getCoords()|*[[\<Coords\>]]*||
+|getBounds()|*\<Bounds\>*||
+|addTo(map: *\<Map\>*)|*\<Polygon\>*||
+|remove()|*\<Polygon\>*||
+|getMap()|*\<Map\>*||
+|onMap()|*\<boolean\>*||
+|clone()|*\<Polygon\>*||
+|setEditable(value: *\<boolean\>*)|*\<Promise\<Polygon\>\>*||
+|setData(value: *\<object\>*)|*\<Promise\<Polygon\>\>*||
+|getData()|*\<object\>*||
+|setStyle(style: *\<Polygon style options\>*):|*\<Promise<Polygon>\>*||
+|setPreset(value: *\<string\>*):|*\<Promise\<Polygon\>\>*||
+|setDrawing(value: *\<boolean\>*):|*\<Promise\<Polygon\>\>*||
 
 ---
 
