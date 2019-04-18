@@ -11,7 +11,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// @TODO ymaps @types interface
 var Api =
 /*#__PURE__*/
 function () {
@@ -28,13 +27,13 @@ function () {
     value: function load() {
       var script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
+      script.src = 'https://maps.googleapis.com/maps/api/js';
       document.head.appendChild(script);
     }
   }, {
-    key: "ymaps",
+    key: "google",
     get: function get() {
-      return window.ymaps;
+      return window.google;
     }
   }]);
 

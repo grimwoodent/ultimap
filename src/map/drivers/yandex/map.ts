@@ -6,7 +6,7 @@ import { EventHandlerFn, IEventHandlerFnMap } from '../../events';
 
 export class YandexMapStrategy implements IMapStrategy {
     /**
-     * Произвести загрузку карты в элемент
+     * Load map to element
      * @param {HTMLElement} element
      * @param {ICreateMapStrategyOptions} options
      * @return {Promise<any>}
@@ -36,12 +36,12 @@ export class YandexMapStrategy implements IMapStrategy {
                 resolve(instance);
             }, (message?: string) => {
                 reject(message);
-            })
+            });
         });
     }
 
     /**
-     * Уничтожить карту
+     * Destroy map instance
      *
      * @param {Map} map
      *

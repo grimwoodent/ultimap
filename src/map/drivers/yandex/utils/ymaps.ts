@@ -10,9 +10,13 @@ export interface IYMaps {
 }
 
 export class Api {
+    /**
+     * Doesnt used
+     */
     public static load() {
         const script = document.createElement('script');
 
+        script.type = 'text/javascript';
         script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
 
         document.head.appendChild(script);

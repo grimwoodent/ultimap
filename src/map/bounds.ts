@@ -5,6 +5,7 @@ export interface IBounds {
     toArray(): [[number, number], [number, number]];
     toPoint(): IPoint[];
     toRectangle(closed?: boolean): Array<[number, number]>;
+    getCenter(): Coords;
 }
 
 export class Bounds implements IBounds {
@@ -53,5 +54,9 @@ export class Bounds implements IBounds {
         }
 
         return rectangle as Array<[number, number]>;
+    }
+
+    public getCenter(): Coords {
+        return new Coords((this.corner1.lat + this.corner2.lat) / 2, (this.corner1.lng + this.corner2.lng) / 2);
     }
 }

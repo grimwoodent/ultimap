@@ -17,7 +17,7 @@ export class Icon {
             this.size = src.size;
             this.offset = src.offset;
         } else {
-            this.src = src;
+            this.src = src as string;
             this.size = size;
             this.offset = offset;
         }

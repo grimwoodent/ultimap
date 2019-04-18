@@ -69,6 +69,11 @@ function () {
 
       return rectangle;
     }
+  }, {
+    key: "getCenter",
+    value: function getCenter() {
+      return new _coords.Coords((this.corner1.lat + this.corner2.lat) / 2, (this.corner1.lng + this.corner2.lng) / 2);
+    }
   }]);
 
   return Bounds;

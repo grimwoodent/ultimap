@@ -23,4 +23,15 @@ $(() => {
     ymap.load().then((map) => {
         console.log('YMaps Map loaded', map);
     });
+
+    const gmap = geo.byStrategy(new Strategy.Google())
+        .map.create($('#gmap_holder').get(0), {
+            center: [57.767131, 40.928349],
+            zoom: 16,
+        });
+
+    console.log('Google Map created', ymap);
+    gmap.load().then((map) => {
+        console.log('Google Map loaded', map);
+    });
 });

@@ -28,7 +28,7 @@ function () {
     key: "load",
 
     /**
-     * Произвести загрузку карты в элемент
+     * Load map to element
      * @param {HTMLElement} element
      * @param {ICreateMapStrategyOptions} options
      * @return {Promise<any>}
@@ -54,7 +54,7 @@ function () {
       });
     }
     /**
-     * Уничтожить карту
+     * Destroy map instance
      *
      * @param {Map} map
      *

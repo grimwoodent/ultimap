@@ -66,13 +66,13 @@ Object.defineProperty(exports, "Polygon", {
 Object.defineProperty(exports, "IMap", {
   enumerable: true,
   get: function get() {
-    return _index3.IMap;
+    return _index.IMap;
   }
 });
 Object.defineProperty(exports, "Map", {
   enumerable: true,
   get: function get() {
-    return _index3.Map;
+    return _index.Map;
   }
 });
 Object.defineProperty(exports, "IIcon", {
@@ -133,15 +133,11 @@ var _polygonCoords = require("./map/polygon-coords");
 
 var _bounds = require("./map/bounds");
 
-var _index = require("./map/drivers/leaflet/index");
-
-var _index2 = require("./map/drivers/yandex/index");
-
 var _marker = require("./map/marker");
 
 var _polygon = require("./map/polygon");
 
-var _index3 = require("./map/index");
+var _index = require("./map/index");
 
 var _icon = require("./map/icon");
 
@@ -151,9 +147,16 @@ var _geoEvent = require("./map/geo-event");
 
 var _domEvent = require("./map/dom-event");
 
+var _index2 = require("./map/drivers/leaflet/index");
+
+var _index3 = require("./map/drivers/yandex/index");
+
+var _index4 = require("./map/drivers/google/index");
+
 var Strategy = {
-  Leaflet: _index.LeafletGeoStrategy,
-  Yandex: _index2.YandexGeoStrategy
+  Leaflet: _index2.LeafletGeoStrategy,
+  Yandex: _index3.YandexGeoStrategy,
+  Google: _index4.GoogleGeoStrategy
 };
 exports.Strategy = Strategy;
 var geo = new _geo.Geo();
