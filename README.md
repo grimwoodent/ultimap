@@ -24,6 +24,7 @@ Universal api for different maps.
 - [Geo](#geo)
 - [Map](#map)
 - [Marker](#marker)
+- [Polygon](#polygon)
 - [Coords](#coords)
 - [Bounds](#bounds)
 - [PolygonCoords](#polygoncoords)
