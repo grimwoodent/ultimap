@@ -27703,7 +27703,7 @@ function () {
   }, {
     key: "destroy",
     value: function destroy(map) {
-      return null;
+      throw new Error('Google maps cant be destroyed. https://issuetracker.google.com/issues/35821412#comment32');
     }
   }, {
     key: "setCenter",
@@ -30845,38 +30845,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+class Page {
+    constructor() {
+        this.osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet())
+            .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 16,
+            });
+        console.log('OSM Map created', this.osm);
+
+        this.ymap = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex())
+            .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 16,
+            });
+        console.log('YMaps Map created', this.ymap);
+
+        // this.gmap = geo.byStrategy(new Strategy.Google())
+        //     .map.create($('#gmap_holder').get(0), {
+        //         center: [57.767131, 40.928349],
+        //         zoom: 16,
+        //     });
+        // console.log('Google Map created', this.gmap);
+    }
+
+    createMaps() {
+        this.osm.load().then((map) => {
+            console.log('OSM Map loaded', map);
+        });
+        this.ymap.load().then((map) => {
+            console.log('YMaps Map loaded', map);
+        });
+        // this.gmap.load().then((map) => {
+        //     console.log('Google Map loaded', map);
+        // });
+    }
+
+    destroyMaps() {
+        this.osm.destroy();
+        this.ymap.destroy();
+        // this.gmap.destroy();
+    }
+}
+
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    const osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet())
-        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-            center: [57.767131, 40.928349],
-            zoom: 16,
-        });
+    const page = new Page();
 
-    console.log('OSM Map created', osm);
-    osm.load().then((map) => {
-        console.log('OSM Map loaded', map);
+    page.createMaps();
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#btn_create").on('click', () => {
+        page.createMaps();
     });
-
-    const ymap = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex())
-        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
-            center: [57.767131, 40.928349],
-            zoom: 16,
-        });
-
-    console.log('YMaps Map created', ymap);
-    ymap.load().then((map) => {
-        console.log('YMaps Map loaded', map);
-    });
-
-    const gmap = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Google())
-        .map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#gmap_holder').get(0), {
-            center: [57.767131, 40.928349],
-            zoom: 16,
-        });
-
-    console.log('Google Map created', ymap);
-    gmap.load().then((map) => {
-        console.log('Google Map loaded', map);
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#btn_destroy").on('click', () => {
+        page.destroyMaps();
     });
 });
 

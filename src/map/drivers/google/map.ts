@@ -44,7 +44,7 @@ export class GoogleMapStrategy implements IMapStrategy {
      * @return {Promise<IMapStrategy>}
      */
     public destroy(map: any): Promise<IMapStrategy> {
-        return null;
+        throw new Error('Google maps cant be destroyed. https://issuetracker.google.com/issues/35821412#comment32');
     }
 
     public setCenter(map: any, value: Coords): Promise<IMapStrategy> {

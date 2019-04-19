@@ -56,7 +56,7 @@ function () {
   }, {
     key: "destroy",
     value: function destroy(map) {
-      return null;
+      throw new Error('Google maps cant be destroyed. https://issuetracker.google.com/issues/35821412#comment32');
     }
   }, {
     key: "setCenter",
