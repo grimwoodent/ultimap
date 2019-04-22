@@ -30845,47 +30845,106 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
+const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
+const coords = [[
+    [57.769131, 40.93534],
+    [57.770131, 40.93434],
+    [57.767131, 40.94234],
+    [57.764131, 40.93434],
+    [57.765131, 40.93534],
+    [57.765131, 40.91834],
+    [57.767131, 40.92534],
+    [57.769131, 40.91834],
+]];
+const style = {
+    fillColor: '#df362a',
+    fillOpacity: 0.33,
+    strokeColor: '#df362a',
+    strokeOpacity: 0.5,
+    strokeWidth: 2,
+};
+
+class Page {
+    constructor() {
+        this.osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 14,
+            });
+        console.log('OSM Map created', this.osm);
+
+        this.ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 14,
+            });
+        console.log('YMaps Map created', this.ymap);
+    }
+
+    simpleCreateMaps() {
+        this.destroyPolygons();
+        this.osm.load().then((map) => {
+            console.log('OSM Map loaded', map);
+            this.osmPolygon = osmGeo.polygon.create(coords,  Object.assign({}, style)).addTo(map);
+        });
+        this.ymap.load().then((map) => {
+            console.log('YMaps Map loaded', map);
+            this.ymapsPolygon = ymapGeo.polygon.create(coords, Object.assign({}, style)).addTo(map);
+        });
+    }
+
+    createByConcaveHullCreateMaps() {
+        this.destroyPolygons();
+        this.osm.load().then((map) => {
+            console.log('OSM Map loaded', map);
+            this.osmPolygon = osmGeo.polygon.create([__WEBPACK_IMPORTED_MODULE_1_ultimap__["PolygonCoords"].createByConcaveHull(coords[0]).toArray()],  Object.assign({}, style)).addTo(map);
+        });
+        this.ymap.load().then((map) => {
+            console.log('YMaps Map loaded', map);
+            this.ymapsPolygon = ymapGeo.polygon.create([__WEBPACK_IMPORTED_MODULE_1_ultimap__["PolygonCoords"].createByConcaveHull(coords[0]).toArray()], Object.assign({}, style)).addTo(map);
+        });
+    }
+
+    createByConvexHullCreateMaps() {
+        this.destroyPolygons();
+        this.osm.load().then((map) => {
+            console.log('OSM Map loaded', map);
+            this.osmPolygon = osmGeo.polygon.create([__WEBPACK_IMPORTED_MODULE_1_ultimap__["PolygonCoords"].createByConvexHull(coords[0]).toArray()],  Object.assign({}, style)).addTo(map);
+        });
+        this.ymap.load().then((map) => {
+            console.log('YMaps Map loaded', map);
+            this.ymapsPolygon = ymapGeo.polygon.create([__WEBPACK_IMPORTED_MODULE_1_ultimap__["PolygonCoords"].createByConvexHull(coords[0]).toArray()], Object.assign({}, style)).addTo(map);
+        });
+    }
+
+    destroyPolygons() {
+        if (this.osmPolygon) {
+            this.osmPolygon.remove();
+            this.osmPolygon = null;
+        }
+
+        if (this.ymapsPolygon) {
+            this.ymapsPolygon.remove();
+            this.ymapsPolygon = null;
+        }
+    }
+}
+
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    const p1 = { lat : 57.769131, lng: 40.93534 };
-    const p2 = { lat : 57.765131, lng: 40.91834 };
-    const coords = [[
-        [p1.lat, p1.lng],
-        [p2.lat, p1.lng],
-        [p2.lat, p2.lng],
-        [p1.lat, p2.lng],
-    ]];
-    const style = {
-        fillColor: '#df362a',
-        fillOpacity: 0.33,
-        strokeColor: '#df362a',
-        strokeOpacity: 0.5,
-        strokeWidth: 2,
-    };
+    const page = new Page();
 
-    const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
-    const osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 14,
+    page.simpleCreateMaps();
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#simple_create").on('click', () => {
+        page.simpleCreateMaps();
     });
-
-    console.log('OSM Map created', osm);
-    osm.load().then((map) => {
-        console.log('OSM Map loaded', map);
-
-        osmGeo.polygon.create(coords,  Object.assign({}, style)).addTo(map);
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#concave_hull_create").on('click', () => {
+        page.createByConcaveHullCreateMaps();
     });
-
-    const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
-    const ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 14,
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#convex_hull_create").on('click', () => {
+        page.createByConvexHullCreateMaps();
     });
-
-    console.log('YMaps Map created', ymap);
-    ymap.load().then((map) => {
-        console.log('YMaps Map loaded', map);
-
-        ymapGeo.polygon.create(coords, Object.assign({}, style)).addTo(map);
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#remove_polygons").on('click', () => {
+        page.destroyPolygons();
     });
 });
 

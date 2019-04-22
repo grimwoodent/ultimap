@@ -8,8 +8,11 @@
 - [Add map controls](https://grimwoodent.github.io/ultimap/examples/controls/)
 - [Map events](https://grimwoodent.github.io/ultimap/examples/events/)
 - [Markers](https://grimwoodent.github.io/ultimap/examples/marker/)
-- [Polygons](https://grimwoodent.github.io/ultimap/examples/polygon/)
 
-### OSM
+#### Polygon
+
+- [Create](https://grimwoodent.github.io/ultimap/examples/polygon/create/)
+
+##### OSM
 
 - [OSM change tile provider](https://grimwoodent.github.io/ultimap/examples/OSM/tile-provider/)

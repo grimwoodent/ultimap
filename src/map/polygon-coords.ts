@@ -15,7 +15,6 @@ export class PolygonCoords {
         return new (this as any)(convexhull(points));
     }
 
-
     public points: tPolygonCoords = null;
 
     constructor(points: tPolygonCoords) {

@@ -12,7 +12,10 @@ Universal api for different maps.
 - [Add map controls](https://grimwoodent.github.io/ultimap/examples/controls/)
 - [Map events](https://grimwoodent.github.io/ultimap/examples/events/)
 - [Markers](https://grimwoodent.github.io/ultimap/examples/marker/)
-- [Polygons](https://grimwoodent.github.io/ultimap/examples/polygon/)
+
+#### Polygon
+
+- [Create](https://grimwoodent.github.io/ultimap/examples/polygon/create/)
 
 ##### OSM
 

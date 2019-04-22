@@ -7,27 +7,45 @@
     <link rel="stylesheet" href="./dist/css/main.css">
 </head>
 <body>
+    <div class="page-header">
+        <div class="container">
+            <button id="simple_create" class="btn btn-default" type="button">Simple create</button>
+            <button id="concave_hull_create" class="btn btn-default" type="button">By Concave Hull</button>
+            <button id="convex_hull_create" class="btn btn-default" type="button">By Convex Hull</button>
+            <button id="remove_polygons" class="btn btn-default" type="button">Remove</button>
+        </div>
+    </div>
     <div class="container">
-        <div class="panel panel-default">
+        <div class="panel panel-default" style="padding: 20px">
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col-xs-6">
                     <div id="osm_holder" style="width: 100%; height: 400px;"></div>
                 </div>
                 <div class="col-xs-6">
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo, Strategy, PolygonCoords } from 'ultimap';
 
 const osmGeo = geo.byStrategy(new Strategy.Leaflet());
 osmGeo.map.create(holder_element, {
     center: [57.767131, 40.928349],
     zoom: 14,
 }).load().then((map) => {
-    osmGeo.polygon.create([[
+    const coords = [[
         [57.769131, 40.93534],
+        [57.770131, 40.93434],
+        [57.767131, 40.94234],
+        [57.764131, 40.93434],
         [57.765131, 40.93534],
         [57.765131, 40.91834],
+        [57.767131, 40.92534],
         [57.769131, 40.91834],
-    ]], {}).addTo(map);
+    ]];
+
+    osmGeo.polygon.create(coords, {}).addTo(map);
+    // or
+    osmGeo.polygon.create([PolygonCoords.createByConcaveHull(coords[0]).toArray()], {}).addTo(map);
+    // or
+    osmGeo.polygon.create([PolygonCoords.createByConvexHull(coords[0]).toArray()], {}).addTo(map);
 });
                     </pre>
                 </div>
@@ -39,19 +57,29 @@ osmGeo.map.create(holder_element, {
                 </div>
                 <div class="col-xs-6">
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo, Strategy, PolygonCoords } from 'ultimap';
 
 const ymapGeo = geo.byStrategy(new Strategy.Yandex());
 ymapGeo.map.byStrategy(new Strategy.Yandex()).create(holder_element, {
     center: [57.767131, 40.928349],
     zoom: 14,
 }).load().then((map) => {
-    ymapGeo.polygon.create([[
+   const coords = [[
         [57.769131, 40.93534],
+        [57.770131, 40.93434],
+        [57.767131, 40.94234],
+        [57.764131, 40.93434],
         [57.765131, 40.93534],
         [57.765131, 40.91834],
+        [57.767131, 40.92534],
         [57.769131, 40.91834],
-    ]], {}).addTo(map);
+    ]];
+
+    ymapGeo.polygon.create(coords, {}).addTo(map);
+    // or
+    ymapGeo.polygon.create([PolygonCoords.createByConcaveHull(coords[0]).toArray()], {}).addTo(map);
+    // or
+    ymapGeo.polygon.create([PolygonCoords.createByConvexHull(coords[0]).toArray()], {}).addTo(map);
 });
                     </pre>
                 </div>
