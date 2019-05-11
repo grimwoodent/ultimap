@@ -1,6 +1,6 @@
 {
   "name": "ultimap",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Universal map api",
   "main": "dist/index.js",
   "files": [
