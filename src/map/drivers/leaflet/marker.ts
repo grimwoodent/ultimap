@@ -45,7 +45,7 @@ export class LeafletMarkerStrategy implements IMarkerStrategy {
         // (geoobject as any).removeFrom(map.getInstance());
 
         // tslint:disable-next-line:
-        geoobject.removeFrom(map.getInstance());
+        (geoobject as any).removeFrom(map.getInstance());
 
         return this;
     }
@@ -59,7 +59,7 @@ export class LeafletMarkerStrategy implements IMarkerStrategy {
      * @return {IMarkerStrategy}
      */
     public setCoords(geoobject: LMarker, value: Coords): IMarkerStrategy {
-        geoobject.setLatLng(value.toArray());
+        (geoobject as any).setLatLng(value.toArray());
 
         return this;
     }

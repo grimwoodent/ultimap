@@ -83,6 +83,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public setCoords(geoObject: YPolygon, value: PolygonCoords): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return this;
     }
@@ -96,6 +97,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public getCoords(geoObject: YPolygon): PolygonCoords {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return null;
     }
@@ -109,6 +111,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public getBounds(geoobject: YPolygon): Bounds {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return null;
     }
@@ -123,6 +126,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public setStyle(geoobject: YPolygon, style: ICreatePolygonStyle): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return this;
     }
@@ -137,6 +141,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public setPreset(geoobject: YPolygon, preset: string): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return this;
     }
@@ -151,6 +156,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public setEditable(geoobject: YPolygon, value: boolean): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return this;
     }
@@ -165,6 +171,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public setDrawing(geoobject: YPolygon, value: boolean): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return this;
     }
@@ -181,6 +188,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public on(geoObject: YPolygon, type: string | IEventHandlerFnMap, fn?: EventHandlerFn, context?: any): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return this;
     }
@@ -197,6 +205,7 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      */
     public off(geoObject: YPolygon, type: string, fn?: EventHandlerFn, context?: any): IPolygonStrategy {
         // @TODO implements method
+        throw new Error('Method not implemented');
 
         return null;
     }

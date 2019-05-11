@@ -5,9 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.PolygonCoords = void 0;
 
+var _concaveman = _interopRequireDefault(require("concaveman"));
+
+var _quickHull2d = _interopRequireDefault(require("quick-hull-2d"));
+
+var _simplifyJs = _interopRequireDefault(require("simplify-js"));
+
 var _bounds = require("./bounds");
 
 var _polygonCoords = require("./utils/polygon-coords");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -17,22 +25,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var concavehull = require('concaveman');
-
-var convexhull = require('quick-hull-2d');
-
 var PolygonCoords =
 /*#__PURE__*/
 function () {
   _createClass(PolygonCoords, null, [{
     key: "createByConcaveHull",
     value: function createByConcaveHull(points) {
-      return new this(concavehull(points));
+      return new this((0, _concaveman.default)(points));
     }
   }, {
     key: "createByConvexHull",
     value: function createByConvexHull(points) {
-      return new this(convexhull(points));
+      return new this((0, _quickHull2d.default)(points));
     }
   }]);
 
@@ -46,8 +50,6 @@ function () {
   /**
    * Привести в массив
    *
-   * @param {boolean} normalize Нормализировать объект к виду вложенности 3
-   *
    * @return {tPolygonCoords}
    */
 
@@ -55,13 +57,18 @@ function () {
   _createClass(PolygonCoords, [{
     key: "toArray",
     value: function toArray() {
-      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (normalize) {
-        return _polygonCoords.UtilsPolygonCoords.normalize(this.points);
-      }
-
       return this.points;
+    }
+    /**
+     * Нормализировать объект к виду вложенности 3
+     *
+     * @return {tPolygonCoords | tPolygonCoords[]}
+     */
+
+  }, {
+    key: "toNormalizeArray",
+    value: function toNormalizeArray() {
+      return _polygonCoords.UtilsPolygonCoords.normalize(this.points);
     }
   }, {
     key: "toJson",
@@ -78,7 +85,7 @@ function () {
         return JSON.stringify(this.points || []);
       }
 
-      return JSON.stringify(this.toArray(normalize));
+      return JSON.stringify(normalize ? this.toNormalizeArray() : this.toArray());
     }
   }, {
     key: "getCount",
@@ -106,6 +113,28 @@ function () {
       });
 
       return new _bounds.Bounds([points.left, points.top], [points.right, points.bottom]);
+    }
+    /**
+     * Reduce number of point for Polygon
+     * @param {number} tolerance
+     * @param {boolean} highQuality
+     */
+
+  }, {
+    key: "toSimplified",
+    value: function toSimplified(tolerance, highQuality) {
+      var rowPoints = this.toNormalizeArray()[0];
+      rowPoints.pop();
+      var points = rowPoints.map(function (point) {
+        return {
+          x: point[0],
+          y: point[1]
+        };
+      });
+      var simplified = (0, _simplifyJs.default)(points, tolerance, highQuality);
+      return new this.constructor([simplified.map(function (point) {
+        return [point.x, point.y];
+      })]);
     }
   }]);
 

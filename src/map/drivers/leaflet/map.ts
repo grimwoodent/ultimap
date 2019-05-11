@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import { LatLng, Map, Bounds as LBounds, MapOptions } from 'leaflet';
+import { LatLng, Map, Bounds as LBounds } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { ICreateMapStrategyOptions, IMapStrategy } from '../interface/map';
 import { Coords } from '../../coords';
@@ -27,7 +27,7 @@ export class LeafletMapStrategy implements IMapStrategy {
      */
     public load(element: HTMLElement, options: ICreateMapStrategyOptions): Promise<any> {
         return new Promise((resolve: (result: any) => void) => {
-            const instance = L.map(element, { editable: true } as MapOptions).on('load', () => {
+            const instance = L.map(element, { editable: true } as any).on('load', () => {
                 resolve(instance);
             });
 
@@ -40,7 +40,7 @@ export class LeafletMapStrategy implements IMapStrategy {
                 ? options.center.toArray()
                 : null;
             const boundsCoords = options.bounds
-                ? (new LBounds(options.bounds.toArray())).getCenter()
+                ? (new LBounds(options.bounds.toArray() as any)).getCenter()
                 : null;
             const boundsCenter = boundsCoords
                 ? [boundsCoords.x, boundsCoords.y] as [number, number]
@@ -135,7 +135,7 @@ export class LeafletMapStrategy implements IMapStrategy {
             // @TODO Проверка на то что можно остановить анимацию (при еще не загруженной карте все ломается)
             // map.stop();
             // @TODO listen event for complete change bounds
-            map.fitBounds(value.toArray());
+            map.fitBounds(value.toArray() as any);
 
             resolve(this);
         });
@@ -208,7 +208,7 @@ export class LeafletMapStrategy implements IMapStrategy {
      */
     public removeControl(map: L.Map, control: L.Control): Promise<IMapStrategy> {
         return new Promise((resolve: (result: IMapStrategy) => void) => {
-            control.remove();
+            (control as any).remove();
 
             resolve(this);
         });

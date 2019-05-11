@@ -296,9 +296,11 @@ ymapGeo.polygon.create(coords.toArray(), {}).addTo(map);
 
 | Method | Returns | Description |
 | ------ | ------- | ----------- |
-|toArray(normalize: *\<boolean\>*)| *\<array\>* | |
+|toArray()| *\<array\>* | |
+|toNormalizeArray()| *\<\[\[\[number, number\]\]\]\\>* | |
 |toJson(normalize: *\<boolean\>*)| *\<string\>* | |
 |getCount()| *\<number\>* | |
 |getBounds()| *\<[Bounds](#bounds)\>* | |
+|toSimplified()| *\<PolygonCoords\>* | |
 
 ---

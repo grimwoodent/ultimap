@@ -67,7 +67,6 @@ function () {
     key: "removeFromMap",
     value: function removeFromMap(geoobject, map) {
       // (geoobject as any).removeFrom(map.getInstance());
-      // tslint:disable-next-line:
       geoobject.removeFrom(map.getInstance());
       return this;
     }

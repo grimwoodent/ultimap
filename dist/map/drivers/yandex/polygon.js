@@ -100,6 +100,7 @@ function () {
     key: "setCoords",
     value: function setCoords(geoObject, value) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -114,6 +115,7 @@ function () {
     key: "getCoords",
     value: function getCoords(geoObject) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return null;
     }
     /**
@@ -128,6 +130,7 @@ function () {
     key: "getBounds",
     value: function getBounds(geoobject) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return null;
     }
     /**
@@ -143,6 +146,7 @@ function () {
     key: "setStyle",
     value: function setStyle(geoobject, style) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -158,6 +162,7 @@ function () {
     key: "setPreset",
     value: function setPreset(geoobject, preset) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -173,6 +178,7 @@ function () {
     key: "setEditable",
     value: function setEditable(geoobject, value) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -188,6 +194,7 @@ function () {
     key: "setDrawing",
     value: function setDrawing(geoobject, value) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -205,6 +212,7 @@ function () {
     key: "on",
     value: function on(geoObject, type, fn, context) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -222,6 +230,7 @@ function () {
     key: "off",
     value: function off(geoObject, type, fn, context) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return null;
     }
   }]);

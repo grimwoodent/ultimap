@@ -1,5 +1,6 @@
-const concavehull = require('concaveman');
-const convexhull = require('quick-hull-2d');
+import concavehull from 'concaveman';
+import convexhull from 'quick-hull-2d';
+import simplifyJS from 'simplify-js';
 import { tSimpleCoords } from './coords';
 import { Bounds } from './bounds';
 import { UtilsPolygonCoords } from './utils/polygon-coords';
@@ -24,16 +25,19 @@ export class PolygonCoords {
     /**
      * Привести в массив
      *
-     * @param {boolean} normalize Нормализировать объект к виду вложенности 3
-     *
      * @return {tPolygonCoords}
      */
-    public toArray(normalize: boolean = false): tPolygonCoords {
-        if (normalize) {
-            return UtilsPolygonCoords.normalize(this.points) as any;
-        }
-
+    public toArray(): tPolygonCoords {
         return this.points as tPolygonCoords;
+    }
+
+    /**
+     * Нормализировать объект к виду вложенности 3
+     *
+     * @return {tPolygonCoords | tPolygonCoords[]}
+     */
+    public toNormalizeArray(): tPolygonCoords[] {
+        return UtilsPolygonCoords.normalize(this.points) as tPolygonCoords[];
     }
 
     public toJson(normalize: boolean = false): string {
@@ -46,7 +50,7 @@ export class PolygonCoords {
             return JSON.stringify(this.points || []);
         }
 
-        return JSON.stringify(this.toArray(normalize));
+        return JSON.stringify(normalize ? this.toNormalizeArray() : this.toArray());
     }
 
     public getCount(): number {
@@ -87,5 +91,24 @@ export class PolygonCoords {
         });
 
         return new Bounds([points.left, points.top], [points.right, points.bottom]);
+    }
+
+    /**
+     * Reduce number of point for Polygon
+     * @param {number} tolerance
+     * @param {boolean} highQuality
+     */
+    public toSimplified(tolerance?: number, highQuality?: boolean) {
+        const rowPoints = this.toNormalizeArray()[0];
+
+        rowPoints.pop();
+
+        const points = rowPoints.map((point) => ({
+            x: point[0],
+            y: point[1],
+        }));
+        const simplified = simplifyJS(points, tolerance, highQuality);
+
+        return new (this.constructor as any)([simplified.map((point) => ([point.x, point.y]))]);
     }
 }

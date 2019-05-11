@@ -32,7 +32,7 @@ function () {
     key: "getControlInstanceConstructor",
     value: function getControlInstanceConstructor() {
       return new Promise(function (resolve, reject) {
-        var ControlConstructor = function ControlConstructor(props) {
+        var ControlConstructor = function ControlConstructorFn(props) {
           var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
           this.props = props || {};
           this.callbacks = new _grim.Callbacks(events);

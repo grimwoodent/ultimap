@@ -114,6 +114,7 @@ module.exports = [
     { name: 'basic', path: 'basic', entry: '/js/index.js' },
     { name: 'marker', path: 'marker', entry: '/js/index.js' },
     { name: 'polygon-create', path: 'polygon/create', entry: '/js/index.js' },
+    { name: 'polygon-simplify', path: 'polygon/simplify', entry: '/js/index.js' },
     { name: 'events', path: 'events', entry: '/js/index.js' },
     { name: 'controls', path: 'controls', entry: '/js/index.js' },
     { name: 'osm-tile-provider', path: 'OSM/tile-provider', entry: '/js/index.js' },

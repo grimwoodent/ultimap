@@ -82,7 +82,7 @@ describe('Polygon', () => {
                     it(`Test №${i + 1}`, () => {
                         const coords = geo.polygon.create(test.coords, {}).getCoords(false);
 
-                        expect((coords.toArray(true))).to.be.deep.equals(test.result);
+                        expect((coords.toNormalizeArray())).to.be.deep.equals(test.result);
                     });
                 });
             });

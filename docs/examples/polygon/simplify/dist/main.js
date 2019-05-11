@@ -31325,52 +31325,117 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    const osm = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet({
-        tileLayerProviderLink: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        copyrights: [
-            '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
-        ],
-    })).map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-            center: [57.767131, 40.928349],
-            zoom: 12,
+const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
+const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
+const coords = [[
+    [57.770131, 40.93134],
+    [57.772131, 40.93144],
+    [57.772231, 40.93154],
+    [57.773231, 40.93164],
+    [57.771031, 40.93234],
+    [57.771231, 40.93334],
+    [57.773131, 40.93434],
+    [57.773131, 40.93534],
+    [57.773131, 40.93634],
+    [57.771531, 40.93734],
+    [57.771231, 40.93834],
+    [57.770131, 40.93934],
+]];
+const style = {
+    fillColor: '#df362a',
+    fillOpacity: 0.33,
+    strokeColor: '#df362a',
+    strokeOpacity: 0.5,
+    strokeWidth: 2,
+};
+const simpifiedStyle = {
+    fillColor: '#0ddf00',
+    fillOpacity: 0.33,
+    strokeColor: '#0ddf00',
+    strokeOpacity: 0.5,
+    strokeWidth: 2,
+};
+
+class Page {
+    constructor() {
+        this.osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 14,
+            });
+        console.log('OSM Map created', this.osm);
+
+        this.ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 14,
+            });
+        console.log('YMaps Map created', this.ymap);
+    }
+
+    simpleCreateMaps() {
+        this.destroyPolygons();
+        this.osm.load().then((map) => {
+            console.log('OSM Map loaded', map);
+            this.osmPolygon = osmGeo.polygon.create(coords,  Object.assign({}, style)).addTo(map);
         });
+        this.ymap.load().then((map) => {
+            console.log('YMaps Map loaded', map);
+            this.ymapsPolygon = ymapGeo.polygon.create(coords, Object.assign({}, style)).addTo(map);
+        });
+    }
 
-    console.log('OSM Map created', osm);
-    osm.load().then((map) => {
-        console.log('OSM Map loaded', map);
+    simplification() {
+        if (this.osmPolygon) {
+            this.osm.load().then((map) => {
+                console.log('OSM Map loaded', map);
+                const newCoords = this.osmPolygon.getCoords().toSimplified(0.001).toArray();
+
+                this.osmSimplfiedPolygon = osmGeo.polygon.create(newCoords, Object.assign({}, simpifiedStyle)).addTo(map);
+            });
+        }
+
+        if (this.ymapsPolygon) {
+            // this.ymap.load().then((map) => {
+            //     console.log('YMaps Map loaded', map);
+            //     const newCoords = this.ymapsPolygon.getCoords().toSimplified(0.001).toArray();
+            //
+            //     this.ymapsSimplfiedPolygon = osmGeo.polygon.create(newCoords, Object.assign({}, simpifiedStyle)).addTo(map);
+            // });
+        }
+    }
+
+    destroyPolygons() {
+        if (this.osmPolygon) {
+            this.osmPolygon.remove();
+            this.osmPolygon = null;
+        }
+
+        if (this.osmSimplfiedPolygon) {
+            this.osmSimplfiedPolygon.remove();
+            this.osmSimplfiedPolygon = null;
+        }
+
+        if (this.ymapsPolygon) {
+            this.ymapsPolygon.remove();
+            this.ymapsPolygon = null;
+        }
+
+        if (this.ymapsSimplfiedPolygon) {
+            this.ymapsSimplfiedPolygon.remove();
+            this.ymapsSimplfiedPolygon = null;
+        }
+    }
+}
+
+__WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
+    const page = new Page();
+
+    page.simpleCreateMaps();
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#create").on('click', () => {
+        page.simpleCreateMaps();
     });
-
-    const osmWikimedia = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet({
-        tileLayerProviderLink: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
-        copyrights: [
-            '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a>',
-            '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
-        ],
-    })).map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_wikimedia_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 12,
-    });
-
-    console.log('OSM Wikimedia Map created', osm);
-    osmWikimedia.load().then((map) => {
-        console.log('OSM Wikimedia Map loaded', map);
-    });
-
-    const osmBBBike = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet({
-        tileLayerProviderLink: 'http://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',
-        copyrights: [
-            '<a href="https://bbbike.org/">BBBike</a>',
-            '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
-        ],
-    })).map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_bbbike_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 12,
-    });
-
-    console.log('OSM BBBike Map created', osm);
-    osmBBBike.load().then((map) => {
-        console.log('OSM BBBike Map loaded', map);
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#simplification").on('click', () => {
+        page.simplification();
     });
 });
 

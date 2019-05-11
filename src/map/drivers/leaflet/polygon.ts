@@ -49,19 +49,19 @@ export class LeafletPolygonStrategy implements IPolygonStrategy {
     }
 
     public addToMap(geoobject: LPolygon, map: IMap): IPolygonStrategy {
-        geoobject.addTo(map.getInstance());
+        (geoobject as any).addTo(map.getInstance());
 
         return this;
     }
 
     public removeFromMap(geoobject: LPolygon, map: IMap): IPolygonStrategy {
-        geoobject.removeFrom(map.getInstance());
+        (geoobject as any).removeFrom(map.getInstance());
 
         return this;
     }
 
     public setCoords(geoobject: LPolygon, value: PolygonCoords): IPolygonStrategy {
-        geoobject.setLatLngs(value.toArray());
+        (geoobject as any).setLatLngs(value.toArray());
 
         return this;
     }

@@ -13,14 +13,17 @@ import { IAdaptedControlProps, PropsAdapter } from './props-adapter';
 export class LeafletMapControlStrategy implements IMapControlStrategy {
     public getControlInstanceConstructor(): Promise<TGetControlInstanceHandler> {
         return new Promise((resolve, reject) => {
-            const ControlConstructor = function ControlConstructor(props: IAdaptedControlProps, events: IMapControlEvents = {}) {
+            const ControlConstructor = function ControlConstructorFn(
+                    props: IAdaptedControlProps,
+                    events: IMapControlEvents = {},
+                ) {
                 this.props = props || {};
                 this.callbacks = new Callbacks(events as any);
-            }
+            };
 
             ControlConstructor.prototype.onAdd = function onAddMapControl(map: Map) {
                 try {
-                    const parentDomContainer = L.DomUtil.create('div');
+                    const parentDomContainer = (L.DomUtil as any).create('div');
                     const position = this.props.position;
 
                     if (position) {
@@ -33,7 +36,7 @@ export class LeafletMapControlStrategy implements IMapControlStrategy {
 
                     this.callbacks.trigger(MAP_CONTROL_EVENTS.ON_ADD, parentDomContainer);
 
-                    L.DomEvent.disableScrollPropagation(parentDomContainer);
+                    (L.DomEvent as any).disableScrollPropagation(parentDomContainer);
                     L.DomEvent.disableClickPropagation(parentDomContainer);
 
                     return parentDomContainer;
