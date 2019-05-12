@@ -33694,66 +33694,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
+const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
+const coords = [57.767131, 40.928349];
+const style = {
+    fillColor: '#df362a',
+    fillOpacity: 0.33,
+    strokeColor: '#df362a',
+    strokeOpacity: 0.5,
+    strokeWidth: 2,
+};
+
+class Page {
+    constructor() {
+        this.circles = { };
+        this.osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 14,
+            });
+        console.log('OSM Map created', this.osm);
+
+        this.ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
+                center: [57.767131, 40.928349],
+                zoom: 14,
+            });
+        console.log('YMaps Map created', this.ymap);
+    }
+
+    create() {
+        this.remove();
+        this.osm.load().then((map) => {
+            console.log('OSM Map loaded', map);
+            this.circles.osm = osmGeo.circle.create(coords,  Object.assign({ radius: 50 }, style)).addTo(map);
+        });
+        this.ymap.load().then((map) => {
+            console.log('YMaps Map loaded', map);
+            // this.circles.ymaps = ymapGeo.polygon.create(coords, { radius: 50 }).addTo(map);
+        });
+    }
+
+    remove() {
+        if (this.circles.osm) {
+            this.circles.osm.remove();
+            this.circles.osm = null;
+        }
+
+        if (this.circles.ymaps) {
+            this.circles.ymaps.remove();
+            this.circles.ymaps = null;
+        }
+    }
+}
+
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
-    // Open Street
-    const osmGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Leaflet());
-    const osm = osmGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#osm_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 16,
+    const page = new Page();
+
+    page.create();
+
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#create").on('click', () => {
+        page.create();
     });
-    let osmMarker;
-
-    console.log('OSM Map created', osm);
-    osm.load().then((map) => {
-        console.log('OSM Map loaded', map);
-
-        osmMarker = osmGeo.marker.create(map.getCenter(), {
-            icon: {
-                src: './image/map-marker-black.png',
-                size: [32, 32],
-                offset: [16, 32],
-            },
-        }).addTo(map);
-    });
-
-    // Yandex
-    const ymapGeo = __WEBPACK_IMPORTED_MODULE_1_ultimap__["geo"].byStrategy(new __WEBPACK_IMPORTED_MODULE_1_ultimap__["Strategy"].Yandex());
-    const ymap = ymapGeo.map.create(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#ymaps_holder').get(0), {
-        center: [57.767131, 40.928349],
-        zoom: 16,
-    });
-    let ymapsMarker;
-
-    console.log('YMaps Map created', ymap);
-    ymap.load().then((map) => {
-        console.log('YMaps Map loaded', map);
-
-        ymapsMarker = ymapGeo.marker.create(map.getCenter(), {
-            icon: {
-                src: './image/map-marker-black.png',
-                size: [32, 32],
-                offset: [16, 32],
-            },
-        }).addTo(map);
-    });
-
-    // Move to
-    const $moveToLat = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#input-move-to-lat');
-    const $moveToLng = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#input-move-to-lng');
-
-    __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#btn-move-to').on('click', () => {
-        const lat = $moveToLat.val() || 0;
-        const lng = $moveToLng.val() || 0;
-
-        if (osmMarker) {
-            osmMarker.setCoords([lat, lng]);
-            osm.setCenter([lat, lng]);
-        }
-
-        if (ymapsMarker) {
-            ymapsMarker.setCoords([lat, lng]);
-            ymap.setCenter([lat, lng]);
-        }
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#remove").on('click', () => {
+        page.remove();
     });
 });
 

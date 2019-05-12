@@ -2,6 +2,7 @@
 
 - [_] Yandex polygon methods
 - [_] Square buffer around point 
+- [_] Create circles
 
 **New examples**  
 

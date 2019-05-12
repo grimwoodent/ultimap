@@ -66,7 +66,6 @@ function () {
   }, {
     key: "removeFromMap",
     value: function removeFromMap(geoobject, map) {
-      // (geoobject as any).removeFrom(map.getInstance());
       geoobject.removeFrom(map.getInstance());
       return this;
     }

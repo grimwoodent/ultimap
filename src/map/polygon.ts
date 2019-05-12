@@ -11,11 +11,12 @@ interface IUpdatePolygonStyle {
     strokeOpacity?: number;
     strokeWidth?: number;
     preset?: string;
+}
+
+interface IUpdatePolygonProperties extends IUpdatePolygonStyle {
     editable?: boolean;
     data?: tExtraData;
 }
-
-interface IUpdatePolygonProperties extends IUpdatePolygonStyle {}
 
 export interface IPolygon extends IGeoObject<tPolygonCoords, IUpdatePolygonProperties> {
     setStyle(style: IUpdatePolygonStyle): Promise<IPolygon>;

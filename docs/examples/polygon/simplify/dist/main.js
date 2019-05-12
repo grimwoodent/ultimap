@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Coords = void 0;
 
-var _bounds = __webpack_require__(1);
+var _bounds = __webpack_require__(2);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -100,94 +100,6 @@ exports.Coords = Coords;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Bounds = void 0;
-
-var _coords = __webpack_require__(0);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Bounds =
-/*#__PURE__*/
-function () {
-  function Bounds(corner1, corner2) {
-    _classCallCheck(this, Bounds);
-
-    _defineProperty(this, "corner1", void 0);
-
-    _defineProperty(this, "corner2", void 0);
-
-    if (!corner2 && Array.isArray(corner1)) {
-      this.corner1 = new _coords.Coords(corner1[0]);
-      this.corner2 = new _coords.Coords(corner1[1]);
-    } else if (!corner1 || !corner2) {
-      throw new Error('Bounds parse corners coords error');
-    } else {
-      this.corner1 = corner1 instanceof _coords.Coords ? corner1 : new _coords.Coords(corner1);
-      this.corner2 = corner2 instanceof _coords.Coords ? corner2 : new _coords.Coords(corner2);
-    }
-  }
-
-  _createClass(Bounds, [{
-    key: "toLatLng",
-    value: function toLatLng() {
-      return [this.corner1.toLatLng(), this.corner2.toLatLng()];
-    }
-  }, {
-    key: "toArray",
-    value: function toArray() {
-      return [this.corner1.toArray(), this.corner2.toArray()];
-    }
-  }, {
-    key: "toPoint",
-    value: function toPoint() {
-      return [this.corner1.toPoint(), this.corner2.toPoint()];
-    }
-    /**
-     * Get bounds coords lake rectangle
-     * @param {boolean} closed
-     * @return {Array<[number , number]>}
-     */
-
-  }, {
-    key: "toRectangle",
-    value: function toRectangle() {
-      var closed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      var rectangle = [[this.corner1.lat, this.corner1.lng], [this.corner2.lat, this.corner1.lng], [this.corner2.lat, this.corner2.lng], [this.corner1.lat, this.corner2.lng]];
-
-      if (closed) {
-        rectangle.push([this.corner1.lat, this.corner1.lng]);
-      }
-
-      return rectangle;
-    }
-  }, {
-    key: "getCenter",
-    value: function getCenter() {
-      return new _coords.Coords((this.corner1.lat + this.corner2.lat) / 2, (this.corner1.lng + this.corner2.lng) / 2);
-    }
-  }]);
-
-  return Bounds;
-}();
-
-exports.Bounds = Bounds;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* @preserve
@@ -14213,6 +14125,94 @@ window.L = exports;
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Bounds = void 0;
+
+var _coords = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Bounds =
+/*#__PURE__*/
+function () {
+  function Bounds(corner1, corner2) {
+    _classCallCheck(this, Bounds);
+
+    _defineProperty(this, "corner1", void 0);
+
+    _defineProperty(this, "corner2", void 0);
+
+    if (!corner2 && Array.isArray(corner1)) {
+      this.corner1 = new _coords.Coords(corner1[0]);
+      this.corner2 = new _coords.Coords(corner1[1]);
+    } else if (!corner1 || !corner2) {
+      throw new Error('Bounds parse corners coords error');
+    } else {
+      this.corner1 = corner1 instanceof _coords.Coords ? corner1 : new _coords.Coords(corner1);
+      this.corner2 = corner2 instanceof _coords.Coords ? corner2 : new _coords.Coords(corner2);
+    }
+  }
+
+  _createClass(Bounds, [{
+    key: "toLatLng",
+    value: function toLatLng() {
+      return [this.corner1.toLatLng(), this.corner2.toLatLng()];
+    }
+  }, {
+    key: "toArray",
+    value: function toArray() {
+      return [this.corner1.toArray(), this.corner2.toArray()];
+    }
+  }, {
+    key: "toPoint",
+    value: function toPoint() {
+      return [this.corner1.toPoint(), this.corner2.toPoint()];
+    }
+    /**
+     * Get bounds coords lake rectangle
+     * @param {boolean} closed
+     * @return {Array<[number , number]>}
+     */
+
+  }, {
+    key: "toRectangle",
+    value: function toRectangle() {
+      var closed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var rectangle = [[this.corner1.lat, this.corner1.lng], [this.corner2.lat, this.corner1.lng], [this.corner2.lat, this.corner2.lng], [this.corner1.lat, this.corner2.lng]];
+
+      if (closed) {
+        rectangle.push([this.corner1.lat, this.corner1.lng]);
+      }
+
+      return rectangle;
+    }
+  }, {
+    key: "getCenter",
+    value: function getCenter() {
+      return new _coords.Coords((this.corner1.lat + this.corner2.lat) / 2, (this.corner1.lng + this.corner2.lng) / 2);
+    }
+  }]);
+
+  return Bounds;
+}();
+
+exports.Bounds = Bounds;
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14325,15 +14325,15 @@ Object.defineProperty(exports, "UID", {
 });
 exports.Collection = void 0;
 
-var _define = __webpack_require__(74);
+var _define = __webpack_require__(77);
 
-var _callbacks = __webpack_require__(69);
+var _callbacks = __webpack_require__(72);
 
-var _cookie = __webpack_require__(73);
+var _cookie = __webpack_require__(76);
 
-var _uid = _interopRequireDefault(__webpack_require__(63));
+var _uid = _interopRequireDefault(__webpack_require__(66));
 
-var Collection = _interopRequireWildcard(__webpack_require__(71));
+var Collection = _interopRequireWildcard(__webpack_require__(74));
 
 exports.Collection = Collection;
 
@@ -14351,1087 +14351,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Icon = void 0;
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Icon =
-/*#__PURE__*/
-function () {
-  function Icon(src, size, offset) {
-    _classCallCheck(this, Icon);
-
-    _defineProperty(this, "src", void 0);
-
-    _defineProperty(this, "size", void 0);
-
-    _defineProperty(this, "offset", void 0);
-
-    if (_typeof(src) === 'object') {
-      this.src = src.src;
-      this.size = src.size;
-      this.offset = src.offset;
-    } else {
-      this.src = src;
-      this.size = size;
-      this.offset = offset;
-    }
-
-    if (!this.src || !this.size) {
-      throw new Error('Empty icon');
-    }
-  }
-
-  _createClass(Icon, [{
-    key: "toObject",
-    value: function toObject() {
-      return {
-        src: this.src,
-        size: this.size,
-        offset: this.offset
-      };
-    }
-  }]);
-
-  return Icon;
-}();
-
-exports.Icon = Icon;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PolygonCoords = void 0;
-
-var _concaveman = _interopRequireDefault(__webpack_require__(66));
-
-var _quickHull2d = _interopRequireDefault(__webpack_require__(80));
-
-var _simplifyJs = _interopRequireDefault(__webpack_require__(86));
-
-var _bounds = __webpack_require__(1);
-
-var _polygonCoords = __webpack_require__(22);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var PolygonCoords =
-/*#__PURE__*/
-function () {
-  _createClass(PolygonCoords, null, [{
-    key: "createByConcaveHull",
-    value: function createByConcaveHull(points) {
-      return new this((0, _concaveman.default)(points));
-    }
-  }, {
-    key: "createByConvexHull",
-    value: function createByConvexHull(points) {
-      return new this((0, _quickHull2d.default)(points));
-    }
-  }]);
-
-  function PolygonCoords(points) {
-    _classCallCheck(this, PolygonCoords);
-
-    _defineProperty(this, "points", null);
-
-    this.points = _polygonCoords.UtilsPolygonCoords.toNumbers(points);
-  }
-  /**
-   * Привести в массив
-   *
-   * @return {tPolygonCoords}
-   */
-
-
-  _createClass(PolygonCoords, [{
-    key: "toArray",
-    value: function toArray() {
-      return this.points;
-    }
-    /**
-     * Нормализировать объект к виду вложенности 3
-     *
-     * @return {tPolygonCoords | tPolygonCoords[]}
-     */
-
-  }, {
-    key: "toNormalizeArray",
-    value: function toNormalizeArray() {
-      return _polygonCoords.UtilsPolygonCoords.normalize(this.points);
-    }
-  }, {
-    key: "toJson",
-    value: function toJson() {
-      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
-      if (!this.getCount()) {
-        console.error('Empty polygon coords');
-
-        if (normalize) {
-          return '[[[]]]';
-        }
-
-        return JSON.stringify(this.points || []);
-      }
-
-      return JSON.stringify(normalize ? this.toNormalizeArray() : this.toArray());
-    }
-  }, {
-    key: "getCount",
-    value: function getCount() {
-      return _polygonCoords.UtilsPolygonCoords.count(this.points);
-    }
-  }, {
-    key: "getBounds",
-    value: function getBounds() {
-      var points = {
-        left: null,
-        right: null,
-        bottom: null,
-        top: null
-      };
-
-      _polygonCoords.UtilsPolygonCoords.simplify(this.points).forEach(function (point) {
-        var coords = Array.isArray(point[0]) ? point[0] : point;
-        var lat = coords[0];
-        var lng = coords[1];
-        points.left = points.left === null || lat < points.left ? lat : points.left;
-        points.right = points.right === null || lat > points.right ? lat : points.right;
-        points.bottom = points.bottom === null || lng < points.bottom ? lng : points.bottom;
-        points.top = points.top === null || lng > points.top ? lng : points.top;
-      });
-
-      return new _bounds.Bounds([points.left, points.top], [points.right, points.bottom]);
-    }
-    /**
-     * Reduce number of point for Polygon
-     * @param {number} tolerance
-     * @param {boolean} highQuality
-     */
-
-  }, {
-    key: "toSimplified",
-    value: function toSimplified(tolerance, highQuality) {
-      var rowPoints = this.toNormalizeArray()[0];
-      rowPoints.pop();
-      var points = rowPoints.map(function (point) {
-        return {
-          x: point[0],
-          y: point[1]
-        };
-      });
-      var simplified = (0, _simplifyJs.default)(points, tolerance, highQuality);
-      return new this.constructor([simplified.map(function (point) {
-        return [point.x, point.y];
-      })]);
-    }
-  }]);
-
-  return PolygonCoords;
-}();
-
-exports.PolygonCoords = PolygonCoords;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var twoProduct = __webpack_require__(24)
-var robustSum = __webpack_require__(85)
-var robustScale = __webpack_require__(83)
-var robustSubtract = __webpack_require__(84)
-
-var NUM_EXPAND = 5
-
-var EPSILON     = 1.1102230246251565e-16
-var ERRBOUND3   = (3.0 + 16.0 * EPSILON) * EPSILON
-var ERRBOUND4   = (7.0 + 56.0 * EPSILON) * EPSILON
-
-function cofactor(m, c) {
-  var result = new Array(m.length-1)
-  for(var i=1; i<m.length; ++i) {
-    var r = result[i-1] = new Array(m.length-1)
-    for(var j=0,k=0; j<m.length; ++j) {
-      if(j === c) {
-        continue
-      }
-      r[k++] = m[i][j]
-    }
-  }
-  return result
-}
-
-function matrix(n) {
-  var result = new Array(n)
-  for(var i=0; i<n; ++i) {
-    result[i] = new Array(n)
-    for(var j=0; j<n; ++j) {
-      result[i][j] = ["m", j, "[", (n-i-1), "]"].join("")
-    }
-  }
-  return result
-}
-
-function sign(n) {
-  if(n & 1) {
-    return "-"
-  }
-  return ""
-}
-
-function generateSum(expr) {
-  if(expr.length === 1) {
-    return expr[0]
-  } else if(expr.length === 2) {
-    return ["sum(", expr[0], ",", expr[1], ")"].join("")
-  } else {
-    var m = expr.length>>1
-    return ["sum(", generateSum(expr.slice(0, m)), ",", generateSum(expr.slice(m)), ")"].join("")
-  }
-}
-
-function determinant(m) {
-  if(m.length === 2) {
-    return [["sum(prod(", m[0][0], ",", m[1][1], "),prod(-", m[0][1], ",", m[1][0], "))"].join("")]
-  } else {
-    var expr = []
-    for(var i=0; i<m.length; ++i) {
-      expr.push(["scale(", generateSum(determinant(cofactor(m, i))), ",", sign(i), m[0][i], ")"].join(""))
-    }
-    return expr
-  }
-}
-
-function orientation(n) {
-  var pos = []
-  var neg = []
-  var m = matrix(n)
-  var args = []
-  for(var i=0; i<n; ++i) {
-    if((i&1)===0) {
-      pos.push.apply(pos, determinant(cofactor(m, i)))
-    } else {
-      neg.push.apply(neg, determinant(cofactor(m, i)))
-    }
-    args.push("m" + i)
-  }
-  var posExpr = generateSum(pos)
-  var negExpr = generateSum(neg)
-  var funcName = "orientation" + n + "Exact"
-  var code = ["function ", funcName, "(", args.join(), "){var p=", posExpr, ",n=", negExpr, ",d=sub(p,n);\
-return d[d.length-1];};return ", funcName].join("")
-  var proc = new Function("sum", "prod", "scale", "sub", code)
-  return proc(robustSum, twoProduct, robustScale, robustSubtract)
-}
-
-var orientation3Exact = orientation(3)
-var orientation4Exact = orientation(4)
-
-var CACHED = [
-  function orientation0() { return 0 },
-  function orientation1() { return 0 },
-  function orientation2(a, b) { 
-    return b[0] - a[0]
-  },
-  function orientation3(a, b, c) {
-    var l = (a[1] - c[1]) * (b[0] - c[0])
-    var r = (a[0] - c[0]) * (b[1] - c[1])
-    var det = l - r
-    var s
-    if(l > 0) {
-      if(r <= 0) {
-        return det
-      } else {
-        s = l + r
-      }
-    } else if(l < 0) {
-      if(r >= 0) {
-        return det
-      } else {
-        s = -(l + r)
-      }
-    } else {
-      return det
-    }
-    var tol = ERRBOUND3 * s
-    if(det >= tol || det <= -tol) {
-      return det
-    }
-    return orientation3Exact(a, b, c)
-  },
-  function orientation4(a,b,c,d) {
-    var adx = a[0] - d[0]
-    var bdx = b[0] - d[0]
-    var cdx = c[0] - d[0]
-    var ady = a[1] - d[1]
-    var bdy = b[1] - d[1]
-    var cdy = c[1] - d[1]
-    var adz = a[2] - d[2]
-    var bdz = b[2] - d[2]
-    var cdz = c[2] - d[2]
-    var bdxcdy = bdx * cdy
-    var cdxbdy = cdx * bdy
-    var cdxady = cdx * ady
-    var adxcdy = adx * cdy
-    var adxbdy = adx * bdy
-    var bdxady = bdx * ady
-    var det = adz * (bdxcdy - cdxbdy) 
-            + bdz * (cdxady - adxcdy)
-            + cdz * (adxbdy - bdxady)
-    var permanent = (Math.abs(bdxcdy) + Math.abs(cdxbdy)) * Math.abs(adz)
-                  + (Math.abs(cdxady) + Math.abs(adxcdy)) * Math.abs(bdz)
-                  + (Math.abs(adxbdy) + Math.abs(bdxady)) * Math.abs(cdz)
-    var tol = ERRBOUND4 * permanent
-    if ((det > tol) || (-det > tol)) {
-      return det
-    }
-    return orientation4Exact(a,b,c,d)
-  }
-]
-
-function slowOrient(args) {
-  var proc = CACHED[args.length]
-  if(!proc) {
-    proc = CACHED[args.length] = orientation(args.length)
-  }
-  return proc.apply(undefined, args)
-}
-
-function generateOrientationProc() {
-  while(CACHED.length <= NUM_EXPAND) {
-    CACHED.push(orientation(CACHED.length))
-  }
-  var args = []
-  var procArgs = ["slow"]
-  for(var i=0; i<=NUM_EXPAND; ++i) {
-    args.push("a" + i)
-    procArgs.push("o" + i)
-  }
-  var code = [
-    "function getOrientation(", args.join(), "){switch(arguments.length){case 0:case 1:return 0;"
-  ]
-  for(var i=2; i<=NUM_EXPAND; ++i) {
-    code.push("case ", i, ":return o", i, "(", args.slice(0, i).join(), ");")
-  }
-  code.push("}var s=new Array(arguments.length);for(var i=0;i<arguments.length;++i){s[i]=arguments[i]};return slow(s);}return getOrientation")
-  procArgs.push(code.join(""))
-
-  var proc = Function.apply(undefined, procArgs)
-  module.exports = proc.apply(undefined, [slowOrient].concat(CACHED))
-  for(var i=0; i<=NUM_EXPAND; ++i) {
-    module.exports[i] = CACHED[i]
-  }
-}
-
-generateOrientationProc()
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DOMEvent = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var DOMEvent =
-/*#__PURE__*/
-function () {
-  function DOMEvent(strategy) {
-    _classCallCheck(this, DOMEvent);
-
-    _defineProperty(this, "instance", void 0);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-  /**
-   * Создать экземпляр объекта события
-   *
-   * @param instance
-   *
-   * @return {IDOMEvent}
-   */
-
-
-  _createClass(DOMEvent, [{
-    key: "create",
-    value: function create(instance) {
-      this.instance = instance;
-      return this;
-    }
-    /**
-     * Получить координаты объекта
-     *
-     * @param domEvent
-     *
-     * @return {Coords}
-     */
-
-  }, {
-    key: "getCoords",
-    value: function getCoords() {
-      return this.getStrategy().getCoords(this.getInstance());
-    }
-    /**
-     * Остановить распространение события
-     *
-     * @return {IDOMEvent}
-     */
-
-  }, {
-    key: "stop",
-    value: function stop() {
-      this.getStrategy().stop(this.getInstance());
-      return this;
-    }
-    /**
-     * Получить элемент события
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "getInstance",
-    value: function getInstance() {
-      return this.instance;
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.domEvent;
-    }
-  }]);
-
-  return DOMEvent;
-}();
-
-exports.DOMEvent = DOMEvent;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Api = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Api =
-/*#__PURE__*/
-function () {
-  function Api() {
-    _classCallCheck(this, Api);
-  }
-
-  _createClass(Api, null, [{
-    key: "load",
-
-    /**
-     * Doesnt used
-     */
-    value: function load() {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://maps.googleapis.com/maps/api/js';
-      document.head.appendChild(script);
-    }
-  }, {
-    key: "google",
-    get: function get() {
-      return window.google;
-    }
-  }]);
-
-  return Api;
-}();
-
-exports.Api = Api;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.LeafletGeoStrategy = void 0;
-
-var _map = __webpack_require__(38);
-
-var _marker = __webpack_require__(39);
-
-var _marker2 = __webpack_require__(41);
-
-var _polygon = __webpack_require__(40);
-
-var _polygon2 = __webpack_require__(42);
-
-var _mapControl = __webpack_require__(36);
-
-var _domEvent = __webpack_require__(33);
-
-var _geoEvent = __webpack_require__(34);
-
-var _geocoder = __webpack_require__(35);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var LeafletGeoStrategy =
-/*#__PURE__*/
-function () {
-  function LeafletGeoStrategy(props) {
-    _classCallCheck(this, LeafletGeoStrategy);
-
-    _defineProperty(this, "map", void 0);
-
-    _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
-
-    _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
-
-    _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
-
-    _defineProperty(this, "domEvent", new _domEvent.LeafletDOMEventStrategy());
-
-    _defineProperty(this, "geoEvent", new _geoEvent.LeafletGeoEventStrategy());
-
-    _defineProperty(this, "preset", {
-      marker: new _marker2.LeafletMarkerPresetStrategy(),
-      polygon: new _polygon2.LeafletPolygonPresetStrategy()
-    });
-
-    _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
-
-    this.initMap(props);
-  }
-
-  _createClass(LeafletGeoStrategy, [{
-    key: "isAllowed",
-    value: function isAllowed() {
-      return true;
-    }
-  }, {
-    key: "initMap",
-    value: function initMap(props) {
-      if (this.map) {
-        throw new Error('Map already exist');
-      }
-
-      this.map = new _map.LeafletMapStrategy(props);
-    }
-  }]);
-
-  return LeafletGeoStrategy;
-}();
-
-exports.LeafletGeoStrategy = LeafletGeoStrategy;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.markerPresetStorage = void 0;
-
-var _icon = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var MarkerPresetStorage =
-/*#__PURE__*/
-function () {
-  function MarkerPresetStorage() {
-    _classCallCheck(this, MarkerPresetStorage);
-
-    _defineProperty(this, "presets", {});
-  }
-
-  _createClass(MarkerPresetStorage, [{
-    key: "add",
-
-    /**
-     * Добавить новый пресет
-     *
-     * @param {string} preset
-     * @param {{icon: IIcon}} props
-     *
-     * @return {MarkerPresetStorage}
-     */
-    value: function add(preset, props) {
-      this.presets[preset] = {
-        icon: props.icon ? new _icon.Icon(props.icon) : null
-      };
-      return this;
-    }
-    /**
-     * Получить пресет по названию
-     *
-     * @param {string} preset
-     *
-     * @return {IMarkerPreset}
-     */
-
-  }, {
-    key: "get",
-    value: function get(preset) {
-      if (!preset) {
-        return null;
-      }
-
-      if (!this.presets[preset]) {
-        throw new Error('Preset not found');
-      }
-
-      return this.presets[preset];
-    }
-  }]);
-
-  return MarkerPresetStorage;
-}();
-
-var markerPresetStorage = new MarkerPresetStorage();
-exports.markerPresetStorage = markerPresetStorage;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.polygonPresetStorge = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var PolygonPresetStorge =
-/*#__PURE__*/
-function () {
-  function PolygonPresetStorge() {
-    _classCallCheck(this, PolygonPresetStorge);
-
-    _defineProperty(this, "presets", {});
-  }
-
-  _createClass(PolygonPresetStorge, [{
-    key: "add",
-
-    /**
-     * Добавить новый пресет
-     *
-     * @param {string} preset
-     * @param {{style: ICreatePolygonStyle}} props
-     *
-     * @return {PolygonPresetStorge}
-     */
-    value: function add(preset, props) {
-      this.presets[preset] = {
-        // @TODO Потенциальная ошибка, в случае не соответствия полей при обновлении и создании
-        style: props.style || null
-      };
-      return this;
-    }
-    /**
-     * Получить пресет по названию
-     *
-     * @param {string} preset
-     *
-     * @return {IPolygonPresetProperties}
-     */
-
-  }, {
-    key: "get",
-    value: function get(preset) {
-      if (!preset) {
-        return null;
-      }
-
-      if (!this.presets[preset]) {
-        throw new Error('Preset not found');
-      }
-
-      return this.presets[preset];
-    }
-  }]);
-
-  return PolygonPresetStorge;
-}();
-
-var polygonPresetStorge = new PolygonPresetStorge();
-exports.polygonPresetStorge = polygonPresetStorge;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Evented = void 0;
-
-var _events = __webpack_require__(55);
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Evented =
-/*#__PURE__*/
-function () {
-  function Evented(strategy) {
-    var _this = this;
-
-    _classCallCheck(this, Evented);
-
-    _defineProperty(this, "instance", void 0);
-
-    _defineProperty(this, "strategy", void 0);
-
-    _defineProperty(this, "props", void 0);
-
-    _defineProperty(this, "events", void 0);
-
-    if (!strategy) {
-      throw new Error('Geo strategy not found');
-    }
-
-    this.props = {}; // Передаем провайдер событий в стратегию
-
-    this.events = new _events.Events({
-      on: function on(type, fn) {
-        if (_this.hasInstance()) {
-          _this.getStrategy().on(_this.getInstance(), type, fn);
-        }
-      },
-      off: function off(type, fn) {
-        if (_this.hasInstance()) {
-          _this.getStrategy().off(_this.getInstance(), type, fn);
-        }
-      }
-    });
-    this.strategy = strategy;
-  }
-  /**
-   * Обновить параметры объекта
-   *
-   * @param {TPropertiesForUpdate} options
-   *
-   * @return {Promise<IGeoObject>}
-   */
-
-
-  _createClass(Evented, [{
-    key: "hasInstance",
-
-    /**
-     * Есть ли созданный экземпляр объекта для стратегии
-     *
-     * @return {boolean}
-     */
-    value: function hasInstance() {
-      return !!this.instance;
-    }
-    /**
-     * Получить элемент для работы со стратегиями
-     *
-     * @return {any}
-     */
-
-  }, {
-    key: "on",
-
-    /**
-     * Включить событие
-     *
-     * @param {string | IEventHandlerFnMap} type
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvented<TPropertiesForUpdate>}
-     */
-    value: function on(type, fn) {
-      var _this2 = this;
-
-      if (!type) {
-        // throw new Error(`Geo event name is not defined`);
-        console.error('Geo event name is not defined');
-        return this;
-      }
-
-      var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
-
-      Object.keys(events).forEach(function (key) {
-        if (!events[key]) {
-          throw new Error("Geo event \"".concat(key, "\" is not defined"));
-        }
-
-        _this2.events.add(key, events[key]);
-      });
-      return this;
-    }
-    /**
-     * Отключить событие
-     *
-     * @param {string} type
-     * @param {EventHandlerFn} fn
-     *
-     * @return {IEvented<TPropertiesForUpdate>}
-     */
-
-  }, {
-    key: "off",
-    value: function off(type, fn) {
-      if (this.events.isEmpty(type)) {
-        return this;
-      } // Работа со стратегией перенесена в группы через strategyProvider
-
-
-      this.events.remove(type, fn);
-      return this;
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-
-  }]);
-
-  return Evented;
-}();
-
-exports.Evented = Evented;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GeoEvent = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var GeoEvent =
-/*#__PURE__*/
-function () {
-  function GeoEvent(strategy) {
-    _classCallCheck(this, GeoEvent);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-
-  _createClass(GeoEvent, [{
-    key: "getStrategy",
-
-    /**
-     * Стратегия работы с геообъектом
-     * @return {any}
-     */
-    value: function getStrategy() {
-      return this.strategy.geoEvent;
-    }
-  }, {
-    key: "map",
-    get: function get() {
-      return this.getStrategy().getMapEventName();
-    }
-  }, {
-    key: "marker",
-    get: function get() {
-      return this.getStrategy().getMarkerEventName();
-    }
-  }]);
-
-  return GeoEvent;
-}();
-
-exports.GeoEvent = GeoEvent;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Geocoder = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var Geocoder =
-/*#__PURE__*/
-function () {
-  function Geocoder(strategy) {
-    _classCallCheck(this, Geocoder);
-
-    _defineProperty(this, "strategy", void 0);
-
-    this.strategy = strategy;
-  }
-  /**
-   * Какие объекты находятся рядом с точкой
-   * @param {tCoords} coords
-   * @return {Promise<IGeocodeResult>}
-   */
-
-
-  _createClass(Geocoder, [{
-    key: "whatAt",
-    value: function whatAt(coords) {
-      return this.getStrategy().whatAt(coords);
-    }
-    /**
-     * Где находится этот адресс
-     * @param {string} address
-     * @param {tCoords} coords
-     * @return {Promise<IGeocodeResult>}
-     */
-
-  }, {
-    key: "whereIs",
-    value: function whereIs(address, coords) {
-      return this.getStrategy().whereIs(address, coords);
-    }
-    /**
-     * Стратегия работы с геообъектом
-     * @return {IGeocoderStrategy}
-     */
-
-  }, {
-    key: "getStrategy",
-    value: function getStrategy() {
-      return this.strategy.geocoder;
-    }
-  }]);
-
-  return Geocoder;
-}();
-
-exports.Geocoder = Geocoder;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.GeoObject = void 0;
 
-var _evented = __webpack_require__(14);
+var _evented = __webpack_require__(15);
 
 var _index = __webpack_require__(21);
 
@@ -15714,6 +14636,1088 @@ exports.GeoObject = GeoObject;
 _defineProperty(GeoObject, "Coords", null);
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Icon = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Icon =
+/*#__PURE__*/
+function () {
+  function Icon(src, size, offset) {
+    _classCallCheck(this, Icon);
+
+    _defineProperty(this, "src", void 0);
+
+    _defineProperty(this, "size", void 0);
+
+    _defineProperty(this, "offset", void 0);
+
+    if (_typeof(src) === 'object') {
+      this.src = src.src;
+      this.size = src.size;
+      this.offset = src.offset;
+    } else {
+      this.src = src;
+      this.size = size;
+      this.offset = offset;
+    }
+
+    if (!this.src || !this.size) {
+      throw new Error('Empty icon');
+    }
+  }
+
+  _createClass(Icon, [{
+    key: "toObject",
+    value: function toObject() {
+      return {
+        src: this.src,
+        size: this.size,
+        offset: this.offset
+      };
+    }
+  }]);
+
+  return Icon;
+}();
+
+exports.Icon = Icon;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.PolygonCoords = void 0;
+
+var _concaveman = _interopRequireDefault(__webpack_require__(69));
+
+var _quickHull2d = _interopRequireDefault(__webpack_require__(82));
+
+var _simplifyJs = _interopRequireDefault(__webpack_require__(88));
+
+var _bounds = __webpack_require__(2);
+
+var _polygonCoords = __webpack_require__(22);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PolygonCoords =
+/*#__PURE__*/
+function () {
+  _createClass(PolygonCoords, null, [{
+    key: "createByConcaveHull",
+    value: function createByConcaveHull(points) {
+      return new this((0, _concaveman.default)(points));
+    }
+  }, {
+    key: "createByConvexHull",
+    value: function createByConvexHull(points) {
+      return new this((0, _quickHull2d.default)(points));
+    }
+  }]);
+
+  function PolygonCoords(points) {
+    _classCallCheck(this, PolygonCoords);
+
+    _defineProperty(this, "points", null);
+
+    this.points = _polygonCoords.UtilsPolygonCoords.toNumbers(points);
+  }
+  /**
+   * Привести в массив
+   *
+   * @return {tPolygonCoords}
+   */
+
+
+  _createClass(PolygonCoords, [{
+    key: "toArray",
+    value: function toArray() {
+      return this.points;
+    }
+    /**
+     * Нормализировать объект к виду вложенности 3
+     *
+     * @return {tPolygonCoords | tPolygonCoords[]}
+     */
+
+  }, {
+    key: "toNormalizeArray",
+    value: function toNormalizeArray() {
+      return _polygonCoords.UtilsPolygonCoords.normalize(this.points);
+    }
+  }, {
+    key: "toJson",
+    value: function toJson() {
+      var normalize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (!this.getCount()) {
+        console.error('Empty polygon coords');
+
+        if (normalize) {
+          return '[[[]]]';
+        }
+
+        return JSON.stringify(this.points || []);
+      }
+
+      return JSON.stringify(normalize ? this.toNormalizeArray() : this.toArray());
+    }
+  }, {
+    key: "getCount",
+    value: function getCount() {
+      return _polygonCoords.UtilsPolygonCoords.count(this.points);
+    }
+  }, {
+    key: "getBounds",
+    value: function getBounds() {
+      var points = {
+        left: null,
+        right: null,
+        bottom: null,
+        top: null
+      };
+
+      _polygonCoords.UtilsPolygonCoords.simplify(this.points).forEach(function (point) {
+        var coords = Array.isArray(point[0]) ? point[0] : point;
+        var lat = coords[0];
+        var lng = coords[1];
+        points.left = points.left === null || lat < points.left ? lat : points.left;
+        points.right = points.right === null || lat > points.right ? lat : points.right;
+        points.bottom = points.bottom === null || lng < points.bottom ? lng : points.bottom;
+        points.top = points.top === null || lng > points.top ? lng : points.top;
+      });
+
+      return new _bounds.Bounds([points.left, points.top], [points.right, points.bottom]);
+    }
+    /**
+     * Reduce number of point for Polygon
+     * @param {number} tolerance
+     * @param {boolean} highQuality
+     */
+
+  }, {
+    key: "toSimplified",
+    value: function toSimplified(tolerance, highQuality) {
+      var rowPoints = this.toNormalizeArray()[0];
+      rowPoints.pop();
+      var points = rowPoints.map(function (point) {
+        return {
+          x: point[0],
+          y: point[1]
+        };
+      });
+      var simplified = (0, _simplifyJs.default)(points, tolerance, highQuality);
+      return new this.constructor([simplified.map(function (point) {
+        return [point.x, point.y];
+      })]);
+    }
+  }]);
+
+  return PolygonCoords;
+}();
+
+exports.PolygonCoords = PolygonCoords;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var twoProduct = __webpack_require__(25)
+var robustSum = __webpack_require__(87)
+var robustScale = __webpack_require__(85)
+var robustSubtract = __webpack_require__(86)
+
+var NUM_EXPAND = 5
+
+var EPSILON     = 1.1102230246251565e-16
+var ERRBOUND3   = (3.0 + 16.0 * EPSILON) * EPSILON
+var ERRBOUND4   = (7.0 + 56.0 * EPSILON) * EPSILON
+
+function cofactor(m, c) {
+  var result = new Array(m.length-1)
+  for(var i=1; i<m.length; ++i) {
+    var r = result[i-1] = new Array(m.length-1)
+    for(var j=0,k=0; j<m.length; ++j) {
+      if(j === c) {
+        continue
+      }
+      r[k++] = m[i][j]
+    }
+  }
+  return result
+}
+
+function matrix(n) {
+  var result = new Array(n)
+  for(var i=0; i<n; ++i) {
+    result[i] = new Array(n)
+    for(var j=0; j<n; ++j) {
+      result[i][j] = ["m", j, "[", (n-i-1), "]"].join("")
+    }
+  }
+  return result
+}
+
+function sign(n) {
+  if(n & 1) {
+    return "-"
+  }
+  return ""
+}
+
+function generateSum(expr) {
+  if(expr.length === 1) {
+    return expr[0]
+  } else if(expr.length === 2) {
+    return ["sum(", expr[0], ",", expr[1], ")"].join("")
+  } else {
+    var m = expr.length>>1
+    return ["sum(", generateSum(expr.slice(0, m)), ",", generateSum(expr.slice(m)), ")"].join("")
+  }
+}
+
+function determinant(m) {
+  if(m.length === 2) {
+    return [["sum(prod(", m[0][0], ",", m[1][1], "),prod(-", m[0][1], ",", m[1][0], "))"].join("")]
+  } else {
+    var expr = []
+    for(var i=0; i<m.length; ++i) {
+      expr.push(["scale(", generateSum(determinant(cofactor(m, i))), ",", sign(i), m[0][i], ")"].join(""))
+    }
+    return expr
+  }
+}
+
+function orientation(n) {
+  var pos = []
+  var neg = []
+  var m = matrix(n)
+  var args = []
+  for(var i=0; i<n; ++i) {
+    if((i&1)===0) {
+      pos.push.apply(pos, determinant(cofactor(m, i)))
+    } else {
+      neg.push.apply(neg, determinant(cofactor(m, i)))
+    }
+    args.push("m" + i)
+  }
+  var posExpr = generateSum(pos)
+  var negExpr = generateSum(neg)
+  var funcName = "orientation" + n + "Exact"
+  var code = ["function ", funcName, "(", args.join(), "){var p=", posExpr, ",n=", negExpr, ",d=sub(p,n);\
+return d[d.length-1];};return ", funcName].join("")
+  var proc = new Function("sum", "prod", "scale", "sub", code)
+  return proc(robustSum, twoProduct, robustScale, robustSubtract)
+}
+
+var orientation3Exact = orientation(3)
+var orientation4Exact = orientation(4)
+
+var CACHED = [
+  function orientation0() { return 0 },
+  function orientation1() { return 0 },
+  function orientation2(a, b) { 
+    return b[0] - a[0]
+  },
+  function orientation3(a, b, c) {
+    var l = (a[1] - c[1]) * (b[0] - c[0])
+    var r = (a[0] - c[0]) * (b[1] - c[1])
+    var det = l - r
+    var s
+    if(l > 0) {
+      if(r <= 0) {
+        return det
+      } else {
+        s = l + r
+      }
+    } else if(l < 0) {
+      if(r >= 0) {
+        return det
+      } else {
+        s = -(l + r)
+      }
+    } else {
+      return det
+    }
+    var tol = ERRBOUND3 * s
+    if(det >= tol || det <= -tol) {
+      return det
+    }
+    return orientation3Exact(a, b, c)
+  },
+  function orientation4(a,b,c,d) {
+    var adx = a[0] - d[0]
+    var bdx = b[0] - d[0]
+    var cdx = c[0] - d[0]
+    var ady = a[1] - d[1]
+    var bdy = b[1] - d[1]
+    var cdy = c[1] - d[1]
+    var adz = a[2] - d[2]
+    var bdz = b[2] - d[2]
+    var cdz = c[2] - d[2]
+    var bdxcdy = bdx * cdy
+    var cdxbdy = cdx * bdy
+    var cdxady = cdx * ady
+    var adxcdy = adx * cdy
+    var adxbdy = adx * bdy
+    var bdxady = bdx * ady
+    var det = adz * (bdxcdy - cdxbdy) 
+            + bdz * (cdxady - adxcdy)
+            + cdz * (adxbdy - bdxady)
+    var permanent = (Math.abs(bdxcdy) + Math.abs(cdxbdy)) * Math.abs(adz)
+                  + (Math.abs(cdxady) + Math.abs(adxcdy)) * Math.abs(bdz)
+                  + (Math.abs(adxbdy) + Math.abs(bdxady)) * Math.abs(cdz)
+    var tol = ERRBOUND4 * permanent
+    if ((det > tol) || (-det > tol)) {
+      return det
+    }
+    return orientation4Exact(a,b,c,d)
+  }
+]
+
+function slowOrient(args) {
+  var proc = CACHED[args.length]
+  if(!proc) {
+    proc = CACHED[args.length] = orientation(args.length)
+  }
+  return proc.apply(undefined, args)
+}
+
+function generateOrientationProc() {
+  while(CACHED.length <= NUM_EXPAND) {
+    CACHED.push(orientation(CACHED.length))
+  }
+  var args = []
+  var procArgs = ["slow"]
+  for(var i=0; i<=NUM_EXPAND; ++i) {
+    args.push("a" + i)
+    procArgs.push("o" + i)
+  }
+  var code = [
+    "function getOrientation(", args.join(), "){switch(arguments.length){case 0:case 1:return 0;"
+  ]
+  for(var i=2; i<=NUM_EXPAND; ++i) {
+    code.push("case ", i, ":return o", i, "(", args.slice(0, i).join(), ");")
+  }
+  code.push("}var s=new Array(arguments.length);for(var i=0;i<arguments.length;++i){s[i]=arguments[i]};return slow(s);}return getOrientation")
+  procArgs.push(code.join(""))
+
+  var proc = Function.apply(undefined, procArgs)
+  module.exports = proc.apply(undefined, [slowOrient].concat(CACHED))
+  for(var i=0; i<=NUM_EXPAND; ++i) {
+    module.exports[i] = CACHED[i]
+  }
+}
+
+generateOrientationProc()
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DOMEvent = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var DOMEvent =
+/*#__PURE__*/
+function () {
+  function DOMEvent(strategy) {
+    _classCallCheck(this, DOMEvent);
+
+    _defineProperty(this, "instance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+  /**
+   * Создать экземпляр объекта события
+   *
+   * @param instance
+   *
+   * @return {IDOMEvent}
+   */
+
+
+  _createClass(DOMEvent, [{
+    key: "create",
+    value: function create(instance) {
+      this.instance = instance;
+      return this;
+    }
+    /**
+     * Получить координаты объекта
+     *
+     * @param domEvent
+     *
+     * @return {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords() {
+      return this.getStrategy().getCoords(this.getInstance());
+    }
+    /**
+     * Остановить распространение события
+     *
+     * @return {IDOMEvent}
+     */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      this.getStrategy().stop(this.getInstance());
+      return this;
+    }
+    /**
+     * Получить элемент события
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "getInstance",
+    value: function getInstance() {
+      return this.instance;
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.domEvent;
+    }
+  }]);
+
+  return DOMEvent;
+}();
+
+exports.DOMEvent = DOMEvent;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Api = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Api =
+/*#__PURE__*/
+function () {
+  function Api() {
+    _classCallCheck(this, Api);
+  }
+
+  _createClass(Api, null, [{
+    key: "load",
+
+    /**
+     * Doesnt used
+     */
+    value: function load() {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://maps.googleapis.com/maps/api/js';
+      document.head.appendChild(script);
+    }
+  }, {
+    key: "google",
+    get: function get() {
+      return window.google;
+    }
+  }]);
+
+  return Api;
+}();
+
+exports.Api = Api;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LeafletGeoStrategy = void 0;
+
+var _map = __webpack_require__(41);
+
+var _marker = __webpack_require__(42);
+
+var _marker2 = __webpack_require__(44);
+
+var _polygon = __webpack_require__(43);
+
+var _polygon2 = __webpack_require__(45);
+
+var _mapControl = __webpack_require__(39);
+
+var _domEvent = __webpack_require__(36);
+
+var _geoEvent = __webpack_require__(37);
+
+var _geocoder = __webpack_require__(38);
+
+var _circle = __webpack_require__(35);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var LeafletGeoStrategy =
+/*#__PURE__*/
+function () {
+  function LeafletGeoStrategy(props) {
+    _classCallCheck(this, LeafletGeoStrategy);
+
+    _defineProperty(this, "map", void 0);
+
+    _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
+
+    _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
+
+    _defineProperty(this, "circle", new _circle.LeafletCircleStrategy());
+
+    _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
+
+    _defineProperty(this, "domEvent", new _domEvent.LeafletDOMEventStrategy());
+
+    _defineProperty(this, "geoEvent", new _geoEvent.LeafletGeoEventStrategy());
+
+    _defineProperty(this, "preset", {
+      marker: new _marker2.LeafletMarkerPresetStrategy(),
+      polygon: new _polygon2.LeafletPolygonPresetStrategy()
+    });
+
+    _defineProperty(this, "geocoder", new _geocoder.LeafletGeocoderStrategy());
+
+    this.initMap(props);
+  }
+
+  _createClass(LeafletGeoStrategy, [{
+    key: "isAllowed",
+    value: function isAllowed() {
+      return true;
+    }
+  }, {
+    key: "initMap",
+    value: function initMap(props) {
+      if (this.map) {
+        throw new Error('Map already exist');
+      }
+
+      this.map = new _map.LeafletMapStrategy(props);
+    }
+  }]);
+
+  return LeafletGeoStrategy;
+}();
+
+exports.LeafletGeoStrategy = LeafletGeoStrategy;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.markerPresetStorage = void 0;
+
+var _icon = __webpack_require__(7);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MarkerPresetStorage =
+/*#__PURE__*/
+function () {
+  function MarkerPresetStorage() {
+    _classCallCheck(this, MarkerPresetStorage);
+
+    _defineProperty(this, "presets", {});
+  }
+
+  _createClass(MarkerPresetStorage, [{
+    key: "add",
+
+    /**
+     * Добавить новый пресет
+     *
+     * @param {string} preset
+     * @param {{icon: IIcon}} props
+     *
+     * @return {MarkerPresetStorage}
+     */
+    value: function add(preset, props) {
+      this.presets[preset] = {
+        icon: props.icon ? new _icon.Icon(props.icon) : null
+      };
+      return this;
+    }
+    /**
+     * Получить пресет по названию
+     *
+     * @param {string} preset
+     *
+     * @return {IMarkerPreset}
+     */
+
+  }, {
+    key: "get",
+    value: function get(preset) {
+      if (!preset) {
+        return null;
+      }
+
+      if (!this.presets[preset]) {
+        throw new Error('Preset not found');
+      }
+
+      return this.presets[preset];
+    }
+  }]);
+
+  return MarkerPresetStorage;
+}();
+
+var markerPresetStorage = new MarkerPresetStorage();
+exports.markerPresetStorage = markerPresetStorage;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.polygonPresetStorge = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var PolygonPresetStorge =
+/*#__PURE__*/
+function () {
+  function PolygonPresetStorge() {
+    _classCallCheck(this, PolygonPresetStorge);
+
+    _defineProperty(this, "presets", {});
+  }
+
+  _createClass(PolygonPresetStorge, [{
+    key: "add",
+
+    /**
+     * Добавить новый пресет
+     *
+     * @param {string} preset
+     * @param {{style: ICreatePolygonStyle}} props
+     *
+     * @return {PolygonPresetStorge}
+     */
+    value: function add(preset, props) {
+      this.presets[preset] = {
+        // @TODO Потенциальная ошибка, в случае не соответствия полей при обновлении и создании
+        style: props.style || null
+      };
+      return this;
+    }
+    /**
+     * Получить пресет по названию
+     *
+     * @param {string} preset
+     *
+     * @return {IPolygonPresetProperties}
+     */
+
+  }, {
+    key: "get",
+    value: function get(preset) {
+      if (!preset) {
+        return null;
+      }
+
+      if (!this.presets[preset]) {
+        throw new Error('Preset not found');
+      }
+
+      return this.presets[preset];
+    }
+  }]);
+
+  return PolygonPresetStorge;
+}();
+
+var polygonPresetStorge = new PolygonPresetStorge();
+exports.polygonPresetStorge = polygonPresetStorge;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Evented = void 0;
+
+var _events = __webpack_require__(58);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Evented =
+/*#__PURE__*/
+function () {
+  function Evented(strategy) {
+    var _this = this;
+
+    _classCallCheck(this, Evented);
+
+    _defineProperty(this, "instance", void 0);
+
+    _defineProperty(this, "strategy", void 0);
+
+    _defineProperty(this, "props", void 0);
+
+    _defineProperty(this, "events", void 0);
+
+    if (!strategy) {
+      throw new Error('Geo strategy not found');
+    }
+
+    this.props = {}; // Передаем провайдер событий в стратегию
+
+    this.events = new _events.Events({
+      on: function on(type, fn) {
+        if (_this.hasInstance()) {
+          _this.getStrategy().on(_this.getInstance(), type, fn);
+        }
+      },
+      off: function off(type, fn) {
+        if (_this.hasInstance()) {
+          _this.getStrategy().off(_this.getInstance(), type, fn);
+        }
+      }
+    });
+    this.strategy = strategy;
+  }
+  /**
+   * Обновить параметры объекта
+   *
+   * @param {TPropertiesForUpdate} options
+   *
+   * @return {Promise<IGeoObject>}
+   */
+
+
+  _createClass(Evented, [{
+    key: "hasInstance",
+
+    /**
+     * Есть ли созданный экземпляр объекта для стратегии
+     *
+     * @return {boolean}
+     */
+    value: function hasInstance() {
+      return !!this.instance;
+    }
+    /**
+     * Получить элемент для работы со стратегиями
+     *
+     * @return {any}
+     */
+
+  }, {
+    key: "on",
+
+    /**
+     * Включить событие
+     *
+     * @param {string | IEventHandlerFnMap} type
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvented<TPropertiesForUpdate>}
+     */
+    value: function on(type, fn) {
+      var _this2 = this;
+
+      if (!type) {
+        // throw new Error(`Geo event name is not defined`);
+        console.error('Geo event name is not defined');
+        return this;
+      }
+
+      var events = _typeof(type) === 'object' ? type : _defineProperty({}, type, fn); // Работа со стратегией перенесена в группы через strategyProvider
+
+      Object.keys(events).forEach(function (key) {
+        if (!events[key]) {
+          throw new Error("Geo event \"".concat(key, "\" is not defined"));
+        }
+
+        _this2.events.add(key, events[key]);
+      });
+      return this;
+    }
+    /**
+     * Отключить событие
+     *
+     * @param {string} type
+     * @param {EventHandlerFn} fn
+     *
+     * @return {IEvented<TPropertiesForUpdate>}
+     */
+
+  }, {
+    key: "off",
+    value: function off(type, fn) {
+      if (this.events.isEmpty(type)) {
+        return this;
+      } // Работа со стратегией перенесена в группы через strategyProvider
+
+
+      this.events.remove(type, fn);
+      return this;
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+
+  }]);
+
+  return Evented;
+}();
+
+exports.Evented = Evented;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GeoEvent = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GeoEvent =
+/*#__PURE__*/
+function () {
+  function GeoEvent(strategy) {
+    _classCallCheck(this, GeoEvent);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+
+  _createClass(GeoEvent, [{
+    key: "getStrategy",
+
+    /**
+     * Стратегия работы с геообъектом
+     * @return {any}
+     */
+    value: function getStrategy() {
+      return this.strategy.geoEvent;
+    }
+  }, {
+    key: "map",
+    get: function get() {
+      return this.getStrategy().getMapEventName();
+    }
+  }, {
+    key: "marker",
+    get: function get() {
+      return this.getStrategy().getMarkerEventName();
+    }
+  }]);
+
+  return GeoEvent;
+}();
+
+exports.GeoEvent = GeoEvent;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Geocoder = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Geocoder =
+/*#__PURE__*/
+function () {
+  function Geocoder(strategy) {
+    _classCallCheck(this, Geocoder);
+
+    _defineProperty(this, "strategy", void 0);
+
+    this.strategy = strategy;
+  }
+  /**
+   * Какие объекты находятся рядом с точкой
+   * @param {tCoords} coords
+   * @return {Promise<IGeocodeResult>}
+   */
+
+
+  _createClass(Geocoder, [{
+    key: "whatAt",
+    value: function whatAt(coords) {
+      return this.getStrategy().whatAt(coords);
+    }
+    /**
+     * Где находится этот адресс
+     * @param {string} address
+     * @param {tCoords} coords
+     * @return {Promise<IGeocodeResult>}
+     */
+
+  }, {
+    key: "whereIs",
+    value: function whereIs(address, coords) {
+      return this.getStrategy().whereIs(address, coords);
+    }
+    /**
+     * Стратегия работы с геообъектом
+     * @return {IGeocoderStrategy}
+     */
+
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.geocoder;
+    }
+  }]);
+
+  return Geocoder;
+}();
+
+exports.Geocoder = Geocoder;
+
+/***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15727,9 +15731,9 @@ exports.Map = void 0;
 
 var _coords = __webpack_require__(0);
 
-var _bounds = __webpack_require__(1);
+var _bounds = __webpack_require__(2);
 
-var _evented = __webpack_require__(14);
+var _evented = __webpack_require__(15);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -16117,9 +16121,9 @@ exports.Marker = void 0;
 
 var _coords = __webpack_require__(0);
 
-var _icon = __webpack_require__(6);
+var _icon = __webpack_require__(7);
 
-var _geoobject = __webpack_require__(17);
+var _geoobject = __webpack_require__(6);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -16323,9 +16327,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Polygon = void 0;
 
-var _geoobject = __webpack_require__(17);
+var _geoobject = __webpack_require__(6);
 
-var _polygonCoords = __webpack_require__(7);
+var _polygonCoords = __webpack_require__(8);
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -16867,6 +16871,1962 @@ exports.UtilsPolygonCoords = UtilsPolygonCoords;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+(function (factory, window) {
+    /*globals define, module, require*/
+
+    // define an AMD module that relies on 'leaflet'
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+    // define a Common JS module that relies on 'leaflet'
+    } else if (typeof exports === 'object') {
+        module.exports = factory(require('leaflet'));
+    }
+
+    // attach your plugin to the global 'L' variable
+    if(typeof window !== 'undefined' && window.L){
+        factory(window.L);
+    }
+
+}(function (L) {
+    // 🍂miniclass CancelableEvent (Event objects)
+    // 🍂method cancel()
+    // Cancel any subsequent action.
+
+    // 🍂miniclass VertexEvent (Event objects)
+    // 🍂property vertex: VertexMarker
+    // The vertex that fires the event.
+
+    // 🍂miniclass ShapeEvent (Event objects)
+    // 🍂property shape: Array
+    // The shape (LatLngs array) subject of the action.
+
+    // 🍂miniclass CancelableVertexEvent (Event objects)
+    // 🍂inherits VertexEvent
+    // 🍂inherits CancelableEvent
+
+    // 🍂miniclass CancelableShapeEvent (Event objects)
+    // 🍂inherits ShapeEvent
+    // 🍂inherits CancelableEvent
+
+    // 🍂miniclass LayerEvent (Event objects)
+    // 🍂property layer: object
+    // The Layer (Marker, Polyline…) subject of the action.
+
+    // 🍂namespace Editable; 🍂class Editable; 🍂aka L.Editable
+    // Main edition handler. By default, it is attached to the map
+    // as `map.editTools` property.
+    // Leaflet.Editable is made to be fully extendable. You have three ways to customize
+    // the behaviour: using options, listening to events, or extending.
+    L.Editable = L.Evented.extend({
+
+        statics: {
+            FORWARD: 1,
+            BACKWARD: -1
+        },
+
+        options: {
+
+            // You can pass them when creating a map using the `editOptions` key.
+            // 🍂option zIndex: int = 1000
+            // The default zIndex of the editing tools.
+            zIndex: 1000,
+
+            // 🍂option polygonClass: class = L.Polygon
+            // Class to be used when creating a new Polygon.
+            polygonClass: L.Polygon,
+
+            // 🍂option polylineClass: class = L.Polyline
+            // Class to be used when creating a new Polyline.
+            polylineClass: L.Polyline,
+
+            // 🍂option markerClass: class = L.Marker
+            // Class to be used when creating a new Marker.
+            markerClass: L.Marker,
+
+            // 🍂option rectangleClass: class = L.Rectangle
+            // Class to be used when creating a new Rectangle.
+            rectangleClass: L.Rectangle,
+
+            // 🍂option circleClass: class = L.Circle
+            // Class to be used when creating a new Circle.
+            circleClass: L.Circle,
+
+            // 🍂option drawingCSSClass: string = 'leaflet-editable-drawing'
+            // CSS class to be added to the map container while drawing.
+            drawingCSSClass: 'leaflet-editable-drawing',
+
+            // 🍂option drawingCursor: const = 'crosshair'
+            // Cursor mode set to the map while drawing.
+            drawingCursor: 'crosshair',
+
+            // 🍂option editLayer: Layer = new L.LayerGroup()
+            // Layer used to store edit tools (vertex, line guide…).
+            editLayer: undefined,
+
+            // 🍂option featuresLayer: Layer = new L.LayerGroup()
+            // Default layer used to store drawn features (Marker, Polyline…).
+            featuresLayer: undefined,
+
+            // 🍂option polylineEditorClass: class = PolylineEditor
+            // Class to be used as Polyline editor.
+            polylineEditorClass: undefined,
+
+            // 🍂option polygonEditorClass: class = PolygonEditor
+            // Class to be used as Polygon editor.
+            polygonEditorClass: undefined,
+
+            // 🍂option markerEditorClass: class = MarkerEditor
+            // Class to be used as Marker editor.
+            markerEditorClass: undefined,
+
+            // 🍂option rectangleEditorClass: class = RectangleEditor
+            // Class to be used as Rectangle editor.
+            rectangleEditorClass: undefined,
+
+            // 🍂option circleEditorClass: class = CircleEditor
+            // Class to be used as Circle editor.
+            circleEditorClass: undefined,
+
+            // 🍂option lineGuideOptions: hash = {}
+            // Options to be passed to the line guides.
+            lineGuideOptions: {},
+
+            // 🍂option skipMiddleMarkers: boolean = false
+            // Set this to true if you don't want middle markers.
+            skipMiddleMarkers: false
+
+        },
+
+        initialize: function (map, options) {
+            L.setOptions(this, options);
+            this._lastZIndex = this.options.zIndex;
+            this.map = map;
+            this.editLayer = this.createEditLayer();
+            this.featuresLayer = this.createFeaturesLayer();
+            this.forwardLineGuide = this.createLineGuide();
+            this.backwardLineGuide = this.createLineGuide();
+        },
+
+        fireAndForward: function (type, e) {
+            e = e || {};
+            e.editTools = this;
+            this.fire(type, e);
+            this.map.fire(type, e);
+        },
+
+        createLineGuide: function () {
+            var options = L.extend({dashArray: '5,10', weight: 1, interactive: false}, this.options.lineGuideOptions);
+            return L.polyline([], options);
+        },
+
+        createVertexIcon: function (options) {
+            return L.Browser.mobile && L.Browser.touch ? new L.Editable.TouchVertexIcon(options) : new L.Editable.VertexIcon(options);
+        },
+
+        createEditLayer: function () {
+            return this.options.editLayer || new L.LayerGroup().addTo(this.map);
+        },
+
+        createFeaturesLayer: function () {
+            return this.options.featuresLayer || new L.LayerGroup().addTo(this.map);
+        },
+
+        moveForwardLineGuide: function (latlng) {
+            if (this.forwardLineGuide._latlngs.length) {
+                this.forwardLineGuide._latlngs[1] = latlng;
+                this.forwardLineGuide._bounds.extend(latlng);
+                this.forwardLineGuide.redraw();
+            }
+        },
+
+        moveBackwardLineGuide: function (latlng) {
+            if (this.backwardLineGuide._latlngs.length) {
+                this.backwardLineGuide._latlngs[1] = latlng;
+                this.backwardLineGuide._bounds.extend(latlng);
+                this.backwardLineGuide.redraw();
+            }
+        },
+
+        anchorForwardLineGuide: function (latlng) {
+            this.forwardLineGuide._latlngs[0] = latlng;
+            this.forwardLineGuide._bounds.extend(latlng);
+            this.forwardLineGuide.redraw();
+        },
+
+        anchorBackwardLineGuide: function (latlng) {
+            this.backwardLineGuide._latlngs[0] = latlng;
+            this.backwardLineGuide._bounds.extend(latlng);
+            this.backwardLineGuide.redraw();
+        },
+
+        attachForwardLineGuide: function () {
+            this.editLayer.addLayer(this.forwardLineGuide);
+        },
+
+        attachBackwardLineGuide: function () {
+            this.editLayer.addLayer(this.backwardLineGuide);
+        },
+
+        detachForwardLineGuide: function () {
+            this.forwardLineGuide.setLatLngs([]);
+            this.editLayer.removeLayer(this.forwardLineGuide);
+        },
+
+        detachBackwardLineGuide: function () {
+            this.backwardLineGuide.setLatLngs([]);
+            this.editLayer.removeLayer(this.backwardLineGuide);
+        },
+
+        blockEvents: function () {
+            // Hack: force map not to listen to other layers events while drawing.
+            if (!this._oldTargets) {
+                this._oldTargets = this.map._targets;
+                this.map._targets = {};
+            }
+        },
+
+        unblockEvents: function () {
+            if (this._oldTargets) {
+                // Reset, but keep targets created while drawing.
+                this.map._targets = L.extend(this.map._targets, this._oldTargets);
+                delete this._oldTargets;
+            }
+        },
+
+        registerForDrawing: function (editor) {
+            if (this._drawingEditor) this.unregisterForDrawing(this._drawingEditor);
+            this.blockEvents();
+            editor.reset();  // Make sure editor tools still receive events.
+            this._drawingEditor = editor;
+            this.map.on('mousemove touchmove', editor.onDrawingMouseMove, editor);
+            this.map.on('mousedown', this.onMousedown, this);
+            this.map.on('mouseup', this.onMouseup, this);
+            L.DomUtil.addClass(this.map._container, this.options.drawingCSSClass);
+            this.defaultMapCursor = this.map._container.style.cursor;
+            this.map._container.style.cursor = this.options.drawingCursor;
+        },
+
+        unregisterForDrawing: function (editor) {
+            this.unblockEvents();
+            L.DomUtil.removeClass(this.map._container, this.options.drawingCSSClass);
+            this.map._container.style.cursor = this.defaultMapCursor;
+            editor = editor || this._drawingEditor;
+            if (!editor) return;
+            this.map.off('mousemove touchmove', editor.onDrawingMouseMove, editor);
+            this.map.off('mousedown', this.onMousedown, this);
+            this.map.off('mouseup', this.onMouseup, this);
+            if (editor !== this._drawingEditor) return;
+            delete this._drawingEditor;
+            if (editor._drawing) editor.cancelDrawing();
+        },
+
+        onMousedown: function (e) {
+            if (e.originalEvent.which != 1) return;
+            this._mouseDown = e;
+            this._drawingEditor.onDrawingMouseDown(e);
+        },
+
+        onMouseup: function (e) {
+            if (this._mouseDown) {
+                var editor = this._drawingEditor,
+                    mouseDown = this._mouseDown;
+                this._mouseDown = null;
+                editor.onDrawingMouseUp(e);
+                if (this._drawingEditor !== editor) return;  // onDrawingMouseUp may call unregisterFromDrawing.
+                var origin = L.point(mouseDown.originalEvent.clientX, mouseDown.originalEvent.clientY);
+                var distance = L.point(e.originalEvent.clientX, e.originalEvent.clientY).distanceTo(origin);
+                if (Math.abs(distance) < 9 * (window.devicePixelRatio || 1)) this._drawingEditor.onDrawingClick(e);
+            }
+        },
+
+        // 🍂section Public methods
+        // You will generally access them by the `map.editTools`
+        // instance:
+        //
+        // `map.editTools.startPolyline();`
+
+        // 🍂method drawing(): boolean
+        // Return true if any drawing action is ongoing.
+        drawing: function () {
+            return this._drawingEditor && this._drawingEditor.drawing();
+        },
+
+        // 🍂method stopDrawing()
+        // When you need to stop any ongoing drawing, without needing to know which editor is active.
+        stopDrawing: function () {
+            this.unregisterForDrawing();
+        },
+
+        // 🍂method commitDrawing()
+        // When you need to commit any ongoing drawing, without needing to know which editor is active.
+        commitDrawing: function (e) {
+            if (!this._drawingEditor) return;
+            this._drawingEditor.commitDrawing(e);
+        },
+
+        connectCreatedToMap: function (layer) {
+            return this.featuresLayer.addLayer(layer);
+        },
+
+        // 🍂method startPolyline(latlng: L.LatLng, options: hash): L.Polyline
+        // Start drawing a Polyline. If `latlng` is given, a first point will be added. In any case, continuing on user click.
+        // If `options` is given, it will be passed to the Polyline class constructor.
+        startPolyline: function (latlng, options) {
+            var line = this.createPolyline([], options);
+            line.enableEdit(this.map).newShape(latlng);
+            return line;
+        },
+
+        // 🍂method startPolygon(latlng: L.LatLng, options: hash): L.Polygon
+        // Start drawing a Polygon. If `latlng` is given, a first point will be added. In any case, continuing on user click.
+        // If `options` is given, it will be passed to the Polygon class constructor.
+        startPolygon: function (latlng, options) {
+            var polygon = this.createPolygon([], options);
+            polygon.enableEdit(this.map).newShape(latlng);
+            return polygon;
+        },
+
+        // 🍂method startMarker(latlng: L.LatLng, options: hash): L.Marker
+        // Start adding a Marker. If `latlng` is given, the Marker will be shown first at this point.
+        // In any case, it will follow the user mouse, and will have a final `latlng` on next click (or touch).
+        // If `options` is given, it will be passed to the Marker class constructor.
+        startMarker: function (latlng, options) {
+            latlng = latlng || this.map.getCenter().clone();
+            var marker = this.createMarker(latlng, options);
+            marker.enableEdit(this.map).startDrawing();
+            return marker;
+        },
+
+        // 🍂method startRectangle(latlng: L.LatLng, options: hash): L.Rectangle
+        // Start drawing a Rectangle. If `latlng` is given, the Rectangle anchor will be added. In any case, continuing on user drag.
+        // If `options` is given, it will be passed to the Rectangle class constructor.
+        startRectangle: function(latlng, options) {
+            var corner = latlng || L.latLng([0, 0]);
+            var bounds = new L.LatLngBounds(corner, corner);
+            var rectangle = this.createRectangle(bounds, options);
+            rectangle.enableEdit(this.map).startDrawing();
+            return rectangle;
+        },
+
+        // 🍂method startCircle(latlng: L.LatLng, options: hash): L.Circle
+        // Start drawing a Circle. If `latlng` is given, the Circle anchor will be added. In any case, continuing on user drag.
+        // If `options` is given, it will be passed to the Circle class constructor.
+        startCircle: function (latlng, options) {
+            latlng = latlng || this.map.getCenter().clone();
+            var circle = this.createCircle(latlng, options);
+            circle.enableEdit(this.map).startDrawing();
+            return circle;
+        },
+
+        startHole: function (editor, latlng) {
+            editor.newHole(latlng);
+        },
+
+        createLayer: function (klass, latlngs, options) {
+            options = L.Util.extend({editOptions: {editTools: this}}, options);
+            var layer = new klass(latlngs, options);
+            // 🍂namespace Editable
+            // 🍂event editable:created: LayerEvent
+            // Fired when a new feature (Marker, Polyline…) is created.
+            this.fireAndForward('editable:created', {layer: layer});
+            return layer;
+        },
+
+        createPolyline: function (latlngs, options) {
+            return this.createLayer(options && options.polylineClass || this.options.polylineClass, latlngs, options);
+        },
+
+        createPolygon: function (latlngs, options) {
+            return this.createLayer(options && options.polygonClass || this.options.polygonClass, latlngs, options);
+        },
+
+        createMarker: function (latlng, options) {
+            return this.createLayer(options && options.markerClass || this.options.markerClass, latlng, options);
+        },
+
+        createRectangle: function (bounds, options) {
+            return this.createLayer(options && options.rectangleClass || this.options.rectangleClass, bounds, options);
+        },
+
+        createCircle: function (latlng, options) {
+            return this.createLayer(options && options.circleClass || this.options.circleClass, latlng, options);
+        }
+
+    });
+
+    L.extend(L.Editable, {
+
+        makeCancellable: function (e) {
+            e.cancel = function () {
+                e._cancelled = true;
+            };
+        }
+
+    });
+
+    // 🍂namespace Map; 🍂class Map
+    // Leaflet.Editable add options and events to the `L.Map` object.
+    // See `Editable` events for the list of events fired on the Map.
+    // 🍂example
+    //
+    // ```js
+    // var map = L.map('map', {
+    //  editable: true,
+    //  editOptions: {
+    //    …
+    // }
+    // });
+    // ```
+    // 🍂section Editable Map Options
+    L.Map.mergeOptions({
+
+        // 🍂namespace Map
+        // 🍂section Map Options
+        // 🍂option editToolsClass: class = L.Editable
+        // Class to be used as vertex, for path editing.
+        editToolsClass: L.Editable,
+
+        // 🍂option editable: boolean = false
+        // Whether to create a L.Editable instance at map init.
+        editable: false,
+
+        // 🍂option editOptions: hash = {}
+        // Options to pass to L.Editable when instantiating.
+        editOptions: {}
+
+    });
+
+    L.Map.addInitHook(function () {
+
+        this.whenReady(function () {
+            if (this.options.editable) {
+                this.editTools = new this.options.editToolsClass(this, this.options.editOptions);
+            }
+        });
+
+    });
+
+    L.Editable.VertexIcon = L.DivIcon.extend({
+
+        options: {
+            iconSize: new L.Point(8, 8)
+        }
+
+    });
+
+    L.Editable.TouchVertexIcon = L.Editable.VertexIcon.extend({
+
+        options: {
+            iconSize: new L.Point(20, 20)
+        }
+
+    });
+
+
+    // 🍂namespace Editable; 🍂class VertexMarker; Handler for dragging path vertices.
+    L.Editable.VertexMarker = L.Marker.extend({
+
+        options: {
+            draggable: true,
+            className: 'leaflet-div-icon leaflet-vertex-icon'
+        },
+
+
+        // 🍂section Public methods
+        // The marker used to handle path vertex. You will usually interact with a `VertexMarker`
+        // instance when listening for events like `editable:vertex:ctrlclick`.
+
+        initialize: function (latlng, latlngs, editor, options) {
+            // We don't use this._latlng, because on drag Leaflet replace it while
+            // we want to keep reference.
+            this.latlng = latlng;
+            this.latlngs = latlngs;
+            this.editor = editor;
+            L.Marker.prototype.initialize.call(this, latlng, options);
+            this.options.icon = this.editor.tools.createVertexIcon({className: this.options.className});
+            this.latlng.__vertex = this;
+            this.editor.editLayer.addLayer(this);
+            this.setZIndexOffset(editor.tools._lastZIndex + 1);
+        },
+
+        onAdd: function (map) {
+            L.Marker.prototype.onAdd.call(this, map);
+            this.on('drag', this.onDrag);
+            this.on('dragstart', this.onDragStart);
+            this.on('dragend', this.onDragEnd);
+            this.on('mouseup', this.onMouseup);
+            this.on('click', this.onClick);
+            this.on('contextmenu', this.onContextMenu);
+            this.on('mousedown touchstart', this.onMouseDown);
+            this.on('mouseover', this.onMouseOver);
+            this.on('mouseout', this.onMouseOut);
+            this.addMiddleMarkers();
+        },
+
+        onRemove: function (map) {
+            if (this.middleMarker) this.middleMarker.delete();
+            delete this.latlng.__vertex;
+            this.off('drag', this.onDrag);
+            this.off('dragstart', this.onDragStart);
+            this.off('dragend', this.onDragEnd);
+            this.off('mouseup', this.onMouseup);
+            this.off('click', this.onClick);
+            this.off('contextmenu', this.onContextMenu);
+            this.off('mousedown touchstart', this.onMouseDown);
+            this.off('mouseover', this.onMouseOver);
+            this.off('mouseout', this.onMouseOut);
+            L.Marker.prototype.onRemove.call(this, map);
+        },
+
+        onDrag: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerDrag(e);
+            var iconPos = L.DomUtil.getPosition(this._icon),
+                latlng = this._map.layerPointToLatLng(iconPos);
+            this.latlng.update(latlng);
+            this._latlng = this.latlng;  // Push back to Leaflet our reference.
+            this.editor.refresh();
+            if (this.middleMarker) this.middleMarker.updateLatLng();
+            var next = this.getNext();
+            if (next && next.middleMarker) next.middleMarker.updateLatLng();
+        },
+
+        onDragStart: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerDragStart(e);
+        },
+
+        onDragEnd: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerDragEnd(e);
+        },
+
+        onClick: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerClick(e);
+        },
+
+        onMouseup: function (e) {
+            L.DomEvent.stop(e);
+            e.vertex = this;
+            this.editor.map.fire('mouseup', e);
+        },
+
+        onContextMenu: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerContextMenu(e);
+        },
+
+        onMouseDown: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerMouseDown(e);
+        },
+
+        onMouseOver: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerMouseOver(e);
+        },
+
+        onMouseOut: function (e) {
+            e.vertex = this;
+            this.editor.onVertexMarkerMouseOut(e);
+        },
+
+        // 🍂method delete()
+        // Delete a vertex and the related LatLng.
+        delete: function () {
+            var next = this.getNext();  // Compute before changing latlng
+            this.latlngs.splice(this.getIndex(), 1);
+            this.editor.editLayer.removeLayer(this);
+            this.editor.onVertexDeleted({latlng: this.latlng, vertex: this});
+            if (!this.latlngs.length) this.editor.deleteShape(this.latlngs);
+            if (next) next.resetMiddleMarker();
+            this.editor.refresh();
+        },
+
+        // 🍂method getIndex(): int
+        // Get the index of the current vertex among others of the same LatLngs group.
+        getIndex: function () {
+            return this.latlngs.indexOf(this.latlng);
+        },
+
+        // 🍂method getLastIndex(): int
+        // Get last vertex index of the LatLngs group of the current vertex.
+        getLastIndex: function () {
+            return this.latlngs.length - 1;
+        },
+
+        // 🍂method getPrevious(): VertexMarker
+        // Get the previous VertexMarker in the same LatLngs group.
+        getPrevious: function () {
+            if (this.latlngs.length < 2) return;
+            var index = this.getIndex(),
+                previousIndex = index - 1;
+            if (index === 0 && this.editor.CLOSED) previousIndex = this.getLastIndex();
+            var previous = this.latlngs[previousIndex];
+            if (previous) return previous.__vertex;
+        },
+
+        // 🍂method getNext(): VertexMarker
+        // Get the next VertexMarker in the same LatLngs group.
+        getNext: function () {
+            if (this.latlngs.length < 2) return;
+            var index = this.getIndex(),
+                nextIndex = index + 1;
+            if (index === this.getLastIndex() && this.editor.CLOSED) nextIndex = 0;
+            var next = this.latlngs[nextIndex];
+            if (next) return next.__vertex;
+        },
+
+        addMiddleMarker: function (previous) {
+            if (!this.editor.hasMiddleMarkers()) return;
+            previous = previous || this.getPrevious();
+            if (previous && !this.middleMarker) this.middleMarker = this.editor.addMiddleMarker(previous, this, this.latlngs, this.editor);
+        },
+
+        addMiddleMarkers: function () {
+            if (!this.editor.hasMiddleMarkers()) return;
+            var previous = this.getPrevious();
+            if (previous) this.addMiddleMarker(previous);
+            var next = this.getNext();
+            if (next) next.resetMiddleMarker();
+        },
+
+        resetMiddleMarker: function () {
+            if (this.middleMarker) this.middleMarker.delete();
+            this.addMiddleMarker();
+        },
+
+        // 🍂method split()
+        // Split the vertex LatLngs group at its index, if possible.
+        split: function () {
+            if (!this.editor.splitShape) return;  // Only for PolylineEditor
+            this.editor.splitShape(this.latlngs, this.getIndex());
+        },
+
+        // 🍂method continue()
+        // Continue the vertex LatLngs from this vertex. Only active for first and last vertices of a Polyline.
+        continue: function () {
+            if (!this.editor.continueBackward) return;  // Only for PolylineEditor
+            var index = this.getIndex();
+            if (index === 0) this.editor.continueBackward(this.latlngs);
+            else if (index === this.getLastIndex()) this.editor.continueForward(this.latlngs);
+        }
+
+    });
+
+    L.Editable.mergeOptions({
+
+        // 🍂namespace Editable
+        // 🍂option vertexMarkerClass: class = VertexMarker
+        // Class to be used as vertex, for path editing.
+        vertexMarkerClass: L.Editable.VertexMarker
+
+    });
+
+    L.Editable.MiddleMarker = L.Marker.extend({
+
+        options: {
+            opacity: 0.5,
+            className: 'leaflet-div-icon leaflet-middle-icon',
+            draggable: true
+        },
+
+        initialize: function (left, right, latlngs, editor, options) {
+            this.left = left;
+            this.right = right;
+            this.editor = editor;
+            this.latlngs = latlngs;
+            L.Marker.prototype.initialize.call(this, this.computeLatLng(), options);
+            this._opacity = this.options.opacity;
+            this.options.icon = this.editor.tools.createVertexIcon({className: this.options.className});
+            this.editor.editLayer.addLayer(this);
+            this.setVisibility();
+        },
+
+        setVisibility: function () {
+            var leftPoint = this._map.latLngToContainerPoint(this.left.latlng),
+                rightPoint = this._map.latLngToContainerPoint(this.right.latlng),
+                size = L.point(this.options.icon.options.iconSize);
+            if (leftPoint.distanceTo(rightPoint) < size.x * 3) this.hide();
+            else this.show();
+        },
+
+        show: function () {
+            this.setOpacity(this._opacity);
+        },
+
+        hide: function () {
+            this.setOpacity(0);
+        },
+
+        updateLatLng: function () {
+            this.setLatLng(this.computeLatLng());
+            this.setVisibility();
+        },
+
+        computeLatLng: function () {
+            var leftPoint = this.editor.map.latLngToContainerPoint(this.left.latlng),
+                rightPoint = this.editor.map.latLngToContainerPoint(this.right.latlng),
+                y = (leftPoint.y + rightPoint.y) / 2,
+                x = (leftPoint.x + rightPoint.x) / 2;
+            return this.editor.map.containerPointToLatLng([x, y]);
+        },
+
+        onAdd: function (map) {
+            L.Marker.prototype.onAdd.call(this, map);
+            L.DomEvent.on(this._icon, 'mousedown touchstart', this.onMouseDown, this);
+            map.on('zoomend', this.setVisibility, this);
+        },
+
+        onRemove: function (map) {
+            delete this.right.middleMarker;
+            L.DomEvent.off(this._icon, 'mousedown touchstart', this.onMouseDown, this);
+            map.off('zoomend', this.setVisibility, this);
+            L.Marker.prototype.onRemove.call(this, map);
+        },
+
+        onMouseDown: function (e) {
+            var iconPos = L.DomUtil.getPosition(this._icon),
+                latlng = this.editor.map.layerPointToLatLng(iconPos);
+            e = {
+                originalEvent: e,
+                latlng: latlng
+            };
+            if (this.options.opacity === 0) return;
+            L.Editable.makeCancellable(e);
+            this.editor.onMiddleMarkerMouseDown(e);
+            if (e._cancelled) return;
+            this.latlngs.splice(this.index(), 0, e.latlng);
+            this.editor.refresh();
+            var icon = this._icon;
+            var marker = this.editor.addVertexMarker(e.latlng, this.latlngs);
+            this.editor.onNewVertex(marker);
+            /* Hack to workaround browser not firing touchend when element is no more on DOM */
+            var parent = marker._icon.parentNode;
+            parent.removeChild(marker._icon);
+            marker._icon = icon;
+            parent.appendChild(marker._icon);
+            marker._initIcon();
+            marker._initInteraction();
+            marker.setOpacity(1);
+            /* End hack */
+            // Transfer ongoing dragging to real marker
+            L.Draggable._dragging = false;
+            marker.dragging._draggable._onDown(e.originalEvent);
+            this.delete();
+        },
+
+        delete: function () {
+            this.editor.editLayer.removeLayer(this);
+        },
+
+        index: function () {
+            return this.latlngs.indexOf(this.right.latlng);
+        }
+
+    });
+
+    L.Editable.mergeOptions({
+
+        // 🍂namespace Editable
+        // 🍂option middleMarkerClass: class = VertexMarker
+        // Class to be used as middle vertex, pulled by the user to create a new point in the middle of a path.
+        middleMarkerClass: L.Editable.MiddleMarker
+
+    });
+
+    // 🍂namespace Editable; 🍂class BaseEditor; 🍂aka L.Editable.BaseEditor
+    // When editing a feature (Marker, Polyline…), an editor is attached to it. This
+    // editor basically knows how to handle the edition.
+    L.Editable.BaseEditor = L.Handler.extend({
+
+        initialize: function (map, feature, options) {
+            L.setOptions(this, options);
+            this.map = map;
+            this.feature = feature;
+            this.feature.editor = this;
+            this.editLayer = new L.LayerGroup();
+            this.tools = this.options.editTools || map.editTools;
+        },
+
+        // 🍂method enable(): this
+        // Set up the drawing tools for the feature to be editable.
+        addHooks: function () {
+            if (this.isConnected()) this.onFeatureAdd();
+            else this.feature.once('add', this.onFeatureAdd, this);
+            this.onEnable();
+            this.feature.on(this._getEvents(), this);
+        },
+
+        // 🍂method disable(): this
+        // Remove the drawing tools for the feature.
+        removeHooks: function () {
+            this.feature.off(this._getEvents(), this);
+            if (this.feature.dragging) this.feature.dragging.disable();
+            this.editLayer.clearLayers();
+            this.tools.editLayer.removeLayer(this.editLayer);
+            this.onDisable();
+            if (this._drawing) this.cancelDrawing();
+        },
+
+        // 🍂method drawing(): boolean
+        // Return true if any drawing action is ongoing with this editor.
+        drawing: function () {
+            return !!this._drawing;
+        },
+
+        reset: function () {},
+
+        onFeatureAdd: function () {
+            this.tools.editLayer.addLayer(this.editLayer);
+            if (this.feature.dragging) this.feature.dragging.enable();
+        },
+
+        hasMiddleMarkers: function () {
+            return !this.options.skipMiddleMarkers && !this.tools.options.skipMiddleMarkers;
+        },
+
+        fireAndForward: function (type, e) {
+            e = e || {};
+            e.layer = this.feature;
+            this.feature.fire(type, e);
+            this.tools.fireAndForward(type, e);
+        },
+
+        onEnable: function () {
+            // 🍂namespace Editable
+            // 🍂event editable:enable: Event
+            // Fired when an existing feature is ready to be edited.
+            this.fireAndForward('editable:enable');
+        },
+
+        onDisable: function () {
+            // 🍂namespace Editable
+            // 🍂event editable:disable: Event
+            // Fired when an existing feature is not ready anymore to be edited.
+            this.fireAndForward('editable:disable');
+        },
+
+        onEditing: function () {
+            // 🍂namespace Editable
+            // 🍂event editable:editing: Event
+            // Fired as soon as any change is made to the feature geometry.
+            this.fireAndForward('editable:editing');
+        },
+
+        onStartDrawing: function () {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:start: Event
+            // Fired when a feature is to be drawn.
+            this.fireAndForward('editable:drawing:start');
+        },
+
+        onEndDrawing: function () {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:end: Event
+            // Fired when a feature is not drawn anymore.
+            this.fireAndForward('editable:drawing:end');
+        },
+
+        onCancelDrawing: function () {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:cancel: Event
+            // Fired when user cancel drawing while a feature is being drawn.
+            this.fireAndForward('editable:drawing:cancel');
+        },
+
+        onCommitDrawing: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:commit: Event
+            // Fired when user finish drawing a feature.
+            this.fireAndForward('editable:drawing:commit', e);
+        },
+
+        onDrawingMouseDown: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:mousedown: Event
+            // Fired when user `mousedown` while drawing.
+            this.fireAndForward('editable:drawing:mousedown', e);
+        },
+
+        onDrawingMouseUp: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:mouseup: Event
+            // Fired when user `mouseup` while drawing.
+            this.fireAndForward('editable:drawing:mouseup', e);
+        },
+
+        startDrawing: function () {
+            if (!this._drawing) this._drawing = L.Editable.FORWARD;
+            this.tools.registerForDrawing(this);
+            this.onStartDrawing();
+        },
+
+        commitDrawing: function (e) {
+            this.onCommitDrawing(e);
+            this.endDrawing();
+        },
+
+        cancelDrawing: function () {
+            // If called during a vertex drag, the vertex will be removed before
+            // the mouseup fires on it. This is a workaround. Maybe better fix is
+            // To have L.Draggable reset it's status on disable (Leaflet side).
+            L.Draggable._dragging = false;
+            this.onCancelDrawing();
+            this.endDrawing();
+        },
+
+        endDrawing: function () {
+            this._drawing = false;
+            this.tools.unregisterForDrawing(this);
+            this.onEndDrawing();
+        },
+
+        onDrawingClick: function (e) {
+            if (!this.drawing()) return;
+            L.Editable.makeCancellable(e);
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:click: CancelableEvent
+            // Fired when user `click` while drawing, before any internal action is being processed.
+            this.fireAndForward('editable:drawing:click', e);
+            if (e._cancelled) return;
+            if (!this.isConnected()) this.connect(e);
+            this.processDrawingClick(e);
+        },
+
+        isConnected: function () {
+            return this.map.hasLayer(this.feature);
+        },
+
+        connect: function () {
+            this.tools.connectCreatedToMap(this.feature);
+            this.tools.editLayer.addLayer(this.editLayer);
+        },
+
+        onMove: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:move: Event
+            // Fired when `move` mouse while drawing, while dragging a marker, and while dragging a vertex.
+            this.fireAndForward('editable:drawing:move', e);
+        },
+
+        onDrawingMouseMove: function (e) {
+            this.onMove(e);
+        },
+
+        _getEvents: function () {
+            return {
+                dragstart: this.onDragStart,
+                drag: this.onDrag,
+                dragend: this.onDragEnd,
+                remove: this.disable
+            };
+        },
+
+        onDragStart: function (e) {
+            this.onEditing();
+            // 🍂namespace Editable
+            // 🍂event editable:dragstart: Event
+            // Fired before a path feature is dragged.
+            this.fireAndForward('editable:dragstart', e);
+        },
+
+        onDrag: function (e) {
+            this.onMove(e);
+            // 🍂namespace Editable
+            // 🍂event editable:drag: Event
+            // Fired when a path feature is being dragged.
+            this.fireAndForward('editable:drag', e);
+        },
+
+        onDragEnd: function (e) {
+            // 🍂namespace Editable
+            // 🍂event editable:dragend: Event
+            // Fired after a path feature has been dragged.
+            this.fireAndForward('editable:dragend', e);
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class MarkerEditor; 🍂aka L.Editable.MarkerEditor
+    // 🍂inherits BaseEditor
+    // Editor for Marker.
+    L.Editable.MarkerEditor = L.Editable.BaseEditor.extend({
+
+        onDrawingMouseMove: function (e) {
+            L.Editable.BaseEditor.prototype.onDrawingMouseMove.call(this, e);
+            if (this._drawing) this.feature.setLatLng(e.latlng);
+        },
+
+        processDrawingClick: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Drawing events
+            // 🍂event editable:drawing:clicked: Event
+            // Fired when user `click` while drawing, after all internal actions.
+            this.fireAndForward('editable:drawing:clicked', e);
+            this.commitDrawing(e);
+        },
+
+        connect: function (e) {
+            // On touch, the latlng has not been updated because there is
+            // no mousemove.
+            if (e) this.feature._latlng = e.latlng;
+            L.Editable.BaseEditor.prototype.connect.call(this, e);
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class PathEditor; 🍂aka L.Editable.PathEditor
+    // 🍂inherits BaseEditor
+    // Base class for all path editors.
+    L.Editable.PathEditor = L.Editable.BaseEditor.extend({
+
+        CLOSED: false,
+        MIN_VERTEX: 2,
+
+        addHooks: function () {
+            L.Editable.BaseEditor.prototype.addHooks.call(this);
+            if (this.feature) this.initVertexMarkers();
+            return this;
+        },
+
+        initVertexMarkers: function (latlngs) {
+            if (!this.enabled()) return;
+            latlngs = latlngs || this.getLatLngs();
+            if (isFlat(latlngs)) this.addVertexMarkers(latlngs);
+            else for (var i = 0; i < latlngs.length; i++) this.initVertexMarkers(latlngs[i]);
+        },
+
+        getLatLngs: function () {
+            return this.feature.getLatLngs();
+        },
+
+        // 🍂method reset()
+        // Rebuild edit elements (Vertex, MiddleMarker, etc.).
+        reset: function () {
+            this.editLayer.clearLayers();
+            this.initVertexMarkers();
+        },
+
+        addVertexMarker: function (latlng, latlngs) {
+            return new this.tools.options.vertexMarkerClass(latlng, latlngs, this);
+        },
+
+        onNewVertex: function (vertex) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:new: VertexEvent
+            // Fired when a new vertex is created.
+            this.fireAndForward('editable:vertex:new', {latlng: vertex.latlng, vertex: vertex});
+        },
+
+        addVertexMarkers: function (latlngs) {
+            for (var i = 0; i < latlngs.length; i++) {
+                this.addVertexMarker(latlngs[i], latlngs);
+            }
+        },
+
+        refreshVertexMarkers: function (latlngs) {
+            latlngs = latlngs || this.getDefaultLatLngs();
+            for (var i = 0; i < latlngs.length; i++) {
+                latlngs[i].__vertex.update();
+            }
+        },
+
+        addMiddleMarker: function (left, right, latlngs) {
+            return new this.tools.options.middleMarkerClass(left, right, latlngs, this);
+        },
+
+        onVertexMarkerClick: function (e) {
+            L.Editable.makeCancellable(e);
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:click: CancelableVertexEvent
+            // Fired when a `click` is issued on a vertex, before any internal action is being processed.
+            this.fireAndForward('editable:vertex:click', e);
+            if (e._cancelled) return;
+            if (this.tools.drawing() && this.tools._drawingEditor !== this) return;
+            var index = e.vertex.getIndex(), commit;
+            if (e.originalEvent.ctrlKey) {
+                this.onVertexMarkerCtrlClick(e);
+            } else if (e.originalEvent.altKey) {
+                this.onVertexMarkerAltClick(e);
+            } else if (e.originalEvent.shiftKey) {
+                this.onVertexMarkerShiftClick(e);
+            } else if (e.originalEvent.metaKey) {
+                this.onVertexMarkerMetaKeyClick(e);
+            } else if (index === e.vertex.getLastIndex() && this._drawing === L.Editable.FORWARD) {
+                if (index >= this.MIN_VERTEX - 1) commit = true;
+            } else if (index === 0 && this._drawing === L.Editable.BACKWARD && this._drawnLatLngs.length >= this.MIN_VERTEX) {
+                commit = true;
+            } else if (index === 0 && this._drawing === L.Editable.FORWARD && this._drawnLatLngs.length >= this.MIN_VERTEX && this.CLOSED) {
+                commit = true;  // Allow to close on first point also for polygons
+            } else {
+                this.onVertexRawMarkerClick(e);
+            }
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:clicked: VertexEvent
+            // Fired when a `click` is issued on a vertex, after all internal actions.
+            this.fireAndForward('editable:vertex:clicked', e);
+            if (commit) this.commitDrawing(e);
+        },
+
+        onVertexRawMarkerClick: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:rawclick: CancelableVertexEvent
+            // Fired when a `click` is issued on a vertex without any special key and without being in drawing mode.
+            this.fireAndForward('editable:vertex:rawclick', e);
+            if (e._cancelled) return;
+            if (!this.vertexCanBeDeleted(e.vertex)) return;
+            e.vertex.delete();
+        },
+
+        vertexCanBeDeleted: function (vertex) {
+            return vertex.latlngs.length > this.MIN_VERTEX;
+        },
+
+        onVertexDeleted: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:deleted: VertexEvent
+            // Fired after a vertex has been deleted by user.
+            this.fireAndForward('editable:vertex:deleted', e);
+        },
+
+        onVertexMarkerCtrlClick: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:ctrlclick: VertexEvent
+            // Fired when a `click` with `ctrlKey` is issued on a vertex.
+            this.fireAndForward('editable:vertex:ctrlclick', e);
+        },
+
+        onVertexMarkerShiftClick: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:shiftclick: VertexEvent
+            // Fired when a `click` with `shiftKey` is issued on a vertex.
+            this.fireAndForward('editable:vertex:shiftclick', e);
+        },
+
+        onVertexMarkerMetaKeyClick: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:metakeyclick: VertexEvent
+            // Fired when a `click` with `metaKey` is issued on a vertex.
+            this.fireAndForward('editable:vertex:metakeyclick', e);
+        },
+
+        onVertexMarkerAltClick: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:altclick: VertexEvent
+            // Fired when a `click` with `altKey` is issued on a vertex.
+            this.fireAndForward('editable:vertex:altclick', e);
+        },
+
+        onVertexMarkerContextMenu: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:contextmenu: VertexEvent
+            // Fired when a `contextmenu` is issued on a vertex.
+            this.fireAndForward('editable:vertex:contextmenu', e);
+        },
+
+        onVertexMarkerMouseDown: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:mousedown: VertexEvent
+            // Fired when user `mousedown` a vertex.
+            this.fireAndForward('editable:vertex:mousedown', e);
+        },
+
+        onVertexMarkerMouseOver: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:mouseover: VertexEvent
+            // Fired when a user's mouse enters the vertex
+            this.fireAndForward('editable:vertex:mouseover', e);
+        },
+
+        onVertexMarkerMouseOut: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:mouseout: VertexEvent
+            // Fired when a user's mouse leaves the vertex
+            this.fireAndForward('editable:vertex:mouseout', e);
+        },
+
+        onMiddleMarkerMouseDown: function (e) {
+            // 🍂namespace Editable
+            // 🍂section MiddleMarker events
+            // 🍂event editable:middlemarker:mousedown: VertexEvent
+            // Fired when user `mousedown` a middle marker.
+            this.fireAndForward('editable:middlemarker:mousedown', e);
+        },
+
+        onVertexMarkerDrag: function (e) {
+            this.onMove(e);
+            if (this.feature._bounds) this.extendBounds(e);
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:drag: VertexEvent
+            // Fired when a vertex is dragged by user.
+            this.fireAndForward('editable:vertex:drag', e);
+        },
+
+        onVertexMarkerDragStart: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:dragstart: VertexEvent
+            // Fired before a vertex is dragged by user.
+            this.fireAndForward('editable:vertex:dragstart', e);
+        },
+
+        onVertexMarkerDragEnd: function (e) {
+            // 🍂namespace Editable
+            // 🍂section Vertex events
+            // 🍂event editable:vertex:dragend: VertexEvent
+            // Fired after a vertex is dragged by user.
+            this.fireAndForward('editable:vertex:dragend', e);
+        },
+
+        setDrawnLatLngs: function (latlngs) {
+            this._drawnLatLngs = latlngs || this.getDefaultLatLngs();
+        },
+
+        startDrawing: function () {
+            if (!this._drawnLatLngs) this.setDrawnLatLngs();
+            L.Editable.BaseEditor.prototype.startDrawing.call(this);
+        },
+
+        startDrawingForward: function () {
+            this.startDrawing();
+        },
+
+        endDrawing: function () {
+            this.tools.detachForwardLineGuide();
+            this.tools.detachBackwardLineGuide();
+            if (this._drawnLatLngs && this._drawnLatLngs.length < this.MIN_VERTEX) this.deleteShape(this._drawnLatLngs);
+            L.Editable.BaseEditor.prototype.endDrawing.call(this);
+            delete this._drawnLatLngs;
+        },
+
+        addLatLng: function (latlng) {
+            if (this._drawing === L.Editable.FORWARD) this._drawnLatLngs.push(latlng);
+            else this._drawnLatLngs.unshift(latlng);
+            this.feature._bounds.extend(latlng);
+            var vertex = this.addVertexMarker(latlng, this._drawnLatLngs);
+            this.onNewVertex(vertex);
+            this.refresh();
+        },
+
+        newPointForward: function (latlng) {
+            this.addLatLng(latlng);
+            this.tools.attachForwardLineGuide();
+            this.tools.anchorForwardLineGuide(latlng);
+        },
+
+        newPointBackward: function (latlng) {
+            this.addLatLng(latlng);
+            this.tools.anchorBackwardLineGuide(latlng);
+        },
+
+        // 🍂namespace PathEditor
+        // 🍂method push()
+        // Programmatically add a point while drawing.
+        push: function (latlng) {
+            if (!latlng) return console.error('L.Editable.PathEditor.push expect a valid latlng as parameter');
+            if (this._drawing === L.Editable.FORWARD) this.newPointForward(latlng);
+            else this.newPointBackward(latlng);
+        },
+
+        removeLatLng: function (latlng) {
+            latlng.__vertex.delete();
+            this.refresh();
+        },
+
+        // 🍂method pop(): L.LatLng or null
+        // Programmatically remove last point (if any) while drawing.
+        pop: function () {
+            if (this._drawnLatLngs.length <= 1) return;
+            var latlng;
+            if (this._drawing === L.Editable.FORWARD) latlng = this._drawnLatLngs[this._drawnLatLngs.length - 1];
+            else latlng = this._drawnLatLngs[0];
+            this.removeLatLng(latlng);
+            if (this._drawing === L.Editable.FORWARD) this.tools.anchorForwardLineGuide(this._drawnLatLngs[this._drawnLatLngs.length - 1]);
+            else this.tools.anchorForwardLineGuide(this._drawnLatLngs[0]);
+            return latlng;
+        },
+
+        processDrawingClick: function (e) {
+            if (e.vertex && e.vertex.editor === this) return;
+            if (this._drawing === L.Editable.FORWARD) this.newPointForward(e.latlng);
+            else this.newPointBackward(e.latlng);
+            this.fireAndForward('editable:drawing:clicked', e);
+        },
+
+        onDrawingMouseMove: function (e) {
+            L.Editable.BaseEditor.prototype.onDrawingMouseMove.call(this, e);
+            if (this._drawing) {
+                this.tools.moveForwardLineGuide(e.latlng);
+                this.tools.moveBackwardLineGuide(e.latlng);
+            }
+        },
+
+        refresh: function () {
+            this.feature.redraw();
+            this.onEditing();
+        },
+
+        // 🍂namespace PathEditor
+        // 🍂method newShape(latlng?: L.LatLng)
+        // Add a new shape (Polyline, Polygon) in a multi, and setup up drawing tools to draw it;
+        // if optional `latlng` is given, start a path at this point.
+        newShape: function (latlng) {
+            var shape = this.addNewEmptyShape();
+            if (!shape) return;
+            this.setDrawnLatLngs(shape[0] || shape);  // Polygon or polyline
+            this.startDrawingForward();
+            // 🍂namespace Editable
+            // 🍂section Shape events
+            // 🍂event editable:shape:new: ShapeEvent
+            // Fired when a new shape is created in a multi (Polygon or Polyline).
+            this.fireAndForward('editable:shape:new', {shape: shape});
+            if (latlng) this.newPointForward(latlng);
+        },
+
+        deleteShape: function (shape, latlngs) {
+            var e = {shape: shape};
+            L.Editable.makeCancellable(e);
+            // 🍂namespace Editable
+            // 🍂section Shape events
+            // 🍂event editable:shape:delete: CancelableShapeEvent
+            // Fired before a new shape is deleted in a multi (Polygon or Polyline).
+            this.fireAndForward('editable:shape:delete', e);
+            if (e._cancelled) return;
+            shape = this._deleteShape(shape, latlngs);
+            if (this.ensureNotFlat) this.ensureNotFlat();  // Polygon.
+            this.feature.setLatLngs(this.getLatLngs());  // Force bounds reset.
+            this.refresh();
+            this.reset();
+            // 🍂namespace Editable
+            // 🍂section Shape events
+            // 🍂event editable:shape:deleted: ShapeEvent
+            // Fired after a new shape is deleted in a multi (Polygon or Polyline).
+            this.fireAndForward('editable:shape:deleted', {shape: shape});
+            return shape;
+        },
+
+        _deleteShape: function (shape, latlngs) {
+            latlngs = latlngs || this.getLatLngs();
+            if (!latlngs.length) return;
+            var self = this,
+                inplaceDelete = function (latlngs, shape) {
+                    // Called when deleting a flat latlngs
+                    shape = latlngs.splice(0, Number.MAX_VALUE);
+                    return shape;
+                },
+                spliceDelete = function (latlngs, shape) {
+                    // Called when removing a latlngs inside an array
+                    latlngs.splice(latlngs.indexOf(shape), 1);
+                    if (!latlngs.length) self._deleteShape(latlngs);
+                    return shape;
+                };
+            if (latlngs === shape) return inplaceDelete(latlngs, shape);
+            for (var i = 0; i < latlngs.length; i++) {
+                if (latlngs[i] === shape) return spliceDelete(latlngs, shape);
+                else if (latlngs[i].indexOf(shape) !== -1) return spliceDelete(latlngs[i], shape);
+            }
+        },
+
+        // 🍂namespace PathEditor
+        // 🍂method deleteShapeAt(latlng: L.LatLng): Array
+        // Remove a path shape at the given `latlng`.
+        deleteShapeAt: function (latlng) {
+            var shape = this.feature.shapeAt(latlng);
+            if (shape) return this.deleteShape(shape);
+        },
+
+        // 🍂method appendShape(shape: Array)
+        // Append a new shape to the Polygon or Polyline.
+        appendShape: function (shape) {
+            this.insertShape(shape);
+        },
+
+        // 🍂method prependShape(shape: Array)
+        // Prepend a new shape to the Polygon or Polyline.
+        prependShape: function (shape) {
+            this.insertShape(shape, 0);
+        },
+
+        // 🍂method insertShape(shape: Array, index: int)
+        // Insert a new shape to the Polygon or Polyline at given index (default is to append).
+        insertShape: function (shape, index) {
+            this.ensureMulti();
+            shape = this.formatShape(shape);
+            if (typeof index === 'undefined') index = this.feature._latlngs.length;
+            this.feature._latlngs.splice(index, 0, shape);
+            this.feature.redraw();
+            if (this._enabled) this.reset();
+        },
+
+        extendBounds: function (e) {
+            this.feature._bounds.extend(e.vertex.latlng);
+        },
+
+        onDragStart: function (e) {
+            this.editLayer.clearLayers();
+            L.Editable.BaseEditor.prototype.onDragStart.call(this, e);
+        },
+
+        onDragEnd: function (e) {
+            this.initVertexMarkers();
+            L.Editable.BaseEditor.prototype.onDragEnd.call(this, e);
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class PolylineEditor; 🍂aka L.Editable.PolylineEditor
+    // 🍂inherits PathEditor
+    L.Editable.PolylineEditor = L.Editable.PathEditor.extend({
+
+        startDrawingBackward: function () {
+            this._drawing = L.Editable.BACKWARD;
+            this.startDrawing();
+        },
+
+        // 🍂method continueBackward(latlngs?: Array)
+        // Set up drawing tools to continue the line backward.
+        continueBackward: function (latlngs) {
+            if (this.drawing()) return;
+            latlngs = latlngs || this.getDefaultLatLngs();
+            this.setDrawnLatLngs(latlngs);
+            if (latlngs.length > 0) {
+                this.tools.attachBackwardLineGuide();
+                this.tools.anchorBackwardLineGuide(latlngs[0]);
+            }
+            this.startDrawingBackward();
+        },
+
+        // 🍂method continueForward(latlngs?: Array)
+        // Set up drawing tools to continue the line forward.
+        continueForward: function (latlngs) {
+            if (this.drawing()) return;
+            latlngs = latlngs || this.getDefaultLatLngs();
+            this.setDrawnLatLngs(latlngs);
+            if (latlngs.length > 0) {
+                this.tools.attachForwardLineGuide();
+                this.tools.anchorForwardLineGuide(latlngs[latlngs.length - 1]);
+            }
+            this.startDrawingForward();
+        },
+
+        getDefaultLatLngs: function (latlngs) {
+            latlngs = latlngs || this.feature._latlngs;
+            if (!latlngs.length || latlngs[0] instanceof L.LatLng) return latlngs;
+            else return this.getDefaultLatLngs(latlngs[0]);
+        },
+
+        ensureMulti: function () {
+            if (this.feature._latlngs.length && isFlat(this.feature._latlngs)) {
+                this.feature._latlngs = [this.feature._latlngs];
+            }
+        },
+
+        addNewEmptyShape: function () {
+            if (this.feature._latlngs.length) {
+                var shape = [];
+                this.appendShape(shape);
+                return shape;
+            } else {
+                return this.feature._latlngs;
+            }
+        },
+
+        formatShape: function (shape) {
+            if (isFlat(shape)) return shape;
+            else if (shape[0]) return this.formatShape(shape[0]);
+        },
+
+        // 🍂method splitShape(latlngs?: Array, index: int)
+        // Split the given `latlngs` shape at index `index` and integrate new shape in instance `latlngs`.
+        splitShape: function (shape, index) {
+            if (!index || index >= shape.length - 1) return;
+            this.ensureMulti();
+            var shapeIndex = this.feature._latlngs.indexOf(shape);
+            if (shapeIndex === -1) return;
+            var first = shape.slice(0, index + 1),
+                second = shape.slice(index);
+            // We deal with reference, we don't want twice the same latlng around.
+            second[0] = L.latLng(second[0].lat, second[0].lng, second[0].alt);
+            this.feature._latlngs.splice(shapeIndex, 1, first, second);
+            this.refresh();
+            this.reset();
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class PolygonEditor; 🍂aka L.Editable.PolygonEditor
+    // 🍂inherits PathEditor
+    L.Editable.PolygonEditor = L.Editable.PathEditor.extend({
+
+        CLOSED: true,
+        MIN_VERTEX: 3,
+
+        newPointForward: function (latlng) {
+            L.Editable.PathEditor.prototype.newPointForward.call(this, latlng);
+            if (!this.tools.backwardLineGuide._latlngs.length) this.tools.anchorBackwardLineGuide(latlng);
+            if (this._drawnLatLngs.length === 2) this.tools.attachBackwardLineGuide();
+        },
+
+        addNewEmptyHole: function (latlng) {
+            this.ensureNotFlat();
+            var latlngs = this.feature.shapeAt(latlng);
+            if (!latlngs) return;
+            var holes = [];
+            latlngs.push(holes);
+            return holes;
+        },
+
+        // 🍂method newHole(latlng?: L.LatLng, index: int)
+        // Set up drawing tools for creating a new hole on the Polygon. If the `latlng` param is given, a first point is created.
+        newHole: function (latlng) {
+            var holes = this.addNewEmptyHole(latlng);
+            if (!holes) return;
+            this.setDrawnLatLngs(holes);
+            this.startDrawingForward();
+            if (latlng) this.newPointForward(latlng);
+        },
+
+        addNewEmptyShape: function () {
+            if (this.feature._latlngs.length && this.feature._latlngs[0].length) {
+                var shape = [];
+                this.appendShape(shape);
+                return shape;
+            } else {
+                return this.feature._latlngs;
+            }
+        },
+
+        ensureMulti: function () {
+            if (this.feature._latlngs.length && isFlat(this.feature._latlngs[0])) {
+                this.feature._latlngs = [this.feature._latlngs];
+            }
+        },
+
+        ensureNotFlat: function () {
+            if (!this.feature._latlngs.length || isFlat(this.feature._latlngs)) this.feature._latlngs = [this.feature._latlngs];
+        },
+
+        vertexCanBeDeleted: function (vertex) {
+            var parent = this.feature.parentShape(vertex.latlngs),
+                idx = L.Util.indexOf(parent, vertex.latlngs);
+            if (idx > 0) return true;  // Holes can be totally deleted without removing the layer itself.
+            return L.Editable.PathEditor.prototype.vertexCanBeDeleted.call(this, vertex);
+        },
+
+        getDefaultLatLngs: function () {
+            if (!this.feature._latlngs.length) this.feature._latlngs.push([]);
+            return this.feature._latlngs[0];
+        },
+
+        formatShape: function (shape) {
+            // [[1, 2], [3, 4]] => must be nested
+            // [] => must be nested
+            // [[]] => is already nested
+            if (isFlat(shape) && (!shape[0] || shape[0].length !== 0)) return [shape];
+            else return shape;
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class RectangleEditor; 🍂aka L.Editable.RectangleEditor
+    // 🍂inherits PathEditor
+    L.Editable.RectangleEditor = L.Editable.PathEditor.extend({
+
+        CLOSED: true,
+        MIN_VERTEX: 4,
+
+        options: {
+            skipMiddleMarkers: true
+        },
+
+        extendBounds: function (e) {
+            var index = e.vertex.getIndex(),
+                next = e.vertex.getNext(),
+                previous = e.vertex.getPrevious(),
+                oppositeIndex = (index + 2) % 4,
+                opposite = e.vertex.latlngs[oppositeIndex],
+                bounds = new L.LatLngBounds(e.latlng, opposite);
+            // Update latlngs by hand to preserve order.
+            previous.latlng.update([e.latlng.lat, opposite.lng]);
+            next.latlng.update([opposite.lat, e.latlng.lng]);
+            this.updateBounds(bounds);
+            this.refreshVertexMarkers();
+        },
+
+        onDrawingMouseDown: function (e) {
+            L.Editable.PathEditor.prototype.onDrawingMouseDown.call(this, e);
+            this.connect();
+            var latlngs = this.getDefaultLatLngs();
+            // L.Polygon._convertLatLngs removes last latlng if it equals first point,
+            // which is the case here as all latlngs are [0, 0]
+            if (latlngs.length === 3) latlngs.push(e.latlng);
+            var bounds = new L.LatLngBounds(e.latlng, e.latlng);
+            this.updateBounds(bounds);
+            this.updateLatLngs(bounds);
+            this.refresh();
+            this.reset();
+            // Stop dragging map.
+            // L.Draggable has two workflows:
+            // - mousedown => mousemove => mouseup
+            // - touchstart => touchmove => touchend
+            // Problem: L.Map.Tap does not allow us to listen to touchstart, so we only
+            // can deal with mousedown, but then when in a touch device, we are dealing with
+            // simulated events (actually simulated by L.Map.Tap), which are no more taken
+            // into account by L.Draggable.
+            // Ref.: https://github.com/Leaflet/Leaflet.Editable/issues/103
+            e.originalEvent._simulated = false;
+            this.map.dragging._draggable._onUp(e.originalEvent);
+            // Now transfer ongoing drag action to the bottom right corner.
+            // Should we refine which corner will handle the drag according to
+            // drag direction?
+            latlngs[3].__vertex.dragging._draggable._onDown(e.originalEvent);
+        },
+
+        onDrawingMouseUp: function (e) {
+            this.commitDrawing(e);
+            e.originalEvent._simulated = false;
+            L.Editable.PathEditor.prototype.onDrawingMouseUp.call(this, e);
+        },
+
+        onDrawingMouseMove: function (e) {
+            e.originalEvent._simulated = false;
+            L.Editable.PathEditor.prototype.onDrawingMouseMove.call(this, e);
+        },
+
+
+        getDefaultLatLngs: function (latlngs) {
+            return latlngs || this.feature._latlngs[0];
+        },
+
+        updateBounds: function (bounds) {
+            this.feature._bounds = bounds;
+        },
+
+        updateLatLngs: function (bounds) {
+            var latlngs = this.getDefaultLatLngs(),
+                newLatlngs = this.feature._boundsToLatLngs(bounds);
+            // Keep references.
+            for (var i = 0; i < latlngs.length; i++) {
+                latlngs[i].update(newLatlngs[i]);
+            }
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class CircleEditor; 🍂aka L.Editable.CircleEditor
+    // 🍂inherits PathEditor
+    L.Editable.CircleEditor = L.Editable.PathEditor.extend({
+
+        MIN_VERTEX: 2,
+
+        options: {
+            skipMiddleMarkers: true
+        },
+
+        initialize: function (map, feature, options) {
+            L.Editable.PathEditor.prototype.initialize.call(this, map, feature, options);
+            this._resizeLatLng = this.computeResizeLatLng();
+        },
+
+        computeResizeLatLng: function () {
+            // While circle is not added to the map, _radius is not set.
+            var delta = (this.feature._radius || this.feature._mRadius) * Math.cos(Math.PI / 4),
+                point = this.map.project(this.feature._latlng);
+            return this.map.unproject([point.x + delta, point.y - delta]);
+        },
+
+        updateResizeLatLng: function () {
+            this._resizeLatLng.update(this.computeResizeLatLng());
+            this._resizeLatLng.__vertex.update();
+        },
+
+        getLatLngs: function () {
+            return [this.feature._latlng, this._resizeLatLng];
+        },
+
+        getDefaultLatLngs: function () {
+            return this.getLatLngs();
+        },
+
+        onVertexMarkerDrag: function (e) {
+            if (e.vertex.getIndex() === 1) this.resize(e);
+            else this.updateResizeLatLng(e);
+            L.Editable.PathEditor.prototype.onVertexMarkerDrag.call(this, e);
+        },
+
+        resize: function (e) {
+            var radius = this.feature._latlng.distanceTo(e.latlng);
+            this.feature.setRadius(radius);
+        },
+
+        onDrawingMouseDown: function (e) {
+            L.Editable.PathEditor.prototype.onDrawingMouseDown.call(this, e);
+            this._resizeLatLng.update(e.latlng);
+            this.feature._latlng.update(e.latlng);
+            this.connect();
+            // Stop dragging map.
+            e.originalEvent._simulated = false;
+            this.map.dragging._draggable._onUp(e.originalEvent);
+            // Now transfer ongoing drag action to the radius handler.
+            this._resizeLatLng.__vertex.dragging._draggable._onDown(e.originalEvent);
+        },
+
+        onDrawingMouseUp: function (e) {
+            this.commitDrawing(e);
+            e.originalEvent._simulated = false;
+            L.Editable.PathEditor.prototype.onDrawingMouseUp.call(this, e);
+        },
+
+        onDrawingMouseMove: function (e) {
+            e.originalEvent._simulated = false;
+            L.Editable.PathEditor.prototype.onDrawingMouseMove.call(this, e);
+        },
+
+        onDrag: function (e) {
+            L.Editable.PathEditor.prototype.onDrag.call(this, e);
+            this.feature.dragging.updateLatLng(this._resizeLatLng);
+        }
+
+    });
+
+    // 🍂namespace Editable; 🍂class EditableMixin
+    // `EditableMixin` is included to `L.Polyline`, `L.Polygon`, `L.Rectangle`, `L.Circle`
+    // and `L.Marker`. It adds some methods to them.
+    // *When editing is enabled, the editor is accessible on the instance with the
+    // `editor` property.*
+    var EditableMixin = {
+
+        createEditor: function (map) {
+            map = map || this._map;
+            var tools = (this.options.editOptions || {}).editTools || map.editTools;
+            if (!tools) throw Error('Unable to detect Editable instance.');
+            var Klass = this.options.editorClass || this.getEditorClass(tools);
+            return new Klass(map, this, this.options.editOptions);
+        },
+
+        // 🍂method enableEdit(map?: L.Map): this.editor
+        // Enable editing, by creating an editor if not existing, and then calling `enable` on it.
+        enableEdit: function (map) {
+            if (!this.editor) this.createEditor(map);
+            this.editor.enable();
+            return this.editor;
+        },
+
+        // 🍂method editEnabled(): boolean
+        // Return true if current instance has an editor attached, and this editor is enabled.
+        editEnabled: function () {
+            return this.editor && this.editor.enabled();
+        },
+
+        // 🍂method disableEdit()
+        // Disable editing, also remove the editor property reference.
+        disableEdit: function () {
+            if (this.editor) {
+                this.editor.disable();
+                delete this.editor;
+            }
+        },
+
+        // 🍂method toggleEdit()
+        // Enable or disable editing, according to current status.
+        toggleEdit: function () {
+            if (this.editEnabled()) this.disableEdit();
+            else this.enableEdit();
+        },
+
+        _onEditableAdd: function () {
+            if (this.editor) this.enableEdit();
+        }
+
+    };
+
+    var PolylineMixin = {
+
+        getEditorClass: function (tools) {
+            return (tools && tools.options.polylineEditorClass) ? tools.options.polylineEditorClass : L.Editable.PolylineEditor;
+        },
+
+        shapeAt: function (latlng, latlngs) {
+            // We can have those cases:
+            // - latlngs are just a flat array of latlngs, use this
+            // - latlngs is an array of arrays of latlngs, loop over
+            var shape = null;
+            latlngs = latlngs || this._latlngs;
+            if (!latlngs.length) return shape;
+            else if (isFlat(latlngs) && this.isInLatLngs(latlng, latlngs)) shape = latlngs;
+            else for (var i = 0; i < latlngs.length; i++) if (this.isInLatLngs(latlng, latlngs[i])) return latlngs[i];
+            return shape;
+        },
+
+        isInLatLngs: function (l, latlngs) {
+            if (!latlngs) return false;
+            var i, k, len, part = [], p,
+                w = this._clickTolerance();
+            this._projectLatlngs(latlngs, part, this._pxBounds);
+            part = part[0];
+            p = this._map.latLngToLayerPoint(l);
+
+            if (!this._pxBounds.contains(p)) { return false; }
+            for (i = 1, len = part.length, k = 0; i < len; k = i++) {
+
+                if (L.LineUtil.pointToSegmentDistance(p, part[k], part[i]) <= w) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+    };
+
+    var PolygonMixin = {
+
+        getEditorClass: function (tools) {
+            return (tools && tools.options.polygonEditorClass) ? tools.options.polygonEditorClass : L.Editable.PolygonEditor;
+        },
+
+        shapeAt: function (latlng, latlngs) {
+            // We can have those cases:
+            // - latlngs are just a flat array of latlngs, use this
+            // - latlngs is an array of arrays of latlngs, this is a simple polygon (maybe with holes), use the first
+            // - latlngs is an array of arrays of arrays, this is a multi, loop over
+            var shape = null;
+            latlngs = latlngs || this._latlngs;
+            if (!latlngs.length) return shape;
+            else if (isFlat(latlngs) && this.isInLatLngs(latlng, latlngs)) shape = latlngs;
+            else if (isFlat(latlngs[0]) && this.isInLatLngs(latlng, latlngs[0])) shape = latlngs;
+            else for (var i = 0; i < latlngs.length; i++) if (this.isInLatLngs(latlng, latlngs[i][0])) return latlngs[i];
+            return shape;
+        },
+
+        isInLatLngs: function (l, latlngs) {
+            var inside = false, l1, l2, j, k, len2;
+
+            for (j = 0, len2 = latlngs.length, k = len2 - 1; j < len2; k = j++) {
+                l1 = latlngs[j];
+                l2 = latlngs[k];
+
+                if (((l1.lat > l.lat) !== (l2.lat > l.lat)) &&
+                        (l.lng < (l2.lng - l1.lng) * (l.lat - l1.lat) / (l2.lat - l1.lat) + l1.lng)) {
+                    inside = !inside;
+                }
+            }
+
+            return inside;
+        },
+
+        parentShape: function (shape, latlngs) {
+            latlngs = latlngs || this._latlngs;
+            if (!latlngs) return;
+            var idx = L.Util.indexOf(latlngs, shape);
+            if (idx !== -1) return latlngs;
+            for (var i = 0; i < latlngs.length; i++) {
+                idx = L.Util.indexOf(latlngs[i], shape);
+                if (idx !== -1) return latlngs[i];
+            }
+        }
+
+    };
+
+
+    var MarkerMixin = {
+
+        getEditorClass: function (tools) {
+            return (tools && tools.options.markerEditorClass) ? tools.options.markerEditorClass : L.Editable.MarkerEditor;
+        }
+
+    };
+
+    var RectangleMixin = {
+
+        getEditorClass: function (tools) {
+            return (tools && tools.options.rectangleEditorClass) ? tools.options.rectangleEditorClass : L.Editable.RectangleEditor;
+        }
+
+    };
+
+    var CircleMixin = {
+
+        getEditorClass: function (tools) {
+            return (tools && tools.options.circleEditorClass) ? tools.options.circleEditorClass : L.Editable.CircleEditor;
+        }
+
+    };
+
+    var keepEditable = function () {
+        // Make sure you can remove/readd an editable layer.
+        this.on('add', this._onEditableAdd);
+    };
+
+    var isFlat = L.LineUtil.isFlat || L.LineUtil._flat || L.Polyline._flat;  // <=> 1.1 compat.
+
+
+    if (L.Polyline) {
+        L.Polyline.include(EditableMixin);
+        L.Polyline.include(PolylineMixin);
+        L.Polyline.addInitHook(keepEditable);
+    }
+    if (L.Polygon) {
+        L.Polygon.include(EditableMixin);
+        L.Polygon.include(PolygonMixin);
+    }
+    if (L.Marker) {
+        L.Marker.include(EditableMixin);
+        L.Marker.include(MarkerMixin);
+        L.Marker.addInitHook(keepEditable);
+    }
+    if (L.Rectangle) {
+        L.Rectangle.include(EditableMixin);
+        L.Rectangle.include(RectangleMixin);
+    }
+    if (L.Circle) {
+        L.Circle.include(EditableMixin);
+        L.Circle.include(CircleMixin);
+    }
+
+    L.LatLng.prototype.update = function (latlng) {
+        latlng = L.latLng(latlng);
+        this.lat = latlng.lat;
+        this.lng = latlng.lng;
+    }
+
+}, window));
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 /**
@@ -16883,7 +18843,7 @@ function isObject(obj) {
 module.exports = isObject;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16922,7 +18882,7 @@ function twoProduct(a, b, result) {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17053,13 +19013,13 @@ Object.defineProperty(exports, "DOMEvent", {
 });
 exports.geo = exports.Strategy = void 0;
 
-var _geo = __webpack_require__(27);
+var _geo = __webpack_require__(28);
 
 var _coords = __webpack_require__(0);
 
-var _polygonCoords = __webpack_require__(7);
+var _polygonCoords = __webpack_require__(8);
 
-var _bounds = __webpack_require__(1);
+var _bounds = __webpack_require__(2);
 
 var _marker = __webpack_require__(19);
 
@@ -17067,19 +19027,19 @@ var _polygon = __webpack_require__(20);
 
 var _index = __webpack_require__(18);
 
-var _icon = __webpack_require__(6);
+var _icon = __webpack_require__(7);
 
-var _geocoder = __webpack_require__(16);
+var _geocoder = __webpack_require__(17);
 
-var _geoEvent = __webpack_require__(15);
+var _geoEvent = __webpack_require__(16);
 
-var _domEvent = __webpack_require__(9);
+var _domEvent = __webpack_require__(10);
 
-var _index2 = __webpack_require__(11);
+var _index2 = __webpack_require__(12);
 
-var _index3 = __webpack_require__(47);
+var _index3 = __webpack_require__(50);
 
-var _index4 = __webpack_require__(31);
+var _index4 = __webpack_require__(33);
 
 var Strategy = {
   Leaflet: _index2.LeafletGeoStrategy,
@@ -17091,7 +19051,7 @@ var geo = new _geo.Geo();
 exports.geo = geo;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -27696,7 +29656,7 @@ return jQuery;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27709,29 +29669,31 @@ exports.Geo = void 0;
 
 var _map = __webpack_require__(18);
 
-var _leaflet = __webpack_require__(11);
+var _leaflet = __webpack_require__(12);
 
 var _marker = __webpack_require__(19);
 
-var _marker2 = __webpack_require__(59);
+var _marker2 = __webpack_require__(62);
 
 var _polygon = __webpack_require__(20);
 
-var _polygon2 = __webpack_require__(60);
+var _polygon2 = __webpack_require__(63);
 
-var _mapControl = __webpack_require__(57);
+var _circle = __webpack_require__(29);
 
-var _domEvent = __webpack_require__(9);
+var _mapControl = __webpack_require__(60);
 
-var _constructor = __webpack_require__(28);
+var _domEvent = __webpack_require__(10);
 
-var _marker3 = __webpack_require__(29);
+var _constructor = __webpack_require__(30);
 
-var _polygon3 = __webpack_require__(30);
+var _marker3 = __webpack_require__(31);
 
-var _geoEvent = __webpack_require__(15);
+var _polygon3 = __webpack_require__(32);
 
-var _geocoder = __webpack_require__(16);
+var _geoEvent = __webpack_require__(16);
+
+var _geocoder = __webpack_require__(17);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -27827,6 +29789,11 @@ function () {
       return new _polygon.Polygon(this.getStrategy());
     }
   }, {
+    key: "circle",
+    get: function get() {
+      return new _circle.Circle(this.getStrategy());
+    }
+  }, {
     key: "control",
     get: function get() {
       return new _mapControl.MapControlController(this.getStrategy());
@@ -27862,7 +29829,178 @@ function () {
 exports.Geo = Geo;
 
 /***/ }),
-/* 28 */
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Circle = void 0;
+
+var _geoobject = __webpack_require__(6);
+
+var _coords = __webpack_require__(0);
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Circle =
+/*#__PURE__*/
+function (_GeoObject) {
+  _inherits(Circle, _GeoObject);
+
+  function Circle() {
+    _classCallCheck(this, Circle);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Circle).apply(this, arguments));
+  }
+
+  _createClass(Circle, [{
+    key: "updateProperties",
+
+    /**
+     * Update circle properties
+     * @param {IUpdateCircleProperties} options
+     * @returns {Promise<IEvented<IUpdateCircleProperties>>}
+     */
+    value: function updateProperties(options) {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        Promise.all([_this.setData((options || {}).data), _this.setRadius((options || {}).radius), _this.setStyle(options), _this.setEditable((options || {}).editable)]).then(function () {
+          resolve(_this);
+        }, function (message) {
+          reject(message);
+        });
+      });
+    }
+  }, {
+    key: "setRadius",
+    value: function setRadius(radius) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (radius === undefined) {
+          resolve(_this2);
+          return;
+        }
+
+        _this2.props.radius = radius;
+
+        if (_this2.hasInstance()) {
+          _this2.getStrategy().setRadius(_this2.getInstance(), radius);
+
+          resolve(_this2);
+        } else {
+          resolve(_this2);
+        }
+      });
+    }
+  }, {
+    key: "getRadius",
+    value: function getRadius() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getRadius(this.getInstance());
+      }
+
+      return this.props.radius;
+    }
+    /**
+     * Clone object with all properties
+     * @returns {IGeoObject<tCoords, IUpdateCircleProperties>}
+     */
+
+  }, {
+    key: "clone",
+    value: function clone() {
+      var clone = new this.constructor(this.strategy);
+      return clone.create(this.coords.toArray(), {
+        data: this.data,
+        radius: this.props.radius,
+        // @TODO Подумать над более красивым решением
+        fillColor: this.props.fillColor,
+        fillOpacity: this.props.fillOpacity,
+        strokeColor: this.props.strokeColor,
+        strokeOpacit: this.props.strokeOpacity,
+        strokeWidth: this.props.strokeWidth
+      });
+    }
+  }, {
+    key: "setStyle",
+    value: function setStyle(value) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        if (value === undefined) {
+          resolve(_this3);
+          return;
+        } // @TODO Подумать над более красивым решением
+
+
+        _this3.props.fillColor = value.fillColor || _this3.props.fillColor;
+        _this3.props.fillOpacity = value.fillOpacity || _this3.props.fillOpacity;
+        _this3.props.strokeColor = value.strokeColor || _this3.props.strokeColor;
+        _this3.props.strokeOpacity = value.strokeOpacity || _this3.props.strokeOpacity;
+        _this3.props.strokeWidth = value.strokeWidth || _this3.props.strokeWidth;
+
+        if (_this3.hasInstance()) {
+          _this3.getStrategy().setStyle(_this3.getInstance(), _this3.props);
+
+          resolve(_this3);
+        } else {
+          resolve(_this3);
+        }
+      });
+    }
+  }, {
+    key: "getBounds",
+    value: function getBounds() {
+      var byInstance = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+      if (byInstance) {
+        return this.getStrategy().getBounds(this.getInstance());
+      }
+
+      return this.getCoords(false).getBounds();
+    }
+  }, {
+    key: "getStrategy",
+    value: function getStrategy() {
+      return this.strategy.circle;
+    }
+  }]);
+
+  return Circle;
+}(_geoobject.GeoObject);
+
+exports.Circle = Circle;
+
+_defineProperty(Circle, "Coords", _coords.Coords);
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27922,7 +30060,7 @@ function (_Collection$Construct) {
 exports.Constructor = Constructor;
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27988,7 +30126,7 @@ function (_Collection$Strategy) {
 exports.MarkerStrategy = MarkerStrategy;
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28054,7 +30192,7 @@ function (_Collection$Strategy) {
 exports.PolygonStrategy = PolygonStrategy;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28065,9 +30203,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GoogleGeoStrategy = void 0;
 
-var _google = __webpack_require__(10);
+var _google = __webpack_require__(11);
 
-var _map = __webpack_require__(32);
+var _map = __webpack_require__(34);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28094,6 +30232,8 @@ function () {
     _defineProperty(this, "marker", null);
 
     _defineProperty(this, "polygon", null);
+
+    _defineProperty(this, "circle", null);
 
     _defineProperty(this, "mapControl", null);
 
@@ -28122,7 +30262,7 @@ function () {
 exports.GoogleGeoStrategy = GoogleGeoStrategy;
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28133,7 +30273,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.GoogleMapStrategy = void 0;
 
-var _google = __webpack_require__(10);
+var _google = __webpack_require__(11);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -28249,7 +30389,226 @@ function () {
 exports.GoogleMapStrategy = GoogleMapStrategy;
 
 /***/ }),
-/* 33 */
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.LeafletCircleStrategy = void 0;
+
+var L = _interopRequireWildcard(__webpack_require__(1));
+
+__webpack_require__(23);
+
+var _coords = __webpack_require__(0);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+// @TODO move to style factory
+var CIRCLE_STYLE = {
+  color: 'strokeColor',
+  opacity: 'strokeOpacity',
+  weight: 'strokeWidth',
+  fillColor: 'fillColor',
+  fillOpacity: 'fillOpacity'
+};
+var CIRCLE_PROPS = Object.assign({}, CIRCLE_STYLE);
+
+var LeafletCircleStrategy =
+/*#__PURE__*/
+function () {
+  function LeafletCircleStrategy() {
+    _classCallCheck(this, LeafletCircleStrategy);
+  }
+
+  _createClass(LeafletCircleStrategy, [{
+    key: "create",
+
+    /**
+     * Create new circle
+     * @param {Coords} coords
+     * @param {ICreateCircleOptions} options
+     * @returns {any}
+     */
+    value: function create(coords, options) {
+      var props = {}; // @TODO move to style factory
+
+      Object.keys(CIRCLE_PROPS).forEach(function (key) {
+        var propKey = CIRCLE_PROPS[key];
+        var option = options[propKey];
+
+        if (option === undefined) {
+          return;
+        }
+
+        props[key] = option;
+      });
+      return L.circle(coords.toArray(), options.radius, props);
+    }
+  }, {
+    key: "setRadius",
+    value: function setRadius(geoObject, radius) {
+      geoObject.setRadius(radius);
+      return this;
+    }
+  }, {
+    key: "getRadius",
+    value: function getRadius(geoObject) {
+      return geoObject.getRadius();
+    }
+    /**
+     * Add to map
+     * @param {Circle} geoObject
+     * @param {IMap} map
+     * @returns {ICircleStrategy}
+     */
+
+  }, {
+    key: "addToMap",
+    value: function addToMap(geoObject, map) {
+      geoObject.addTo(map.getInstance());
+      return this;
+    }
+    /**
+     * Remove circle from map
+     * @param {Circle} geoObject
+     * @param {IMap} map
+     * @returns {ICircleStrategy}
+     */
+
+  }, {
+    key: "removeFromMap",
+    value: function removeFromMap(geoObject, map) {
+      geoObject.removeFrom(map.getInstance());
+      return this;
+    }
+    /**
+     * Set circle center
+     * @param {Circle} geoObject
+     * @param {Coords} value
+     * @returns {ICircleStrategy}
+     */
+
+  }, {
+    key: "setCoords",
+    value: function setCoords(geoObject, value) {
+      geoObject.setLatLng(value.toArray());
+      return this;
+    }
+    /**
+     * Get circle coords
+     * @param {Circle} geoObject
+     * @returns {Coords}
+     */
+
+  }, {
+    key: "getCoords",
+    value: function getCoords(geoObject) {
+      return new _coords.Coords(geoObject.getLatLng());
+    }
+    /**
+     * Get circle bounds
+     * @param {Circle} geoObject
+     * @returns {Bounds}
+     */
+
+  }, {
+    key: "getBounds",
+    value: function getBounds(geoObject) {
+      return this.getCoords(geoObject).getBounds();
+    }
+  }, {
+    key: "setStyle",
+    value: function setStyle(geoobject, style) {
+      var props = {}; // @TODO move to style factory
+
+      Object.keys(CIRCLE_STYLE).forEach(function (key) {
+        var option = style[CIRCLE_STYLE[key]];
+
+        if (option !== undefined) {
+          props[key] = option;
+        }
+      });
+      geoobject.setStyle(props);
+      return this;
+    }
+    /**
+     * Включить редактировние
+     *
+     * @param {Marker} geoObject
+     * @param {boolean} value
+     *
+     * @return {IMarkerStrategy}
+     */
+
+  }, {
+    key: "setEditable",
+    value: function setEditable(geoObject, value) {
+      if (value) {
+        geoObject.enableEdit();
+      } else {
+        geoObject.disableEdit();
+      }
+
+      return this;
+    }
+    /**
+     * Add event handler
+     * @param geoObject
+     * @param {string | IEventHandlerFnMap} type
+     * @param {EventHandlerFn} fn
+     * @param context
+     * @returns {ICircleStrategy}
+     */
+
+  }, {
+    key: "on",
+    value: function on(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.on(type, fn, context);
+      return this;
+    }
+    /**
+     * Remove event handler
+     * @param geoObject
+     * @param {string} type
+     * @param {EventHandlerFn} fn
+     * @param context
+     * @returns {ICircleStrategy}
+     */
+
+  }, {
+    key: "off",
+    value: function off(geoObject, type, fn, context) {
+      if (!type) {
+        throw new Error('Marker event name is not defined');
+      }
+
+      geoObject.off(type, fn, context);
+      return this;
+    }
+  }]);
+
+  return LeafletCircleStrategy;
+}();
+
+exports.LeafletCircleStrategy = LeafletCircleStrategy;
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28260,7 +30619,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletDOMEventStrategy = void 0;
 
-var L = _interopRequireWildcard(__webpack_require__(2));
+var L = _interopRequireWildcard(__webpack_require__(1));
 
 var _coords = __webpack_require__(0);
 
@@ -28314,7 +30673,7 @@ function () {
 exports.LeafletDOMEventStrategy = LeafletDOMEventStrategy;
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28379,7 +30738,7 @@ function () {
 exports.LeafletGeoEventStrategy = LeafletGeoEventStrategy;
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28390,7 +30749,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletGeocoderStrategy = void 0;
 
-var _nominatimSearch = __webpack_require__(78);
+var _nominatimSearch = __webpack_require__(80);
 
 var _coords = __webpack_require__(0);
 
@@ -28461,7 +30820,7 @@ function () {
 exports.LeafletGeocoderStrategy = LeafletGeocoderStrategy;
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28474,11 +30833,11 @@ exports.LeafletMapControlStrategy = void 0;
 
 var _grim = __webpack_require__(5);
 
-var L = _interopRequireWildcard(__webpack_require__(2));
+var L = _interopRequireWildcard(__webpack_require__(1));
 
 var _mapControl = __webpack_require__(4);
 
-var _propsAdapter = __webpack_require__(37);
+var _propsAdapter = __webpack_require__(40);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28546,7 +30905,7 @@ function () {
 exports.LeafletMapControlStrategy = LeafletMapControlStrategy;
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28625,7 +30984,7 @@ function () {
 exports.PropsAdapter = PropsAdapter;
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28636,15 +30995,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMapStrategy = void 0;
 
-var L = _interopRequireWildcard(__webpack_require__(2));
+var L = _interopRequireWildcard(__webpack_require__(1));
 
-__webpack_require__(67);
+__webpack_require__(70);
 
 var _coords = __webpack_require__(0);
 
-var _bounds = __webpack_require__(1);
+var _bounds = __webpack_require__(2);
 
-__webpack_require__(68);
+__webpack_require__(71);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28902,7 +31261,7 @@ function () {
 exports.LeafletMapStrategy = LeafletMapStrategy;
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28913,15 +31272,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMarkerStrategy = void 0;
 
-var L = _interopRequireWildcard(__webpack_require__(2));
+var L = _interopRequireWildcard(__webpack_require__(1));
 
-__webpack_require__(76);
+__webpack_require__(23);
 
 var _coords = __webpack_require__(0);
 
-var _iconFactory = __webpack_require__(43);
+var _iconFactory = __webpack_require__(46);
 
-var _markerPresetStorage = __webpack_require__(12);
+var _markerPresetStorage = __webpack_require__(13);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -28974,7 +31333,6 @@ function () {
   }, {
     key: "removeFromMap",
     value: function removeFromMap(geoobject, map) {
-      // (geoobject as any).removeFrom(map.getInstance());
       geoobject.removeFrom(map.getInstance());
       return this;
     }
@@ -29099,7 +31457,7 @@ function () {
 exports.LeafletMarkerStrategy = LeafletMarkerStrategy;
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29110,13 +31468,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletPolygonStrategy = void 0;
 
-var L = _interopRequireWildcard(__webpack_require__(2));
+var L = _interopRequireWildcard(__webpack_require__(1));
 
-var _polygonCoords = __webpack_require__(7);
+var _polygonCoords = __webpack_require__(8);
 
-var _bounds = __webpack_require__(1);
+var _bounds = __webpack_require__(2);
 
-var _polygonPresetStorge = __webpack_require__(13);
+var _polygonPresetStorge = __webpack_require__(14);
 
 var _polygonCoords2 = __webpack_require__(22);
 
@@ -29304,7 +31662,7 @@ function () {
 exports.LeafletPolygonStrategy = LeafletPolygonStrategy;
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29315,7 +31673,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMarkerPresetStrategy = void 0;
 
-var _markerPresetStorage = __webpack_require__(12);
+var _markerPresetStorage = __webpack_require__(13);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29347,7 +31705,7 @@ function () {
 exports.LeafletMarkerPresetStrategy = LeafletMarkerPresetStrategy;
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29358,7 +31716,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletPolygonPresetStrategy = void 0;
 
-var _polygonPresetStorge = __webpack_require__(13);
+var _polygonPresetStorge = __webpack_require__(14);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29395,7 +31753,7 @@ function () {
 exports.LeafletPolygonPresetStrategy = LeafletPolygonPresetStrategy;
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29406,7 +31764,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.iconFactory = void 0;
 
-var L = _interopRequireWildcard(__webpack_require__(2));
+var L = _interopRequireWildcard(__webpack_require__(1));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -29445,7 +31803,7 @@ var iconFactory = new IconFactory();
 exports.iconFactory = iconFactory;
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29506,7 +31864,7 @@ function () {
 exports.YandexDOMEventStrategy = YandexDOMEventStrategy;
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29572,7 +31930,7 @@ function () {
 exports.YandexGeoEventStrategy = YandexGeoEventStrategy;
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29656,7 +32014,7 @@ function () {
 exports.YandexGeocoderStrategy = YandexGeocoderStrategy;
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29669,19 +32027,19 @@ exports.YandexGeoStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _map = __webpack_require__(50);
+var _map = __webpack_require__(53);
 
-var _geocoder = __webpack_require__(46);
+var _geocoder = __webpack_require__(49);
 
-var _marker = __webpack_require__(51);
+var _marker = __webpack_require__(54);
 
-var _polygon = __webpack_require__(52);
+var _polygon = __webpack_require__(55);
 
-var _geoEvent = __webpack_require__(45);
+var _geoEvent = __webpack_require__(48);
 
-var _domEvent = __webpack_require__(44);
+var _domEvent = __webpack_require__(47);
 
-var _mapControl = __webpack_require__(48);
+var _mapControl = __webpack_require__(51);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29700,6 +32058,8 @@ function () {
     _defineProperty(this, "map", new _map.YandexMapStrategy());
 
     _defineProperty(this, "marker", new _marker.YandexMarkerStrategy());
+
+    _defineProperty(this, "circle", null);
 
     _defineProperty(this, "polygon", new _polygon.YandexPolygonStrategy());
 
@@ -29730,7 +32090,7 @@ function () {
 exports.YandexGeoStrategy = YandexGeoStrategy;
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29747,7 +32107,7 @@ var _ymaps = __webpack_require__(3);
 
 var _mapControl = __webpack_require__(4);
 
-var _propsAdapter = __webpack_require__(49);
+var _propsAdapter = __webpack_require__(52);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -29812,7 +32172,7 @@ function () {
 exports.YandexMapControlStrategy = YandexMapControlStrategy;
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29884,7 +32244,7 @@ function () {
 exports.PropsAdapter = PropsAdapter;
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29899,7 +32259,7 @@ var _ymaps = __webpack_require__(3);
 
 var _coords = __webpack_require__(0);
 
-var _bounds = __webpack_require__(1);
+var _bounds = __webpack_require__(2);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30125,7 +32485,7 @@ function () {
 exports.YandexMapStrategy = YandexMapStrategy;
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30138,7 +32498,7 @@ exports.YandexMarkerStrategy = void 0;
 
 var _ymaps = __webpack_require__(3);
 
-var _iconFactory = __webpack_require__(53);
+var _iconFactory = __webpack_require__(56);
 
 var _coords = __webpack_require__(0);
 
@@ -30341,7 +32701,7 @@ function () {
 exports.YandexMarkerStrategy = YandexMarkerStrategy;
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30447,6 +32807,7 @@ function () {
     key: "setCoords",
     value: function setCoords(geoObject, value) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -30461,6 +32822,7 @@ function () {
     key: "getCoords",
     value: function getCoords(geoObject) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return null;
     }
     /**
@@ -30475,6 +32837,7 @@ function () {
     key: "getBounds",
     value: function getBounds(geoobject) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return null;
     }
     /**
@@ -30490,6 +32853,7 @@ function () {
     key: "setStyle",
     value: function setStyle(geoobject, style) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -30505,6 +32869,7 @@ function () {
     key: "setPreset",
     value: function setPreset(geoobject, preset) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -30520,6 +32885,7 @@ function () {
     key: "setEditable",
     value: function setEditable(geoobject, value) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -30535,6 +32901,7 @@ function () {
     key: "setDrawing",
     value: function setDrawing(geoobject, value) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -30552,6 +32919,7 @@ function () {
     key: "on",
     value: function on(geoObject, type, fn, context) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return this;
     }
     /**
@@ -30569,6 +32937,7 @@ function () {
     key: "off",
     value: function off(geoObject, type, fn, context) {
       // @TODO implements method
+      throw new Error('Method not implemented');
       return null;
     }
   }]);
@@ -30579,7 +32948,7 @@ function () {
 exports.YandexPolygonStrategy = YandexPolygonStrategy;
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30628,7 +32997,7 @@ function () {
 exports.IconFactory = IconFactory;
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30806,7 +33175,7 @@ function () {
 exports.EventsGroup = EventsGroup;
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30817,7 +33186,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Events = void 0;
 
-var _group = __webpack_require__(54);
+var _group = __webpack_require__(57);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -30925,7 +33294,7 @@ function () {
 exports.Events = Events;
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30938,7 +33307,7 @@ exports.MapControlConstructor = void 0;
 
 var _mapControl = __webpack_require__(4);
 
-var _mapControlInstance = __webpack_require__(58);
+var _mapControlInstance = __webpack_require__(61);
 
 function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
@@ -31059,7 +33428,7 @@ function () {
 exports.MapControlConstructor = MapControlConstructor;
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31070,7 +33439,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.MapControlController = void 0;
 
-var _controlConstructor = __webpack_require__(56);
+var _controlConstructor = __webpack_require__(59);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31115,7 +33484,7 @@ function () {
 exports.MapControlController = MapControlController;
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31168,7 +33537,7 @@ function () {
 exports.MapControl = MapControl;
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31235,7 +33604,7 @@ function () {
 exports.MarkerPreset = MarkerPreset;
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31313,14 +33682,14 @@ function () {
 exports.PolygonPreset = PolygonPreset;
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ultimap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ultimap__);
 
 
@@ -31441,7 +33810,7 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31489,7 +33858,7 @@ function () {
 exports.UIDGenerator = UIDGenerator;
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31500,9 +33869,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _queue = __webpack_require__(64);
+var _queue = __webpack_require__(67);
 
-var _generator = __webpack_require__(62);
+var _generator = __webpack_require__(65);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31519,7 +33888,7 @@ _defineProperty(UID, "Queue", _queue.UIDQueue);
 _defineProperty(UID, "Generator", _generator.UIDGenerator);
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31565,7 +33934,7 @@ function () {
 exports.UIDQueue = UIDQueue;
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -31734,17 +34103,17 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var rbush = __webpack_require__(82);
-var convexHull = __webpack_require__(77);
-var Queue = __webpack_require__(92);
-var pointInPolygon = __webpack_require__(79);
-var orient = __webpack_require__(8)[3];
+var rbush = __webpack_require__(84);
+var convexHull = __webpack_require__(79);
+var Queue = __webpack_require__(94);
+var pointInPolygon = __webpack_require__(81);
+var orient = __webpack_require__(9)[3];
 
 module.exports = concaveman;
 module.exports.default = concaveman;
@@ -32081,19 +34450,19 @@ function sqSegSegDist(x0, y0, x1, y1, x2, y2, x3, y3) {
 
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32271,7 +34640,7 @@ function () {
 exports.Callbacks = Callbacks;
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32498,7 +34867,7 @@ function () {
 exports.Collections = Collections;
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32532,12 +34901,12 @@ Object.defineProperty(exports, "IStrategy", {
   }
 });
 
-var _constructor = __webpack_require__(70);
+var _constructor = __webpack_require__(73);
 
-var _strategy = __webpack_require__(72);
+var _strategy = __webpack_require__(75);
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32638,7 +35007,7 @@ function () {
 exports.Strategy = Strategy;
 
 /***/ }),
-/* 73 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32756,7 +35125,7 @@ function () {
 exports.Cookie = Cookie;
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32767,7 +35136,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Define = void 0;
 
-var _property = __webpack_require__(75);
+var _property = __webpack_require__(78);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -32811,7 +35180,7 @@ function () {
 exports.Define = Define;
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32950,1963 +35319,7 @@ function () {
 exports.Property = Property;
 
 /***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-(function (factory, window) {
-    /*globals define, module, require*/
-
-    // define an AMD module that relies on 'leaflet'
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-    // define a Common JS module that relies on 'leaflet'
-    } else if (typeof exports === 'object') {
-        module.exports = factory(require('leaflet'));
-    }
-
-    // attach your plugin to the global 'L' variable
-    if(typeof window !== 'undefined' && window.L){
-        factory(window.L);
-    }
-
-}(function (L) {
-    // 🍂miniclass CancelableEvent (Event objects)
-    // 🍂method cancel()
-    // Cancel any subsequent action.
-
-    // 🍂miniclass VertexEvent (Event objects)
-    // 🍂property vertex: VertexMarker
-    // The vertex that fires the event.
-
-    // 🍂miniclass ShapeEvent (Event objects)
-    // 🍂property shape: Array
-    // The shape (LatLngs array) subject of the action.
-
-    // 🍂miniclass CancelableVertexEvent (Event objects)
-    // 🍂inherits VertexEvent
-    // 🍂inherits CancelableEvent
-
-    // 🍂miniclass CancelableShapeEvent (Event objects)
-    // 🍂inherits ShapeEvent
-    // 🍂inherits CancelableEvent
-
-    // 🍂miniclass LayerEvent (Event objects)
-    // 🍂property layer: object
-    // The Layer (Marker, Polyline…) subject of the action.
-
-    // 🍂namespace Editable; 🍂class Editable; 🍂aka L.Editable
-    // Main edition handler. By default, it is attached to the map
-    // as `map.editTools` property.
-    // Leaflet.Editable is made to be fully extendable. You have three ways to customize
-    // the behaviour: using options, listening to events, or extending.
-    L.Editable = L.Evented.extend({
-
-        statics: {
-            FORWARD: 1,
-            BACKWARD: -1
-        },
-
-        options: {
-
-            // You can pass them when creating a map using the `editOptions` key.
-            // 🍂option zIndex: int = 1000
-            // The default zIndex of the editing tools.
-            zIndex: 1000,
-
-            // 🍂option polygonClass: class = L.Polygon
-            // Class to be used when creating a new Polygon.
-            polygonClass: L.Polygon,
-
-            // 🍂option polylineClass: class = L.Polyline
-            // Class to be used when creating a new Polyline.
-            polylineClass: L.Polyline,
-
-            // 🍂option markerClass: class = L.Marker
-            // Class to be used when creating a new Marker.
-            markerClass: L.Marker,
-
-            // 🍂option rectangleClass: class = L.Rectangle
-            // Class to be used when creating a new Rectangle.
-            rectangleClass: L.Rectangle,
-
-            // 🍂option circleClass: class = L.Circle
-            // Class to be used when creating a new Circle.
-            circleClass: L.Circle,
-
-            // 🍂option drawingCSSClass: string = 'leaflet-editable-drawing'
-            // CSS class to be added to the map container while drawing.
-            drawingCSSClass: 'leaflet-editable-drawing',
-
-            // 🍂option drawingCursor: const = 'crosshair'
-            // Cursor mode set to the map while drawing.
-            drawingCursor: 'crosshair',
-
-            // 🍂option editLayer: Layer = new L.LayerGroup()
-            // Layer used to store edit tools (vertex, line guide…).
-            editLayer: undefined,
-
-            // 🍂option featuresLayer: Layer = new L.LayerGroup()
-            // Default layer used to store drawn features (Marker, Polyline…).
-            featuresLayer: undefined,
-
-            // 🍂option polylineEditorClass: class = PolylineEditor
-            // Class to be used as Polyline editor.
-            polylineEditorClass: undefined,
-
-            // 🍂option polygonEditorClass: class = PolygonEditor
-            // Class to be used as Polygon editor.
-            polygonEditorClass: undefined,
-
-            // 🍂option markerEditorClass: class = MarkerEditor
-            // Class to be used as Marker editor.
-            markerEditorClass: undefined,
-
-            // 🍂option rectangleEditorClass: class = RectangleEditor
-            // Class to be used as Rectangle editor.
-            rectangleEditorClass: undefined,
-
-            // 🍂option circleEditorClass: class = CircleEditor
-            // Class to be used as Circle editor.
-            circleEditorClass: undefined,
-
-            // 🍂option lineGuideOptions: hash = {}
-            // Options to be passed to the line guides.
-            lineGuideOptions: {},
-
-            // 🍂option skipMiddleMarkers: boolean = false
-            // Set this to true if you don't want middle markers.
-            skipMiddleMarkers: false
-
-        },
-
-        initialize: function (map, options) {
-            L.setOptions(this, options);
-            this._lastZIndex = this.options.zIndex;
-            this.map = map;
-            this.editLayer = this.createEditLayer();
-            this.featuresLayer = this.createFeaturesLayer();
-            this.forwardLineGuide = this.createLineGuide();
-            this.backwardLineGuide = this.createLineGuide();
-        },
-
-        fireAndForward: function (type, e) {
-            e = e || {};
-            e.editTools = this;
-            this.fire(type, e);
-            this.map.fire(type, e);
-        },
-
-        createLineGuide: function () {
-            var options = L.extend({dashArray: '5,10', weight: 1, interactive: false}, this.options.lineGuideOptions);
-            return L.polyline([], options);
-        },
-
-        createVertexIcon: function (options) {
-            return L.Browser.mobile && L.Browser.touch ? new L.Editable.TouchVertexIcon(options) : new L.Editable.VertexIcon(options);
-        },
-
-        createEditLayer: function () {
-            return this.options.editLayer || new L.LayerGroup().addTo(this.map);
-        },
-
-        createFeaturesLayer: function () {
-            return this.options.featuresLayer || new L.LayerGroup().addTo(this.map);
-        },
-
-        moveForwardLineGuide: function (latlng) {
-            if (this.forwardLineGuide._latlngs.length) {
-                this.forwardLineGuide._latlngs[1] = latlng;
-                this.forwardLineGuide._bounds.extend(latlng);
-                this.forwardLineGuide.redraw();
-            }
-        },
-
-        moveBackwardLineGuide: function (latlng) {
-            if (this.backwardLineGuide._latlngs.length) {
-                this.backwardLineGuide._latlngs[1] = latlng;
-                this.backwardLineGuide._bounds.extend(latlng);
-                this.backwardLineGuide.redraw();
-            }
-        },
-
-        anchorForwardLineGuide: function (latlng) {
-            this.forwardLineGuide._latlngs[0] = latlng;
-            this.forwardLineGuide._bounds.extend(latlng);
-            this.forwardLineGuide.redraw();
-        },
-
-        anchorBackwardLineGuide: function (latlng) {
-            this.backwardLineGuide._latlngs[0] = latlng;
-            this.backwardLineGuide._bounds.extend(latlng);
-            this.backwardLineGuide.redraw();
-        },
-
-        attachForwardLineGuide: function () {
-            this.editLayer.addLayer(this.forwardLineGuide);
-        },
-
-        attachBackwardLineGuide: function () {
-            this.editLayer.addLayer(this.backwardLineGuide);
-        },
-
-        detachForwardLineGuide: function () {
-            this.forwardLineGuide.setLatLngs([]);
-            this.editLayer.removeLayer(this.forwardLineGuide);
-        },
-
-        detachBackwardLineGuide: function () {
-            this.backwardLineGuide.setLatLngs([]);
-            this.editLayer.removeLayer(this.backwardLineGuide);
-        },
-
-        blockEvents: function () {
-            // Hack: force map not to listen to other layers events while drawing.
-            if (!this._oldTargets) {
-                this._oldTargets = this.map._targets;
-                this.map._targets = {};
-            }
-        },
-
-        unblockEvents: function () {
-            if (this._oldTargets) {
-                // Reset, but keep targets created while drawing.
-                this.map._targets = L.extend(this.map._targets, this._oldTargets);
-                delete this._oldTargets;
-            }
-        },
-
-        registerForDrawing: function (editor) {
-            if (this._drawingEditor) this.unregisterForDrawing(this._drawingEditor);
-            this.blockEvents();
-            editor.reset();  // Make sure editor tools still receive events.
-            this._drawingEditor = editor;
-            this.map.on('mousemove touchmove', editor.onDrawingMouseMove, editor);
-            this.map.on('mousedown', this.onMousedown, this);
-            this.map.on('mouseup', this.onMouseup, this);
-            L.DomUtil.addClass(this.map._container, this.options.drawingCSSClass);
-            this.defaultMapCursor = this.map._container.style.cursor;
-            this.map._container.style.cursor = this.options.drawingCursor;
-        },
-
-        unregisterForDrawing: function (editor) {
-            this.unblockEvents();
-            L.DomUtil.removeClass(this.map._container, this.options.drawingCSSClass);
-            this.map._container.style.cursor = this.defaultMapCursor;
-            editor = editor || this._drawingEditor;
-            if (!editor) return;
-            this.map.off('mousemove touchmove', editor.onDrawingMouseMove, editor);
-            this.map.off('mousedown', this.onMousedown, this);
-            this.map.off('mouseup', this.onMouseup, this);
-            if (editor !== this._drawingEditor) return;
-            delete this._drawingEditor;
-            if (editor._drawing) editor.cancelDrawing();
-        },
-
-        onMousedown: function (e) {
-            if (e.originalEvent.which != 1) return;
-            this._mouseDown = e;
-            this._drawingEditor.onDrawingMouseDown(e);
-        },
-
-        onMouseup: function (e) {
-            if (this._mouseDown) {
-                var editor = this._drawingEditor,
-                    mouseDown = this._mouseDown;
-                this._mouseDown = null;
-                editor.onDrawingMouseUp(e);
-                if (this._drawingEditor !== editor) return;  // onDrawingMouseUp may call unregisterFromDrawing.
-                var origin = L.point(mouseDown.originalEvent.clientX, mouseDown.originalEvent.clientY);
-                var distance = L.point(e.originalEvent.clientX, e.originalEvent.clientY).distanceTo(origin);
-                if (Math.abs(distance) < 9 * (window.devicePixelRatio || 1)) this._drawingEditor.onDrawingClick(e);
-            }
-        },
-
-        // 🍂section Public methods
-        // You will generally access them by the `map.editTools`
-        // instance:
-        //
-        // `map.editTools.startPolyline();`
-
-        // 🍂method drawing(): boolean
-        // Return true if any drawing action is ongoing.
-        drawing: function () {
-            return this._drawingEditor && this._drawingEditor.drawing();
-        },
-
-        // 🍂method stopDrawing()
-        // When you need to stop any ongoing drawing, without needing to know which editor is active.
-        stopDrawing: function () {
-            this.unregisterForDrawing();
-        },
-
-        // 🍂method commitDrawing()
-        // When you need to commit any ongoing drawing, without needing to know which editor is active.
-        commitDrawing: function (e) {
-            if (!this._drawingEditor) return;
-            this._drawingEditor.commitDrawing(e);
-        },
-
-        connectCreatedToMap: function (layer) {
-            return this.featuresLayer.addLayer(layer);
-        },
-
-        // 🍂method startPolyline(latlng: L.LatLng, options: hash): L.Polyline
-        // Start drawing a Polyline. If `latlng` is given, a first point will be added. In any case, continuing on user click.
-        // If `options` is given, it will be passed to the Polyline class constructor.
-        startPolyline: function (latlng, options) {
-            var line = this.createPolyline([], options);
-            line.enableEdit(this.map).newShape(latlng);
-            return line;
-        },
-
-        // 🍂method startPolygon(latlng: L.LatLng, options: hash): L.Polygon
-        // Start drawing a Polygon. If `latlng` is given, a first point will be added. In any case, continuing on user click.
-        // If `options` is given, it will be passed to the Polygon class constructor.
-        startPolygon: function (latlng, options) {
-            var polygon = this.createPolygon([], options);
-            polygon.enableEdit(this.map).newShape(latlng);
-            return polygon;
-        },
-
-        // 🍂method startMarker(latlng: L.LatLng, options: hash): L.Marker
-        // Start adding a Marker. If `latlng` is given, the Marker will be shown first at this point.
-        // In any case, it will follow the user mouse, and will have a final `latlng` on next click (or touch).
-        // If `options` is given, it will be passed to the Marker class constructor.
-        startMarker: function (latlng, options) {
-            latlng = latlng || this.map.getCenter().clone();
-            var marker = this.createMarker(latlng, options);
-            marker.enableEdit(this.map).startDrawing();
-            return marker;
-        },
-
-        // 🍂method startRectangle(latlng: L.LatLng, options: hash): L.Rectangle
-        // Start drawing a Rectangle. If `latlng` is given, the Rectangle anchor will be added. In any case, continuing on user drag.
-        // If `options` is given, it will be passed to the Rectangle class constructor.
-        startRectangle: function(latlng, options) {
-            var corner = latlng || L.latLng([0, 0]);
-            var bounds = new L.LatLngBounds(corner, corner);
-            var rectangle = this.createRectangle(bounds, options);
-            rectangle.enableEdit(this.map).startDrawing();
-            return rectangle;
-        },
-
-        // 🍂method startCircle(latlng: L.LatLng, options: hash): L.Circle
-        // Start drawing a Circle. If `latlng` is given, the Circle anchor will be added. In any case, continuing on user drag.
-        // If `options` is given, it will be passed to the Circle class constructor.
-        startCircle: function (latlng, options) {
-            latlng = latlng || this.map.getCenter().clone();
-            var circle = this.createCircle(latlng, options);
-            circle.enableEdit(this.map).startDrawing();
-            return circle;
-        },
-
-        startHole: function (editor, latlng) {
-            editor.newHole(latlng);
-        },
-
-        createLayer: function (klass, latlngs, options) {
-            options = L.Util.extend({editOptions: {editTools: this}}, options);
-            var layer = new klass(latlngs, options);
-            // 🍂namespace Editable
-            // 🍂event editable:created: LayerEvent
-            // Fired when a new feature (Marker, Polyline…) is created.
-            this.fireAndForward('editable:created', {layer: layer});
-            return layer;
-        },
-
-        createPolyline: function (latlngs, options) {
-            return this.createLayer(options && options.polylineClass || this.options.polylineClass, latlngs, options);
-        },
-
-        createPolygon: function (latlngs, options) {
-            return this.createLayer(options && options.polygonClass || this.options.polygonClass, latlngs, options);
-        },
-
-        createMarker: function (latlng, options) {
-            return this.createLayer(options && options.markerClass || this.options.markerClass, latlng, options);
-        },
-
-        createRectangle: function (bounds, options) {
-            return this.createLayer(options && options.rectangleClass || this.options.rectangleClass, bounds, options);
-        },
-
-        createCircle: function (latlng, options) {
-            return this.createLayer(options && options.circleClass || this.options.circleClass, latlng, options);
-        }
-
-    });
-
-    L.extend(L.Editable, {
-
-        makeCancellable: function (e) {
-            e.cancel = function () {
-                e._cancelled = true;
-            };
-        }
-
-    });
-
-    // 🍂namespace Map; 🍂class Map
-    // Leaflet.Editable add options and events to the `L.Map` object.
-    // See `Editable` events for the list of events fired on the Map.
-    // 🍂example
-    //
-    // ```js
-    // var map = L.map('map', {
-    //  editable: true,
-    //  editOptions: {
-    //    …
-    // }
-    // });
-    // ```
-    // 🍂section Editable Map Options
-    L.Map.mergeOptions({
-
-        // 🍂namespace Map
-        // 🍂section Map Options
-        // 🍂option editToolsClass: class = L.Editable
-        // Class to be used as vertex, for path editing.
-        editToolsClass: L.Editable,
-
-        // 🍂option editable: boolean = false
-        // Whether to create a L.Editable instance at map init.
-        editable: false,
-
-        // 🍂option editOptions: hash = {}
-        // Options to pass to L.Editable when instantiating.
-        editOptions: {}
-
-    });
-
-    L.Map.addInitHook(function () {
-
-        this.whenReady(function () {
-            if (this.options.editable) {
-                this.editTools = new this.options.editToolsClass(this, this.options.editOptions);
-            }
-        });
-
-    });
-
-    L.Editable.VertexIcon = L.DivIcon.extend({
-
-        options: {
-            iconSize: new L.Point(8, 8)
-        }
-
-    });
-
-    L.Editable.TouchVertexIcon = L.Editable.VertexIcon.extend({
-
-        options: {
-            iconSize: new L.Point(20, 20)
-        }
-
-    });
-
-
-    // 🍂namespace Editable; 🍂class VertexMarker; Handler for dragging path vertices.
-    L.Editable.VertexMarker = L.Marker.extend({
-
-        options: {
-            draggable: true,
-            className: 'leaflet-div-icon leaflet-vertex-icon'
-        },
-
-
-        // 🍂section Public methods
-        // The marker used to handle path vertex. You will usually interact with a `VertexMarker`
-        // instance when listening for events like `editable:vertex:ctrlclick`.
-
-        initialize: function (latlng, latlngs, editor, options) {
-            // We don't use this._latlng, because on drag Leaflet replace it while
-            // we want to keep reference.
-            this.latlng = latlng;
-            this.latlngs = latlngs;
-            this.editor = editor;
-            L.Marker.prototype.initialize.call(this, latlng, options);
-            this.options.icon = this.editor.tools.createVertexIcon({className: this.options.className});
-            this.latlng.__vertex = this;
-            this.editor.editLayer.addLayer(this);
-            this.setZIndexOffset(editor.tools._lastZIndex + 1);
-        },
-
-        onAdd: function (map) {
-            L.Marker.prototype.onAdd.call(this, map);
-            this.on('drag', this.onDrag);
-            this.on('dragstart', this.onDragStart);
-            this.on('dragend', this.onDragEnd);
-            this.on('mouseup', this.onMouseup);
-            this.on('click', this.onClick);
-            this.on('contextmenu', this.onContextMenu);
-            this.on('mousedown touchstart', this.onMouseDown);
-            this.on('mouseover', this.onMouseOver);
-            this.on('mouseout', this.onMouseOut);
-            this.addMiddleMarkers();
-        },
-
-        onRemove: function (map) {
-            if (this.middleMarker) this.middleMarker.delete();
-            delete this.latlng.__vertex;
-            this.off('drag', this.onDrag);
-            this.off('dragstart', this.onDragStart);
-            this.off('dragend', this.onDragEnd);
-            this.off('mouseup', this.onMouseup);
-            this.off('click', this.onClick);
-            this.off('contextmenu', this.onContextMenu);
-            this.off('mousedown touchstart', this.onMouseDown);
-            this.off('mouseover', this.onMouseOver);
-            this.off('mouseout', this.onMouseOut);
-            L.Marker.prototype.onRemove.call(this, map);
-        },
-
-        onDrag: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerDrag(e);
-            var iconPos = L.DomUtil.getPosition(this._icon),
-                latlng = this._map.layerPointToLatLng(iconPos);
-            this.latlng.update(latlng);
-            this._latlng = this.latlng;  // Push back to Leaflet our reference.
-            this.editor.refresh();
-            if (this.middleMarker) this.middleMarker.updateLatLng();
-            var next = this.getNext();
-            if (next && next.middleMarker) next.middleMarker.updateLatLng();
-        },
-
-        onDragStart: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerDragStart(e);
-        },
-
-        onDragEnd: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerDragEnd(e);
-        },
-
-        onClick: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerClick(e);
-        },
-
-        onMouseup: function (e) {
-            L.DomEvent.stop(e);
-            e.vertex = this;
-            this.editor.map.fire('mouseup', e);
-        },
-
-        onContextMenu: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerContextMenu(e);
-        },
-
-        onMouseDown: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerMouseDown(e);
-        },
-
-        onMouseOver: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerMouseOver(e);
-        },
-
-        onMouseOut: function (e) {
-            e.vertex = this;
-            this.editor.onVertexMarkerMouseOut(e);
-        },
-
-        // 🍂method delete()
-        // Delete a vertex and the related LatLng.
-        delete: function () {
-            var next = this.getNext();  // Compute before changing latlng
-            this.latlngs.splice(this.getIndex(), 1);
-            this.editor.editLayer.removeLayer(this);
-            this.editor.onVertexDeleted({latlng: this.latlng, vertex: this});
-            if (!this.latlngs.length) this.editor.deleteShape(this.latlngs);
-            if (next) next.resetMiddleMarker();
-            this.editor.refresh();
-        },
-
-        // 🍂method getIndex(): int
-        // Get the index of the current vertex among others of the same LatLngs group.
-        getIndex: function () {
-            return this.latlngs.indexOf(this.latlng);
-        },
-
-        // 🍂method getLastIndex(): int
-        // Get last vertex index of the LatLngs group of the current vertex.
-        getLastIndex: function () {
-            return this.latlngs.length - 1;
-        },
-
-        // 🍂method getPrevious(): VertexMarker
-        // Get the previous VertexMarker in the same LatLngs group.
-        getPrevious: function () {
-            if (this.latlngs.length < 2) return;
-            var index = this.getIndex(),
-                previousIndex = index - 1;
-            if (index === 0 && this.editor.CLOSED) previousIndex = this.getLastIndex();
-            var previous = this.latlngs[previousIndex];
-            if (previous) return previous.__vertex;
-        },
-
-        // 🍂method getNext(): VertexMarker
-        // Get the next VertexMarker in the same LatLngs group.
-        getNext: function () {
-            if (this.latlngs.length < 2) return;
-            var index = this.getIndex(),
-                nextIndex = index + 1;
-            if (index === this.getLastIndex() && this.editor.CLOSED) nextIndex = 0;
-            var next = this.latlngs[nextIndex];
-            if (next) return next.__vertex;
-        },
-
-        addMiddleMarker: function (previous) {
-            if (!this.editor.hasMiddleMarkers()) return;
-            previous = previous || this.getPrevious();
-            if (previous && !this.middleMarker) this.middleMarker = this.editor.addMiddleMarker(previous, this, this.latlngs, this.editor);
-        },
-
-        addMiddleMarkers: function () {
-            if (!this.editor.hasMiddleMarkers()) return;
-            var previous = this.getPrevious();
-            if (previous) this.addMiddleMarker(previous);
-            var next = this.getNext();
-            if (next) next.resetMiddleMarker();
-        },
-
-        resetMiddleMarker: function () {
-            if (this.middleMarker) this.middleMarker.delete();
-            this.addMiddleMarker();
-        },
-
-        // 🍂method split()
-        // Split the vertex LatLngs group at its index, if possible.
-        split: function () {
-            if (!this.editor.splitShape) return;  // Only for PolylineEditor
-            this.editor.splitShape(this.latlngs, this.getIndex());
-        },
-
-        // 🍂method continue()
-        // Continue the vertex LatLngs from this vertex. Only active for first and last vertices of a Polyline.
-        continue: function () {
-            if (!this.editor.continueBackward) return;  // Only for PolylineEditor
-            var index = this.getIndex();
-            if (index === 0) this.editor.continueBackward(this.latlngs);
-            else if (index === this.getLastIndex()) this.editor.continueForward(this.latlngs);
-        }
-
-    });
-
-    L.Editable.mergeOptions({
-
-        // 🍂namespace Editable
-        // 🍂option vertexMarkerClass: class = VertexMarker
-        // Class to be used as vertex, for path editing.
-        vertexMarkerClass: L.Editable.VertexMarker
-
-    });
-
-    L.Editable.MiddleMarker = L.Marker.extend({
-
-        options: {
-            opacity: 0.5,
-            className: 'leaflet-div-icon leaflet-middle-icon',
-            draggable: true
-        },
-
-        initialize: function (left, right, latlngs, editor, options) {
-            this.left = left;
-            this.right = right;
-            this.editor = editor;
-            this.latlngs = latlngs;
-            L.Marker.prototype.initialize.call(this, this.computeLatLng(), options);
-            this._opacity = this.options.opacity;
-            this.options.icon = this.editor.tools.createVertexIcon({className: this.options.className});
-            this.editor.editLayer.addLayer(this);
-            this.setVisibility();
-        },
-
-        setVisibility: function () {
-            var leftPoint = this._map.latLngToContainerPoint(this.left.latlng),
-                rightPoint = this._map.latLngToContainerPoint(this.right.latlng),
-                size = L.point(this.options.icon.options.iconSize);
-            if (leftPoint.distanceTo(rightPoint) < size.x * 3) this.hide();
-            else this.show();
-        },
-
-        show: function () {
-            this.setOpacity(this._opacity);
-        },
-
-        hide: function () {
-            this.setOpacity(0);
-        },
-
-        updateLatLng: function () {
-            this.setLatLng(this.computeLatLng());
-            this.setVisibility();
-        },
-
-        computeLatLng: function () {
-            var leftPoint = this.editor.map.latLngToContainerPoint(this.left.latlng),
-                rightPoint = this.editor.map.latLngToContainerPoint(this.right.latlng),
-                y = (leftPoint.y + rightPoint.y) / 2,
-                x = (leftPoint.x + rightPoint.x) / 2;
-            return this.editor.map.containerPointToLatLng([x, y]);
-        },
-
-        onAdd: function (map) {
-            L.Marker.prototype.onAdd.call(this, map);
-            L.DomEvent.on(this._icon, 'mousedown touchstart', this.onMouseDown, this);
-            map.on('zoomend', this.setVisibility, this);
-        },
-
-        onRemove: function (map) {
-            delete this.right.middleMarker;
-            L.DomEvent.off(this._icon, 'mousedown touchstart', this.onMouseDown, this);
-            map.off('zoomend', this.setVisibility, this);
-            L.Marker.prototype.onRemove.call(this, map);
-        },
-
-        onMouseDown: function (e) {
-            var iconPos = L.DomUtil.getPosition(this._icon),
-                latlng = this.editor.map.layerPointToLatLng(iconPos);
-            e = {
-                originalEvent: e,
-                latlng: latlng
-            };
-            if (this.options.opacity === 0) return;
-            L.Editable.makeCancellable(e);
-            this.editor.onMiddleMarkerMouseDown(e);
-            if (e._cancelled) return;
-            this.latlngs.splice(this.index(), 0, e.latlng);
-            this.editor.refresh();
-            var icon = this._icon;
-            var marker = this.editor.addVertexMarker(e.latlng, this.latlngs);
-            this.editor.onNewVertex(marker);
-            /* Hack to workaround browser not firing touchend when element is no more on DOM */
-            var parent = marker._icon.parentNode;
-            parent.removeChild(marker._icon);
-            marker._icon = icon;
-            parent.appendChild(marker._icon);
-            marker._initIcon();
-            marker._initInteraction();
-            marker.setOpacity(1);
-            /* End hack */
-            // Transfer ongoing dragging to real marker
-            L.Draggable._dragging = false;
-            marker.dragging._draggable._onDown(e.originalEvent);
-            this.delete();
-        },
-
-        delete: function () {
-            this.editor.editLayer.removeLayer(this);
-        },
-
-        index: function () {
-            return this.latlngs.indexOf(this.right.latlng);
-        }
-
-    });
-
-    L.Editable.mergeOptions({
-
-        // 🍂namespace Editable
-        // 🍂option middleMarkerClass: class = VertexMarker
-        // Class to be used as middle vertex, pulled by the user to create a new point in the middle of a path.
-        middleMarkerClass: L.Editable.MiddleMarker
-
-    });
-
-    // 🍂namespace Editable; 🍂class BaseEditor; 🍂aka L.Editable.BaseEditor
-    // When editing a feature (Marker, Polyline…), an editor is attached to it. This
-    // editor basically knows how to handle the edition.
-    L.Editable.BaseEditor = L.Handler.extend({
-
-        initialize: function (map, feature, options) {
-            L.setOptions(this, options);
-            this.map = map;
-            this.feature = feature;
-            this.feature.editor = this;
-            this.editLayer = new L.LayerGroup();
-            this.tools = this.options.editTools || map.editTools;
-        },
-
-        // 🍂method enable(): this
-        // Set up the drawing tools for the feature to be editable.
-        addHooks: function () {
-            if (this.isConnected()) this.onFeatureAdd();
-            else this.feature.once('add', this.onFeatureAdd, this);
-            this.onEnable();
-            this.feature.on(this._getEvents(), this);
-        },
-
-        // 🍂method disable(): this
-        // Remove the drawing tools for the feature.
-        removeHooks: function () {
-            this.feature.off(this._getEvents(), this);
-            if (this.feature.dragging) this.feature.dragging.disable();
-            this.editLayer.clearLayers();
-            this.tools.editLayer.removeLayer(this.editLayer);
-            this.onDisable();
-            if (this._drawing) this.cancelDrawing();
-        },
-
-        // 🍂method drawing(): boolean
-        // Return true if any drawing action is ongoing with this editor.
-        drawing: function () {
-            return !!this._drawing;
-        },
-
-        reset: function () {},
-
-        onFeatureAdd: function () {
-            this.tools.editLayer.addLayer(this.editLayer);
-            if (this.feature.dragging) this.feature.dragging.enable();
-        },
-
-        hasMiddleMarkers: function () {
-            return !this.options.skipMiddleMarkers && !this.tools.options.skipMiddleMarkers;
-        },
-
-        fireAndForward: function (type, e) {
-            e = e || {};
-            e.layer = this.feature;
-            this.feature.fire(type, e);
-            this.tools.fireAndForward(type, e);
-        },
-
-        onEnable: function () {
-            // 🍂namespace Editable
-            // 🍂event editable:enable: Event
-            // Fired when an existing feature is ready to be edited.
-            this.fireAndForward('editable:enable');
-        },
-
-        onDisable: function () {
-            // 🍂namespace Editable
-            // 🍂event editable:disable: Event
-            // Fired when an existing feature is not ready anymore to be edited.
-            this.fireAndForward('editable:disable');
-        },
-
-        onEditing: function () {
-            // 🍂namespace Editable
-            // 🍂event editable:editing: Event
-            // Fired as soon as any change is made to the feature geometry.
-            this.fireAndForward('editable:editing');
-        },
-
-        onStartDrawing: function () {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:start: Event
-            // Fired when a feature is to be drawn.
-            this.fireAndForward('editable:drawing:start');
-        },
-
-        onEndDrawing: function () {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:end: Event
-            // Fired when a feature is not drawn anymore.
-            this.fireAndForward('editable:drawing:end');
-        },
-
-        onCancelDrawing: function () {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:cancel: Event
-            // Fired when user cancel drawing while a feature is being drawn.
-            this.fireAndForward('editable:drawing:cancel');
-        },
-
-        onCommitDrawing: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:commit: Event
-            // Fired when user finish drawing a feature.
-            this.fireAndForward('editable:drawing:commit', e);
-        },
-
-        onDrawingMouseDown: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:mousedown: Event
-            // Fired when user `mousedown` while drawing.
-            this.fireAndForward('editable:drawing:mousedown', e);
-        },
-
-        onDrawingMouseUp: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:mouseup: Event
-            // Fired when user `mouseup` while drawing.
-            this.fireAndForward('editable:drawing:mouseup', e);
-        },
-
-        startDrawing: function () {
-            if (!this._drawing) this._drawing = L.Editable.FORWARD;
-            this.tools.registerForDrawing(this);
-            this.onStartDrawing();
-        },
-
-        commitDrawing: function (e) {
-            this.onCommitDrawing(e);
-            this.endDrawing();
-        },
-
-        cancelDrawing: function () {
-            // If called during a vertex drag, the vertex will be removed before
-            // the mouseup fires on it. This is a workaround. Maybe better fix is
-            // To have L.Draggable reset it's status on disable (Leaflet side).
-            L.Draggable._dragging = false;
-            this.onCancelDrawing();
-            this.endDrawing();
-        },
-
-        endDrawing: function () {
-            this._drawing = false;
-            this.tools.unregisterForDrawing(this);
-            this.onEndDrawing();
-        },
-
-        onDrawingClick: function (e) {
-            if (!this.drawing()) return;
-            L.Editable.makeCancellable(e);
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:click: CancelableEvent
-            // Fired when user `click` while drawing, before any internal action is being processed.
-            this.fireAndForward('editable:drawing:click', e);
-            if (e._cancelled) return;
-            if (!this.isConnected()) this.connect(e);
-            this.processDrawingClick(e);
-        },
-
-        isConnected: function () {
-            return this.map.hasLayer(this.feature);
-        },
-
-        connect: function () {
-            this.tools.connectCreatedToMap(this.feature);
-            this.tools.editLayer.addLayer(this.editLayer);
-        },
-
-        onMove: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:move: Event
-            // Fired when `move` mouse while drawing, while dragging a marker, and while dragging a vertex.
-            this.fireAndForward('editable:drawing:move', e);
-        },
-
-        onDrawingMouseMove: function (e) {
-            this.onMove(e);
-        },
-
-        _getEvents: function () {
-            return {
-                dragstart: this.onDragStart,
-                drag: this.onDrag,
-                dragend: this.onDragEnd,
-                remove: this.disable
-            };
-        },
-
-        onDragStart: function (e) {
-            this.onEditing();
-            // 🍂namespace Editable
-            // 🍂event editable:dragstart: Event
-            // Fired before a path feature is dragged.
-            this.fireAndForward('editable:dragstart', e);
-        },
-
-        onDrag: function (e) {
-            this.onMove(e);
-            // 🍂namespace Editable
-            // 🍂event editable:drag: Event
-            // Fired when a path feature is being dragged.
-            this.fireAndForward('editable:drag', e);
-        },
-
-        onDragEnd: function (e) {
-            // 🍂namespace Editable
-            // 🍂event editable:dragend: Event
-            // Fired after a path feature has been dragged.
-            this.fireAndForward('editable:dragend', e);
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class MarkerEditor; 🍂aka L.Editable.MarkerEditor
-    // 🍂inherits BaseEditor
-    // Editor for Marker.
-    L.Editable.MarkerEditor = L.Editable.BaseEditor.extend({
-
-        onDrawingMouseMove: function (e) {
-            L.Editable.BaseEditor.prototype.onDrawingMouseMove.call(this, e);
-            if (this._drawing) this.feature.setLatLng(e.latlng);
-        },
-
-        processDrawingClick: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Drawing events
-            // 🍂event editable:drawing:clicked: Event
-            // Fired when user `click` while drawing, after all internal actions.
-            this.fireAndForward('editable:drawing:clicked', e);
-            this.commitDrawing(e);
-        },
-
-        connect: function (e) {
-            // On touch, the latlng has not been updated because there is
-            // no mousemove.
-            if (e) this.feature._latlng = e.latlng;
-            L.Editable.BaseEditor.prototype.connect.call(this, e);
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class PathEditor; 🍂aka L.Editable.PathEditor
-    // 🍂inherits BaseEditor
-    // Base class for all path editors.
-    L.Editable.PathEditor = L.Editable.BaseEditor.extend({
-
-        CLOSED: false,
-        MIN_VERTEX: 2,
-
-        addHooks: function () {
-            L.Editable.BaseEditor.prototype.addHooks.call(this);
-            if (this.feature) this.initVertexMarkers();
-            return this;
-        },
-
-        initVertexMarkers: function (latlngs) {
-            if (!this.enabled()) return;
-            latlngs = latlngs || this.getLatLngs();
-            if (isFlat(latlngs)) this.addVertexMarkers(latlngs);
-            else for (var i = 0; i < latlngs.length; i++) this.initVertexMarkers(latlngs[i]);
-        },
-
-        getLatLngs: function () {
-            return this.feature.getLatLngs();
-        },
-
-        // 🍂method reset()
-        // Rebuild edit elements (Vertex, MiddleMarker, etc.).
-        reset: function () {
-            this.editLayer.clearLayers();
-            this.initVertexMarkers();
-        },
-
-        addVertexMarker: function (latlng, latlngs) {
-            return new this.tools.options.vertexMarkerClass(latlng, latlngs, this);
-        },
-
-        onNewVertex: function (vertex) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:new: VertexEvent
-            // Fired when a new vertex is created.
-            this.fireAndForward('editable:vertex:new', {latlng: vertex.latlng, vertex: vertex});
-        },
-
-        addVertexMarkers: function (latlngs) {
-            for (var i = 0; i < latlngs.length; i++) {
-                this.addVertexMarker(latlngs[i], latlngs);
-            }
-        },
-
-        refreshVertexMarkers: function (latlngs) {
-            latlngs = latlngs || this.getDefaultLatLngs();
-            for (var i = 0; i < latlngs.length; i++) {
-                latlngs[i].__vertex.update();
-            }
-        },
-
-        addMiddleMarker: function (left, right, latlngs) {
-            return new this.tools.options.middleMarkerClass(left, right, latlngs, this);
-        },
-
-        onVertexMarkerClick: function (e) {
-            L.Editable.makeCancellable(e);
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:click: CancelableVertexEvent
-            // Fired when a `click` is issued on a vertex, before any internal action is being processed.
-            this.fireAndForward('editable:vertex:click', e);
-            if (e._cancelled) return;
-            if (this.tools.drawing() && this.tools._drawingEditor !== this) return;
-            var index = e.vertex.getIndex(), commit;
-            if (e.originalEvent.ctrlKey) {
-                this.onVertexMarkerCtrlClick(e);
-            } else if (e.originalEvent.altKey) {
-                this.onVertexMarkerAltClick(e);
-            } else if (e.originalEvent.shiftKey) {
-                this.onVertexMarkerShiftClick(e);
-            } else if (e.originalEvent.metaKey) {
-                this.onVertexMarkerMetaKeyClick(e);
-            } else if (index === e.vertex.getLastIndex() && this._drawing === L.Editable.FORWARD) {
-                if (index >= this.MIN_VERTEX - 1) commit = true;
-            } else if (index === 0 && this._drawing === L.Editable.BACKWARD && this._drawnLatLngs.length >= this.MIN_VERTEX) {
-                commit = true;
-            } else if (index === 0 && this._drawing === L.Editable.FORWARD && this._drawnLatLngs.length >= this.MIN_VERTEX && this.CLOSED) {
-                commit = true;  // Allow to close on first point also for polygons
-            } else {
-                this.onVertexRawMarkerClick(e);
-            }
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:clicked: VertexEvent
-            // Fired when a `click` is issued on a vertex, after all internal actions.
-            this.fireAndForward('editable:vertex:clicked', e);
-            if (commit) this.commitDrawing(e);
-        },
-
-        onVertexRawMarkerClick: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:rawclick: CancelableVertexEvent
-            // Fired when a `click` is issued on a vertex without any special key and without being in drawing mode.
-            this.fireAndForward('editable:vertex:rawclick', e);
-            if (e._cancelled) return;
-            if (!this.vertexCanBeDeleted(e.vertex)) return;
-            e.vertex.delete();
-        },
-
-        vertexCanBeDeleted: function (vertex) {
-            return vertex.latlngs.length > this.MIN_VERTEX;
-        },
-
-        onVertexDeleted: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:deleted: VertexEvent
-            // Fired after a vertex has been deleted by user.
-            this.fireAndForward('editable:vertex:deleted', e);
-        },
-
-        onVertexMarkerCtrlClick: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:ctrlclick: VertexEvent
-            // Fired when a `click` with `ctrlKey` is issued on a vertex.
-            this.fireAndForward('editable:vertex:ctrlclick', e);
-        },
-
-        onVertexMarkerShiftClick: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:shiftclick: VertexEvent
-            // Fired when a `click` with `shiftKey` is issued on a vertex.
-            this.fireAndForward('editable:vertex:shiftclick', e);
-        },
-
-        onVertexMarkerMetaKeyClick: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:metakeyclick: VertexEvent
-            // Fired when a `click` with `metaKey` is issued on a vertex.
-            this.fireAndForward('editable:vertex:metakeyclick', e);
-        },
-
-        onVertexMarkerAltClick: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:altclick: VertexEvent
-            // Fired when a `click` with `altKey` is issued on a vertex.
-            this.fireAndForward('editable:vertex:altclick', e);
-        },
-
-        onVertexMarkerContextMenu: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:contextmenu: VertexEvent
-            // Fired when a `contextmenu` is issued on a vertex.
-            this.fireAndForward('editable:vertex:contextmenu', e);
-        },
-
-        onVertexMarkerMouseDown: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:mousedown: VertexEvent
-            // Fired when user `mousedown` a vertex.
-            this.fireAndForward('editable:vertex:mousedown', e);
-        },
-
-        onVertexMarkerMouseOver: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:mouseover: VertexEvent
-            // Fired when a user's mouse enters the vertex
-            this.fireAndForward('editable:vertex:mouseover', e);
-        },
-
-        onVertexMarkerMouseOut: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:mouseout: VertexEvent
-            // Fired when a user's mouse leaves the vertex
-            this.fireAndForward('editable:vertex:mouseout', e);
-        },
-
-        onMiddleMarkerMouseDown: function (e) {
-            // 🍂namespace Editable
-            // 🍂section MiddleMarker events
-            // 🍂event editable:middlemarker:mousedown: VertexEvent
-            // Fired when user `mousedown` a middle marker.
-            this.fireAndForward('editable:middlemarker:mousedown', e);
-        },
-
-        onVertexMarkerDrag: function (e) {
-            this.onMove(e);
-            if (this.feature._bounds) this.extendBounds(e);
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:drag: VertexEvent
-            // Fired when a vertex is dragged by user.
-            this.fireAndForward('editable:vertex:drag', e);
-        },
-
-        onVertexMarkerDragStart: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:dragstart: VertexEvent
-            // Fired before a vertex is dragged by user.
-            this.fireAndForward('editable:vertex:dragstart', e);
-        },
-
-        onVertexMarkerDragEnd: function (e) {
-            // 🍂namespace Editable
-            // 🍂section Vertex events
-            // 🍂event editable:vertex:dragend: VertexEvent
-            // Fired after a vertex is dragged by user.
-            this.fireAndForward('editable:vertex:dragend', e);
-        },
-
-        setDrawnLatLngs: function (latlngs) {
-            this._drawnLatLngs = latlngs || this.getDefaultLatLngs();
-        },
-
-        startDrawing: function () {
-            if (!this._drawnLatLngs) this.setDrawnLatLngs();
-            L.Editable.BaseEditor.prototype.startDrawing.call(this);
-        },
-
-        startDrawingForward: function () {
-            this.startDrawing();
-        },
-
-        endDrawing: function () {
-            this.tools.detachForwardLineGuide();
-            this.tools.detachBackwardLineGuide();
-            if (this._drawnLatLngs && this._drawnLatLngs.length < this.MIN_VERTEX) this.deleteShape(this._drawnLatLngs);
-            L.Editable.BaseEditor.prototype.endDrawing.call(this);
-            delete this._drawnLatLngs;
-        },
-
-        addLatLng: function (latlng) {
-            if (this._drawing === L.Editable.FORWARD) this._drawnLatLngs.push(latlng);
-            else this._drawnLatLngs.unshift(latlng);
-            this.feature._bounds.extend(latlng);
-            var vertex = this.addVertexMarker(latlng, this._drawnLatLngs);
-            this.onNewVertex(vertex);
-            this.refresh();
-        },
-
-        newPointForward: function (latlng) {
-            this.addLatLng(latlng);
-            this.tools.attachForwardLineGuide();
-            this.tools.anchorForwardLineGuide(latlng);
-        },
-
-        newPointBackward: function (latlng) {
-            this.addLatLng(latlng);
-            this.tools.anchorBackwardLineGuide(latlng);
-        },
-
-        // 🍂namespace PathEditor
-        // 🍂method push()
-        // Programmatically add a point while drawing.
-        push: function (latlng) {
-            if (!latlng) return console.error('L.Editable.PathEditor.push expect a valid latlng as parameter');
-            if (this._drawing === L.Editable.FORWARD) this.newPointForward(latlng);
-            else this.newPointBackward(latlng);
-        },
-
-        removeLatLng: function (latlng) {
-            latlng.__vertex.delete();
-            this.refresh();
-        },
-
-        // 🍂method pop(): L.LatLng or null
-        // Programmatically remove last point (if any) while drawing.
-        pop: function () {
-            if (this._drawnLatLngs.length <= 1) return;
-            var latlng;
-            if (this._drawing === L.Editable.FORWARD) latlng = this._drawnLatLngs[this._drawnLatLngs.length - 1];
-            else latlng = this._drawnLatLngs[0];
-            this.removeLatLng(latlng);
-            if (this._drawing === L.Editable.FORWARD) this.tools.anchorForwardLineGuide(this._drawnLatLngs[this._drawnLatLngs.length - 1]);
-            else this.tools.anchorForwardLineGuide(this._drawnLatLngs[0]);
-            return latlng;
-        },
-
-        processDrawingClick: function (e) {
-            if (e.vertex && e.vertex.editor === this) return;
-            if (this._drawing === L.Editable.FORWARD) this.newPointForward(e.latlng);
-            else this.newPointBackward(e.latlng);
-            this.fireAndForward('editable:drawing:clicked', e);
-        },
-
-        onDrawingMouseMove: function (e) {
-            L.Editable.BaseEditor.prototype.onDrawingMouseMove.call(this, e);
-            if (this._drawing) {
-                this.tools.moveForwardLineGuide(e.latlng);
-                this.tools.moveBackwardLineGuide(e.latlng);
-            }
-        },
-
-        refresh: function () {
-            this.feature.redraw();
-            this.onEditing();
-        },
-
-        // 🍂namespace PathEditor
-        // 🍂method newShape(latlng?: L.LatLng)
-        // Add a new shape (Polyline, Polygon) in a multi, and setup up drawing tools to draw it;
-        // if optional `latlng` is given, start a path at this point.
-        newShape: function (latlng) {
-            var shape = this.addNewEmptyShape();
-            if (!shape) return;
-            this.setDrawnLatLngs(shape[0] || shape);  // Polygon or polyline
-            this.startDrawingForward();
-            // 🍂namespace Editable
-            // 🍂section Shape events
-            // 🍂event editable:shape:new: ShapeEvent
-            // Fired when a new shape is created in a multi (Polygon or Polyline).
-            this.fireAndForward('editable:shape:new', {shape: shape});
-            if (latlng) this.newPointForward(latlng);
-        },
-
-        deleteShape: function (shape, latlngs) {
-            var e = {shape: shape};
-            L.Editable.makeCancellable(e);
-            // 🍂namespace Editable
-            // 🍂section Shape events
-            // 🍂event editable:shape:delete: CancelableShapeEvent
-            // Fired before a new shape is deleted in a multi (Polygon or Polyline).
-            this.fireAndForward('editable:shape:delete', e);
-            if (e._cancelled) return;
-            shape = this._deleteShape(shape, latlngs);
-            if (this.ensureNotFlat) this.ensureNotFlat();  // Polygon.
-            this.feature.setLatLngs(this.getLatLngs());  // Force bounds reset.
-            this.refresh();
-            this.reset();
-            // 🍂namespace Editable
-            // 🍂section Shape events
-            // 🍂event editable:shape:deleted: ShapeEvent
-            // Fired after a new shape is deleted in a multi (Polygon or Polyline).
-            this.fireAndForward('editable:shape:deleted', {shape: shape});
-            return shape;
-        },
-
-        _deleteShape: function (shape, latlngs) {
-            latlngs = latlngs || this.getLatLngs();
-            if (!latlngs.length) return;
-            var self = this,
-                inplaceDelete = function (latlngs, shape) {
-                    // Called when deleting a flat latlngs
-                    shape = latlngs.splice(0, Number.MAX_VALUE);
-                    return shape;
-                },
-                spliceDelete = function (latlngs, shape) {
-                    // Called when removing a latlngs inside an array
-                    latlngs.splice(latlngs.indexOf(shape), 1);
-                    if (!latlngs.length) self._deleteShape(latlngs);
-                    return shape;
-                };
-            if (latlngs === shape) return inplaceDelete(latlngs, shape);
-            for (var i = 0; i < latlngs.length; i++) {
-                if (latlngs[i] === shape) return spliceDelete(latlngs, shape);
-                else if (latlngs[i].indexOf(shape) !== -1) return spliceDelete(latlngs[i], shape);
-            }
-        },
-
-        // 🍂namespace PathEditor
-        // 🍂method deleteShapeAt(latlng: L.LatLng): Array
-        // Remove a path shape at the given `latlng`.
-        deleteShapeAt: function (latlng) {
-            var shape = this.feature.shapeAt(latlng);
-            if (shape) return this.deleteShape(shape);
-        },
-
-        // 🍂method appendShape(shape: Array)
-        // Append a new shape to the Polygon or Polyline.
-        appendShape: function (shape) {
-            this.insertShape(shape);
-        },
-
-        // 🍂method prependShape(shape: Array)
-        // Prepend a new shape to the Polygon or Polyline.
-        prependShape: function (shape) {
-            this.insertShape(shape, 0);
-        },
-
-        // 🍂method insertShape(shape: Array, index: int)
-        // Insert a new shape to the Polygon or Polyline at given index (default is to append).
-        insertShape: function (shape, index) {
-            this.ensureMulti();
-            shape = this.formatShape(shape);
-            if (typeof index === 'undefined') index = this.feature._latlngs.length;
-            this.feature._latlngs.splice(index, 0, shape);
-            this.feature.redraw();
-            if (this._enabled) this.reset();
-        },
-
-        extendBounds: function (e) {
-            this.feature._bounds.extend(e.vertex.latlng);
-        },
-
-        onDragStart: function (e) {
-            this.editLayer.clearLayers();
-            L.Editable.BaseEditor.prototype.onDragStart.call(this, e);
-        },
-
-        onDragEnd: function (e) {
-            this.initVertexMarkers();
-            L.Editable.BaseEditor.prototype.onDragEnd.call(this, e);
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class PolylineEditor; 🍂aka L.Editable.PolylineEditor
-    // 🍂inherits PathEditor
-    L.Editable.PolylineEditor = L.Editable.PathEditor.extend({
-
-        startDrawingBackward: function () {
-            this._drawing = L.Editable.BACKWARD;
-            this.startDrawing();
-        },
-
-        // 🍂method continueBackward(latlngs?: Array)
-        // Set up drawing tools to continue the line backward.
-        continueBackward: function (latlngs) {
-            if (this.drawing()) return;
-            latlngs = latlngs || this.getDefaultLatLngs();
-            this.setDrawnLatLngs(latlngs);
-            if (latlngs.length > 0) {
-                this.tools.attachBackwardLineGuide();
-                this.tools.anchorBackwardLineGuide(latlngs[0]);
-            }
-            this.startDrawingBackward();
-        },
-
-        // 🍂method continueForward(latlngs?: Array)
-        // Set up drawing tools to continue the line forward.
-        continueForward: function (latlngs) {
-            if (this.drawing()) return;
-            latlngs = latlngs || this.getDefaultLatLngs();
-            this.setDrawnLatLngs(latlngs);
-            if (latlngs.length > 0) {
-                this.tools.attachForwardLineGuide();
-                this.tools.anchorForwardLineGuide(latlngs[latlngs.length - 1]);
-            }
-            this.startDrawingForward();
-        },
-
-        getDefaultLatLngs: function (latlngs) {
-            latlngs = latlngs || this.feature._latlngs;
-            if (!latlngs.length || latlngs[0] instanceof L.LatLng) return latlngs;
-            else return this.getDefaultLatLngs(latlngs[0]);
-        },
-
-        ensureMulti: function () {
-            if (this.feature._latlngs.length && isFlat(this.feature._latlngs)) {
-                this.feature._latlngs = [this.feature._latlngs];
-            }
-        },
-
-        addNewEmptyShape: function () {
-            if (this.feature._latlngs.length) {
-                var shape = [];
-                this.appendShape(shape);
-                return shape;
-            } else {
-                return this.feature._latlngs;
-            }
-        },
-
-        formatShape: function (shape) {
-            if (isFlat(shape)) return shape;
-            else if (shape[0]) return this.formatShape(shape[0]);
-        },
-
-        // 🍂method splitShape(latlngs?: Array, index: int)
-        // Split the given `latlngs` shape at index `index` and integrate new shape in instance `latlngs`.
-        splitShape: function (shape, index) {
-            if (!index || index >= shape.length - 1) return;
-            this.ensureMulti();
-            var shapeIndex = this.feature._latlngs.indexOf(shape);
-            if (shapeIndex === -1) return;
-            var first = shape.slice(0, index + 1),
-                second = shape.slice(index);
-            // We deal with reference, we don't want twice the same latlng around.
-            second[0] = L.latLng(second[0].lat, second[0].lng, second[0].alt);
-            this.feature._latlngs.splice(shapeIndex, 1, first, second);
-            this.refresh();
-            this.reset();
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class PolygonEditor; 🍂aka L.Editable.PolygonEditor
-    // 🍂inherits PathEditor
-    L.Editable.PolygonEditor = L.Editable.PathEditor.extend({
-
-        CLOSED: true,
-        MIN_VERTEX: 3,
-
-        newPointForward: function (latlng) {
-            L.Editable.PathEditor.prototype.newPointForward.call(this, latlng);
-            if (!this.tools.backwardLineGuide._latlngs.length) this.tools.anchorBackwardLineGuide(latlng);
-            if (this._drawnLatLngs.length === 2) this.tools.attachBackwardLineGuide();
-        },
-
-        addNewEmptyHole: function (latlng) {
-            this.ensureNotFlat();
-            var latlngs = this.feature.shapeAt(latlng);
-            if (!latlngs) return;
-            var holes = [];
-            latlngs.push(holes);
-            return holes;
-        },
-
-        // 🍂method newHole(latlng?: L.LatLng, index: int)
-        // Set up drawing tools for creating a new hole on the Polygon. If the `latlng` param is given, a first point is created.
-        newHole: function (latlng) {
-            var holes = this.addNewEmptyHole(latlng);
-            if (!holes) return;
-            this.setDrawnLatLngs(holes);
-            this.startDrawingForward();
-            if (latlng) this.newPointForward(latlng);
-        },
-
-        addNewEmptyShape: function () {
-            if (this.feature._latlngs.length && this.feature._latlngs[0].length) {
-                var shape = [];
-                this.appendShape(shape);
-                return shape;
-            } else {
-                return this.feature._latlngs;
-            }
-        },
-
-        ensureMulti: function () {
-            if (this.feature._latlngs.length && isFlat(this.feature._latlngs[0])) {
-                this.feature._latlngs = [this.feature._latlngs];
-            }
-        },
-
-        ensureNotFlat: function () {
-            if (!this.feature._latlngs.length || isFlat(this.feature._latlngs)) this.feature._latlngs = [this.feature._latlngs];
-        },
-
-        vertexCanBeDeleted: function (vertex) {
-            var parent = this.feature.parentShape(vertex.latlngs),
-                idx = L.Util.indexOf(parent, vertex.latlngs);
-            if (idx > 0) return true;  // Holes can be totally deleted without removing the layer itself.
-            return L.Editable.PathEditor.prototype.vertexCanBeDeleted.call(this, vertex);
-        },
-
-        getDefaultLatLngs: function () {
-            if (!this.feature._latlngs.length) this.feature._latlngs.push([]);
-            return this.feature._latlngs[0];
-        },
-
-        formatShape: function (shape) {
-            // [[1, 2], [3, 4]] => must be nested
-            // [] => must be nested
-            // [[]] => is already nested
-            if (isFlat(shape) && (!shape[0] || shape[0].length !== 0)) return [shape];
-            else return shape;
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class RectangleEditor; 🍂aka L.Editable.RectangleEditor
-    // 🍂inherits PathEditor
-    L.Editable.RectangleEditor = L.Editable.PathEditor.extend({
-
-        CLOSED: true,
-        MIN_VERTEX: 4,
-
-        options: {
-            skipMiddleMarkers: true
-        },
-
-        extendBounds: function (e) {
-            var index = e.vertex.getIndex(),
-                next = e.vertex.getNext(),
-                previous = e.vertex.getPrevious(),
-                oppositeIndex = (index + 2) % 4,
-                opposite = e.vertex.latlngs[oppositeIndex],
-                bounds = new L.LatLngBounds(e.latlng, opposite);
-            // Update latlngs by hand to preserve order.
-            previous.latlng.update([e.latlng.lat, opposite.lng]);
-            next.latlng.update([opposite.lat, e.latlng.lng]);
-            this.updateBounds(bounds);
-            this.refreshVertexMarkers();
-        },
-
-        onDrawingMouseDown: function (e) {
-            L.Editable.PathEditor.prototype.onDrawingMouseDown.call(this, e);
-            this.connect();
-            var latlngs = this.getDefaultLatLngs();
-            // L.Polygon._convertLatLngs removes last latlng if it equals first point,
-            // which is the case here as all latlngs are [0, 0]
-            if (latlngs.length === 3) latlngs.push(e.latlng);
-            var bounds = new L.LatLngBounds(e.latlng, e.latlng);
-            this.updateBounds(bounds);
-            this.updateLatLngs(bounds);
-            this.refresh();
-            this.reset();
-            // Stop dragging map.
-            // L.Draggable has two workflows:
-            // - mousedown => mousemove => mouseup
-            // - touchstart => touchmove => touchend
-            // Problem: L.Map.Tap does not allow us to listen to touchstart, so we only
-            // can deal with mousedown, but then when in a touch device, we are dealing with
-            // simulated events (actually simulated by L.Map.Tap), which are no more taken
-            // into account by L.Draggable.
-            // Ref.: https://github.com/Leaflet/Leaflet.Editable/issues/103
-            e.originalEvent._simulated = false;
-            this.map.dragging._draggable._onUp(e.originalEvent);
-            // Now transfer ongoing drag action to the bottom right corner.
-            // Should we refine which corner will handle the drag according to
-            // drag direction?
-            latlngs[3].__vertex.dragging._draggable._onDown(e.originalEvent);
-        },
-
-        onDrawingMouseUp: function (e) {
-            this.commitDrawing(e);
-            e.originalEvent._simulated = false;
-            L.Editable.PathEditor.prototype.onDrawingMouseUp.call(this, e);
-        },
-
-        onDrawingMouseMove: function (e) {
-            e.originalEvent._simulated = false;
-            L.Editable.PathEditor.prototype.onDrawingMouseMove.call(this, e);
-        },
-
-
-        getDefaultLatLngs: function (latlngs) {
-            return latlngs || this.feature._latlngs[0];
-        },
-
-        updateBounds: function (bounds) {
-            this.feature._bounds = bounds;
-        },
-
-        updateLatLngs: function (bounds) {
-            var latlngs = this.getDefaultLatLngs(),
-                newLatlngs = this.feature._boundsToLatLngs(bounds);
-            // Keep references.
-            for (var i = 0; i < latlngs.length; i++) {
-                latlngs[i].update(newLatlngs[i]);
-            }
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class CircleEditor; 🍂aka L.Editable.CircleEditor
-    // 🍂inherits PathEditor
-    L.Editable.CircleEditor = L.Editable.PathEditor.extend({
-
-        MIN_VERTEX: 2,
-
-        options: {
-            skipMiddleMarkers: true
-        },
-
-        initialize: function (map, feature, options) {
-            L.Editable.PathEditor.prototype.initialize.call(this, map, feature, options);
-            this._resizeLatLng = this.computeResizeLatLng();
-        },
-
-        computeResizeLatLng: function () {
-            // While circle is not added to the map, _radius is not set.
-            var delta = (this.feature._radius || this.feature._mRadius) * Math.cos(Math.PI / 4),
-                point = this.map.project(this.feature._latlng);
-            return this.map.unproject([point.x + delta, point.y - delta]);
-        },
-
-        updateResizeLatLng: function () {
-            this._resizeLatLng.update(this.computeResizeLatLng());
-            this._resizeLatLng.__vertex.update();
-        },
-
-        getLatLngs: function () {
-            return [this.feature._latlng, this._resizeLatLng];
-        },
-
-        getDefaultLatLngs: function () {
-            return this.getLatLngs();
-        },
-
-        onVertexMarkerDrag: function (e) {
-            if (e.vertex.getIndex() === 1) this.resize(e);
-            else this.updateResizeLatLng(e);
-            L.Editable.PathEditor.prototype.onVertexMarkerDrag.call(this, e);
-        },
-
-        resize: function (e) {
-            var radius = this.feature._latlng.distanceTo(e.latlng);
-            this.feature.setRadius(radius);
-        },
-
-        onDrawingMouseDown: function (e) {
-            L.Editable.PathEditor.prototype.onDrawingMouseDown.call(this, e);
-            this._resizeLatLng.update(e.latlng);
-            this.feature._latlng.update(e.latlng);
-            this.connect();
-            // Stop dragging map.
-            e.originalEvent._simulated = false;
-            this.map.dragging._draggable._onUp(e.originalEvent);
-            // Now transfer ongoing drag action to the radius handler.
-            this._resizeLatLng.__vertex.dragging._draggable._onDown(e.originalEvent);
-        },
-
-        onDrawingMouseUp: function (e) {
-            this.commitDrawing(e);
-            e.originalEvent._simulated = false;
-            L.Editable.PathEditor.prototype.onDrawingMouseUp.call(this, e);
-        },
-
-        onDrawingMouseMove: function (e) {
-            e.originalEvent._simulated = false;
-            L.Editable.PathEditor.prototype.onDrawingMouseMove.call(this, e);
-        },
-
-        onDrag: function (e) {
-            L.Editable.PathEditor.prototype.onDrag.call(this, e);
-            this.feature.dragging.updateLatLng(this._resizeLatLng);
-        }
-
-    });
-
-    // 🍂namespace Editable; 🍂class EditableMixin
-    // `EditableMixin` is included to `L.Polyline`, `L.Polygon`, `L.Rectangle`, `L.Circle`
-    // and `L.Marker`. It adds some methods to them.
-    // *When editing is enabled, the editor is accessible on the instance with the
-    // `editor` property.*
-    var EditableMixin = {
-
-        createEditor: function (map) {
-            map = map || this._map;
-            var tools = (this.options.editOptions || {}).editTools || map.editTools;
-            if (!tools) throw Error('Unable to detect Editable instance.');
-            var Klass = this.options.editorClass || this.getEditorClass(tools);
-            return new Klass(map, this, this.options.editOptions);
-        },
-
-        // 🍂method enableEdit(map?: L.Map): this.editor
-        // Enable editing, by creating an editor if not existing, and then calling `enable` on it.
-        enableEdit: function (map) {
-            if (!this.editor) this.createEditor(map);
-            this.editor.enable();
-            return this.editor;
-        },
-
-        // 🍂method editEnabled(): boolean
-        // Return true if current instance has an editor attached, and this editor is enabled.
-        editEnabled: function () {
-            return this.editor && this.editor.enabled();
-        },
-
-        // 🍂method disableEdit()
-        // Disable editing, also remove the editor property reference.
-        disableEdit: function () {
-            if (this.editor) {
-                this.editor.disable();
-                delete this.editor;
-            }
-        },
-
-        // 🍂method toggleEdit()
-        // Enable or disable editing, according to current status.
-        toggleEdit: function () {
-            if (this.editEnabled()) this.disableEdit();
-            else this.enableEdit();
-        },
-
-        _onEditableAdd: function () {
-            if (this.editor) this.enableEdit();
-        }
-
-    };
-
-    var PolylineMixin = {
-
-        getEditorClass: function (tools) {
-            return (tools && tools.options.polylineEditorClass) ? tools.options.polylineEditorClass : L.Editable.PolylineEditor;
-        },
-
-        shapeAt: function (latlng, latlngs) {
-            // We can have those cases:
-            // - latlngs are just a flat array of latlngs, use this
-            // - latlngs is an array of arrays of latlngs, loop over
-            var shape = null;
-            latlngs = latlngs || this._latlngs;
-            if (!latlngs.length) return shape;
-            else if (isFlat(latlngs) && this.isInLatLngs(latlng, latlngs)) shape = latlngs;
-            else for (var i = 0; i < latlngs.length; i++) if (this.isInLatLngs(latlng, latlngs[i])) return latlngs[i];
-            return shape;
-        },
-
-        isInLatLngs: function (l, latlngs) {
-            if (!latlngs) return false;
-            var i, k, len, part = [], p,
-                w = this._clickTolerance();
-            this._projectLatlngs(latlngs, part, this._pxBounds);
-            part = part[0];
-            p = this._map.latLngToLayerPoint(l);
-
-            if (!this._pxBounds.contains(p)) { return false; }
-            for (i = 1, len = part.length, k = 0; i < len; k = i++) {
-
-                if (L.LineUtil.pointToSegmentDistance(p, part[k], part[i]) <= w) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-    };
-
-    var PolygonMixin = {
-
-        getEditorClass: function (tools) {
-            return (tools && tools.options.polygonEditorClass) ? tools.options.polygonEditorClass : L.Editable.PolygonEditor;
-        },
-
-        shapeAt: function (latlng, latlngs) {
-            // We can have those cases:
-            // - latlngs are just a flat array of latlngs, use this
-            // - latlngs is an array of arrays of latlngs, this is a simple polygon (maybe with holes), use the first
-            // - latlngs is an array of arrays of arrays, this is a multi, loop over
-            var shape = null;
-            latlngs = latlngs || this._latlngs;
-            if (!latlngs.length) return shape;
-            else if (isFlat(latlngs) && this.isInLatLngs(latlng, latlngs)) shape = latlngs;
-            else if (isFlat(latlngs[0]) && this.isInLatLngs(latlng, latlngs[0])) shape = latlngs;
-            else for (var i = 0; i < latlngs.length; i++) if (this.isInLatLngs(latlng, latlngs[i][0])) return latlngs[i];
-            return shape;
-        },
-
-        isInLatLngs: function (l, latlngs) {
-            var inside = false, l1, l2, j, k, len2;
-
-            for (j = 0, len2 = latlngs.length, k = len2 - 1; j < len2; k = j++) {
-                l1 = latlngs[j];
-                l2 = latlngs[k];
-
-                if (((l1.lat > l.lat) !== (l2.lat > l.lat)) &&
-                        (l.lng < (l2.lng - l1.lng) * (l.lat - l1.lat) / (l2.lat - l1.lat) + l1.lng)) {
-                    inside = !inside;
-                }
-            }
-
-            return inside;
-        },
-
-        parentShape: function (shape, latlngs) {
-            latlngs = latlngs || this._latlngs;
-            if (!latlngs) return;
-            var idx = L.Util.indexOf(latlngs, shape);
-            if (idx !== -1) return latlngs;
-            for (var i = 0; i < latlngs.length; i++) {
-                idx = L.Util.indexOf(latlngs[i], shape);
-                if (idx !== -1) return latlngs[i];
-            }
-        }
-
-    };
-
-
-    var MarkerMixin = {
-
-        getEditorClass: function (tools) {
-            return (tools && tools.options.markerEditorClass) ? tools.options.markerEditorClass : L.Editable.MarkerEditor;
-        }
-
-    };
-
-    var RectangleMixin = {
-
-        getEditorClass: function (tools) {
-            return (tools && tools.options.rectangleEditorClass) ? tools.options.rectangleEditorClass : L.Editable.RectangleEditor;
-        }
-
-    };
-
-    var CircleMixin = {
-
-        getEditorClass: function (tools) {
-            return (tools && tools.options.circleEditorClass) ? tools.options.circleEditorClass : L.Editable.CircleEditor;
-        }
-
-    };
-
-    var keepEditable = function () {
-        // Make sure you can remove/readd an editable layer.
-        this.on('add', this._onEditableAdd);
-    };
-
-    var isFlat = L.LineUtil.isFlat || L.LineUtil._flat || L.Polyline._flat;  // <=> 1.1 compat.
-
-
-    if (L.Polyline) {
-        L.Polyline.include(EditableMixin);
-        L.Polyline.include(PolylineMixin);
-        L.Polyline.addInitHook(keepEditable);
-    }
-    if (L.Polygon) {
-        L.Polygon.include(EditableMixin);
-        L.Polygon.include(PolygonMixin);
-    }
-    if (L.Marker) {
-        L.Marker.include(EditableMixin);
-        L.Marker.include(MarkerMixin);
-        L.Marker.addInitHook(keepEditable);
-    }
-    if (L.Rectangle) {
-        L.Rectangle.include(EditableMixin);
-        L.Rectangle.include(RectangleMixin);
-    }
-    if (L.Circle) {
-        L.Circle.include(EditableMixin);
-        L.Circle.include(CircleMixin);
-    }
-
-    L.LatLng.prototype.update = function (latlng) {
-        latlng = L.latLng(latlng);
-        this.lat = latlng.lat;
-        this.lng = latlng.lng;
-    }
-
-}, window));
-
-
-/***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34914,7 +35327,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 module.exports = monotoneConvexHull2D
 
-var orient = __webpack_require__(8)[3]
+var orient = __webpack_require__(9)[3]
 
 function monotoneConvexHull2D(points) {
   var n = points.length
@@ -34993,7 +35406,7 @@ function monotoneConvexHull2D(points) {
 }
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35034,7 +35447,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var superagent = __webpack_require__(88);
+var superagent = __webpack_require__(90);
 var NominatimJS = /** @class */ (function () {
     function NominatimJS() {
     }
@@ -35086,7 +35499,7 @@ exports.NominatimJS = NominatimJS;
 
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports) {
 
 module.exports = function (point, vs) {
@@ -35110,13 +35523,13 @@ module.exports = function (point, vs) {
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var lr = __webpack_require__(8)
+var lr = __webpack_require__(9)
 
 // these should probably use robust-sum, etc
 function vectSum(a,b) {
@@ -35239,7 +35652,7 @@ module.exports = quickHull
 
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -35308,7 +35721,7 @@ return quickselect;
 
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35317,7 +35730,7 @@ return quickselect;
 module.exports = rbush;
 module.exports.default = rbush;
 
-var quickselect = __webpack_require__(81);
+var quickselect = __webpack_require__(83);
 
 function rbush(maxEntries, format) {
     if (!(this instanceof rbush)) return new rbush(maxEntries, format);
@@ -35877,14 +36290,14 @@ function multiSelect(arr, left, right, n, compare) {
 
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var twoProduct = __webpack_require__(24)
-var twoSum = __webpack_require__(93)
+var twoProduct = __webpack_require__(25)
+var twoSum = __webpack_require__(95)
 
 module.exports = scaleLinearExpansion
 
@@ -35933,7 +36346,7 @@ function scaleLinearExpansion(e, scale) {
 }
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36095,7 +36508,7 @@ function robustSubtract(e, f) {
 }
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36257,7 +36670,7 @@ function linearExpansionSum(e, f) {
 }
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -36387,7 +36800,7 @@ else window.simplify = simplify;
 
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36418,7 +36831,7 @@ Agent.prototype._setDefaults = function (req) {
 module.exports = Agent;
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36441,15 +36854,15 @@ if (typeof window !== 'undefined') {
   root = self;
 }
 
-const Emitter = __webpack_require__(65);
+const Emitter = __webpack_require__(68);
 
-const RequestBase = __webpack_require__(89);
+const RequestBase = __webpack_require__(91);
 
-const isObject = __webpack_require__(23);
+const isObject = __webpack_require__(24);
 
-const ResponseBase = __webpack_require__(90);
+const ResponseBase = __webpack_require__(92);
 
-const Agent = __webpack_require__(87);
+const Agent = __webpack_require__(89);
 /**
  * Noop.
  */
@@ -37429,7 +37842,7 @@ request.put = (url, data, fn) => {
 };
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37438,7 +37851,7 @@ request.put = (url, data, fn) => {
 /**
  * Module of mixed-in functions shared between node and client code
  */
-const isObject = __webpack_require__(23);
+const isObject = __webpack_require__(24);
 /**
  * Expose `RequestBase`.
  */
@@ -38177,7 +38590,7 @@ RequestBase.prototype._setTimeouts = function () {
 };
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38186,7 +38599,7 @@ RequestBase.prototype._setTimeouts = function () {
 /**
  * Module dependencies.
  */
-const utils = __webpack_require__(91);
+const utils = __webpack_require__(93);
 /**
  * Expose `ResponseBase`.
  */
@@ -38313,7 +38726,7 @@ ResponseBase.prototype._setStatusProperties = function (status) {
 };
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38383,7 +38796,7 @@ exports.cleanHeader = (header, changesOrigin) => {
 };
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38478,7 +38891,7 @@ TinyQueue.prototype = {
 
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38501,5 +38914,5 @@ function fastTwoSum(a, b, result) {
 }
 
 /***/ })
-],[61]);
+],[64]);
 //# sourceMappingURL=main.js.map

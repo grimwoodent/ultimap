@@ -35,6 +35,8 @@ function () {
 
     _defineProperty(this, "polygon", null);
 
+    _defineProperty(this, "circle", null);
+
     _defineProperty(this, "mapControl", null);
 
     _defineProperty(this, "domEvent", null);

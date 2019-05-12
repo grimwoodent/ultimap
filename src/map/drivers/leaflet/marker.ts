@@ -42,9 +42,6 @@ export class LeafletMarkerStrategy implements IMarkerStrategy {
      * @return {IMarkerStrategy}
      */
     public removeFromMap(geoobject: LMarker, map: IMap): IMarkerStrategy {
-        // (geoobject as any).removeFrom(map.getInstance());
-
-        // tslint:disable-next-line:
         (geoobject as any).removeFrom(map.getInstance());
 
         return this;

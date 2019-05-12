@@ -17,6 +17,8 @@ export class GoogleGeoStrategy implements IGeoStrategy {
     // public polygon = new GooglePolygonStrategy();
     public polygon = null as any;
 
+    public circle = null as any;
+
     // public mapControl = new GoogleMapControlStrategy();
     public mapControl = null as any;
 

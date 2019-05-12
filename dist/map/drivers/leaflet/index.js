@@ -23,6 +23,8 @@ var _geoEvent = require("./geo-event");
 
 var _geocoder = require("./geocoder");
 
+var _circle = require("./circle");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -42,6 +44,8 @@ function () {
     _defineProperty(this, "marker", new _marker.LeafletMarkerStrategy());
 
     _defineProperty(this, "polygon", new _polygon.LeafletPolygonStrategy());
+
+    _defineProperty(this, "circle", new _circle.LeafletCircleStrategy());
 
     _defineProperty(this, "mapControl", new _mapControl.LeafletMapControlStrategy());
 

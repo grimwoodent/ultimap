@@ -1,8 +1,12 @@
 import { IMarkerStrategy } from './marker';
-import { IMapStrategy } from './map';
+import { ICircleStrategy } from './circle';
 import { IMarkerPresetStrategy } from './preset/marker';
+
 import { IPolygonStrategy } from './polygon';
 import { IPolygonPresetStrategy } from './preset/polygon';
+
+import { IMapStrategy } from './map';
+
 import { Bounds } from '../../bounds';
 import { IMapControlStrategy } from './map-control';
 import { EventHandlerFn, IEventHandlerFnMap } from '../../events/index';
@@ -47,6 +51,7 @@ export interface IGeoStrategy {
     map: IMapStrategy;
     marker: IMarkerStrategy;
     polygon: IPolygonStrategy;
+    circle: ICircleStrategy;
     mapControl: IMapControlStrategy;
     domEvent: IDOMEventStrategy;
     geoEvent: IGeoEventStrategy;

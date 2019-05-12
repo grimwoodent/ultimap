@@ -39,6 +39,8 @@ function () {
 
     _defineProperty(this, "marker", new _marker.YandexMarkerStrategy());
 
+    _defineProperty(this, "circle", null);
+
     _defineProperty(this, "polygon", new _polygon.YandexPolygonStrategy());
 
     _defineProperty(this, "mapControl", new _mapControl.YandexMapControlStrategy());

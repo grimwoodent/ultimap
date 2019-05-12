@@ -5,6 +5,7 @@ import { Marker } from './map/marker';
 import { MarkerPreset } from './map/preset/marker';
 import { Polygon } from './map/polygon';
 import { PolygonPreset } from './map/preset/polygon';
+import { Circle } from './map/circle';
 import { MapControlController } from './map/map-control';
 import { DOMEvent } from './map/dom-event';
 import { Constructor as CollectionsConstructor } from './map/collection/constructor';
@@ -83,6 +84,10 @@ export class Geo {
 
     public get polygon() {
         return new Polygon(this.getStrategy());
+    }
+
+    public get circle() {
+        return new Circle(this.getStrategy());
     }
 
     public get control() {

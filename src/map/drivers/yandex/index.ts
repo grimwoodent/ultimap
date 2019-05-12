@@ -13,6 +13,8 @@ export class YandexGeoStrategy implements IGeoStrategy {
 
     public marker = new YandexMarkerStrategy();
 
+    public circle = null as any;
+
     public polygon = new YandexPolygonStrategy();
 
     public mapControl = new YandexMapControlStrategy();

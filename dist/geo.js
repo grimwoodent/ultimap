@@ -17,6 +17,8 @@ var _polygon = require("./map/polygon");
 
 var _polygon2 = require("./map/preset/polygon");
 
+var _circle = require("./map/circle");
+
 var _mapControl = require("./map/map-control");
 
 var _domEvent = require("./map/dom-event");
@@ -123,6 +125,11 @@ function () {
     key: "polygon",
     get: function get() {
       return new _polygon.Polygon(this.getStrategy());
+    }
+  }, {
+    key: "circle",
+    get: function get() {
+      return new _circle.Circle(this.getStrategy());
     }
   }, {
     key: "control",

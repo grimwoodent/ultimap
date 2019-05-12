@@ -10,6 +10,7 @@ import { LeafletMapControlStrategy } from './map-control';
 import { LeafletDOMEventStrategy } from './dom-event';
 import { LeafletGeoEventStrategy } from './geo-event';
 import { LeafletGeocoderStrategy } from './geocoder';
+import { LeafletCircleStrategy } from './circle';
 
 export interface ILeafletGeoStrategyProps extends ILeafletMapStrategyProps {
 
@@ -21,6 +22,8 @@ export class LeafletGeoStrategy implements IGeoStrategy {
     public marker = new LeafletMarkerStrategy();
 
     public polygon = new LeafletPolygonStrategy();
+
+    public circle = new LeafletCircleStrategy();
 
     public mapControl = new LeafletMapControlStrategy();
 
