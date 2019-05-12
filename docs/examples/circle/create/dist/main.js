@@ -33744,6 +33744,12 @@ class Page {
             this.circles.ymaps = null;
         }
     }
+
+    setRadius(radius) {
+        if (this.circles.osm) {
+            this.circles.osm.setRadius(radius);
+        }
+    }
 }
 
 __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
@@ -33751,11 +33757,14 @@ __WEBPACK_IMPORTED_MODULE_0_jquery___default()(() => {
 
     page.create();
 
-    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#create").on('click', () => {
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#create').on('click', () => {
         page.create();
     });
-    __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#remove").on('click', () => {
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#remove').on('click', () => {
         page.remove();
+    });
+    __WEBPACK_IMPORTED_MODULE_0_jquery___default()('#set_radius').on('click', () => {
+        page.setRadius(__WEBPACK_IMPORTED_MODULE_0_jquery___default()('#radius').val());
     });
 });
 

@@ -51,6 +51,12 @@ class Page {
             this.circles.ymaps = null;
         }
     }
+
+    setRadius(radius) {
+        if (this.circles.osm) {
+            this.circles.osm.setRadius(radius);
+        }
+    }
 }
 
 $(() => {
@@ -58,10 +64,13 @@ $(() => {
 
     page.create();
 
-    $("#create").on('click', () => {
+    $('#create').on('click', () => {
         page.create();
     });
-    $("#remove").on('click', () => {
+    $('#remove').on('click', () => {
         page.remove();
+    });
+    $('#set_radius').on('click', () => {
+        page.setRadius($('#radius').val());
     });
 });
