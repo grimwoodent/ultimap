@@ -51,6 +51,19 @@ function () {
         mouseleave: 'mouseout'
       };
     }
+  }, {
+    key: "getPolygonEventName",
+    value: function getPolygonEventName() {
+      return {
+        add: 'add',
+        remove: 'remove',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseover',
+        mouseleave: 'mouseout'
+      };
+    }
   }]);
 
   return LeafletGeoEventStrategy;

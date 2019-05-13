@@ -44,6 +44,11 @@ function () {
     get: function get() {
       return this.getStrategy().getMarkerEventName();
     }
+  }, {
+    key: "polygon",
+    get: function get() {
+      return this.getStrategy().getPolygonEventName();
+    }
   }]);
 
   return GeoEvent;

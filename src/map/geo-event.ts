@@ -1,9 +1,13 @@
 import { IGeoStrategy } from './drivers/interface/index';
-import { IMapGeoEventName, IGeoEventStrategy, IMarkerGeoEventName } from './drivers/interface/geo-event';
+import {
+    IMapGeoEventName, IGeoEventStrategy, IMarkerGeoEventName,
+    IPolygonGeoEventName,
+} from './drivers/interface/geo-event';
 
 export interface IGeoEvent {
     map: IMapGeoEventName;
     marker: IMarkerGeoEventName;
+    polygon: IPolygonGeoEventName;
 }
 
 export class GeoEvent implements IGeoEvent {
@@ -19,6 +23,10 @@ export class GeoEvent implements IGeoEvent {
 
     public get marker(): IMapGeoEventName {
         return this.getStrategy().getMarkerEventName();
+    }
+
+    public get polygon(): IPolygonGeoEventName {
+        return this.getStrategy().getPolygonEventName();
     }
 
     /**

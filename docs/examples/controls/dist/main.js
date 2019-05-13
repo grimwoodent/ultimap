@@ -20248,6 +20248,11 @@ function () {
     get: function get() {
       return this.getStrategy().getMarkerEventName();
     }
+  }, {
+    key: "polygon",
+    get: function get() {
+      return this.getStrategy().getPolygonEventName();
+    }
   }]);
 
   return GeoEvent;
@@ -47537,6 +47542,19 @@ function () {
         mouseleave: 'mouseout'
       };
     }
+  }, {
+    key: "getPolygonEventName",
+    value: function getPolygonEventName() {
+      return {
+        add: 'add',
+        remove: 'remove',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseover',
+        mouseleave: 'mouseout'
+      };
+    }
   }]);
 
   return LeafletGeoEventStrategy;
@@ -48707,7 +48725,7 @@ function () {
         drag: 'boundschange',
         // ?
         dragstart: 'actionbegin',
-        //?
+        // ?
         dragend: 'actionend',
         // ?
         contextmenu: 'contextmenu',
@@ -48718,10 +48736,25 @@ function () {
     key: "getMarkerEventName",
     value: function getMarkerEventName() {
       return {
+        // add: 'add', // ?
+        // remove: 'remove', // ?
         drag: 'drag',
         dragstart: 'dragstart',
         dragend: 'dragend',
         move: 'geometrychange',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave'
+      };
+    }
+  }, {
+    key: "getPolygonEventName",
+    value: function getPolygonEventName() {
+      return {
+        // add: 'add', // ?
+        // remove: 'remove', // ?
         click: 'click',
         mousedown: 'mousedown',
         mouseup: 'mouseup',
@@ -49682,7 +49715,7 @@ function () {
     /**
      * Set polygon editing state
      *
-     * @param {YPolygon} geoobject
+     * @param {YPolygon} geoObject
      * @param {boolean} value
      *
      * @return {IPolygonStrategy}
@@ -49690,9 +49723,13 @@ function () {
 
   }, {
     key: "setEditable",
-    value: function setEditable(geoobject, value) {
-      // @TODO implements method
-      throw new Error('Method not implemented');
+    value: function setEditable(geoObject, value) {
+      if (value) {
+        geoObject.editor.startEditing();
+      } else {
+        geoObject.editor.stopEditing();
+      }
+
       return this;
     }
     /**
@@ -49725,8 +49762,11 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
-      // @TODO implements method
-      throw new Error('Method not implemented');
+      if (!type) {
+        throw new Error('Polygon event name is not defined');
+      }
+
+      geoObject.events.add(type, fn, context);
       return this;
     }
     /**
@@ -49743,9 +49783,12 @@ function () {
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
-      // @TODO implements method
-      throw new Error('Method not implemented');
-      return null;
+      if (!type) {
+        throw new Error('Polygon event name is not defined');
+      }
+
+      geoObject.events.remove(type, fn, context);
+      return this;
     }
   }]);
 

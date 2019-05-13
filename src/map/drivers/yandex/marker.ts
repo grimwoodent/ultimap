@@ -65,7 +65,7 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {IMarkerStrategy}
      */
     public setCoords(placemark: YMarker, value: Coords): IMarkerStrategy {
-        placemark.geometry.setCoordinates(value.toArray());
+        (placemark as any).geometry.setCoordinates(value.toArray());
 
         return this;
     }
@@ -78,7 +78,7 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      * @returns {Coords}
      */
     public getCoords(placemark: YMarker): Coords {
-        return new Coords(placemark.geometry.getCoordinates());
+        return new Coords((placemark as any).geometry.getCoordinates());
     }
 
     /**
@@ -145,12 +145,16 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
      *
      * @returns {IMarkerStrategy}
      */
-    public on(geoObject: YMarker, type: string | IEventHandlerFnMap, fn?: EventHandlerFn, context?: any): IMarkerStrategy {
+    public on(
+        geoObject: YMarker,
+        type: string | IEventHandlerFnMap,
+        fn?: EventHandlerFn, context?: any,
+    ): IMarkerStrategy {
         if (!type) {
             throw new Error('Marker event name is not defined');
         }
 
-        geoObject.events.add(type as string, fn, context);
+        (geoObject as any).events.add(type as string, fn, context);
 
         return this;
     }
@@ -170,7 +174,7 @@ export class YandexMarkerStrategy implements IMarkerStrategy {
             throw new Error('Marker event name is not defined');
         }
 
-        geoObject.events.remove(type as string, fn, context);
+        (geoObject as any).events.remove(type as string, fn, context);
 
         return this;
     }

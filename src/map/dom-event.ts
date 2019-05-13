@@ -5,7 +5,7 @@ import { IDOMEventStrategy } from './drivers/interface/dom-event';
 export interface IDOMEvent {
     create(instance: any): IDOMEvent;
     stop(): IDOMEvent;
-    getCoords(domEvent: any): Coords;
+    getCoords(): Coords;
     getInstance(): any;
 }
 

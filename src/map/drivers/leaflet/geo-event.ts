@@ -1,4 +1,4 @@
-import { IMapGeoEventName, IGeoEventStrategy, IMarkerGeoEventName } from '../interface/geo-event';
+import { IMapGeoEventName, IGeoEventStrategy, IMarkerGeoEventName, IPolygonGeoEventName } from '../interface/geo-event';
 
 export class LeafletGeoEventStrategy implements IGeoEventStrategy {
     public getMapEventName(): IMapGeoEventName {
@@ -25,6 +25,19 @@ export class LeafletGeoEventStrategy implements IGeoEventStrategy {
             dragstart: 'dragstart',
             dragend: 'dragend',
             move: 'move',
+
+            click: 'click',
+            mousedown: 'mousedown',
+            mouseup: 'mouseup',
+            mouseenter: 'mouseover',
+            mouseleave: 'mouseout',
+        };
+    }
+
+    public getPolygonEventName(): IPolygonGeoEventName {
+        return {
+            add: 'add',
+            remove: 'remove',
 
             click: 'click',
             mousedown: 'mousedown',

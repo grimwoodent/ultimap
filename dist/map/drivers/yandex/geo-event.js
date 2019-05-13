@@ -30,7 +30,7 @@ function () {
         drag: 'boundschange',
         // ?
         dragstart: 'actionbegin',
-        //?
+        // ?
         dragend: 'actionend',
         // ?
         contextmenu: 'contextmenu',
@@ -41,10 +41,25 @@ function () {
     key: "getMarkerEventName",
     value: function getMarkerEventName() {
       return {
+        // add: 'add', // ?
+        // remove: 'remove', // ?
         drag: 'drag',
         dragstart: 'dragstart',
         dragend: 'dragend',
         move: 'geometrychange',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave'
+      };
+    }
+  }, {
+    key: "getPolygonEventName",
+    value: function getPolygonEventName() {
+      return {
+        // add: 'add', // ?
+        // remove: 'remove', // ?
         click: 'click',
         mousedown: 'mousedown',
         mouseup: 'mouseup',

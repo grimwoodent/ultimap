@@ -20248,6 +20248,11 @@ function () {
     get: function get() {
       return this.getStrategy().getMarkerEventName();
     }
+  }, {
+    key: "polygon",
+    get: function get() {
+      return this.getStrategy().getPolygonEventName();
+    }
   }]);
 
   return GeoEvent;
@@ -47537,6 +47542,19 @@ function () {
         mouseleave: 'mouseout'
       };
     }
+  }, {
+    key: "getPolygonEventName",
+    value: function getPolygonEventName() {
+      return {
+        add: 'add',
+        remove: 'remove',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseover',
+        mouseleave: 'mouseout'
+      };
+    }
   }]);
 
   return LeafletGeoEventStrategy;
@@ -48707,7 +48725,7 @@ function () {
         drag: 'boundschange',
         // ?
         dragstart: 'actionbegin',
-        //?
+        // ?
         dragend: 'actionend',
         // ?
         contextmenu: 'contextmenu',
@@ -48718,10 +48736,25 @@ function () {
     key: "getMarkerEventName",
     value: function getMarkerEventName() {
       return {
+        // add: 'add', // ?
+        // remove: 'remove', // ?
         drag: 'drag',
         dragstart: 'dragstart',
         dragend: 'dragend',
         move: 'geometrychange',
+        click: 'click',
+        mousedown: 'mousedown',
+        mouseup: 'mouseup',
+        mouseenter: 'mouseenter',
+        mouseleave: 'mouseleave'
+      };
+    }
+  }, {
+    key: "getPolygonEventName",
+    value: function getPolygonEventName() {
+      return {
+        // add: 'add', // ?
+        // remove: 'remove', // ?
         click: 'click',
         mousedown: 'mousedown',
         mouseup: 'mouseup',
@@ -49682,7 +49715,7 @@ function () {
     /**
      * Set polygon editing state
      *
-     * @param {YPolygon} geoobject
+     * @param {YPolygon} geoObject
      * @param {boolean} value
      *
      * @return {IPolygonStrategy}
@@ -49690,9 +49723,13 @@ function () {
 
   }, {
     key: "setEditable",
-    value: function setEditable(geoobject, value) {
-      // @TODO implements method
-      throw new Error('Method not implemented');
+    value: function setEditable(geoObject, value) {
+      if (value) {
+        geoObject.editor.startEditing();
+      } else {
+        geoObject.editor.stopEditing();
+      }
+
       return this;
     }
     /**
@@ -49725,8 +49762,11 @@ function () {
   }, {
     key: "on",
     value: function on(geoObject, type, fn, context) {
-      // @TODO implements method
-      throw new Error('Method not implemented');
+      if (!type) {
+        throw new Error('Polygon event name is not defined');
+      }
+
+      geoObject.events.add(type, fn, context);
       return this;
     }
     /**
@@ -49743,9 +49783,12 @@ function () {
   }, {
     key: "off",
     value: function off(geoObject, type, fn, context) {
-      // @TODO implements method
-      throw new Error('Method not implemented');
-      return null;
+      if (!type) {
+        throw new Error('Polygon event name is not defined');
+      }
+
+      geoObject.events.remove(type, fn, context);
+      return this;
     }
   }]);
 
@@ -50504,6 +50547,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+const defaultPolygon = {
+    coords: [[
+        [57.769131, 40.93534],
+        [57.765131, 40.93534],
+        [57.765131, 40.93134],
+        [57.769131, 40.93134],
+    ]],
+    style: {
+        fillColor: '#df362a',
+        fillOpacity: 0.33,
+        strokeColor: '#df362a',
+        strokeOpacity: 0.5,
+        strokeWidth: 2,
+    },
+};
+
 class Log {
     constructor(name, $element) {
         this.name = name;
@@ -50534,7 +50593,7 @@ class Example {
     create() {
         this.map = this.geo.map.create(this.$holder.get(0), {
             center: [57.767131, 40.928349],
-            zoom: 16,
+            zoom: 14,
         });
 
         this.console.log('Map created', this.map);
@@ -50547,6 +50606,7 @@ class Example {
             this.console.log('Map loaded', map);
             this._initMapEvents();
             this._addMarker();
+            this._addPolygon();
         });
 
         return this;
@@ -50592,6 +50652,25 @@ class Example {
         this.marker.on(this.geo.event.marker.mouseleave, (e) => { this.console.log(`Marker mouseleave`); });
 
         this.console.log('Marker added');
+    }
+
+    _addPolygon() {
+        this.polygon = this.geo.polygon.create(defaultPolygon.coords, Object.assign({
+            editable: true,
+        }, defaultPolygon.style)).addTo(this.map);
+
+        this.polygon.on(this.geo.event.polygon.click, (e) => {
+            const ev = this.geo.domEvent.create(e);
+            const coords = ev.getCoords();
+
+            this.console.log(`Polygon click ${coords.toString()}`, ev);
+        });
+        this.polygon.on(this.geo.event.polygon.mousedown, (e) => { this.console.log(`Polygon mousedown`); });
+        this.polygon.on(this.geo.event.polygon.mouseup, (e) => { this.console.log(`Polygon mouseup`); });
+        this.polygon.on(this.geo.event.polygon.mouseenter, (e) => { this.console.log(`Polygon mouseenter`); });
+        this.polygon.on(this.geo.event.polygon.mouseleave, (e) => { this.console.log(`Polygon mouseleave`); });
+
+        this.console.log('Polygon added');
     }
 }
 

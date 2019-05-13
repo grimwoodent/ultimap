@@ -27,7 +27,19 @@ export interface IMarkerGeoEventName {
     mouseleave?: string;
 }
 
+export interface IPolygonGeoEventName {
+    add?: string;
+    remove?: string;
+    click?: string;
+
+    mousedown?: string;
+    mouseup?: string;
+    mouseenter?: string;
+    mouseleave?: string;
+}
+
 export interface IGeoEventStrategy {
     getMapEventName(): IMapGeoEventName;
     getMarkerEventName(): IMarkerGeoEventName;
+    getPolygonEventName(): IPolygonGeoEventName;
 }

@@ -2,6 +2,22 @@ import $ from 'jquery';
 import moment from 'moment';
 import { geo, Strategy } from 'ultimap';
 
+const defaultPolygon = {
+    coords: [[
+        [57.769131, 40.93534],
+        [57.765131, 40.93534],
+        [57.765131, 40.93134],
+        [57.769131, 40.93134],
+    ]],
+    style: {
+        fillColor: '#df362a',
+        fillOpacity: 0.33,
+        strokeColor: '#df362a',
+        strokeOpacity: 0.5,
+        strokeWidth: 2,
+    },
+};
+
 class Log {
     constructor(name, $element) {
         this.name = name;
@@ -32,7 +48,7 @@ class Example {
     create() {
         this.map = this.geo.map.create(this.$holder.get(0), {
             center: [57.767131, 40.928349],
-            zoom: 16,
+            zoom: 14,
         });
 
         this.console.log('Map created', this.map);
@@ -45,6 +61,7 @@ class Example {
             this.console.log('Map loaded', map);
             this._initMapEvents();
             this._addMarker();
+            this._addPolygon();
         });
 
         return this;
@@ -90,6 +107,25 @@ class Example {
         this.marker.on(this.geo.event.marker.mouseleave, (e) => { this.console.log(`Marker mouseleave`); });
 
         this.console.log('Marker added');
+    }
+
+    _addPolygon() {
+        this.polygon = this.geo.polygon.create(defaultPolygon.coords, Object.assign({
+            editable: true,
+        }, defaultPolygon.style)).addTo(this.map);
+
+        this.polygon.on(this.geo.event.polygon.click, (e) => {
+            const ev = this.geo.domEvent.create(e);
+            const coords = ev.getCoords();
+
+            this.console.log(`Polygon click ${coords.toString()}`, ev);
+        });
+        this.polygon.on(this.geo.event.polygon.mousedown, (e) => { this.console.log(`Polygon mousedown`); });
+        this.polygon.on(this.geo.event.polygon.mouseup, (e) => { this.console.log(`Polygon mouseup`); });
+        this.polygon.on(this.geo.event.polygon.mouseenter, (e) => { this.console.log(`Polygon mouseenter`); });
+        this.polygon.on(this.geo.event.polygon.mouseleave, (e) => { this.console.log(`Polygon mouseleave`); });
+
+        this.console.log('Polygon added');
     }
 }
 

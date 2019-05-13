@@ -149,14 +149,17 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
     /**
      * Set polygon editing state
      *
-     * @param {YPolygon} geoobject
+     * @param {YPolygon} geoObject
      * @param {boolean} value
      *
      * @return {IPolygonStrategy}
      */
-    public setEditable(geoobject: YPolygon, value: boolean): IPolygonStrategy {
-        // @TODO implements method
-        throw new Error('Method not implemented');
+    public setEditable(geoObject: YPolygon, value: boolean): IPolygonStrategy {
+        if (value) {
+            (geoObject as any).editor.startEditing();
+        } else {
+            (geoObject as any).editor.stopEditing();
+        }
 
         return this;
     }
@@ -186,9 +189,16 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      *
      * @return {IPolygonStrategy}
      */
-    public on(geoObject: YPolygon, type: string | IEventHandlerFnMap, fn?: EventHandlerFn, context?: any): IPolygonStrategy {
-        // @TODO implements method
-        throw new Error('Method not implemented');
+    public on(
+        geoObject: YPolygon,
+        type: string | IEventHandlerFnMap,
+        fn?: EventHandlerFn, context?: any,
+    ): IPolygonStrategy {
+        if (!type) {
+            throw new Error('Polygon event name is not defined');
+        }
+
+        (geoObject as any).events.add(type as string, fn, context);
 
         return this;
     }
@@ -204,9 +214,12 @@ export class YandexPolygonStrategy implements IPolygonStrategy {
      * @return {IPolygonStrategy}
      */
     public off(geoObject: YPolygon, type: string, fn?: EventHandlerFn, context?: any): IPolygonStrategy {
-        // @TODO implements method
-        throw new Error('Method not implemented');
+        if (!type) {
+            throw new Error('Polygon event name is not defined');
+        }
 
-        return null;
+        (geoObject as any).events.remove(type as string, fn, context);
+
+        return this;
     }
 }
