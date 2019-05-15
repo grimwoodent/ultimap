@@ -1,5 +1,4 @@
 import { Map } from './map';
-import { LeafletGeoStrategy } from './map/drivers/leaflet';
 import { IGeoStrategy } from './map/drivers/interface';
 import { Marker } from './map/marker';
 import { MarkerPreset } from './map/preset/marker';
@@ -40,7 +39,7 @@ export class Geo {
      */
     public getStrategy(): IGeoStrategy {
         if (!this.strategy) {
-            this.strategy = new LeafletGeoStrategy();
+            this.strategy = null; // maybe some warning
         }
 
         return this.strategy;

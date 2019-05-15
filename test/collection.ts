@@ -2,9 +2,12 @@ import { expect } from 'chai';
 import 'mocha';
 import * as Collection from '../dist/map/collection/constructor';
 import { geo } from '../index';
+import { Strategy } from '../dist/strategy/leaflet';
 
 describe('Collection', () => {
-    describe('Abstract', () => {
+    const ugeo = geo.byStrategy(new Strategy.Leaflet());
+
+    describe('abstract', () => {
         let collections;
 
         it('should be created', () => {
@@ -50,20 +53,20 @@ describe('Collection', () => {
         });
     });
 
-    describe('GeoObjects', () => {
+    describe('geoObjects', () => {
         let collections;
 
         it('should be created', () => {
             expect(() => {
-                collections = (new geo.Collections.Constructor({
-                    [geo.Collections.Type.Marker]: (new geo.Collections.Strategy.Marker()),
-                    [geo.Collections.Type.Polygon]: (new geo.Collections.Strategy.Polygon()),
+                collections = (new ugeo.Collections.Constructor({
+                    [ugeo.Collections.Type.Marker]: (new ugeo.Collections.Strategy.Marker()),
+                    [ugeo.Collections.Type.Polygon]: (new ugeo.Collections.Strategy.Polygon()),
                 }));
             }).to.not.throw();
         });
 
-        describe('Marker', () => {
-            const marker = geo.marker.create([0, 0], {
+        describe('marker', () => {
+            const marker = ugeo.marker.create([0, 0], {
                 icon: {
                     src: '@src',
                     offset: [17, 46],
@@ -73,16 +76,16 @@ describe('Collection', () => {
 
             it('should be added', () => {
                 expect(() => {
-                    collections.addTo(geo.Collections.Type.Marker, marker);
+                    collections.addTo(ugeo.Collections.Type.Marker, marker);
                 }).to.not.throw();
-                expect(collections.isEmpty(geo.Collections.Type.Marker)).to.be.equals(false);
+                expect(collections.isEmpty(ugeo.Collections.Type.Marker)).to.be.equals(false);
             });
 
             it('should be removed', () => {
                 expect(() => {
-                    collections.removeFrom(geo.Collections.Type.Marker, marker);
+                    collections.removeFrom(ugeo.Collections.Type.Marker, marker);
                 }).to.not.throw();
-                expect(collections.isEmpty(geo.Collections.Type.Marker)).to.be.equals(true);
+                expect(collections.isEmpty(ugeo.Collections.Type.Marker)).to.be.equals(true);
             });
         });
     });

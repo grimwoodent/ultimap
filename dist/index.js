@@ -123,7 +123,7 @@ Object.defineProperty(exports, "DOMEvent", {
     return _domEvent.DOMEvent;
   }
 });
-exports.geo = exports.Strategy = void 0;
+exports.geo = void 0;
 
 var _geo = require("./geo");
 
@@ -147,17 +147,5 @@ var _geoEvent = require("./map/geo-event");
 
 var _domEvent = require("./map/dom-event");
 
-var _index2 = require("./map/drivers/leaflet/index");
-
-var _index3 = require("./map/drivers/yandex/index");
-
-var _index4 = require("./map/drivers/google/index");
-
-var Strategy = {
-  Leaflet: _index2.LeafletGeoStrategy,
-  Yandex: _index3.YandexGeoStrategy,
-  Google: _index4.GoogleGeoStrategy
-};
-exports.Strategy = Strategy;
 var geo = new _geo.Geo();
 exports.geo = geo;

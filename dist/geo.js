@@ -7,8 +7,6 @@ exports.Geo = void 0;
 
 var _map = require("./map");
 
-var _leaflet = require("./map/drivers/leaflet");
-
 var _marker = require("./map/marker");
 
 var _marker2 = require("./map/preset/marker");
@@ -74,7 +72,7 @@ function () {
     key: "getStrategy",
     value: function getStrategy() {
       if (!this.strategy) {
-        this.strategy = new _leaflet.LeafletGeoStrategy();
+        this.strategy = null; // maybe some warning
       }
 
       return this.strategy;

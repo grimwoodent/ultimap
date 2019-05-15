@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import moment from 'moment';
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy';
 
 const defaultPolygon = {
     coords: [[

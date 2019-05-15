@@ -10,10 +10,6 @@ import { IGeocoder, Geocoder } from './map/geocoder';
 import { IGeoEvent, GeoEvent } from './map/geo-event';
 import { IDOMEvent, DOMEvent } from './map/dom-event';
 
-import { LeafletGeoStrategy } from './map/drivers/leaflet/index';
-import { YandexGeoStrategy } from './map/drivers/yandex/index';
-import { GoogleGeoStrategy } from './map/drivers/google/index';
-
 export {
     Geo,
 
@@ -44,12 +40,6 @@ export {
 
     IDOMEvent,
     DOMEvent,
-};
-
-export const Strategy = {
-    Leaflet: LeafletGeoStrategy,
-    Yandex: YandexGeoStrategy,
-    Google: GoogleGeoStrategy,
 };
 
 export const geo = new Geo();

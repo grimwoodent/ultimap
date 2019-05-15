@@ -31,7 +31,8 @@
                 </div>
                 <div class="col-xs-6">
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy/leaflet';
 
 const osmGeo = geo.byStrategy(new Strategy.Leaflet());
 osmGeo.map.create(holder_element, {
@@ -57,7 +58,8 @@ osmGeo.map.create(holder_element, {
                 </div>
                 <div class="col-xs-6">
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy/yandex';
 
 const ymapGeo = geo.byStrategy(new Strategy.Yandex());
 ymapGeo.map.byStrategy(new Strategy.Yandex()).create(holder_element, {

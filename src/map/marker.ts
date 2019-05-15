@@ -161,6 +161,10 @@ export class Marker
      * @return {IMarkerStrategy}
      */
     protected getStrategy(): IMarkerStrategy {
+        if (!this.strategy) {
+            throw new Error('Geo strategy not found');
+        }
+
         return this.strategy.marker;
     }
 }

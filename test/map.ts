@@ -2,14 +2,17 @@ import { expect, assert } from 'chai';
 import 'mocha';
 import { JSDOM } from 'jsdom';
 import { geo } from '../dist';
+import { Strategy } from '../dist/strategy/leaflet';
 
 describe('Map', () => {
+    const ugeo = geo.byStrategy(new Strategy.Leaflet());
+
     describe('element', () => {
         let map;
 
         it('should be created', () => {
             expect(() => {
-                map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+                map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
                     center: [0, 0],
                     zoom: 13,
                 });
@@ -29,7 +32,7 @@ describe('Map', () => {
 
     describe('zoom', () => {
         it('should be set or get without instance', () => {
-            const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+            const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
                 center: [55.7500, 37.6300],
                 zoom: 1,
             });
@@ -45,7 +48,7 @@ describe('Map', () => {
         });
 
         it('should be set or get with instance', (done) => {
-            const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+            const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
                 center: [55.7500, 37.6300],
                 zoom: 1,
             });
@@ -64,7 +67,7 @@ describe('Map', () => {
 
     describe('center', () => {
         it('should be set or get without instance', () => {
-            const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+            const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
                 center: [0, 0],
                 zoom: 1,
             });
@@ -79,7 +82,7 @@ describe('Map', () => {
         });
 
         it('should be set or get with instance', (done) => {
-            const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+            const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
                 center: [0, 0],
                 zoom: 1,
             });
@@ -96,7 +99,7 @@ describe('Map', () => {
         });
 
         it('should be set by bounds', (done) => {
-            const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+            const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
                 bounds: [[0, 0], [4, 4]],
                 zoom: 1,
             });

@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy';
 
 $(() => {
     const osm = geo.byStrategy(new Strategy.Leaflet({

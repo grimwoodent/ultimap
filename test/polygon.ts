@@ -2,9 +2,11 @@ import { expect, assert } from 'chai';
 import 'mocha';
 import { JSDOM } from 'jsdom';
 import { geo, Coords } from '../dist';
+import { Strategy } from '../dist/strategy/leaflet';
 
 describe('Polygon', () => {
-    const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+    const ugeo = geo.byStrategy(new Strategy.Leaflet());
+    const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
         center: [0, 0],
         zoom: 13,
     });
@@ -22,13 +24,13 @@ describe('Polygon', () => {
 
         it('should be created', () => {
             expect(() => {
-                polygon = geo.polygon.create(coords, {});
+                polygon = ugeo.polygon.create(coords, {});
             }).to.not.throw();
         });
 
         it('should be created by Coords', () => {
             expect(() => {
-                geo.polygon.create(coords.map((coord) => new Coords(coord)), {});
+                ugeo.polygon.create(coords.map((coord) => new Coords(coord)), {});
             }).to.not.throw();
         });
 
@@ -62,7 +64,7 @@ describe('Polygon', () => {
 
                 tests.forEach((test, i) => {
                     it(`Test №${i + 1}`, () => {
-                        const coords = geo.polygon.create(test.coords, {}).getCoords(false);
+                        const coords = ugeo.polygon.create(test.coords, {}).getCoords(false);
 
                         expect((coords.toArray())).to.be.deep.equals(test.result);
                     });
@@ -80,7 +82,7 @@ describe('Polygon', () => {
 
                 tests.forEach((test, i) => {
                     it(`Test №${i + 1}`, () => {
-                        const coords = geo.polygon.create(test.coords, {}).getCoords(false);
+                        const coords = ugeo.polygon.create(test.coords, {}).getCoords(false);
 
                         expect((coords.toNormalizeArray())).to.be.deep.equals(test.result);
                     });
@@ -92,7 +94,7 @@ describe('Polygon', () => {
     describe('preset', () => {
         it('should be added', () => {
             expect(() => {
-                geo.preset.polygon
+                ugeo.preset.polygon
                     .add('defaults', {
                         style: {
                             fillColor: '#df362a',
@@ -106,14 +108,14 @@ describe('Polygon', () => {
         });
 
         it('should be get', () => {
-            const preset = geo.preset.polygon.get('defaults');
+            const preset = ugeo.preset.polygon.get('defaults');
 
             assert.isNotEmpty(preset);
         });
 
         it('should be set to polygon', () => {
             expect(() => {
-                const polygon = geo.polygon.create(coords, {
+                const polygon = ugeo.polygon.create(coords, {
                     preset: 'defaults',
                 });
             }).to.not.throw();
@@ -125,9 +127,9 @@ describe('Polygon', () => {
     describe('clone', () => {
         it('should be cloned', () => {
             const presetName = 'defaults';
-            const preset = geo.preset.polygon.get(presetName);
-            const polygon = geo.polygon.create(coords, {
-                preset: presetName
+            const preset = ugeo.preset.polygon.get(presetName);
+            const polygon = ugeo.polygon.create(coords, {
+                preset: presetName,
             });
             const clone = polygon.clone();
 

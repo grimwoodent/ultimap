@@ -139,6 +139,10 @@ export class Circle
     }
 
     protected getStrategy(): ICircleStrategy {
+        if (!this.strategy) {
+            throw new Error('Geo strategy not found');
+        }
+
         return this.strategy.circle;
     }
 }

@@ -344,6 +344,10 @@ export class Map extends Evented<IUpdateMapProperties, ICreateMapStrategyOptions
      * @return {IMapStrategy}
      */
     protected getStrategy(): IMapStrategy {
+        if (!this.strategy) {
+            throw new Error('Geo strategy not found');
+        }
+
         return this.strategy.map;
     }
 }

@@ -72,7 +72,7 @@ describe('Bounds', () => {
         it('should return center', () => {
             const bounds = (new Bounds(new Coords([0, 1]), new Coords([2, 3])));
 
-            expect(bounds.getCenter().toArray()).to.be.deep.equals([1, 2]);
+            expect(bounds.getCenter(false).toArray()).to.be.deep.equals([1, 2]);
         });
     });
 });

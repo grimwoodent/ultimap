@@ -21,7 +21,8 @@
                 </div>
                 <div class="col-xs-6">
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy/leaflet';
 
 geo.byStrategy(new Strategy.Leaflet()).map.create(holder_element, {
     center: [57.767131, 40.928349],
@@ -40,7 +41,8 @@ geo.byStrategy(new Strategy.Leaflet()).map.create(holder_element, {
 &lt;script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"&gt;&lt;/script&gt;
                     </pre>
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy/yandex';
 
 geo.map.byStrategy(new Strategy.Yandex()).map.create(holder_element, {
     center: [57.767131, 40.928349],

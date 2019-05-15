@@ -153,6 +153,10 @@ function (_GeoObject) {
   }, {
     key: "getStrategy",
     value: function getStrategy() {
+      if (!this.strategy) {
+        throw new Error('Geo strategy not found');
+      }
+
       return this.strategy.circle;
     }
   }]);

@@ -2,9 +2,11 @@ import { expect, assert } from 'chai';
 import 'mocha';
 import { JSDOM } from 'jsdom';
 import { geo } from '../dist';
+import { Strategy } from '../dist/strategy/leaflet';
 
 describe('Marker', () => {
-    const map = geo.map.create(JSDOM.fragment('<div></div>').firstChild, {
+    const ugeo = geo.byStrategy(new Strategy.Leaflet());
+    const map = ugeo.map.create(JSDOM.fragment('<div></div>').firstChild, {
         center: [0, 0],
         zoom: 13,
     });
@@ -19,7 +21,7 @@ describe('Marker', () => {
 
         it('should be created', () => {
             expect(() => {
-                marker = geo.marker.create([0, 0], { icon });
+                marker = ugeo.marker.create([0, 0], { icon });
             }).to.not.throw();
             expect(marker.getCoords(false).toArray()).to.be.deep.equal([0, 0]);
             expect(marker.props.icon).to.be.deep.equal(icon);
@@ -49,7 +51,7 @@ describe('Marker', () => {
     });
 
     describe('coords', () => {
-        const marker = geo.marker.create([0, 0], { icon });
+        const marker = ugeo.marker.create([0, 0], { icon });
 
         it('should be set without instance', () => {
             expect(() => {
@@ -77,7 +79,7 @@ describe('Marker', () => {
     describe('preset', () => {
         it('should be added', () => {
             expect(() => {
-                geo.preset.marker
+                ugeo.preset.marker
                     .add('defaults', {
                         icon: {
                             src: '@src',
@@ -96,7 +98,7 @@ describe('Marker', () => {
         });
 
         it('should be set to marker', (done) => {
-            const marker = geo.marker.create([0, 0], {
+            const marker = ugeo.marker.create([0, 0], {
                 preset: 'defaults',
             });
 
@@ -112,7 +114,7 @@ describe('Marker', () => {
 
     describe('edit', () => {
         it('should be enabled', (done) => {
-            const marker = geo.marker.create([0, 0], { icon });
+            const marker = ugeo.marker.create([0, 0], { icon });
 
             map.load().then(() => {
                 marker.addTo(map);
@@ -127,7 +129,7 @@ describe('Marker', () => {
 
     describe('clone', () => {
         it('should be cloned', () => {
-            const marker = geo.marker.create([0, 0], { icon });
+            const marker = ugeo.marker.create([0, 0], { icon });
             const clone = marker.clone();
 
             expect(clone).to.be.not.equal(null);

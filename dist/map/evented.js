@@ -33,10 +33,6 @@ function () {
 
     _defineProperty(this, "events", void 0);
 
-    if (!strategy) {
-      throw new Error('Geo strategy not found');
-    }
-
     this.props = {}; // Передаем провайдер событий в стратегию
 
     this.events = new _events.Events({

@@ -15,15 +15,14 @@ export interface IEvented<TPropertiesForUpdate> {
 
 export abstract class Evented<TPropertiesForUpdate, TPropertiesForCreate> implements IEvented<TPropertiesForUpdate> {
     protected instance: any;
+
     protected strategy: IGeoStrategy;
+
     protected props: TPropertiesForCreate;
+
     protected events: IEvents;
 
     constructor(strategy: IGeoStrategy) {
-        if (!strategy) {
-            throw new Error('Geo strategy not found');
-        }
-
         this.props = {} as TPropertiesForCreate;
         // Передаем провайдер событий в стратегию
         this.events = new Events({

@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import { geo, Strategy, PolygonCoords } from 'ultimap';
+import { geo, PolygonCoords } from 'ultimap';
+import { Strategy } from 'ultimap/strategy';
 
 const osmGeo = geo.byStrategy(new Strategy.Leaflet());
 const ymapGeo = geo.byStrategy(new Strategy.Yandex());
