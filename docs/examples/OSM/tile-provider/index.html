@@ -38,7 +38,7 @@ geo.byStrategy(new Strategy.Leaflet({
                 <div class="col-xs-6">
                     <pre class="small">
 import { geo } from 'ultimap';
-import { Strategy } from 'ultimap/strategy/yandex';
+import { Strategy } from 'ultimap/strategy/leaflet';
 
 geo.byStrategy(new Strategy.Leaflet({
     tileLayerProviderLink: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
@@ -60,7 +60,8 @@ geo.byStrategy(new Strategy.Leaflet({
                 </div>
                 <div class="col-xs-6">
                     <pre class="small">
-import { geo, Strategy } from 'ultimap';
+import { geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy/leaflet';
 
 geo.byStrategy(new Strategy.Leaflet({
     tileLayerProviderLink: 'http://{s}.tiles.wmflabs.org/hillshading/{z}/{x}/{y}.png',

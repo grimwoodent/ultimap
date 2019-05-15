@@ -41,6 +41,16 @@ The central class of the API - it is used for get access for other classes.
 ### Usage example
 ``` javascript
 import { Geo, geo } from 'ultimap';
+import { Strategy } from 'ultimap/strategy';
+// or // import { Strategy } from 'ultimap/strategy/leaflet';
+// or // import { Strategy } from 'ultimap/strategy/yandex';
+
+const ugeo = geo.byStrategy(new Strategy.Leaflet());
+// or // const ugeo = (new Geo(new Strategy.Leaflet()))
+// or // const ugeo = (new Geo(new Strategy.Yandex()))
+
+// include yandex api script to your page for Yandex Strategy
+// Leaflet api scripts dependencies included in Leaflet Strategy
 ```
 
 ### Constructor
