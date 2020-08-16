@@ -1,4 +1,4 @@
-import { Collection } from 'grim.lib';
+import Collection from '../../../utils/collection';
 import { IPolygon } from '../../polygon';
 
 export class PolygonStrategy extends Collection.Strategy {

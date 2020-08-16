@@ -1,4 +1,4 @@
-import { Collection } from 'grim.lib';
+import Collection from '../../utils/collection';
 
 export class Strategy extends Collection.Strategy {
 

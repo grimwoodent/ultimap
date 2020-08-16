@@ -38,11 +38,6 @@ const resultConfig = {
                 }]
             })
         }, {
-            test: /\.twig$/,
-            use: [
-                'twig-loader'
-            ]
-        }, {
             test: /\.png$/,
             use: [{
                 loader: 'url-loader',

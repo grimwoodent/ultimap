@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.YandexMapControlStrategy = void 0;
 
-var _grim = require("grim.lib");
+var _callbacks = require("../../../../utils/callbacks");
 
 var _ymaps = require("../utils/ymaps");
 
@@ -37,7 +37,7 @@ function () {
         _ymaps.Api.ymaps.ready(function () {
           var ControlConstructor = function Constructor(props) {
             var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-            this.callbacks = new _grim.Callbacks(events);
+            this.callbacks = new _callbacks.Callbacks(events);
             ControlConstructor.superclass.constructor.call(this, props);
           };
 

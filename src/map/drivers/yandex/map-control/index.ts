@@ -1,4 +1,4 @@
-import { Callbacks } from 'grim.lib';
+import { Callbacks } from '../../../../utils/callbacks';
 import { Api } from '../utils/ymaps';
 import {
     IMapControlStrategy,

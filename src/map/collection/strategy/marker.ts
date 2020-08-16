@@ -1,4 +1,4 @@
-import { Collection } from 'grim.lib';
+import Collection from '../../../utils/collection';
 import { IMarker } from '../../marker';
 
 export class MarkerStrategy extends Collection.Strategy {

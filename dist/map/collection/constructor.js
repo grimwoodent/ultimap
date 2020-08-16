@@ -5,7 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Constructor = exports.Strategy = void 0;
 
-var _grim = require("grim.lib");
+var _collection = _interopRequireDefault(require("../../utils/collection"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -33,7 +35,7 @@ function (_Collection$Strategy) {
   }
 
   return Strategy;
-}(_grim.Collection.Strategy);
+}(_collection.default.Strategy);
 
 exports.Strategy = Strategy;
 
@@ -49,6 +51,6 @@ function (_Collection$Construct) {
   }
 
   return Constructor;
-}(_grim.Collection.Constructor);
+}(_collection.default.Constructor);
 
 exports.Constructor = Constructor;

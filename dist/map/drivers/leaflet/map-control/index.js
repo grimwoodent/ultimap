@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.LeafletMapControlStrategy = void 0;
 
-var _grim = require("grim.lib");
+var _callbacks = require("../../../../utils/callbacks");
 
 var L = _interopRequireWildcard(require("leaflet"));
 
@@ -35,7 +35,7 @@ function () {
         var ControlConstructor = function ControlConstructorFn(props) {
           var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
           this.props = props || {};
-          this.callbacks = new _grim.Callbacks(events);
+          this.callbacks = new _callbacks.Callbacks(events);
         };
 
         ControlConstructor.prototype.onAdd = function onAddMapControl(map) {
