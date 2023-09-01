@@ -1,0 +1,11 @@
+export { Geo } from './geo';
+export { Coords, ILatLng, IPoint } from './map/coords';
+export { PolygonCoords } from './map/polygon-coords';
+export { Bounds } from './map/bounds';
+export { IMarker, Marker } from './map/marker';
+export { IPolygon, Polygon } from './map/polygon';
+export { IMap, Map } from './map/index';
+export { IIcon, Icon } from './map/icon';
+export { IGeocoder, Geocoder } from './map/geocoder';
+export { IGeoEvent, GeoEvent } from './map/geo-event';
+export { IDOMEvent, DOMEvent } from './map/dom-event';
