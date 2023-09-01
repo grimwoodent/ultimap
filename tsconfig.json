@@ -1,15 +1,6 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
-    "noImplicitAny" : true,
-    "target": "es6",
-    "module": "commonjs",
-    "sourceMap": true,
-    "outDir": "dist",
-    "rootDir": "src",
-    "moduleResolution": "node"
-  },
-  "include": [
-    "src/**/*"
-  ]
+    "target": "esnext",
+    "esModuleInterop": true
+  }
 }
